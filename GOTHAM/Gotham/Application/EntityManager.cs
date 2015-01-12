@@ -1,11 +1,15 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Data;
+using FluentNHibernate.Mapping;
+using GOTHAM.Gotham.Application.Model;
 using IronPython.Runtime.Exceptions;
+using Microsoft.Scripting.Utils;
 using Newtonsoft.Json.Linq;
 using NHibernate;
 
@@ -53,6 +57,7 @@ namespace GOTHAM.Gotham.Application
       }
 
 
+
       SessionFactory = Fluently.Configure()
         .Database(MySQLConfiguration
           .Standard
@@ -61,19 +66,27 @@ namespace GOTHAM.Gotham.Application
             .Username(sqlConfig["username"].ToString())
             .Password(sqlConfig["password"].ToString())
           ))
-        .Mappings(
-          m => m.AutoMappings.Add(
-               AutoMap.AssemblyOf<Entity>()
-               .Where(t => t.Namespace == "GOTHAM.Gotham.Application.Model"))
-        ).BuildSessionFactory();
-
+           .Mappings(m =>
+    m.FluentMappings
+      .AddFromAssemblyOf<NodeEntity>())
+      .BuildSessionFactory();
     }
 
 
 
-
-
-
+    static bool IsSubclassOfRawGeneric(Type generic, Type toCheck)
+    {
+      while (toCheck != null && toCheck != typeof(object))
+      {
+        var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
+        if (generic == cur)
+        {
+          return true;
+        }
+        toCheck = toCheck.BaseType;
+      }
+      return false;
+    }
 
   }
 }
