@@ -66,14 +66,6 @@ namespace GOTHAM.Gotham.Application
                AutoMap.AssemblyOf<Entity>()
                .Where(t => t.Namespace == "GOTHAM.Gotham.Application.Model"))
         ).BuildSessionFactory();
-
     }
-
-
-
-
-
-
-
   }
 }
