@@ -1,0 +1,28 @@
+﻿{
+
+    "mysql": {
+        "per": {
+            "host": "localhost",
+            "port": 3306,
+            "database": "gotham",
+            "username": "root",
+            "password": "root"
+        },
+
+        "paul": {
+            "host": "localhost",
+            "port": 3306,
+            "database": "gotham",
+            "username": "root",
+            "password": "root"
+        },
+
+        "production": {
+            "host": "localhost",
+            "port": 3306,
+            "database": "gotham",
+            "username": "root",
+            "password": "root"
+        }
+    }
+}
