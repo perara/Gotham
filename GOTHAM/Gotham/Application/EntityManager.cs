@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using FluentNHibernate;
 using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Data;
 using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping.Providers;
 using GOTHAM.Gotham.Application.Model;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Utils;
@@ -68,25 +71,43 @@ namespace GOTHAM.Gotham.Application
           ))
            .Mappings(m =>
     m.FluentMappings
-      .AddFromAssemblyOf<NodeEntity>())
+      .AddFromNamespaceOf<NodeEntity>())
       .BuildSessionFactory();
     }
 
+  }
 
-
-    static bool IsSubclassOfRawGeneric(Type generic, Type toCheck)
+  /// <summary>
+  /// http://stackoverflow.com/questions/6204511/how-to-add-mappings-by-namespace-in-fluent-nhibernate
+  /// </summary>
+  public static class FluentNHibernateExtensions
+  {
+    public static FluentMappingsContainer AddFromNamespaceOf<T>(
+        this FluentMappingsContainer fmc)
     {
-      while (toCheck != null && toCheck != typeof(object))
+      string ns = typeof(T).Namespace;
+      IEnumerable<Type> types = typeof(T).Assembly.GetExportedTypes()
+          .Where(t => t.Namespace == ns)
+          .Where(x => IsMappingOf<IMappingProvider>(x) ||
+                      IsMappingOf<IIndeterminateSubclassMappingProvider>(x) ||
+                      IsMappingOf<IExternalComponentMappingProvider>(x) ||
+                      IsMappingOf<IFilterDefinition>(x));
+
+      foreach (Type t in types)
       {
-        var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
-        if (generic == cur)
-        {
-          return true;
-        }
-        toCheck = toCheck.BaseType;
+        fmc.Add(t);
       }
-      return false;
+
+      return fmc;
     }
 
+    /// <summary>
+    /// Private helper method cribbed from FNH source (PersistenModel.cs:151)
+    /// </summary>
+    private static bool IsMappingOf<T>(Type type)
+    {
+      return !type.IsGenericType && typeof(T).IsAssignableFrom(type);
+    }
   }
+
 }
