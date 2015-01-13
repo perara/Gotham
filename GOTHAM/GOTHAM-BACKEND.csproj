@@ -106,6 +106,7 @@
     <Compile Include="Gotham\Tests\Tools\HTTPRequestTest.cs" />
     <Compile Include="Gotham\Application\Tools\FakeNameGenerator\FakeNameGenerator.cs" />
     <Compile Include="Gotham\Application\Tools\HTTPRequest.cs" />
+    <Compile Include="Gotham\Tests\Tools\NodeTest.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
