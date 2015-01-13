@@ -10,33 +10,37 @@ using GOTHAM.Gotham.Application.Model;
 
 namespace GOTHAM
 {
-    class Program
+  class Program
+  {
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+
+
+      // EntityManager.GetSessionFactory().Close();
+      // http://www.fakenamegenerator.com/advanced.php?t=country&n%5B%5D=us&c%5B%5D=sw&gen=50&age-min=19&age-max=40
+
+      NodeEntity node1 = new NodeEntity();
+
+      NodeEntity node2 = new NodeEntity();
+
+      NodeEntity node3 = new NodeEntity();
+
+
+
+      /*using (var session = EntityManager.GetSessionFactory().OpenSession())
         {
+          var nodes = session.CreateCriteria<NodeEntity>().List<NodeEntity>();
 
-
-            // EntityManager.GetSessionFactory().Close();
-            // http://www.fakenamegenerator.com/advanced.php?t=country&n%5B%5D=us&c%5B%5D=sw&gen=50&age-min=19&age-max=40
-
-            Console.WriteLine("Welcome ಠ ω ಠ");
-
-            using (var session = EntityManager.GetSessionFactory().OpenSession())
-            {
-
-
-              var nodes = session.CreateCriteria<NodeEntity>().List<NodeEntity>();
-
-            }
+        }
             
 
 
-            // Wait for input
-            var input = "";
-            while ((input = Console.ReadLine()) != "e")
-            {
-                Console.WriteLine(Globals.GetInstance().GetID());
-            }
-        }
+        // Wait for input
+        var input = "";
+        while ((input = Console.ReadLine()) != "e")
+        {
+            Console.WriteLine(Globals.GetInstance().GetID());
+        }*/
     }
+  }
 }

@@ -14,7 +14,10 @@ namespace GOTHAM.Gotham.Application.Model
       public virtual double bandwidth { get; set; }
      // public ProviderEntity provider { get; set; }
 
-      ISet<NodeEntity> Neighbors { get; set; }
+      /// <summary>
+      /// neighbors node, This can only be a node within the same Tier level
+      /// </summary>
+      public virtual IList<NodeEntity> neighbors { get; set; }
 
       public virtual String name { get; set; }
   }

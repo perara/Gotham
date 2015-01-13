@@ -7,23 +7,16 @@ using FluentNHibernate.Mapping;
 
 namespace GOTHAM.Gotham.Application.Model
 {
-  public class NodeEntityMap : ClassMap<NodeEntity>
+  class TierEntityMap : ClassMap<TierEntity>
   {
 
-    public NodeEntityMap()
+    public TierEntityMap()
     {
-      Table("node");
-
+      Table("tier");
       Id(x => x.id).GeneratedBy.Identity();
       Map(x => x.name);
-      Map(x => x.bandwidth);
-      Map(x => x.tier);
-      HasMany(x => x.neighbors)
-        .KeyColumn("id")
-        .Inverse()
-        .Cascade
-        .AllDeleteOrphan();
     }
+
 
 
   }
