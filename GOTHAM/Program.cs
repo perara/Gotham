@@ -8,13 +8,14 @@ using System.Drawing;
 using GOTHAM.Gotham.Application;
 using NHibernate;
 using GOTHAM.Gotham.Application.Model;
+using GOTHAM.Gotham.Application.Tools;
 
 namespace GOTHAM
 {
     class Program
     {
 
-        static Random rnd = new Random();
+        
 
         static void Main(string[] args)
         {
@@ -26,53 +27,15 @@ namespace GOTHAM
             //      var nodes = session.CreateCriteria<NodeEntity>().List<NodeEntity>();
             //}
 
+            var gen = new NodeGenerator();
+            
 
             // Wait for input
             var input = "";
-            var nodes = new List<NodeEntity>();
-            
-            for (int i = 0; i < 3; i++)
-            {
-                NodeEntity node = GenerateNode(2);
-
-                for (int j = 0; j < 10; j++)
-                {
-                    var childNode = GenerateNode(3);
-                    node.siblings.Add(childNode);
-                }
-                
-                nodes.Add(node);
-
-            }
-            
-            foreach(var node in nodes)
-            {
-                Console.WriteLine(node.geoPosX + " - " + node.geoPosY + " - Pri: " + node.priority);
-            }
-
             while ((input = Console.ReadLine()) != "e")
             {
-
                 Console.WriteLine(Globals.GetInstance().GetID());
             }
-            
-
-        }
-
-
-        public static NodeEntity GenerateNode(int tier)
-        {
-            
-            NodeEntity node = new NodeEntity();
-
-            node.geoPosX = rnd.Next(Globals.GetInstance().mapMax.X);
-            node.geoPosY = rnd.Next(Globals.GetInstance().mapMax.Y);
-            node.name = "Flette";
-            node.priority = rnd.Next(10);
-            node.tier = tier;
-            node.siblings = new ISet<NodeEntity>();
-
-            return node;
         }
     }
 }

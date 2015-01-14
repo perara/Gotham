@@ -103,6 +103,9 @@
     <Compile Include="Gotham\Application\EntityManager.cs" />
     <Compile Include="Gotham\Application\Model\NodeEntity.cs" />
     <Compile Include="Gotham\Application\Model\NodeEntityMap.cs" />
+    <Compile Include="Gotham\Application\Model\TierEntity.cs" />
+    <Compile Include="Gotham\Application\Model\TierEntityMap.cs" />
+    <Compile Include="Gotham\Application\Tools\NodeGenerator.cs" />
     <Compile Include="Gotham\Tests\Tools\HTTPRequestTest.cs" />
     <Compile Include="Gotham\Application\Tools\FakeNameGenerator\FakeNameGenerator.cs" />
     <Compile Include="Gotham\Application\Tools\HTTPRequest.cs" />

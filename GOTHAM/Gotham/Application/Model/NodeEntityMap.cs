@@ -18,7 +18,7 @@ namespace GOTHAM.Gotham.Application.Model
       Map(x => x.name);
       Map(x => x.bandwidth);
       Map(x => x.tier);
-      HasMany(x => x.neighbors)
+      HasMany(x => x.siblings)
         .KeyColumn("id")
         .Inverse()
         .Cascade
