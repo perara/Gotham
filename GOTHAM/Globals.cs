@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace GOTHAM
 
 
         int idCounter;
-
+        public Point mapMax = new Point(1000, 1000);
 
 
         public int GetID()

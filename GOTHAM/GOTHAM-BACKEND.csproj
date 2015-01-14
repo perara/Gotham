@@ -83,6 +83,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Extensions">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\net45\System.Net.Http.Extensions.dll</HintPath>
@@ -104,6 +105,7 @@
     <Compile Include="Gotham\Application\Model\NodeEntityMap.cs" />
     <Compile Include="Gotham\Application\Model\TierEntity.cs" />
     <Compile Include="Gotham\Application\Model\TierEntityMap.cs" />
+    <Compile Include="Gotham\Application\Tools\NodeGenerator.cs" />
     <Compile Include="Gotham\Tests\Tools\HTTPRequestTest.cs" />
     <Compile Include="Gotham\Application\Tools\FakeNameGenerator\FakeNameGenerator.cs" />
     <Compile Include="Gotham\Application\Tools\HTTPRequest.cs" />
