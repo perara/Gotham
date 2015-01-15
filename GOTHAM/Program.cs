@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Cache;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using GOTHAM.Gotham.Application;
-using NHibernate;
-using GOTHAM.Gotham.Application.Model;
 using GOTHAM.Gotham.Application.Tools;
 
 namespace GOTHAM
