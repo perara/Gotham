@@ -101,8 +101,14 @@
   <ItemGroup>
     <Compile Include="Globals.cs" />
     <Compile Include="Gotham\Application\EntityManager.cs" />
+    <Compile Include="Gotham\Application\Model\CableEntityMap.cs" />
+    <Compile Include="Gotham\Application\Model\CableEntity.cs" />
+    <Compile Include="Gotham\Application\Model\HostEntity.cs" />
+    <Compile Include="Gotham\Application\Model\HostEntityMap.cs" />
     <Compile Include="Gotham\Application\Model\NodeEntity.cs" />
     <Compile Include="Gotham\Application\Model\NodeEntityMap.cs" />
+    <Compile Include="Gotham\Application\Model\PersonEntity.cs" />
+    <Compile Include="Gotham\Application\Model\PersonEntityMap.cs" />
     <Compile Include="Gotham\Application\Model\TierEntity.cs" />
     <Compile Include="Gotham\Application\Model\TierEntityMap.cs" />
     <Compile Include="Gotham\Application\Tools\NodeGenerator.cs" />

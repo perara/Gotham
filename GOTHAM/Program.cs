@@ -1,5 +1,7 @@
 ﻿using System;
 using GOTHAM.Gotham.Application.Tools;
+using GOTHAM.Gotham.Application;
+using GOTHAM.Gotham.Application.Model;
 
 namespace GOTHAM
 {
@@ -13,12 +15,15 @@ namespace GOTHAM
             // EntityManager.GetSessionFactory().Close();
             // http://www.fakenamegenerator.com/advanced.php?t=country&n%5B%5D=us&c%5B%5D=sw&gen=50&age-min=19&age-max=40
             Console.WriteLine("Welcome");
-            //using (var session = EntityManager.GetSessionFactory().OpenSession())
-            //{
-            //      var nodes = session.CreateCriteria<NodeEntity>().List<NodeEntity>();
-            //}
+            using (var session = EntityManager.GetSessionFactory().OpenSession())
+            {
+                  var nodses = session.CreateCriteria<NodeEntity>()
+                      .List<NodeEntity>();
 
-            var gen = new NodeGenerator();
+            }
+
+            var nodes = new NodeGenerator();
+            nodes.GenerateNodes(3, 10);
             
 
             // Wait for input

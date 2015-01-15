@@ -23,6 +23,13 @@ namespace GOTHAM.Gotham.Application.Model
         .Inverse()
         .Cascade
         .AllDeleteOrphan();
+      HasManyToMany(x => x.cables)
+          .Cascade.All()
+          .Inverse()
+          .Table("node_node");
+   
+
+
     }
 
 

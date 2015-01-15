@@ -21,7 +21,7 @@ namespace GOTHAM.Gotham.Application.Model
       /// neighbors node, This can only be a node within the same Tier level
       /// </summary>
       public virtual IList<NodeEntity> siblings { get; set; }
-
+      public virtual IList<CableEntity> cables { get; set; }
       public virtual String name { get; set; }
   }
 }

@@ -11,18 +11,21 @@ namespace GOTHAM.Gotham.Application.Tools
     {
         static Random rnd = new Random();
 
-        public NodeGenerator()
+        public void GenerateNodes(int tier2, int tier3)
         {
             var nodes = new List<NodeEntity>();
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < tier2; i++)
             {
-                NodeEntity node = GenerateNode(2);
-                for (int j = 0; j < 10; j++)
+                NodeEntity node = NewNode(2);
+
+                for (int j = 0; j < tier3; j++)
                 {
-                    var childNode = GenerateNode(3);
+                    var childNode = NewNode(3);
+                    var cable = NewCable(node, childNode, 100);
                     node.siblings.Add(childNode);
                 }
+
                 nodes.Add(node);
             }
 
@@ -31,16 +34,15 @@ namespace GOTHAM.Gotham.Application.Tools
                 Console.WriteLine(node.geoPosX + " - " + node.geoPosY + " - Pri: " + node.priority);
                 foreach (var sibling in node.siblings)
                 {
-                    Console.WriteLine("\t" + sibling.geoPosX + " - " + sibling.geoPosY + " - Pri: " + sibling.priority);
+                    Console.WriteLine("\t" + sibling.geoPosX + " - " + sibling.geoPosY + " - Pri: " + sibling.priority + " Cable Cap: " );
                 }
             }
         }
 
 
-        public static NodeEntity GenerateNode(int tier)
+        private static NodeEntity NewNode(int tier)
         {
-
-            NodeEntity node = new NodeEntity();
+            var node = new NodeEntity();
 
             node.geoPosX = rnd.Next(Globals.GetInstance().mapMax.X);
             node.geoPosY = rnd.Next(Globals.GetInstance().mapMax.Y);
@@ -52,5 +54,16 @@ namespace GOTHAM.Gotham.Application.Tools
             return node;
         }
 
+        private static CableEntity NewCable(NodeEntity node1, NodeEntity node2, int bandwidth)
+        {
+            var cable = new CableEntity();
+
+            cable.bandwidth = bandwidth;
+            //cable.priority = 1;
+            cable.quality = 2;
+            cable.type = 4;
+
+            return cable;
+        }
     }
 }

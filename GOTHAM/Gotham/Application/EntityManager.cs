@@ -70,8 +70,8 @@ namespace GOTHAM.Gotham.Application
             .Password(sqlConfig["password"].ToString())
           ))
            .Mappings(m =>
-    m.FluentMappings
-      .AddFromNamespaceOf<NodeEntity>())
+            m.FluentMappings.AddFromAssemblyOf<NodeEntity>())
+            //m.FluentMappings.AddFromNamespaceOf<NodeEntity>())
       .BuildSessionFactory();
     }
 

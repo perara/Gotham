@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GOTHAM.Gotham.Application.Model;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -22,10 +23,12 @@ namespace GOTHAM
 
 
 
-
-        int idCounter;
+        // Global variables and objects
+        public int idCounter;
         public Point mapMax = new Point(1000, 1000);
 
+        public List<NodeEntity> rootNodes = new List<NodeEntity>();
+        public List<CableEntity> cables = new List<CableEntity>();
 
         public int GetID()
         {

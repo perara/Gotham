@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM.Gotham.Application.Model
+namespace GOTHAM.Gotham.Application.ModelOld
 {
   public class PersonEntity
   {
