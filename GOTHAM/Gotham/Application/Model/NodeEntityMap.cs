@@ -17,18 +17,16 @@ namespace GOTHAM.Gotham.Application.Model
       Id(x => x.id).GeneratedBy.Identity();
       Map(x => x.name);
       Map(x => x.bandwidth);
-      Map(x => x.tier);
+      HasOne(x => x.tier);
       HasMany(x => x.siblings)
-        .KeyColumn("id")
-        .Inverse()
-        .Cascade
-        .AllDeleteOrphan();
-      HasManyToMany(x => x.cables)
-          .Cascade.All()
-          .Inverse()
-          .Table("node_node");
-   
-
+           .KeyColumn("id")
+           .Inverse()
+           .Cascade
+           .AllDeleteOrphan();
+      /*HasManyToMany(x => x.cables)
+         .Cascade.All()
+         .Table("cable");
+      */
 
     }
 

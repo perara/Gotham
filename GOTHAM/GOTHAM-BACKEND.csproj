@@ -103,6 +103,8 @@
     <Compile Include="Gotham\Application\EntityManager.cs" />
     <Compile Include="Gotham\Application\Model\CableEntityMap.cs" />
     <Compile Include="Gotham\Application\Model\CableEntity.cs" />
+    <Compile Include="Gotham\Application\Model\CableTypeEntityMap.cs" />
+    <Compile Include="Gotham\Application\Model\CableTypeEntity.cs" />
     <Compile Include="Gotham\Application\Model\HostEntity.cs" />
     <Compile Include="Gotham\Application\Model\HostEntityMap.cs" />
     <Compile Include="Gotham\Application\Model\NodeEntity.cs" />

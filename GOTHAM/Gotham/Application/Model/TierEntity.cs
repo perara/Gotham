@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GOTHAM.Gotham.Application.Model
 {
-  class TierEntity
+  public class TierEntity
   {
 
     public virtual int id { get; set; }

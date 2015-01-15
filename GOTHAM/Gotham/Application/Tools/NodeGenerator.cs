@@ -31,10 +31,10 @@ namespace GOTHAM.Gotham.Application.Tools
 
             foreach (var node in nodes)
             {
-                Console.WriteLine(node.geoPosX + " - " + node.geoPosY + " - Pri: " + node.priority);
+                Console.WriteLine(node.latitude + " - " + node.longditude + " - Pri: " + node.priority);
                 foreach (var sibling in node.siblings)
                 {
-                    Console.WriteLine("\t" + sibling.geoPosX + " - " + sibling.geoPosY + " - Pri: " + sibling.priority + " Cable Cap: " );
+                    Console.WriteLine("\t" + sibling.latitude + " - " + sibling.longditude + " - Pri: " + sibling.priority + " Cable Cap: " );
                 }
             }
         }
@@ -44,11 +44,14 @@ namespace GOTHAM.Gotham.Application.Tools
         {
             var node = new NodeEntity();
 
-            node.geoPosX = rnd.Next(Globals.GetInstance().mapMax.X);
-            node.geoPosY = rnd.Next(Globals.GetInstance().mapMax.Y);
+            node.latitude = rnd.Next(Globals.GetInstance().mapMax.X);
+            node.longditude = rnd.Next(Globals.GetInstance().mapMax.Y);
             node.name = "Flette";
             node.priority = rnd.Next(10);
-            node.tier = tier;
+            TierEntity tiers = new TierEntity();
+            tiers.id = tier;
+
+            node.tier = tiers;
             node.siblings = new List<NodeEntity>();
 
             return node;
@@ -58,10 +61,14 @@ namespace GOTHAM.Gotham.Application.Tools
         {
             var cable = new CableEntity();
 
+          var cableType = new CableTypeEntity();
+          cableType.id = 0;
+
+
             cable.bandwidth = bandwidth;
             //cable.priority = 1;
             cable.quality = 2;
-            cable.type = 4;
+            cable.type = cableType;
 
             return cable;
         }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentNHibernate.Mapping;
 
-namespace GOTHAM.Gotham.Application.ModelOld
+namespace GOTHAM.Gotham.Application.Model
 {
   public class HostEntityMap : ClassMap<HostEntity>
   {

@@ -5,16 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentNHibernate.Mapping;
 
-namespace GOTHAM.Gotham.Application.ModelOld
+namespace GOTHAM.Gotham.Application.Model
 {
- /* public class PersonEntityMap : ClassMap<PersonEntity>
+  public class PersonEntityMap : ClassMap<PersonEntity>
   {
 
     public PersonEntityMap()
     {
       Table("person");
+      Id(x => x.id).GeneratedBy.Identity();
+      Map(x => x.name).Not.Nullable();
 
 
     }
-  }*/
+  }
 }

@@ -7,7 +7,7 @@ using FluentNHibernate.Mapping;
 
 namespace GOTHAM.Gotham.Application.Model
 {
-  class TierEntityMap : ClassMap<TierEntity>
+  public class TierEntityMap : ClassMap<TierEntity>
   {
 
     public TierEntityMap()
