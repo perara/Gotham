@@ -1,6 +1,4 @@
 ﻿using GMap.NET;
-using GMap.NET.WindowsForms;
-using GMap.NET.WindowsForms.Markers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,8 +10,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GOTHAM.Model;
 using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
 
-namespace GOTHAM_FRONTEND_DEBUG
+namespace GOTHAM_BACKEND_DEBUG
 {
     public partial class Form1 : Form
     {
@@ -33,8 +33,6 @@ namespace GOTHAM_FRONTEND_DEBUG
             GMapOverlay markersOverlay = new GMapOverlay("markers");
             MainMap.Overlays.Add(markersOverlay);
             
-         
-
 
             IList<NodeEntity> nodes = null;
             IList<CableEntity> cables = null;

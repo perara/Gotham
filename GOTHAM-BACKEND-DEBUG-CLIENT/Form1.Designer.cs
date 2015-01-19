@@ -1,4 +1,4 @@
-﻿namespace GOTHAM_FRONTEND_DEBUG
+﻿namespace GOTHAM_BACKEND_DEBUG
 {
     partial class Form1
     {

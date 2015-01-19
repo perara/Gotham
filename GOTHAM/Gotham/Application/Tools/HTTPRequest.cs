@@ -9,7 +9,7 @@ using IronPython.Runtime.Exceptions;
 
 namespace GOTHAM.Gotham.Tools
 {
-  internal class HTTPRequest
+  public  class HTTPRequest
   {
 
 
