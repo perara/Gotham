@@ -11,6 +11,7 @@ namespace GOTHAM
     public class Globals
     {
         private static Globals INSTANCE = new Globals();
+
         public static Globals GetInstance()
         {
             return INSTANCE;
@@ -39,7 +40,7 @@ namespace GOTHAM
 
 
         // Convert to human readable banswidth
-        static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+        static readonly string[] SizeSuffixes = { "bytes", "Kb", "Mb", "Gb", "Tb", "Pb", "Eb", "Zb", "Yb" };
         public string BWSuffix(double value)
         {
             if (value < 0) { return "-" + BWSuffix(-value); }
