@@ -49,7 +49,7 @@ namespace GOTHAM.Model
       else if (MachineName.Equals("PER-ARNE-PC"))
       {
         sqlConfig = configuration["mysql"]["per"];
-        log.Error("Using SQL Configuration: Per");
+        log.Info("Using SQL Configuration: Per");
       }
       else
       {
