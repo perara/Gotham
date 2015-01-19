@@ -5,18 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentNHibernate.Mapping;
 
-namespace GOTHAM.Gotham.Application.Model
+namespace GOTHAM.Model
 {
-  class TierEntityMap : ClassMap<TierEntity>
+  public class HostEntityMap : ClassMap<HostEntity>
   {
 
-    public TierEntityMap()
+    public HostEntityMap()
     {
-      Table("tier");
+      Table("host");
       Id(x => x.id).GeneratedBy.Identity();
-      Map(x => x.name);
-    }
+      Map(x => x.machineName);
+      Map(x => x.online);
+      References(x => x.owner);
 
+    }
 
 
   }

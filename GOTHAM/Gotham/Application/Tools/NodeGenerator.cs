@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GOTHAM.Gotham.Application.Model;
+using GOTHAM.Model;
+using GOTHAM.Gotham.Tests.Tools;
 
 namespace GOTHAM.Gotham.Application.Tools
 {
@@ -11,35 +12,40 @@ namespace GOTHAM.Gotham.Application.Tools
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        // Generates random numbers for bandwidth
         static Random rnd = new Random();
-        
 
-        public void GenerateNodes(int tier2, int tier3)
+        // Set the minimum and maximum amount of bandwidth a tier 3 node can have
+        static double childMinBW = 0.01;
+        static double childMaxBW = 0.2;
+
+        public void GenerateNodes(int siblings, long totBandwidth)
         {
             var nodes = new List<NodeEntity>();
             //var cables = new List<CableEntity>();
 
             // Generate Tier 2 Nodes
-            for (int i = 0; i < tier2; i++)
+            for (int i = 0; i < siblings; i++)
             {
 
                 // Create a tier 2 Node
-                NodeEntity node = NewNode(2);
+                NodeEntity node = NewNode(new TierEntity() { id = 2 });
                 node.cables = new List<CableEntity>();
-                node.bandwidth = 100000;
+                node.bandwidth = totBandwidth;
                 nodes.Add(node);
 
-                int bwCounter = 0;
+                long bwCounter = 0;
 
                 // Check if total child bandwidth exeedes parent bandwidth
                 while (bwCounter < node.bandwidth)
                 {
                     // Make bandwidth cap for child and add to BW counter
-                    var bwCap = rnd.Next((int)(node.bandwidth * 0.2));
+                    var bwCap = LongRandom.Next((long)(node.bandwidth * childMinBW), (long)(node.bandwidth * childMaxBW));
+                    bwCap = (bwCap + 50) / 1000 * 1000;
                     bwCounter += bwCap;
 
                     // Create new Tier 3 Node
-                    var childNode = NewNode(3);
+                    var childNode = NewNode(new TierEntity() { id = 3 });
                     childNode.cables = new List<CableEntity>();
 
                     // Add ChildNode to parentNode
@@ -47,7 +53,6 @@ namespace GOTHAM.Gotham.Application.Tools
 
                     // Add a new Cable Beetwen nodes
                     var cable = NewCable(node, childNode, bwCap);
-                    //cables.Add(cable);
 
                 } // Tier 3 End
             } // Tier 2 End
@@ -59,14 +64,13 @@ namespace GOTHAM.Gotham.Application.Tools
                 var nodeBandwidth = node.bandwidth;
 
                 log.Info("\n");
-                log.Info(node.geoPosX + " - " + node.geoPosY + " - Pri: " + node.priority + " Bandwidth: " + node.bandwidth);
-
+                log.Info(node.latitude + " - " + node.longditude + " - Pri: " + node.priority + " Bandwidth: " + Globals.GetInstance().BWSuffix(node.bandwidth));
 
                 // Iterate through each of the Tier 3 siblings
                 foreach (var sibling in node.siblings)
                 {
                     var siblBandwidth = node.cables.FirstOrDefault(x => x.node2 == sibling).bandwidth;
-                    log.Info("\t" + sibling.geoPosX + " - " + sibling.geoPosY + " - Pri: " + sibling.priority + " Cable Cap: " + siblBandwidth);
+                    log.Info("\t" + sibling.latitude + " - " + sibling.longditude + " - Pri: " + sibling.priority + " Cable Cap: " + Globals.GetInstance().BWSuffix(siblBandwidth));
                     nodeBandwidth -= siblBandwidth;
                 }
                 log.Info("Bandwidth remaining: " + nodeBandwidth);
@@ -75,12 +79,12 @@ namespace GOTHAM.Gotham.Application.Tools
 
         // Make new node
         // TODO Get relevant data
-        private static NodeEntity NewNode(int tier)
+        private static NodeEntity NewNode(TierEntity tier)
         {
             var node = new NodeEntity();
 
-            node.geoPosX = rnd.Next(Globals.GetInstance().mapMax.X);
-            node.geoPosY = rnd.Next(Globals.GetInstance().mapMax.Y);
+            node.latitude = rnd.Next(Globals.GetInstance().mapMax.X);
+            node.longditude = rnd.Next(Globals.GetInstance().mapMax.Y);
             node.name = "Flette";
             node.priority = rnd.Next(10);
             node.tier = tier;
@@ -91,7 +95,7 @@ namespace GOTHAM.Gotham.Application.Tools
 
         // Make new cables
         // TODO Get relevant data
-        private static CableEntity NewCable(NodeEntity node1, NodeEntity node2, int bandwidth)
+        private static CableEntity NewCable(NodeEntity node1, NodeEntity node2, long bandwidth)
         {
             var cable = new CableEntity();
 
@@ -100,7 +104,7 @@ namespace GOTHAM.Gotham.Application.Tools
             cable.bandwidth = bandwidth;
             //cable.priority = 1;
             cable.quality = 2;
-            cable.type = 4;
+            cable.type = new CableTypeEntity() { id = 0 };
 
             // Refference this cable in each node
             node1.cables.Add(cable);

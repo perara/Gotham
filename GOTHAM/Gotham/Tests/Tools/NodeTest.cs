@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentNHibernate.MappingModel.Output.Sorting;
 using GOTHAM.Gotham.Application;
-using GOTHAM.Gotham.Application.Model;
 using NHibernate.Criterion;
 using NUnit.Framework;
+using GOTHAM.Model;
 
 namespace GOTHAM.Gotham.Tests.Tools
 {

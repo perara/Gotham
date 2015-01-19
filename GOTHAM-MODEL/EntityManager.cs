@@ -10,15 +10,12 @@ using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Data;
 using FluentNHibernate.Mapping;
 using FluentNHibernate.Mapping.Providers;
-using GOTHAM.Gotham.Application.Model;
-using IronPython.Runtime.Exceptions;
-using Microsoft.Scripting.Utils;
 using Newtonsoft.Json.Linq;
 using NHibernate;
 
-namespace GOTHAM.Gotham.Application
+namespace GOTHAM.Model
 {
-  class EntityManager
+ public class EntityManager
   {
     private static readonly log4net.ILog log = log4net.LogManager.GetLogger
     (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -39,7 +36,7 @@ namespace GOTHAM.Gotham.Application
     private void InitializeSessionFactory()
     {
 
-      JObject configuration = JObject.Parse(File.ReadAllText(@"Configuration.json"));
+      JObject configuration = JObject.Parse(File.ReadAllText("./Configuration.json"));
       JToken sqlConfig;
 
       // Determine which Configuration file to use
@@ -56,7 +53,8 @@ namespace GOTHAM.Gotham.Application
       }
       else
       {
-        throw new RuntimeException("There is no configurationfile for this host");
+          throw new Exception("There is no configurationfile for this host");
+       
       }
 
 
@@ -70,8 +68,8 @@ namespace GOTHAM.Gotham.Application
             .Password(sqlConfig["password"].ToString())
           ))
            .Mappings(m =>
-            m.FluentMappings.AddFromAssemblyOf<NodeEntity>())
-            //m.FluentMappings.AddFromNamespaceOf<NodeEntity>())
+           
+            m.FluentMappings.AddFromNamespaceOf<NodeEntity>())
       .BuildSessionFactory();
     }
 

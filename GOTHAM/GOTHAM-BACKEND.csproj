@@ -100,21 +100,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Globals.cs" />
-    <Compile Include="Gotham\Application\EntityManager.cs" />
-    <Compile Include="Gotham\Application\Model\CableEntityMap.cs" />
-    <Compile Include="Gotham\Application\Model\CableEntity.cs" />
-    <Compile Include="Gotham\Application\Model\HostEntity.cs" />
-    <Compile Include="Gotham\Application\Model\HostEntityMap.cs" />
-    <Compile Include="Gotham\Application\Model\NodeEntity.cs" />
-    <Compile Include="Gotham\Application\Model\NodeEntityMap.cs" />
-    <Compile Include="Gotham\Application\Model\PersonEntity.cs" />
-    <Compile Include="Gotham\Application\Model\PersonEntityMap.cs" />
-    <Compile Include="Gotham\Application\Model\TierEntity.cs" />
-    <Compile Include="Gotham\Application\Model\TierEntityMap.cs" />
     <Compile Include="Gotham\Application\Tools\NodeGenerator.cs" />
     <Compile Include="Gotham\Tests\Tools\HTTPRequestTest.cs" />
     <Compile Include="Gotham\Application\Tools\FakeNameGenerator\FakeNameGenerator.cs" />
     <Compile Include="Gotham\Application\Tools\HTTPRequest.cs" />
+    <Compile Include="Gotham\Tests\Tools\LongRandom.cs" />
     <Compile Include="Gotham\Tests\Tools\NodeTest.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />
@@ -122,10 +112,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Configuration.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GOTHAM-MODEL\GOTHAM-MODEL.csproj">
+      <Project>{d8fab9bf-89e8-41a6-88d9-003735fe2a18}</Project>
+      <Name>GOTHAM-MODEL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
