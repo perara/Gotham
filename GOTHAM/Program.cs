@@ -1,25 +1,31 @@
 ﻿using System;
 using GOTHAM.Gotham.Application.Tools;
-using GOTHAM.Gotham.Application;
 using GOTHAM.Model;
-using System.Collections.Generic;
-using GOTHAM.Model;
+using GOTHAM.Gotham.API;
 
 namespace GOTHAM
 {
   class Program
   {
-
+    private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
     static void Main(string[] args)
     {
+      //
+      // LOG4NET configuration
+      //
       log4net.Config.XmlConfigurator.Configure();
 
+      //
+      // ServiceStack API Server
+      //
+      ServiceStackConsoleHost.Start();
+     
 
-      // EntityManager.GetSessionFactory().Close();
-      // http://www.fakenamegenerator.com/advanced.php?t=country&n%5B%5D=us&c%5B%5D=sw&gen=50&age-min=19&age-max=40
-      Console.WriteLine("Welcome");
+
+
+
       using (var session = EntityManager.GetSessionFactory().OpenSession())
       {
         var nodses = session.CreateCriteria<NodeEntity>()
