@@ -7,13 +7,13 @@ namespace GOTHAM.Model
 
     public CableTypeEntityMap()
     {
-        Table("cable_type");
+      Table("cable_type");
       Id(x => x.id).GeneratedBy.Identity();
       Map(x => x.name);
 
 
     }
-   
+
 
   }
 }
