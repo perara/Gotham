@@ -36,22 +36,24 @@ namespace GOTHAM_BACKEND_DEBUG
 
             IList<NodeEntity> nodes = null;
             IList<CableEntity> cables = null;
+            IList<LocationEntity> locations = null;
             
             using (var session = EntityManager.GetSessionFactory().OpenSession())
             {
-             
-                    nodes = session.CreateCriteria<NodeEntity>().List<NodeEntity>();
-                    cables = session.CreateCriteria<CableEntity>().List<CableEntity>();
+
+                locations = session.CreateCriteria<LocationEntity>().List<LocationEntity>();
+                    //nodes = session.CreateCriteria<NodeEntity>().List<NodeEntity>();
+                    //cables = session.CreateCriteria<CableEntity>().List<CableEntity>();
 
             }
             
-            foreach(NodeEntity node in nodes)
+            foreach(LocationEntity location in locations)
             {
-                var marker = new GMarkerGoogle(new PointLatLng(node.latitude, node.longditude), GMarkerGoogleType.green);
+                var marker = new GMarkerGoogle(new PointLatLng(location.latitude, location.longitude), GMarkerGoogleType.green);
                 var tt = new GMapToolTip(marker);
                 
                 markersOverlay.Markers.Add(marker);
-                marker.ToolTipText = node.id.ToString();
+                marker.ToolTipText = location.id.ToString();
 
             }
 
@@ -59,8 +61,8 @@ namespace GOTHAM_BACKEND_DEBUG
             foreach (CableEntity cable in cables)
             {
                 
-                var point = new PointLatLng(cable.node1.latitude, cable.node1.longditude);
-                var point2 = new PointLatLng(cable.node2.latitude, cable.node2.longditude);
+                var point = new PointLatLng(cable.node1.latitude, cable.node1.longitude);
+                var point2 = new PointLatLng(cable.node2.latitude, cable.node2.longitude);
 
                 List<PointLatLng> points = new List<PointLatLng>();
                 points.Add(point);

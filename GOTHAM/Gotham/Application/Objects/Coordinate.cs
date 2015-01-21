@@ -33,14 +33,14 @@ namespace GOTHAM.Gotham.Application.Tools
         public class LatLngCoordinate : BaseCoordinate
         {
             public double latitude { get; set; }
-            public double longditude { get; set; }
+            public double longitude { get; set; }
 
             public LatLngCoordinate() { }
 
             public LatLngCoordinate(double lat, double lng)
             {
                 this.latitude = lat;
-                this.longditude = lng;
+                this.longitude = lng;
             }
 
             public PolarCoordinate toPolar()
@@ -49,9 +49,9 @@ namespace GOTHAM.Gotham.Application.Tools
                 double latMin = 60 * (latitude - latDeg);
                 double latSec = 3600 * (latitude - latDeg - latMin / 60);
 
-                double lngDeg = longditude;
-                double lngMin = 60 * (longditude - lngDeg);
-                double lngSec = 3600 * (longditude - lngDeg - lngMin / 60);
+                double lngDeg = longitude;
+                double lngMin = 60 * (longitude - lngDeg);
+                double lngSec = 3600 * (longitude - lngDeg - lngMin / 60);
 
                 return new PolarCoordinate(latDeg, (int)latMin, (int)latSec, lngDeg, (int)lngMin, (int)lngSec);
             }

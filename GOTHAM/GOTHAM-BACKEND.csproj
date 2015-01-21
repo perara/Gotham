@@ -122,12 +122,12 @@
     <Compile Include="Gotham\API\AppHost.cs" />
     <Compile Include="Gotham\API\Resources\HelloResource.cs" />
     <Compile Include="Gotham\API\ServiceStackConsoleHost.cs" />
+    <Compile Include="Gotham\Application\Objects\Coordinate.cs" />
+    <Compile Include="Gotham\Application\Tools\LongRandom.cs" />
     <Compile Include="Gotham\Application\Tools\NodeGenerator.cs" />
-    <Compile Include="Gotham\Tests\Tools\HTTPRequestTest.cs" />
     <Compile Include="Gotham\Application\Tools\FakeNameGenerator\FakeNameGenerator.cs" />
     <Compile Include="Gotham\Application\Tools\HTTPRequest.cs" />
-    <Compile Include="Gotham\Tests\Tools\LongRandom.cs" />
-    <Compile Include="Gotham\Tests\Tools\NodeTest.cs" />
+    <Compile Include="Gotham\Application\Tools\TxtParse.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -15,7 +15,7 @@ namespace GOTHAM.Model
       public virtual int priority { get; set; }
       public virtual long bandwidth { get; set; }
       public virtual double latitude { get; set; }
-      public virtual double longditude { get; set; }
+      public virtual double longitude { get; set; }
 
 
       /// <summary>

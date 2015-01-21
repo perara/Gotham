@@ -17,6 +17,14 @@
             "password": "%123zombies%"
         },
 
+		"local": {
+            "host": "localhost",
+            "port": 3306,
+            "database": "gotham",
+            "username": "root",
+            "password": "",
+        },
+
         "production": {
             "host": "hybel.keel.no",
             "port": 3306,

@@ -43,7 +43,7 @@ namespace GOTHAM.Model
       var MachineName = Environment.MachineName;
       if (MachineName.Equals("GRAV"))
       {
-        sqlConfig = configuration["mysql"]["paul"];
+        sqlConfig = configuration["mysql"]["local"];
         log.Info("Using SQL Configuration: Paul");
       }
       else if (MachineName.Equals("PER-ARNE-PC"))

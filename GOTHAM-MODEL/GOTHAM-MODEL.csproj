@@ -7,7 +7,7 @@
     <ProjectGuid>{D8FAB9BF-89E8-41A6-88D9-003735FE2A18}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GOTHAM_MODEL</RootNamespace>
+    <RootNamespace>GOTHAM</RootNamespace>
     <AssemblyName>GOTHAM-MODEL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -63,6 +63,8 @@
     <Compile Include="Model\CableTypeEntityMap.cs" />
     <Compile Include="Model\HostEntity.cs" />
     <Compile Include="Model\HostEntityMap.cs" />
+    <Compile Include="Model\LocationEntity.cs" />
+    <Compile Include="Model\LocationEntityMap.cs" />
     <Compile Include="Model\NodeEntity.cs" />
     <Compile Include="Model\NodeEntityMap.cs" />
     <Compile Include="Model\PersonEntity.cs" />

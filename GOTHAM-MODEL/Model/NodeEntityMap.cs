@@ -18,7 +18,7 @@ namespace GOTHAM.Model
       Map(x => x.name);
       Map(x => x.bandwidth);
       Map(x => x.latitude);
-      Map(x => x.longditude);
+      Map(x => x.longitude);
       HasOne(x => x.tier);
       HasMany(x => x.siblings)
            .KeyColumn("id")
@@ -31,7 +31,5 @@ namespace GOTHAM.Model
       */
 
     }
-
-
   }
 }
