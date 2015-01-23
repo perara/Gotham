@@ -13,22 +13,26 @@ namespace GOTHAM.Model
     public NodeEntityMap()
     {
       Table("node");
-
-      Id(x => x.id).GeneratedBy.Identity();
-      Map(x => x.name);
-      Map(x => x.bandwidth);
-      Map(x => x.latitude);
-      Map(x => x.longitude);
+      
+      Id(x => x.id).Column("id").GeneratedBy.Identity();
+      Map(x => x.name).Not.Nullable();
+      Map(x => x.bandwidth).Not.Nullable();
+      Map(x => x.latitude).Not.Nullable();
+      Map(x => x.longitude).Not.Nullable();
+      Map(x => x.tierId).Column("tier").Not.Nullable();
       HasOne(x => x.tier);
       HasMany(x => x.siblings)
-           .KeyColumn("id")
-           .Inverse()
-           .Cascade
-           .AllDeleteOrphan();
-      /*HasManyToMany(x => x.cables)
-         .Cascade.All()
-         .Table("cable");
-      */
+         .KeyColumn("id")
+         .Inverse()
+         .Cascade
+         .AllDeleteOrphan().Not.LazyLoad();
+      HasManyToMany(x => x.cables)
+         .Table("cable")
+         .ParentKeyColumn("node_1")
+         .ChildKeyColumn("node_2")
+         .Cascade.All();
+
+      
 
     }
   }

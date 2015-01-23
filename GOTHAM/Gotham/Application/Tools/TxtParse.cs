@@ -6,12 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GOTHAM.Model;
+using GOTHAM.Tools;
 
 namespace GOTHAM.Gotham.Application.Tools
 {
     public class TxtParse
     {
-        public static List<LocationEntity> FromFile(string path)
+
+        public static List<LocationEntity> FromFile1(string path)
         {
             
             // Read files to string-list and make empty locaions list
@@ -36,5 +38,29 @@ namespace GOTHAM.Gotham.Application.Tools
 
             return locations;
         }
+        public static List<LocationEntity> FromFile2(string path)
+        {
+
+            // Read files to string-list and make empty locaions list
+            var file = File.ReadAllLines(path, Encoding.Default);
+            var lines = new List<string>(file);
+            var locations = new List<LocationEntity>();
+
+            foreach (var line in lines)
+            {
+                var location = new LocationEntity();
+                var l = line.Split(',');
+                var coord = Coordinate.newLatLng(
+                    double.Parse(l[1], CultureInfo.InvariantCulture),
+                    double.Parse(l[2], CultureInfo.InvariantCulture));
+                
+                location.name = l[0];
+                location.latitude = coord.latitude;
+                location.longitude = coord.longitude;
+                locations.Add(location);
+            }
+            return locations;
+        }
+
     }
 }

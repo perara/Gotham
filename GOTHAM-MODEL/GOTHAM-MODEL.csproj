@@ -56,11 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityManager.cs" />
+    <Compile Include="Tools\EntityManager.cs" />
     <Compile Include="Model\CableEntity.cs" />
     <Compile Include="Model\CableEntityMap.cs" />
     <Compile Include="Model\CableTypeEntity.cs" />
     <Compile Include="Model\CableTypeEntityMap.cs" />
+    <Compile Include="Tools\DBTool.cs" />
     <Compile Include="Model\HostEntity.cs" />
     <Compile Include="Model\HostEntityMap.cs" />
     <Compile Include="Model\LocationEntity.cs" />
@@ -74,10 +75,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Configuration.json">
+    <None Include="Tools\Configuration.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GOTHAM-TOOLS\GOTHAM-TOOLS.csproj">
+      <Project>{3ed49688-b315-4a49-8eac-eb66e52af78d}</Project>
+      <Name>GOTHAM-TOOLS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

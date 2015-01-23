@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using GOTHAM.Tools;
 
 namespace GOTHAM.Gotham.Tests.Tools
 {
@@ -20,7 +21,7 @@ namespace GOTHAM.Gotham.Tests.Tools
             // Response with "Created" http://postcatcher.in/catchers/54b146db2310af02000014fc
 
             // Test POST Request
-            String postTest = new Gotham.Tools.HTTPRequest()
+            String postTest = new HTTPRequest()
             .POST()
             .setURL("http://postcatcher.in/catchers/54b146db2310af02000014fc")
             .addPostData("test", "lol")
@@ -35,7 +36,7 @@ namespace GOTHAM.Gotham.Tests.Tools
             // Response with IP
 
             // Test GET Request
-            String getTest = new Gotham.Tools.HTTPRequest()
+            String getTest = new HTTPRequest()
               .GET()
               .setURL("http://ip.jsontest.com/")
               .execute();

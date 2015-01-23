@@ -8,22 +8,25 @@ using NHibernate.Mapping;
 
 namespace GOTHAM.Model
 {
-  public class CableEntityMap : ClassMap<CableEntity>
-  {
-
-    public CableEntityMap()
+    public class CableEntityMap : ClassMap<CableEntity>
     {
-      Table("cable");
-      Id(x => x.id).GeneratedBy.Identity();
-      References(x => x.node1, "id").Column("node_1");
-      References(x => x.node2, "id").Column("node_2");
-      Map(x => x.priority);
-      Map(x => x.bandwidth);
-      Map(x => x.quality);
-      References(x => x.type, "id"); 
-      // TODO map rest
+
+        public CableEntityMap()
+        {
+            Table("cable");
+
+            Id(x => x.id).GeneratedBy.Identity();
+            References(x => x.node1, "id").Column("node_1").ForeignKey("Id").Not.Nullable().Fetch.Join();
+            References(x => x.node2, "id").Column("node_2").ForeignKey("Id").Not.Nullable().Fetch.Join();
+            Map(x => x.priority);
+            Map(x => x.bandwidth);
+            Map(x => x.quality);
+            References(x => x.type, "id").ReadOnly().Not.Nullable();
+            // TODO map rest
+
+            //References(x => x.node1).Column("id").ForeignKey("Id");
+            //References(x => x.node2).Column("id").ForeignKey("Id").Fetch.Join();
+        }
 
     }
-
-  }
 }

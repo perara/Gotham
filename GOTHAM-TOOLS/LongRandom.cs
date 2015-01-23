@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM.Gotham.Tests.Tools
+namespace GOTHAM.Tools
 {
-    class LongRandom
+    public class LongRandom
     {
         static Random rand = new Random();
         public static long Next(long min, long max)

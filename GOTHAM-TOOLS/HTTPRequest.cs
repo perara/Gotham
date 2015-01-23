@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
-using System.Net.Http;
 using System.Text;
-using Community.CsharpSqlite;
-using IronPython.Runtime.Exceptions;
 
-namespace GOTHAM.Gotham.Tools
+namespace GOTHAM.Tools
 {
   public  class HTTPRequest
   {

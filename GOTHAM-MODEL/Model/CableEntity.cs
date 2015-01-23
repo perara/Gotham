@@ -11,6 +11,7 @@ namespace GOTHAM.Model
         public virtual NodeEntity node2 { get; set; }
         public virtual int priority { get; set; }
         public virtual long bandwidth { get; set; }
+        public virtual double length { get; set; }
         public virtual CableTypeEntity type { get; set; }
         public virtual double quality { get; set; }
     }

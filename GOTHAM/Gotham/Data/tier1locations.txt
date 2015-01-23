@@ -1,0 +1,7 @@
+Level 3 Communications,59.332604,18.060420
+TeliaSonera International Carrier,59.245538,18.101874
+Centurylink,30.824900,-92.262124
+Vodafone,51.518602,-0.223478
+Verizon,34.764327,-92.302199
+Sprint,32.854807,-96.931197
+AT&T,40.672372,-74.635581
