@@ -27,7 +27,7 @@ namespace GOTHAM.Gotham.Application.Tools
 
             node.latitude = rnd.Next(Globals.GetInstance().mapMax.X);
             node.longitude = rnd.Next(Globals.GetInstance().mapMax.Y);
-            node.name = "Flette";
+            node.country = "Flette";
             node.priority = rnd.Next(10);
             node.tier = tier;
             node.siblings = new List<NodeEntity>();
@@ -87,7 +87,7 @@ namespace GOTHAM.Gotham.Application.Tools
                 // Iterate through each of the Tier 3 siblings
                 foreach (var sibling in node.siblings)
                 {
-                    var siblBandwidth = node.cables.FirstOrDefault(x => x.node2 == sibling).bandwidth;
+                    var siblBandwidth = node.cables.FirstOrDefault(x => x.nodes[0] == sibling).capacity;
                     log.Info("\t" + sibling.latitude + " - " + sibling.longitude + " - Pri: " + sibling.priority + " Cable Cap: " + Globals.GetInstance().BWSuffix(siblBandwidth));
                     nodeBandwidth -= siblBandwidth;
                 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentNHibernate.Mapping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,23 @@ using System.Threading.Tasks;
 
 namespace GOTHAM.Model
 {
-    public class TierEntity
+    public class TierEntity : BaseEntity
+    {
+        public virtual string name { get; set; }
+
+    }
+
+    public class TierEntityMap : ClassMap<TierEntity>
     {
 
-        public virtual int id { get; set; }
-        public virtual string name { get; set; }
+        public TierEntityMap()
+        {
+            Table("tier");
+            Id(x => x.id).GeneratedBy.Identity();
+            Map(x => x.name).ReadOnly();
+        }
+
+
 
     }
 }

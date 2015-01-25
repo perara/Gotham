@@ -56,22 +56,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\BaseEntity.cs" />
+    <Compile Include="Model\CablePartEntity.cs" />
     <Compile Include="Tools\EntityManager.cs" />
     <Compile Include="Model\CableEntity.cs" />
-    <Compile Include="Model\CableEntityMap.cs" />
     <Compile Include="Model\CableTypeEntity.cs" />
-    <Compile Include="Model\CableTypeEntityMap.cs" />
     <Compile Include="Tools\DBTool.cs" />
     <Compile Include="Model\HostEntity.cs" />
-    <Compile Include="Model\HostEntityMap.cs" />
     <Compile Include="Model\LocationEntity.cs" />
-    <Compile Include="Model\LocationEntityMap.cs" />
     <Compile Include="Model\NodeEntity.cs" />
-    <Compile Include="Model\NodeEntityMap.cs" />
     <Compile Include="Model\PersonEntity.cs" />
-    <Compile Include="Model\PersonEntityMap.cs" />
     <Compile Include="Model\TierEntity.cs" />
-    <Compile Include="Model\TierEntityMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

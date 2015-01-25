@@ -12,14 +12,8 @@ namespace GOTHAM.Model.Tools
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // Store multiple entities to database
-        public static void WriteList(IList<object> input, int batchSize = 20)
+        public static void WriteList(List<BaseEntity> input, int batchSize = 20)
         {
-            // Check if input is valid
-            if (input[0].GetType().Namespace != "GOTHAM.Model")
-            {
-                return;
-            }
-
             // Open up a transaction and stores data to database 
             using (var session = EntityManager.GetSessionFactory().OpenSession())
             {
@@ -27,8 +21,6 @@ namespace GOTHAM.Model.Tools
                 {
                     for (int i = 0; i < input.Count; i++)
                     {
-
-
                         session.Save(input[i]);
                         if (i % batchSize == 0)
                         {
@@ -50,7 +42,7 @@ namespace GOTHAM.Model.Tools
 
 
         // Store single entity to database
-        public static void Write(object input)
+        public static void Write(BaseEntity input)
         {
 
             // Check if input is valid

@@ -46,9 +46,9 @@ namespace GOTHAM.Gotham.Application.Tools
             var cable = new CableEntity();
             var type = new CableTypeEntity() { id = 0 };
 
-            cable.node1 = current;
-            cable.node2 = closenode;
-            cable.length = closest;
+            //cable.Node1 = current;
+            //cable.Node2 = closenode;
+            cable.distance = closest;
             cable.type = type;
             cables.Add(cable);
             current.siblings.Add(closenode);
@@ -62,11 +62,9 @@ namespace GOTHAM.Gotham.Application.Tools
         {
             var cable = new CableEntity();
 
-            cable.node1 = node1;
-            cable.node2 = node2;
-            cable.bandwidth = bandwidth;
-            //cable.priority = 1;
-            cable.quality = 2;
+            //cable.Node1 = node1;
+            //cable.Node2 = node2;
+            cable.capacity = bandwidth;
             cable.type = new CableTypeEntity() { id = 0 };
 
             // Refference this cable in each node
