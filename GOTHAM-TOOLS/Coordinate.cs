@@ -4,46 +4,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM.Gotham.Application.Tools
+namespace GOTHAM.Tools
 {
     public class Coordinate
     {
 
-        public static LatLngCoordinate newLatLng()
+        public static LatLng newLatLng()
         {
-            return new LatLngCoordinate();
+            return new LatLng();
         }
-        public static LatLngCoordinate newLatLng(double lat, double lng)
+        public static LatLng newLatLng(double lat, double lng)
         {
-            return new LatLngCoordinate(lat, lng);
-        }
-
-
-        public static PolarCoordinate newPolar()
-        {
-            return new PolarCoordinate();
-        }
-        public static PolarCoordinate newPolar(int latDeg, int latMin, int latSec, int lngDeg, int lngMin, int lngSec)
-        {
-            return new PolarCoordinate(latDeg, latMin, latSec, lngDeg, lngMin, lngSec);
+            return new LatLng(lat, lng);
         }
 
 
+        public static Polar newPolar()
+        {
+            return new Polar();
+        }
+        public static Polar newPolar(int latDeg, int latMin, int latSec, int lngDeg, int lngMin, int lngSec)
+        {
+            return new Polar(latDeg, latMin, latSec, lngDeg, lngMin, lngSec);
+        }
 
-        public class LatLngCoordinate : BaseCoordinate
+        
+
+        public class LatLng : BaseCoordinate
         {
             public double latitude { get; set; }
             public double longitude { get; set; }
 
-            public LatLngCoordinate() { }
+            public LatLng() { }
 
-            public LatLngCoordinate(double lat, double lng)
+            public LatLng(double lat, double lng)
             {
                 this.latitude = lat;
                 this.longitude = lng;
             }
 
-            public PolarCoordinate toPolar()
+            public Polar toPolar()
             {
                 double latDeg = latitude;
                 double latMin = 60 * (latitude - latDeg);
@@ -53,12 +53,18 @@ namespace GOTHAM.Gotham.Application.Tools
                 double lngMin = 60 * (longitude - lngDeg);
                 double lngSec = 3600 * (longitude - lngDeg - lngMin / 60);
 
-                return new PolarCoordinate(latDeg, (int)latMin, (int)latSec, lngDeg, (int)lngMin, (int)lngSec);
+                return new Polar(latDeg, (int)latMin, (int)latSec, lngDeg, (int)lngMin, (int)lngSec);
             }
 
             public override object convert()
             {
                 return toPolar();
+            }
+            public LatLng ToRadians()
+            {
+                var lat = (Math.PI / 180) * this.latitude;
+                var lng = (Math.PI / 180) * this.longitude;
+                return new LatLng(lat, lng);
             }
         }
 
@@ -73,7 +79,7 @@ namespace GOTHAM.Gotham.Application.Tools
 
         }
 
-        public class PolarCoordinate : BaseCoordinate
+        public class Polar : BaseCoordinate
         {
             public double LngDeg { get; set; }
             public int LngMin { get; set; }
@@ -82,8 +88,8 @@ namespace GOTHAM.Gotham.Application.Tools
             public int LatMin { get; set; }
             public int LatSec { get; set; }
 
-            public PolarCoordinate() { }
-            public PolarCoordinate(double latDeg, int latMin, int latSec, double lngDeg, int lngMin, int lngSec)
+            public Polar() { }
+            public Polar(double latDeg, int latMin, int latSec, double lngDeg, int lngMin, int lngSec)
             {
                 this.LngDeg = lngDeg;
                 this.LngMin = lngMin;
@@ -93,11 +99,11 @@ namespace GOTHAM.Gotham.Application.Tools
                 this.LatSec = latSec;
             }
 
-            public LatLngCoordinate toLatLng()
+            public LatLng toLatLng()
             {
                 double Lat = (LatDeg) + (LatMin) / 60 + (LatSec) / 3600;
                 double Lng = (LngDeg) + (LngMin) / 60 + (LngSec) / 3600;
-                return new LatLngCoordinate(Lat, Lng);
+                return new LatLng(Lat, Lng);
             }
 
             public override object convert()

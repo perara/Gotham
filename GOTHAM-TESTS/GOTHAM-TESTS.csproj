@@ -85,6 +85,10 @@
       <Project>{d8fab9bf-89e8-41a6-88d9-003735fe2a18}</Project>
       <Name>GOTHAM-MODEL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GOTHAM-TOOLS\GOTHAM-TOOLS.csproj">
+      <Project>{3ed49688-b315-4a49-8eac-eb66e52af78d}</Project>
+      <Name>GOTHAM-TOOLS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GOTHAM\GOTHAM-BACKEND.csproj">
       <Project>{aac33a71-c897-4012-a49d-e1c82a68d242}</Project>
       <Name>GOTHAM-BACKEND</Name>

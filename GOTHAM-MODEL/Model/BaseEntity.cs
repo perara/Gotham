@@ -4,17 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM.FakeNameGenerator
+namespace GOTHAM.Model
 {
-  class FakeNameGenerator
-  {
-
-    public FakeNameGenerator()
+    public class BaseEntity
     {
-
-
+        public virtual int id { get; set; }
     }
-
-
-  }
 }

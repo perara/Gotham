@@ -122,11 +122,8 @@
     <Compile Include="Gotham\API\AppHost.cs" />
     <Compile Include="Gotham\API\Resources\HelloResource.cs" />
     <Compile Include="Gotham\API\ServiceStackConsoleHost.cs" />
-    <Compile Include="Gotham\Application\Objects\Coordinate.cs" />
-    <Compile Include="Gotham\Application\Tools\LongRandom.cs" />
+    <Compile Include="Gotham\Application\Tools\CableGenerator.cs" />
     <Compile Include="Gotham\Application\Tools\NodeGenerator.cs" />
-    <Compile Include="Gotham\Application\Tools\FakeNameGenerator\FakeNameGenerator.cs" />
-    <Compile Include="Gotham\Application\Tools\HTTPRequest.cs" />
     <Compile Include="Gotham\Application\Tools\TxtParse.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />
@@ -140,6 +137,10 @@
     <ProjectReference Include="..\GOTHAM-MODEL\GOTHAM-MODEL.csproj">
       <Project>{d8fab9bf-89e8-41a6-88d9-003735fe2a18}</Project>
       <Name>GOTHAM-MODEL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GOTHAM-TOOLS\GOTHAM-TOOLS.csproj">
+      <Project>{3ed49688-b315-4a49-8eac-eb66e52af78d}</Project>
+      <Name>GOTHAM-TOOLS</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

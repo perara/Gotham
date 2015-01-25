@@ -13,7 +13,7 @@ using FluentNHibernate.Mapping.Providers;
 using Newtonsoft.Json.Linq;
 using NHibernate;
 
-namespace GOTHAM.Model
+namespace GOTHAM.Model.Tools
 {
  public class EntityManager
   {
@@ -36,7 +36,7 @@ namespace GOTHAM.Model
     private void InitializeSessionFactory()
     {
 
-      JObject configuration = JObject.Parse(File.ReadAllText("./Configuration.json"));
+      JObject configuration = JObject.Parse(File.ReadAllText("./Tools/Configuration.json"));
       JToken sqlConfig;
 
       // Determine which Configuration file to use
@@ -68,7 +68,6 @@ namespace GOTHAM.Model
             .Password(sqlConfig["password"].ToString())
           ))
            .Mappings(m =>
-           
             m.FluentMappings.AddFromNamespaceOf<NodeEntity>())
       .BuildSessionFactory();
     }

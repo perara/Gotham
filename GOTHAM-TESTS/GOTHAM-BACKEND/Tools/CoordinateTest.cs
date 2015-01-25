@@ -1,4 +1,5 @@
 ﻿using GOTHAM.Gotham.Application.Tools;
+using GOTHAM.Tools;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -19,14 +20,14 @@ namespace GOTHAM.Gotham.Tests.Tools
         public void TEST_CheckCoordinatePrecision()
         {
 
-            GOTHAM.Gotham.Application.Tools.Coordinate.BaseCoordinate coord = Coordinate.newLatLng(startLat, startLng);
+            Coordinate.BaseCoordinate coord = Coordinate.newLatLng(startLat, startLng);
             for (int i = 0; i < 1000; i++)
             {
-                coord = (GOTHAM.Gotham.Application.Tools.Coordinate.BaseCoordinate)coord.convert();
+                coord = (Coordinate.BaseCoordinate)coord.convert();
                 Console.WriteLine(coord.GetType());
             }
 
-            Coordinate.LatLngCoordinate endCoord = (Coordinate.LatLngCoordinate)coord;
+            Coordinate.LatLng endCoord = (Coordinate.LatLng)coord;
             double endLat = endCoord.latitude;
             double endLng = endCoord.longitude;
 

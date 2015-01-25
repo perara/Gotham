@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GOTHAM.Model;
-using GOTHAM.Gotham.Tests.Tools;
+using GOTHAM.Tools;
 
 namespace GOTHAM.Gotham.Application.Tools
 {
@@ -18,6 +18,24 @@ namespace GOTHAM.Gotham.Application.Tools
         // Set the minimum and maximum amount of bandwidth a tier 3 node can have
         static double childMinBW = 0.01;
         static double childMaxBW = 0.2;
+
+        // Make new node
+        // TODO Get relevant data
+        private static NodeEntity NewNode(TierEntity tier)
+        {
+            var node = new NodeEntity();
+
+            node.latitude = rnd.Next(Globals.GetInstance().mapMax.X);
+            node.longitude = rnd.Next(Globals.GetInstance().mapMax.Y);
+            node.country = "Flette";
+            node.priority = rnd.Next(10);
+            node.tier = tier;
+            node.siblings = new List<NodeEntity>();
+
+            return node;
+        }
+
+        
 
         public void GenerateNodes(int siblings, long totBandwidth)
         {
@@ -52,7 +70,7 @@ namespace GOTHAM.Gotham.Application.Tools
                     node.siblings.Add(childNode);
 
                     // Add a new Cable Beetwen nodes
-                    var cable = NewCable(node, childNode, bwCap);
+                    var cable = CableGenerator.NewCable(node, childNode, bwCap);
 
                 } // Tier 3 End
             } // Tier 2 End
@@ -69,48 +87,12 @@ namespace GOTHAM.Gotham.Application.Tools
                 // Iterate through each of the Tier 3 siblings
                 foreach (var sibling in node.siblings)
                 {
-                    var siblBandwidth = node.cables.FirstOrDefault(x => x.node2 == sibling).bandwidth;
+                    var siblBandwidth = node.cables.FirstOrDefault(x => x.nodes[0] == sibling).capacity;
                     log.Info("\t" + sibling.latitude + " - " + sibling.longitude + " - Pri: " + sibling.priority + " Cable Cap: " + Globals.GetInstance().BWSuffix(siblBandwidth));
                     nodeBandwidth -= siblBandwidth;
                 }
                 log.Info("Bandwidth remaining: " + nodeBandwidth);
             }
-        }
-
-        // Make new node
-        // TODO Get relevant data
-        private static NodeEntity NewNode(TierEntity tier)
-        {
-            var node = new NodeEntity();
-
-            node.latitude = rnd.Next(Globals.GetInstance().mapMax.X);
-            node.longitude = rnd.Next(Globals.GetInstance().mapMax.Y);
-            node.name = "Flette";
-            node.priority = rnd.Next(10);
-            node.tier = tier;
-            node.siblings = new List<NodeEntity>();
-
-            return node;
-        }
-
-        // Make new cables
-        // TODO Get relevant data
-        private static CableEntity NewCable(NodeEntity node1, NodeEntity node2, long bandwidth)
-        {
-            var cable = new CableEntity();
-
-            cable.node1 = node1;
-            cable.node2 = node2;
-            cable.bandwidth = bandwidth;
-            //cable.priority = 1;
-            cable.quality = 2;
-            cable.type = new CableTypeEntity() { id = 0 };
-
-            // Refference this cable in each node
-            node1.cables.Add(cable);
-            node2.cables.Add(cable);
-
-            return cable;
         }
     }
 }
