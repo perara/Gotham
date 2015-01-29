@@ -45,6 +45,7 @@ namespace GOTHAM.Model.Tools
         public static void Write(BaseEntity input)
         {
 
+            // TODO: Deprecated?
             // Check if input is valid
             if (input.GetType().Namespace != "GOTHAM.Model")
             {

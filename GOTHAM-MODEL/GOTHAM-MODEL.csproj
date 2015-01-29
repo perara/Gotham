@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Model\BaseEntity.cs" />
     <Compile Include="Model\CablePartEntity.cs" />
+    <Compile Include="Model\NodeCableEntity.cs" />
     <Compile Include="Tools\EntityManager.cs" />
     <Compile Include="Model\CableEntity.cs" />
     <Compile Include="Model\CableTypeEntity.cs" />

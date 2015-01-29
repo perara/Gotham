@@ -1,4 +1,5 @@
 ﻿using GOTHAM.Model;
+using GOTHAM.Model.Tools;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -19,27 +20,18 @@ namespace GOTHAM
         private Globals()
         {
             // TODO: Hent fra database
-            idCounter = 0;
         }
 
 
 
         // Global variables and objects
-        public int idCounter;
         public Point mapMax = new Point(1000, 1000);
 
         public List<NodeEntity> rootNodes = new List<NodeEntity>();
         public List<CableEntity> cables = new List<CableEntity>();
 
-        public int GetID()
-        {
-            int id = idCounter;
-            idCounter++;
-            return id;
-        }
 
-
-        // Convert to human readable banswidth
+        // Convert to human readable bandwidth
         static readonly string[] SizeSuffixes = { "bytes", "Kb", "Mb", "Gb", "Tb", "Pb", "Eb", "Zb", "Yb" };
         public string BWSuffix(double value)
         {
@@ -50,6 +42,21 @@ namespace GOTHAM
             decimal adjustedSize = (decimal)value / (1L << (mag * 10));
 
             return string.Format("{0:n1} {1}", adjustedSize, SizeSuffixes[mag]);
+        }
+
+        /// <summary>
+        /// Query database for table mapped to type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public IList<T> getTable<T>()
+        {
+            using (var session = EntityManager.GetSessionFactory().OpenSession())
+            {
+                Type typeParameterType = typeof(T);
+                var data = session.CreateCriteria(typeParameterType).List<T>();
+                return data;
+            }
         }
     }
 }

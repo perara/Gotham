@@ -28,8 +28,8 @@ namespace GOTHAM.Gotham.Tests.Tools
             }
 
             Coordinate.LatLng endCoord = (Coordinate.LatLng)coord;
-            double endLat = endCoord.latitude;
-            double endLng = endCoord.longitude;
+            double endLat = endCoord.lat;
+            double endLng = endCoord.lng;
 
             // Check that Latitude is equal;
             Assert.AreEqual(startLat, endLat);

@@ -21,7 +21,7 @@ namespace GOTHAM.Gotham.Application.Tools
 
             foreach (var location in sortedLocations)
             {
-                var str = location.countrycode + "," + location.name + "," + location.latitude + "," + location.longitude;
+                var str = location.countrycode + "," + location.name + "," + location.lat + "," + location.lng;
                 file.WriteLine(str);
             }
         }
@@ -46,8 +46,8 @@ namespace GOTHAM.Gotham.Application.Tools
 
                 location.countrycode = segment[0];
                 location.name = segment[2];
-                location.latitude = coord.latitude;
-                location.longitude = coord.longitude;
+                location.lat = coord.lat;
+                location.lng = coord.lng;
                 locations.Add(location);
             }
 
@@ -73,8 +73,8 @@ namespace GOTHAM.Gotham.Application.Tools
                     double.Parse(segment[2], CultureInfo.InvariantCulture));
 
                 location.name = segment[0];
-                location.latitude = coord.latitude;
-                location.longitude = coord.longitude;
+                location.lat = coord.lat;
+                location.lng = coord.lng;
                 locations.Add(location);
             }
             return locations;
@@ -100,8 +100,8 @@ namespace GOTHAM.Gotham.Application.Tools
 
                 node.country = segment[0];
                 node.name = segment[1];
-                node.latitude = coord.latitude;
-                node.longitude = coord.longitude;
+                node.lat = coord.lat;
+                node.lng = coord.lng;
                 node.tier = new TierEntity() { id = 4 };
                 nodes.Add(node);
 
@@ -157,8 +157,8 @@ namespace GOTHAM.Gotham.Application.Tools
                     // TODO Is ID generated if cable is not in database?
                     cablepart.cable = cables.Last();
                     cablepart.number = cable_part_counter++;
-                    cablepart.latitude = Double.Parse(partLocations[i + 1]);
-                    cablepart.longitude = Double.Parse(partLocations[i]);
+                    cablepart.lat = Double.Parse(partLocations[i + 1]);
+                    cablepart.lng = Double.Parse(partLocations[i]);
                     cable_parts.Add(cablepart);
                 }
                 cable_part_counter = 0;

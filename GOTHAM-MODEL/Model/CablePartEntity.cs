@@ -11,8 +11,8 @@ namespace GOTHAM.Model
     {
         public virtual CableEntity cable { get; set; }
         public virtual int number { get; set; }
-        public virtual double latitude{ get; set; }
-        public virtual double longitude { get; set; }
+        public virtual double lat{ get; set; }
+        public virtual double lng { get; set; }
         
     }
 
@@ -25,8 +25,8 @@ namespace GOTHAM.Model
             Id(x => x.id).GeneratedBy.Identity();
 
             Map(x => x.number);
-            Map(x => x.latitude);
-            Map(x => x.longitude);
+            Map(x => x.lat);
+            Map(x => x.lng);
 
             References(x => x.cable).Not.Nullable().Column("cable");
 

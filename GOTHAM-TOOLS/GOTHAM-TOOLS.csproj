@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="A-Star.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="FakeNameGenerator\FakeNameGenerator.cs" />
     <Compile Include="GeoTool.cs" />

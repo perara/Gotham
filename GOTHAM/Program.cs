@@ -6,6 +6,7 @@ using GOTHAM.Gotham.API;
 using System.Collections.Generic;
 using GOTHAM.Tools;
 using System.Globalization;
+using GOTHAM_TOOLS;
 
 namespace GOTHAM
 {
@@ -16,6 +17,7 @@ namespace GOTHAM
 
         static void Main(string[] args)
         {
+
             // ServiceStack API Server
             ServiceStackConsoleHost.Start();
 
@@ -27,59 +29,61 @@ namespace GOTHAM
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
             CultureInfo.DefaultThreadCurrentCulture = customCulture;
 
+            // ========================================================================================
+            // ===========================        TEST CODE       =====================================
 
-            var nodes = new List<NodeEntity>();
-            TxtParse.FromFile4("C:\\temp\\SeaCableCables.txt");
+           
+            //var nodes = new List<NodeEntity>();
+            //TxtParse.FromFile4("C:\\temp\\SeaCableCables.txt");
 
             //TxtParse.LocsToFile(locations, "C:\\temp\\SeaCableCablesTestOutput.txt");
 
-            log.Info(nodes.Count);
+            var rawNodes = (Globals.GetInstance().getTable<NodeEntity>());
+            var nodesDict = new Dictionary<int, NodeEntity>();
+            var nodesList = new List<NodeEntity>();
+
+            foreach (var node in rawNodes)
+            {
+                node.getSiblings();
+                nodesDict.Add(node.id, node);
+                nodesList.Add(node);
+            }
+            Console.WriteLine("Finished loading from DB");
+
+            //CableGenerator.ConnectCloseNodes(nodesList, 50);
+            //CableGenerator.ConnectNodes(1);
+
+
+
+            var node1 = nodesDict[3316];
+            var node2 = nodesDict[3482];
+            var testlist = new List<NodeEntity>();
+
+            var path1 = Pathfinder.TryRandom(node1, node2, nodesList);
+
+            foreach (var node in path1)
+            {
+                log.Info(node.country + ": \t\t" + node.name);
+            }
+
+
+            Console.WriteLine("====================================================================");
+
+            var path2 = Pathfinder.ByDistance(node1, node2, nodesList);
+
+            foreach (var node in path2)
+            {
+                log.Info(node.country + ": \t\t" + node.name);
+            }
+
+            //CableGenerator.ConnectNodes(1);
+
+            // ========================================================================================
+            // ========================================================================================
+
             log.Info("DOG FINISH");
             Console.ReadLine();
 
-
-            //System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
-            //
-            // LOG4NET configuration
-            //
-            //var locations = TxtParse.FromFile2("C:\\temp\\tier2.txt");
-            //var nodes = new List<NodeEntity>();
-
-
-
-
-            //var cables = new List<CableEntity>();
-
-            //using (var session = EntityManager.GetSessionFactory().OpenSession())
-            //{
-
-            //    nodes = (List<NodeEntity>)session.CreateCriteria<NodeEntity>().List<NodeEntity>();
-            //    cables = (List<CableEntity>)session.CreateCriteria<CableEntity>().List<CableEntity>();
-
-            //}
-
-
-            //foreach (var location in locations)
-            //{
-            //    nodes.Add(new NodeEntity()
-            //    {
-            //        name = location.name,
-            //        longitude = location.longitude,
-            //        latitude = location.latitude,
-            //        bandwidth = 20,
-            //        tier = new TierEntity() { id = 1}
-            //    });
-            //}
-
-            //foreach (var node in nodes)
-            //{
-            //    var cable = CableGenerator.MakeCables(node, nodes);
-            //    DBTool.Write(node);
-            //}
-
-            //var list = new List<CableEntity>();
-            //list.Add(testCable);
-            //CableGenerator.MakeCables(nodes)
 
         }// End Main
 

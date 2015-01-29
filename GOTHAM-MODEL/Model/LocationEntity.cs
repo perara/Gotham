@@ -11,8 +11,8 @@ namespace GOTHAM.Model
     {
         public virtual string countrycode { get; set; }
         public virtual string name { get; set; }
-        public virtual double latitude { get; set; }
-        public virtual double longitude { get; set; }
+        public virtual double lat { get; set; }
+        public virtual double lng { get; set; }
     }
 
     public class LocationEntityMap : ClassMap<LocationEntity>
@@ -24,8 +24,8 @@ namespace GOTHAM.Model
             Id(x => x.id).GeneratedBy.Identity();
             Map(x => x.countrycode).Not.Nullable();
             Map(x => x.name).Not.Nullable();
-            Map(x => x.latitude).Not.Nullable();
-            Map(x => x.longitude).Not.Nullable();
+            Map(x => x.lat).Not.Nullable();
+            Map(x => x.lng).Not.Nullable();
         }
     }
 }

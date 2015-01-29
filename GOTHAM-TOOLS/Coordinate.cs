@@ -32,26 +32,26 @@ namespace GOTHAM.Tools
 
         public class LatLng : BaseCoordinate
         {
-            public double latitude { get; set; }
-            public double longitude { get; set; }
+            public double lat { get; set; }
+            public double lng { get; set; }
 
             public LatLng() { }
 
             public LatLng(double lat, double lng)
             {
-                this.latitude = lat;
-                this.longitude = lng;
+                this.lat = lat;
+                this.lng = lng;
             }
 
             public Polar toPolar()
             {
-                double latDeg = latitude;
-                double latMin = 60 * (latitude - latDeg);
-                double latSec = 3600 * (latitude - latDeg - latMin / 60);
+                double latDeg = lat;
+                double latMin = 60 * (lat - latDeg);
+                double latSec = 3600 * (lat - latDeg - latMin / 60);
 
-                double lngDeg = longitude;
-                double lngMin = 60 * (longitude - lngDeg);
-                double lngSec = 3600 * (longitude - lngDeg - lngMin / 60);
+                double lngDeg = lng;
+                double lngMin = 60 * (lng - lngDeg);
+                double lngSec = 3600 * (lng - lngDeg - lngMin / 60);
 
                 return new Polar(latDeg, (int)latMin, (int)latSec, lngDeg, (int)lngMin, (int)lngSec);
             }
@@ -62,8 +62,8 @@ namespace GOTHAM.Tools
             }
             public LatLng ToRadians()
             {
-                var lat = (Math.PI / 180) * this.latitude;
-                var lng = (Math.PI / 180) * this.longitude;
+                var lat = (Math.PI / 180) * this.lat;
+                var lng = (Math.PI / 180) * this.lng;
                 return new LatLng(lat, lng);
             }
         }

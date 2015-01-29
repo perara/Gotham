@@ -122,8 +122,10 @@
     <Compile Include="Gotham\API\AppHost.cs" />
     <Compile Include="Gotham\API\Resources\HelloResource.cs" />
     <Compile Include="Gotham\API\ServiceStackConsoleHost.cs" />
+    <Compile Include="Gotham\Application\Tools\AStarGrid.cs" />
     <Compile Include="Gotham\Application\Tools\CableGenerator.cs" />
     <Compile Include="Gotham\Application\Tools\NodeGenerator.cs" />
+    <Compile Include="Gotham\Application\Tools\Pathfinder.cs" />
     <Compile Include="Gotham\Application\Tools\TxtParse.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />

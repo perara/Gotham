@@ -40,7 +40,10 @@ namespace GOTHAM.Model
             HasManyToMany(x => x.nodes)
                 .Cascade.All()
                 .Inverse()
-                .Table("node_cable");
+                .Table("node_cable")
+                .ParentKeyColumn("cable")
+                .ChildKeyColumn("node")
+                .Not.LazyLoad();
 
             //HasMany(x => x.cableParts);
             //HasMany(x => x.cableParts)

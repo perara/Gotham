@@ -12,10 +12,10 @@ namespace GOTHAM.Tools
         public static double GetDistance(Coordinate.LatLng pos1, Coordinate.LatLng pos2)
         {
             var R = 6371.0; // km
-            var φ1 = pos1.ToRadians().latitude;
-            var φ2 = pos2.ToRadians().latitude;
-            var Δφ = (pos2.ToRadians().latitude - pos1.ToRadians().latitude);
-            var Δλ = (pos2.ToRadians().longitude - pos1.ToRadians().longitude);
+            var φ1 = pos1.ToRadians().lat;
+            var φ2 = pos2.ToRadians().lat;
+            var Δφ = (pos2.ToRadians().lat - pos1.ToRadians().lat);
+            var Δλ = (pos2.ToRadians().lng - pos1.ToRadians().lng);
 
             var a = Math.Sin(Δφ / 2.0) * Math.Sin(Δφ / 2.0) +
                     Math.Cos(φ1) * Math.Cos(φ2) *

@@ -28,6 +28,7 @@ namespace GOTHAM_BACKEND_DEBUG
         IList<CableEntity> cables = null;
         IList<CablePartEntity> cableparts = null;
         GMapOverlay markersOverlay = null;
+        
 
         Brush tempBrush = null;
         List<GMapRoute> tempRoutes = null;
@@ -45,6 +46,10 @@ namespace GOTHAM_BACKEND_DEBUG
 
             markersOverlay = new GMapOverlay("markers");
             MainMap.Overlays.Add(markersOverlay);
+            MainMap.MaxZoom = 10;
+            MainMap.MinZoom = 3;
+            MainMap.Zoom = 3;
+            MainMap.Position = new PointLatLng(30, 0);
 
             loadEntities();
             drawNodes();
@@ -74,19 +79,19 @@ namespace GOTHAM_BACKEND_DEBUG
                 switch (node.tier.id)
                 {
                     case 1:
-                        marker = new GMarkerGoogle(new PointLatLng(node.latitude, node.longitude), GMarkerGoogleType.red_dot);
+                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.red_dot);
                         break;
                     case 2:
-                        marker = new GMarkerGoogle(new PointLatLng(node.latitude, node.longitude), GMarkerGoogleType.green_small);
+                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.green_small);
                         break;
                     case 3:
-                        marker = new GMarkerGoogle(new PointLatLng(node.latitude, node.longitude), GMarkerGoogleType.red_small);
+                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.red_small);
                         break;
                     case 4:
-                        marker = new GMarkerGoogle(new PointLatLng(node.latitude, node.longitude), GMarkerGoogleType.blue_small);
+                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.blue_small);
                         break;
                     default:
-                        marker = new GMarkerGoogle(new PointLatLng(node.latitude, node.longitude), GMarkerGoogleType.orange);
+                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.orange);
                         break;
                 }
 
@@ -94,6 +99,8 @@ namespace GOTHAM_BACKEND_DEBUG
 
                 markersOverlay.Markers.Add(marker);
                 marker.ToolTipText = node.name.ToString() + "\n" + node.country.ToString();
+                marker.Tag = node;
+                
             }
         }
 
@@ -104,11 +111,11 @@ namespace GOTHAM_BACKEND_DEBUG
             var random = new Random();
             foreach (var cable in cables)
             {
-                if (cable.year > 2013) continue;
+                if (cable.year > 2014) continue;
 
                 var parts = new List<PointLatLng>();
                 var color = Color.FromArgb(150, random.Next(255), random.Next(255), random.Next(255));
-                var width = Math.Max(Math.Min((float)(cable.capacity * 0.001), 10), 2);
+                var width = Math.Max(Math.Min((float)(cable.capacity * 0.001), 7), 2);
 
                 foreach (var part in cable.cableParts)
                 {
@@ -118,17 +125,19 @@ namespace GOTHAM_BACKEND_DEBUG
                         r1.Stroke = new Pen(new SolidBrush(color), width); // color; //Color.FromArgb(50, 20, 20, 200);
                         r1.IsHitTestVisible = true;
                         r1.Name = cable.name;
+                        r1.Tag = cable;
                         markersOverlay.Routes.Add(r1);
                         parts.Clear();
                     }
 
-                    parts.Add(new PointLatLng(part.latitude, part.longitude));
+                    parts.Add(new PointLatLng(part.lat, part.lng));
                 }// End foreach
 
                 GMapRoute r2 = new GMapRoute(parts, "route");
                 r2.Stroke = new Pen(new SolidBrush(color), width); // color; //Color.FromArgb(50, 20, 20, 200);
                 r2.IsHitTestVisible = true;
                 r2.Name = cable.name;
+                r2.Tag = cable;
                 markersOverlay.Routes.Add(r2);
             }
         }
@@ -143,6 +152,7 @@ namespace GOTHAM_BACKEND_DEBUG
 
         private void MainMap_OnRouteClick(GMapRoute item, MouseEventArgs e)
         {
+           
             lbl_name.Text = item.Name;
 
             if (tempRoutes != null)
@@ -163,6 +173,29 @@ namespace GOTHAM_BACKEND_DEBUG
                     tempRoutes.Add(route);
                     route.Stroke.Brush = new SolidBrush((Color.White));
                 }
+            }
+
+
+            lbl_NodeList.Text = "";
+
+            var cables = (CableEntity)item.Tag;
+
+            foreach (var cable in cables.nodes)
+            {
+                lbl_NodeList.Text += "\n" + cable.name;
+            }
+        }
+
+        private void MainMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
+        {
+            lbl_CableList.Text = "";
+
+            var node = (NodeEntity)item.Tag;
+
+            foreach (var cable in node.cables)
+            {
+                if (cable.year > 2014) continue;
+                lbl_CableList.Text += "\n" + cable.name;
             }
         }
     }

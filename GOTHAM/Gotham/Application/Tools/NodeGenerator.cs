@@ -25,8 +25,8 @@ namespace GOTHAM.Gotham.Application.Tools
         {
             var node = new NodeEntity();
 
-            node.latitude = rnd.Next(Globals.GetInstance().mapMax.X);
-            node.longitude = rnd.Next(Globals.GetInstance().mapMax.Y);
+            node.lat = rnd.Next(Globals.GetInstance().mapMax.X);
+            node.lng = rnd.Next(Globals.GetInstance().mapMax.Y);
             node.country = "Flette";
             node.priority = rnd.Next(10);
             node.tier = tier;
@@ -82,13 +82,13 @@ namespace GOTHAM.Gotham.Application.Tools
                 var nodeBandwidth = node.bandwidth;
 
                 log.Info("\n");
-                log.Info(node.latitude + " - " + node.longitude + " - Pri: " + node.priority + " Bandwidth: " + Globals.GetInstance().BWSuffix(node.bandwidth));
+                log.Info(node.lat + " - " + node.lng + " - Pri: " + node.priority + " Bandwidth: " + Globals.GetInstance().BWSuffix(node.bandwidth));
 
                 // Iterate through each of the Tier 3 siblings
                 foreach (var sibling in node.siblings)
                 {
                     var siblBandwidth = node.cables.FirstOrDefault(x => x.nodes[0] == sibling).capacity;
-                    log.Info("\t" + sibling.latitude + " - " + sibling.longitude + " - Pri: " + sibling.priority + " Cable Cap: " + Globals.GetInstance().BWSuffix(siblBandwidth));
+                    log.Info("\t" + sibling.lat + " - " + sibling.lng + " - Pri: " + sibling.priority + " Cable Cap: " + Globals.GetInstance().BWSuffix(siblBandwidth));
                     nodeBandwidth -= siblBandwidth;
                 }
                 log.Info("Bandwidth remaining: " + nodeBandwidth);
