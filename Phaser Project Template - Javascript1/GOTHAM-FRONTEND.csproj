@@ -34,29 +34,13 @@
       <DependentUpon>Gruntfile.js</DependentUpon>
     </Content>
     <Content Include="index.html" />
-    <Content Include="src\lib\config.js">
+    <Content Include="assets\design.css" />
+    <Content Include="map.html" />
+    <Content Include="src\modules\config.js">
       <DependentUpon>config.coffee</DependentUpon>
     </Content>
-    <Content Include="src\lib\config.min.js">
+    <Content Include="src\modules\config.min.js">
       <DependentUpon>config.js</DependentUpon>
-    </Content>
-    <Content Include="src\lib\menu.js">
-      <DependentUpon>menu.coffee</DependentUpon>
-    </Content>
-    <Content Include="src\lib\menu.min.js">
-      <DependentUpon>menu.js</DependentUpon>
-    </Content>
-    <Content Include="src\lib\preload.js">
-      <DependentUpon>preload.coffee</DependentUpon>
-    </Content>
-    <Content Include="src\lib\preload.min.js">
-      <DependentUpon>preload.js</DependentUpon>
-    </Content>
-    <Content Include="src\lib\VolumeAdjuster.js">
-      <DependentUpon>VolumeAdjuster.coffee</DependentUpon>
-    </Content>
-    <Content Include="src\lib\VolumeAdjuster.min.js">
-      <DependentUpon>VolumeAdjuster.js</DependentUpon>
     </Content>
     <Content Include="src\main.js">
       <DependentUpon>main.coffee</DependentUpon>
@@ -71,8 +55,7 @@
   <ItemGroup>
     <None Include=".bin\node.cmd" />
     <Content Include="packages.config" />
-    <Content Include="src\lib\config.coffee" />
-    <Content Include="src\lib\state.coffee" />
+    <Content Include="src\modules\config.coffee" />
     <Content Include="src\main.coffee" />
     <Content Include="bower.json" />
     <Content Include="Gruntfile.coffee" />
@@ -82,10 +65,10 @@
     <Content Include="Gruntfile.min.js.map">
       <DependentUpon>Gruntfile.min.js</DependentUpon>
     </Content>
-    <Content Include="src\lib\config.js.map">
+    <Content Include="src\modules\config.js.map">
       <DependentUpon>config.js</DependentUpon>
     </Content>
-    <Content Include="src\lib\config.min.js.map">
+    <Content Include="src\modules\config.min.js.map">
       <DependentUpon>config.min.js</DependentUpon>
     </Content>
     <Content Include="src\main.js.map">
@@ -94,27 +77,8 @@
     <Content Include="src\main.min.js.map">
       <DependentUpon>main.min.js</DependentUpon>
     </Content>
-    <Content Include="src\lib\menu.coffee" />
-    <Content Include="src\lib\menu.js.map">
-      <DependentUpon>menu.js</DependentUpon>
-    </Content>
-    <Content Include="src\lib\menu.min.js.map">
-      <DependentUpon>menu.min.js</DependentUpon>
-    </Content>
-    <Content Include="src\lib\preload.coffee" />
-    <Content Include="src\lib\preload.js.map">
-      <DependentUpon>preload.js</DependentUpon>
-    </Content>
-    <Content Include="src\lib\preload.min.js.map">
-      <DependentUpon>preload.min.js</DependentUpon>
-    </Content>
-    <Content Include="src\lib\VolumeAdjuster.coffee" />
-    <Content Include="src\lib\VolumeAdjuster.js.map">
-      <DependentUpon>VolumeAdjuster.js</DependentUpon>
-    </Content>
-    <Content Include="src\lib\VolumeAdjuster.min.js.map">
-      <DependentUpon>VolumeAdjuster.min.js</DependentUpon>
-    </Content>
+    <Content Include="src\controllers\MainController.coffee" />
+    <Content Include="assets\json\world-50m.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

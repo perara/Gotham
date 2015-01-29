@@ -12,7 +12,7 @@ namespace GOTHAM.Gotham.API.Resources
   {
     public AppHost() : base("MyApp's REST services", 
       typeof(HelloResource.HelloService).Assembly,
-      typeof(HelloResource.HelloService).Assembly) {}
+      typeof(NodeResource.NodeService).Assembly) {}
 
 
     public override void Configure(Container container){}
