@@ -53,7 +53,9 @@ namespace GOTHAM.Model.Tools
       }
       else
       {
-          throw new Exception("There is no configurationfile for this host");
+        sqlConfig = configuration["mysql"]["production"];
+        log.Info("Using SQL Configuration: Default");
+          //throw new Exception("There is no configurationfile for this host");
        
       }
 

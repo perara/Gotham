@@ -1,0 +1,4902 @@
+﻿[
+  {
+    "id": 3054,
+    "lat": 41.316667,
+    "long": 19.45,
+    "name": "Durres",
+    "country": "Albania"
+  },
+  {
+    "id": 3055,
+    "lat": 41.326,
+    "long": 19.816,
+    "name": "Tirana",
+    "country": "Albania"
+  },
+  {
+    "id": 3056,
+    "lat": 36.7,
+    "long": 3.216667,
+    "name": "Algiers",
+    "country": "Algeria"
+  },
+  {
+    "id": 3057,
+    "lat": 36.9,
+    "long": 7.7666666,
+    "name": "Annaba",
+    "country": "Algeria"
+  },
+  {
+    "id": 3058,
+    "lat": 36.80175097,
+    "long": 2.90759122,
+    "name": "El Djemila",
+    "country": "Algeria"
+  },
+  {
+    "id": 3059,
+    "lat": 35.696944,
+    "long": -0.633056,
+    "name": "Oran",
+    "country": "Algeria"
+  },
+  {
+    "id": 3060,
+    "lat": -8.77595,
+    "long": 13.36843333,
+    "name": "Cacuaco",
+    "country": "Angola"
+  },
+  {
+    "id": 3061,
+    "lat": -8.81655699,
+    "long": 13.24261057,
+    "name": "Luanda",
+    "country": "Angola"
+  },
+  {
+    "id": 3062,
+    "lat": -9.559111,
+    "long": 13.205,
+    "name": "Sangano Village (Cable Station)",
+    "country": "Angola"
+  },
+  {
+    "id": 3063,
+    "lat": -9.564,
+    "long": 13.1975,
+    "name": "Sangano Village (Landing)",
+    "country": "Angola"
+  },
+  {
+    "id": 3064,
+    "lat": 18.17161101,
+    "long": -63.15939024,
+    "name": "Anguilla",
+    "country": "Anguilla"
+  },
+  {
+    "id": 3065,
+    "lat": 33.866,
+    "long": -118.399722,
+    "name": "South Pole",
+    "country": "Antarctica"
+  },
+  {
+    "id": 3066,
+    "lat": 17.12589085,
+    "long": -61.87742053,
+    "name": "Dickenson Bay",
+    "country": "Antigua"
+  },
+  {
+    "id": 3067,
+    "lat": -36.44822425,
+    "long": -56.68875764,
+    "name": "Las Toninas",
+    "country": "Argentina"
+  },
+  {
+    "id": 3068,
+    "lat": 12.4138,
+    "long": -69.88,
+    "name": "Baby Beach",
+    "country": "Aruba"
+  },
+  {
+    "id": 3069,
+    "lat": 12.519,
+    "long": -70.037,
+    "name": "Oranjestad",
+    "country": "Aruba"
+  },
+  {
+    "id": 3070,
+    "lat": -33.902,
+    "long": 151.20007,
+    "name": "Alexandria",
+    "country": "Australia"
+  },
+  {
+    "id": 3071,
+    "lat": -40.94605,
+    "long": 145.63716,
+    "name": "Boat Harbour",
+    "country": "Australia"
+  },
+  {
+    "id": 3072,
+    "lat": -33.765,
+    "long": 151.27041,
+    "name": "Brookvale",
+    "country": "Australia"
+  },
+  {
+    "id": 3073,
+    "lat": -41.032557,
+    "long": 146.854935,
+    "name": "Four Mile Beach",
+    "country": "Australia"
+  },
+  {
+    "id": 3074,
+    "lat": -38.633333,
+    "long": 145.716667,
+    "name": "Inverloch",
+    "country": "Australia"
+  },
+  {
+    "id": 3075,
+    "lat": -20.66900063,
+    "long": 116.71299744,
+    "name": "Karratha",
+    "country": "Australia"
+  },
+  {
+    "id": 3076,
+    "lat": -38.454261,
+    "long": 147.094059,
+    "name": "McGaurans Beach",
+    "country": "Australia"
+  },
+  {
+    "id": 3077,
+    "lat": -21.64299965,
+    "long": 115.11199951,
+    "name": "Onslow",
+    "country": "Australia"
+  },
+  {
+    "id": 3078,
+    "lat": -33.7774245,
+    "long": 151.29860722,
+    "name": "Oxford Falls",
+    "country": "Australia"
+  },
+  {
+    "id": 3079,
+    "lat": -33.885,
+    "long": 151.22621,
+    "name": "Paddington",
+    "country": "Australia"
+  },
+  {
+    "id": 3080,
+    "lat": -32.04601698,
+    "long": 115.73149039,
+    "name": "Perth",
+    "country": "Australia"
+  },
+  {
+    "id": 3081,
+    "lat": -20.31,
+    "long": 118.601,
+    "name": "Port Hedland",
+    "country": "Australia"
+  },
+  {
+    "id": 3082,
+    "lat": -38.816667,
+    "long": 146.1,
+    "name": "Sandy Point",
+    "country": "Australia"
+  },
+  {
+    "id": 3083,
+    "lat": -40.762,
+    "long": 145.2954,
+    "name": "Stanley",
+    "country": "Australia"
+  },
+  {
+    "id": 3084,
+    "lat": -33.96772905,
+    "long": 151.28013676,
+    "name": "Sydney",
+    "country": "Australia"
+  },
+  {
+    "id": 3085,
+    "lat": 37.74625,
+    "long": -25.666861,
+    "name": "Ponta Delgada",
+    "country": "Azores"
+  },
+  {
+    "id": 3086,
+    "lat": 24.40371474,
+    "long": -75.49068444,
+    "name": "Cat Island",
+    "country": "Bahamas"
+  },
+  {
+    "id": 3087,
+    "lat": 22.18051163,
+    "long": -74.26948837,
+    "name": "Crooked Island",
+    "country": "Bahamas"
+  },
+  {
+    "id": 3088,
+    "lat": 26.90152766,
+    "long": -77.88659306,
+    "name": "Crown Haven",
+    "country": "Bahamas"
+  },
+  {
+    "id": 3089,
+    "lat": 26.59771373,
+    "long": -78.8824276,
+    "name": "Eight Mile Rock",
+    "country": "Bahamas"
+  },
+  {
+    "id": 3090,
+    "lat": 26.528472,
+    "long": -78.696583,
+    "name": "Freeport",
+    "country": "Bahamas"
+  },
+  {
+    "id": 3091,
+    "lat": 26.528472,
+    "long": -77.22,
+    "name": "Marsh Harbour",
+    "country": "Bahamas"
+  },
+  {
+    "id": 3092,
+    "lat": 25.07171943,
+    "long": -77.3416141,
+    "name": "Nassau",
+    "country": "Bahamas"
+  },
+  {
+    "id": 3093,
+    "lat": 26.7496207,
+    "long": -77.94566799,
+    "name": "Riding Point",
+    "country": "Bahamas"
+  },
+  {
+    "id": 3094,
+    "lat": 24.833333,
+    "long": -76.333333,
+    "name": "Rock Sound",
+    "country": "Bahamas"
+  },
+  {
+    "id": 3095,
+    "lat": 26.016667,
+    "long": -77.4,
+    "name": "Sandy Point",
+    "country": "Bahamas"
+  },
+  {
+    "id": 3096,
+    "lat": 25.45,
+    "long": -76.6667,
+    "name": "Upper Bogue",
+    "country": "Bahamas"
+  },
+  {
+    "id": 3097,
+    "lat": 26.25,
+    "long": 50.65,
+    "name": "Al-Hidd",
+    "country": "Bahrain"
+  },
+  {
+    "id": 3098,
+    "lat": 26.216667,
+    "long": 50.583333,
+    "name": "Manama",
+    "country": "Bahrain"
+  },
+  {
+    "id": 3099,
+    "lat": 21.583,
+    "long": 92.00166666,
+    "name": "Cox\\s Bazaar",
+    "country": "Bangladesh"
+  },
+  {
+    "id": 3100,
+    "lat": 21.817,
+    "long": 90.116667,
+    "name": "Kuatka",
+    "country": "Bangladesh"
+  },
+  {
+    "id": 3101,
+    "lat": 13.08657328,
+    "long": -59.61442942,
+    "name": "Bridgetown",
+    "country": "Barbados"
+  },
+  {
+    "id": 3102,
+    "lat": 51.34905,
+    "long": 3.2247,
+    "name": "Bruges",
+    "country": "Belgium"
+  },
+  {
+    "id": 3103,
+    "lat": 51.32798333,
+    "long": 3.1764,
+    "name": "Bruges",
+    "country": "Belgium"
+  },
+  {
+    "id": 3104,
+    "lat": 51.12753094,
+    "long": 2.64353866,
+    "name": "Koksijde",
+    "country": "Belgium"
+  },
+  {
+    "id": 3105,
+    "lat": 51.21913333,
+    "long": 2.88473333,
+    "name": "Oostende",
+    "country": "Belgium"
+  },
+  {
+    "id": 3106,
+    "lat": 17.57754181,
+    "long": -88.28019091,
+    "name": "Ladyville",
+    "country": "Belize"
+  },
+  {
+    "id": 3107,
+    "lat": 6.34855,
+    "long": 2.38853333,
+    "name": "Cotonou",
+    "country": "Benin"
+  },
+  {
+    "id": 3108,
+    "lat": 32.31158392,
+    "long": -64.74634748,
+    "name": "Devonshire",
+    "country": "Bermuda"
+  },
+  {
+    "id": 3109,
+    "lat": 32.36173,
+    "long": -64.654509,
+    "name": "St David\\s",
+    "country": "Bermuda"
+  },
+  {
+    "id": 3110,
+    "lat": 54.991711,
+    "long": 15.074242,
+    "name": "Dueodde",
+    "country": "Bornholm"
+  },
+  {
+    "id": 3111,
+    "lat": -27.5717,
+    "long": -48.6256,
+    "name": "FlorianÃƒÆ’Ã‚Â³polisBr",
+    "country": "Brazil"
+  },
+  {
+    "id": 3112,
+    "lat": -3.75013953,
+    "long": -38.47613405,
+    "name": "Fortaleza",
+    "country": "Brazil"
+  },
+  {
+    "id": 3113,
+    "lat": -23.016667,
+    "long": -43.467,
+    "name": "Recreio Beach",
+    "country": "Brazil"
+  },
+  {
+    "id": 3114,
+    "lat": -23.00068445,
+    "long": -43.27555662,
+    "name": "Rio de Janeiro",
+    "country": "Brazil"
+  },
+  {
+    "id": 3115,
+    "lat": -13.01776945,
+    "long": -38.47959872,
+    "name": "Salvador",
+    "country": "Brazil"
+  },
+  {
+    "id": 3116,
+    "lat": -23.98033461,
+    "long": -46.35413871,
+    "name": "Santos",
+    "country": "Brazil"
+  },
+  {
+    "id": 3117,
+    "lat": -23.90216023,
+    "long": -46.19551217,
+    "name": "Sao Paulo",
+    "country": "Brazil"
+  },
+  {
+    "id": 3118,
+    "lat": 18.4,
+    "long": -64.633333,
+    "name": "Nanny Cay",
+    "country": "British Virgin Islands"
+  },
+  {
+    "id": 3119,
+    "lat": 18.45835626,
+    "long": -64.57560534,
+    "name": "Tortola",
+    "country": "British Virgin Islands"
+  },
+  {
+    "id": 3120,
+    "lat": 4.79745149,
+    "long": 114.64518485,
+    "name": "Telisai",
+    "country": "Brunei"
+  },
+  {
+    "id": 3121,
+    "lat": 4.74399405,
+    "long": 114.57658629,
+    "name": "Tungku",
+    "country": "Brunei"
+  },
+  {
+    "id": 3122,
+    "lat": 43.416667,
+    "long": 28.167,
+    "name": "Balchik",
+    "country": "Bulgaria"
+  },
+  {
+    "id": 3123,
+    "lat": 43.19495436,
+    "long": 27.97814013,
+    "name": "Varna",
+    "country": "Bulgaria"
+  },
+  {
+    "id": 3124,
+    "lat": 43.2337347,
+    "long": 28.01536644,
+    "name": "Varna",
+    "country": "Bulgaria"
+  },
+  {
+    "id": 3125,
+    "lat": 4.0645,
+    "long": 9.68411667,
+    "name": "Douala",
+    "country": "Cameroon"
+  },
+  {
+    "id": 3126,
+    "lat": 2.98184524,
+    "long": 9.92801142,
+    "name": "Kribi",
+    "country": "Cameroon"
+  },
+  {
+    "id": 3127,
+    "lat": 4.03,
+    "long": 9.094,
+    "name": "Madison Park Beach",
+    "country": "Cameroon"
+  },
+  {
+    "id": 3128,
+    "lat": 61.108,
+    "long": -94.056944,
+    "name": "Arviat",
+    "country": "Canada"
+  },
+  {
+    "id": 3129,
+    "lat": 69.11513691,
+    "long": -105.06151656,
+    "name": "Cambridge Bay CLS",
+    "country": "Canada"
+  },
+  {
+    "id": 3130,
+    "lat": 69.11513691,
+    "long": -105.06151656,
+    "name": "Cambridge Bay CLS",
+    "country": "Canada"
+  },
+  {
+    "id": 3131,
+    "lat": 69.11513691,
+    "long": -105.06151656,
+    "name": "Cambridge Bay CLS",
+    "country": "Canada"
+  },
+  {
+    "id": 3132,
+    "lat": 69.11513691,
+    "long": -105.06151656,
+    "name": "Cambridge Bay CLS",
+    "country": "Canada"
+  },
+  {
+    "id": 3133,
+    "lat": 69.11513691,
+    "long": -105.06151656,
+    "name": "Cambridge Bay CLS",
+    "country": "Canada"
+  },
+  {
+    "id": 3134,
+    "lat": 64.23212758,
+    "long": -76.54412149,
+    "name": "Cape Dorset BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3135,
+    "lat": 63.341,
+    "long": -90.706111,
+    "name": "Chesterfield Inlet",
+    "country": "Canada"
+  },
+  {
+    "id": 3136,
+    "lat": 64.137,
+    "long": -83.164167,
+    "name": "Coral Harbour BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3137,
+    "lat": 68.62391169,
+    "long": -95.87848845,
+    "name": "Goja Haven BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3138,
+    "lat": 68.62391169,
+    "long": -95.87848845,
+    "name": "Goja Haven BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3139,
+    "lat": 68.62391169,
+    "long": -95.87848845,
+    "name": "Goja Haven BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3140,
+    "lat": 68.62391169,
+    "long": -95.87848845,
+    "name": "Goja Haven BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3141,
+    "lat": 68.62391169,
+    "long": -95.87848845,
+    "name": "Goja Haven BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3142,
+    "lat": 68.62391169,
+    "long": -95.87848845,
+    "name": "Goja Haven BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3143,
+    "lat": 68.79125572,
+    "long": -81.23703546,
+    "name": "Hall Beach BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3144,
+    "lat": 44.561694,
+    "long": -63.561375,
+    "name": "Herring Cove",
+    "country": "Canada"
+  },
+  {
+    "id": 3145,
+    "lat": 69.37697292,
+    "long": -81.79812288,
+    "name": "Igloolik BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3146,
+    "lat": 69.37697292,
+    "long": -81.79812288,
+    "name": "Igloolik BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3147,
+    "lat": 69.37697292,
+    "long": -81.79812288,
+    "name": "Igloolik BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3148,
+    "lat": 69.37697292,
+    "long": -81.79812288,
+    "name": "Igloolik BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3149,
+    "lat": 69.37697292,
+    "long": -81.79812288,
+    "name": "Igloolik BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3150,
+    "lat": 69.37697292,
+    "long": -81.79812288,
+    "name": "Igloolik BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3151,
+    "lat": 69.37697292,
+    "long": -81.79812288,
+    "name": "Igloolik BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3152,
+    "lat": 69.37697292,
+    "long": -81.79812288,
+    "name": "Igloolik BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3153,
+    "lat": 63.74556694,
+    "long": -68.51833315,
+    "name": "Iqaluit BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3154,
+    "lat": 62.417,
+    "long": -77.908333,
+    "name": "Ivujivik",
+    "country": "Canada"
+  },
+  {
+    "id": 3155,
+    "lat": 61.6,
+    "long": -71.966667,
+    "name": "Kangiqsujaq",
+    "country": "Canada"
+  },
+  {
+    "id": 3156,
+    "lat": 60.018,
+    "long": -70.027778,
+    "name": "Kangirsuk",
+    "country": "Canada"
+  },
+  {
+    "id": 3157,
+    "lat": 58.107,
+    "long": -68.398611,
+    "name": "Kuujjuaq",
+    "country": "Canada"
+  },
+  {
+    "id": 3158,
+    "lat": 48.20678246,
+    "long": -53.95935197,
+    "name": "Milton CLS",
+    "country": "Canada"
+  },
+  {
+    "id": 3159,
+    "lat": 48.20678246,
+    "long": -53.95935197,
+    "name": "Milton CLS",
+    "country": "Canada"
+  },
+  {
+    "id": 3160,
+    "lat": 56.542,
+    "long": -61.692778,
+    "name": "Nain",
+    "country": "Canada"
+  },
+  {
+    "id": 3161,
+    "lat": 44.43083333,
+    "long": -63.62676023,
+    "name": "Pennant Point",
+    "country": "Canada"
+  },
+  {
+    "id": 3162,
+    "lat": 61.047,
+    "long": -69.616944,
+    "name": "Quagtaq",
+    "country": "Canada"
+  },
+  {
+    "id": 3163,
+    "lat": 62.809722,
+    "long": -92.099,
+    "name": "Rankin Inlet",
+    "country": "Canada"
+  },
+  {
+    "id": 3164,
+    "lat": 62.2,
+    "long": -75.65,
+    "name": "Salluit",
+    "country": "Canada"
+  },
+  {
+    "id": 3165,
+    "lat": 69.53622808,
+    "long": -93.52708989,
+    "name": "Taloyoak",
+    "country": "Canada"
+  },
+  {
+    "id": 3166,
+    "lat": 69.53622808,
+    "long": -93.52708989,
+    "name": "Taloyoak",
+    "country": "Canada"
+  },
+  {
+    "id": 3167,
+    "lat": 69.53622808,
+    "long": -93.52708989,
+    "name": "Taloyoak",
+    "country": "Canada"
+  },
+  {
+    "id": 3168,
+    "lat": 69.53622808,
+    "long": -93.52708989,
+    "name": "Taloyoak",
+    "country": "Canada"
+  },
+  {
+    "id": 3169,
+    "lat": 69.53622808,
+    "long": -93.52708989,
+    "name": "Taloyoak",
+    "country": "Canada"
+  },
+  {
+    "id": 3170,
+    "lat": 69.53622808,
+    "long": -93.52708989,
+    "name": "Taloyoak",
+    "country": "Canada"
+  },
+  {
+    "id": 3171,
+    "lat": 69.53622808,
+    "long": -93.52708989,
+    "name": "Taloyoak",
+    "country": "Canada"
+  },
+  {
+    "id": 3172,
+    "lat": 69.44345698,
+    "long": -133.03488844,
+    "name": "Tuktoyaktuk BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3173,
+    "lat": 69.44345698,
+    "long": -133.03488844,
+    "name": "Tuktoyaktuk BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3174,
+    "lat": 69.44345698,
+    "long": -133.03488844,
+    "name": "Tuktoyaktuk BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3175,
+    "lat": 69.44345698,
+    "long": -133.03488844,
+    "name": "Tuktoyaktuk BMH",
+    "country": "Canada"
+  },
+  {
+    "id": 3176,
+    "lat": 19.28665051,
+    "long": -81.15430864,
+    "name": "Half-Moon Bay",
+    "country": "Cayman Islands"
+  },
+  {
+    "id": 3177,
+    "lat": -18.48895473,
+    "long": -70.3160748,
+    "name": "Arica",
+    "country": "Chile"
+  },
+  {
+    "id": 3178,
+    "lat": -33.01245961,
+    "long": -71.56999593,
+    "name": "ValparaÃƒÆ’Ã‚Â­so",
+    "country": "Chile"
+  },
+  {
+    "id": 3179,
+    "lat": 31.53177727,
+    "long": 121.86684437,
+    "name": "Chongming",
+    "country": "China"
+  },
+  {
+    "id": 3180,
+    "lat": 30.91875202,
+    "long": 121.8881736,
+    "name": "Nanhui District",
+    "country": "China"
+  },
+  {
+    "id": 3181,
+    "lat": 36.03925333,
+    "long": 120.34884297,
+    "name": "Qingdao",
+    "country": "China"
+  },
+  {
+    "id": 3182,
+    "lat": 31.16859111,
+    "long": 121.72700058,
+    "name": "Shanghai",
+    "country": "China"
+  },
+  {
+    "id": 3183,
+    "lat": 23.34547168,
+    "long": 116.74720701,
+    "name": "Shantou",
+    "country": "China"
+  },
+  {
+    "id": 3184,
+    "lat": 23.34449495,
+    "long": 116.74441634,
+    "name": "Shantou",
+    "country": "China"
+  },
+  {
+    "id": 3185,
+    "lat": 11.12020543,
+    "long": -74.86866073,
+    "name": "Barranquilla",
+    "country": "Colombia"
+  },
+  {
+    "id": 3186,
+    "lat": 10.40692896,
+    "long": -75.49068444,
+    "name": "Cartagena",
+    "country": "Colombia"
+  },
+  {
+    "id": 3187,
+    "lat": 11.57941636,
+    "long": -72.92304141,
+    "name": "Riohacha",
+    "country": "Colombia"
+  },
+  {
+    "id": 3188,
+    "lat": 9.5280264,
+    "long": -75.59423652,
+    "name": "Tolu",
+    "country": "Colombia"
+  },
+  {
+    "id": 3189,
+    "lat": -11.75,
+    "long": 43.2,
+    "name": "Moroni",
+    "country": "Comores"
+  },
+  {
+    "id": 3190,
+    "lat": 9.52559182,
+    "long": -84.45381093,
+    "name": "Esterillos",
+    "country": "Costa Rica"
+  },
+  {
+    "id": 3191,
+    "lat": 9.96507169,
+    "long": -83.03357074,
+    "name": "Puerto Limon",
+    "country": "Costa Rica"
+  },
+  {
+    "id": 3192,
+    "lat": 5.248,
+    "long": -3.95227778,
+    "name": "Abdijan",
+    "country": "Cote d\\Ivoire"
+  },
+  {
+    "id": 3193,
+    "lat": 5.244605,
+    "long": -3.93510667,
+    "name": "Abidjan",
+    "country": "Cote d\\Ivoire"
+  },
+  {
+    "id": 3194,
+    "lat": 42.64,
+    "long": 18.108333,
+    "name": "Dubrovnik",
+    "country": "Croatia"
+  },
+  {
+    "id": 3195,
+    "lat": 19.96,
+    "long": -75.708901,
+    "name": "Siboney",
+    "country": "Cuba"
+  },
+  {
+    "id": 3196,
+    "lat": 34.74861111,
+    "long": 32.49,
+    "name": "Anatoliko",
+    "country": "Cyprus"
+  },
+  {
+    "id": 3197,
+    "lat": 34.97887466,
+    "long": 34.02159083,
+    "name": "Ayia Napa",
+    "country": "Cyprus"
+  },
+  {
+    "id": 3198,
+    "lat": 34.85164029,
+    "long": 32.3492068,
+    "name": "Geroskipou",
+    "country": "Cyprus"
+  },
+  {
+    "id": 3199,
+    "lat": 35.34,
+    "long": 33.319167,
+    "name": "Girne",
+    "country": "Cyprus"
+  },
+  {
+    "id": 3200,
+    "lat": 35.27782833,
+    "long": 33.92231167,
+    "name": "Iskele",
+    "country": "Cyprus"
+  },
+  {
+    "id": 3201,
+    "lat": 34.767,
+    "long": 32.416667,
+    "name": "Paphos",
+    "country": "Cyprus"
+  },
+  {
+    "id": 3202,
+    "lat": 34.82366882,
+    "long": 33.59943096,
+    "name": "Pentaskhinos",
+    "country": "Cyprus"
+  },
+  {
+    "id": 3203,
+    "lat": 34.71883919,
+    "long": 32.46610211,
+    "name": "Yeroskipou",
+    "country": "Cyprus"
+  },
+  {
+    "id": 3204,
+    "lat": -5.85,
+    "long": 13.05,
+    "name": "Boma",
+    "country": "Democratic Republic of Congo"
+  },
+  {
+    "id": 3205,
+    "lat": 55.76806667,
+    "long": 8.18181667,
+    "name": "Blaabjerg",
+    "country": "Denmark"
+  },
+  {
+    "id": 3206,
+    "lat": 55.676111,
+    "long": 12.568333,
+    "name": "Copenhagen",
+    "country": "Denmark"
+  },
+  {
+    "id": 3207,
+    "lat": 55.583333,
+    "long": 12.666667,
+    "name": "DragÃƒÆ’Ã‚Â¸r",
+    "country": "Denmark"
+  },
+  {
+    "id": 3208,
+    "lat": 56.01100297,
+    "long": 8.15095374,
+    "name": "FanÃƒÆ’Ã‚Â¸",
+    "country": "Denmark"
+  },
+  {
+    "id": 3209,
+    "lat": 55.26549946,
+    "long": 12.39583393,
+    "name": "Gedebak Odde",
+    "country": "Denmark"
+  },
+  {
+    "id": 3210,
+    "lat": 54.99965249,
+    "long": 15.01016397,
+    "name": "Gedebak Odde",
+    "country": "Denmark"
+  },
+  {
+    "id": 3211,
+    "lat": 54.583333,
+    "long": 11.933333,
+    "name": "Gedser",
+    "country": "Denmark"
+  },
+  {
+    "id": 3212,
+    "lat": 56.033333,
+    "long": 12.616667,
+    "name": "HelsingÃƒÆ’Ã‚Â¸r",
+    "country": "Denmark"
+  },
+  {
+    "id": 3213,
+    "lat": 56.04147259,
+    "long": 12.61883674,
+    "name": "Hillerod",
+    "country": "Denmark"
+  },
+  {
+    "id": 3214,
+    "lat": 57.60516667,
+    "long": 10.029,
+    "name": "HjÃƒÆ’Ã‚Â¸rring",
+    "country": "Denmark"
+  },
+  {
+    "id": 3215,
+    "lat": 57.74014634,
+    "long": 10.59836537,
+    "name": "Jutland",
+    "country": "Denmark"
+  },
+  {
+    "id": 3216,
+    "lat": 56.60840565,
+    "long": 8.16878666,
+    "name": "MÃƒÆ’Ã‚Â¥de",
+    "country": "Denmark"
+  },
+  {
+    "id": 3217,
+    "lat": 54.65,
+    "long": 11.35,
+    "name": "RÃƒÆ’Ã‚Â¶dbyhavn",
+    "country": "Denmark"
+  },
+  {
+    "id": 3218,
+    "lat": 56.078,
+    "long": 4.228412,
+    "name": "South Arne (Oil Platform)",
+    "country": "Denmark"
+  },
+  {
+    "id": 3219,
+    "lat": 57.12483333,
+    "long": 8.62016667,
+    "name": "Thisted",
+    "country": "Denmark"
+  },
+  {
+    "id": 3220,
+    "lat": 55.73333,
+    "long": 12.58333,
+    "name": "Tuborg",
+    "country": "Denmark"
+  },
+  {
+    "id": 3221,
+    "lat": 55.64,
+    "long": 4.882617,
+    "name": "Tyra (Oil Platform)",
+    "country": "Denmark"
+  },
+  {
+    "id": 3222,
+    "lat": 55.804,
+    "long": 4.56425,
+    "name": "Valdemar (Oil Platform)",
+    "country": "Denmark"
+  },
+  {
+    "id": 3223,
+    "lat": 15.3375,
+    "long": -61.390278,
+    "name": "Canefield",
+    "country": "Dominica"
+  },
+  {
+    "id": 3224,
+    "lat": 18.42,
+    "long": -70.03,
+    "name": "Bajos de Haina",
+    "country": "Dominican Republic"
+  },
+  {
+    "id": 3225,
+    "lat": 18.43397897,
+    "long": -69.96211943,
+    "name": "Cacique",
+    "country": "Dominican Republic"
+  },
+  {
+    "id": 3226,
+    "lat": 19.79726573,
+    "long": -70.69287992,
+    "name": "Puerto Plata",
+    "country": "Dominican Republic"
+  },
+  {
+    "id": 3227,
+    "lat": 18.56215289,
+    "long": -68.33398836,
+    "name": "Punta Cana",
+    "country": "Dominican Republic"
+  },
+  {
+    "id": 3228,
+    "lat": -4.63,
+    "long": 11.82535167,
+    "name": "Brazzaville",
+    "country": "DRC"
+  },
+  {
+    "id": 3229,
+    "lat": -0.95002,
+    "long": -80.7162,
+    "name": "Manta",
+    "country": "Ecuador"
+  },
+  {
+    "id": 3230,
+    "lat": -2.20136354,
+    "long": -80.9886663,
+    "name": "Punta Carnero",
+    "country": "Ecuador"
+  },
+  {
+    "id": 3231,
+    "lat": -2.2167,
+    "long": -80.950067,
+    "name": "Salinas",
+    "country": "Ecuador"
+  },
+  {
+    "id": 3232,
+    "lat": 31.07202776,
+    "long": 29.734091,
+    "name": "Abo Talat",
+    "country": "Egypt"
+  },
+  {
+    "id": 3233,
+    "lat": 31.06751111,
+    "long": 29.68811667,
+    "name": "Abu Talat",
+    "country": "Egypt"
+  },
+  {
+    "id": 3234,
+    "lat": 31.21896952,
+    "long": 29.91684289,
+    "name": "Alexandria",
+    "country": "Egypt"
+  },
+  {
+    "id": 3235,
+    "lat": 30.058056,
+    "long": 31.228889,
+    "name": "Cairo",
+    "country": "Egypt"
+  },
+  {
+    "id": 3236,
+    "lat": 29.60344867,
+    "long": 32.69180185,
+    "name": "Ras Sudar",
+    "country": "Egypt"
+  },
+  {
+    "id": 3237,
+    "lat": 29.9858921,
+    "long": 32.54401318,
+    "name": "Suez",
+    "country": "Egypt"
+  },
+  {
+    "id": 3238,
+    "lat": 29.11623359,
+    "long": 32.65797158,
+    "name": "Zafarana",
+    "country": "Egypt"
+  },
+  {
+    "id": 3239,
+    "lat": 1.80096765,
+    "long": 9.80864028,
+    "name": "Bata",
+    "country": "Equatorial Guinea"
+  },
+  {
+    "id": 3240,
+    "lat": 15.60916667,
+    "long": 39.4465922,
+    "name": "Massawa",
+    "country": "Eritrea"
+  },
+  {
+    "id": 3241,
+    "lat": 59.0,
+    "long": 22.75,
+    "name": "KÃƒÆ’Ã‚Â¤rdla",
+    "country": "Estonia"
+  },
+  {
+    "id": 3242,
+    "lat": 59.383,
+    "long": 25.2466666,
+    "name": "Meremoisa",
+    "country": "Estonia"
+  },
+  {
+    "id": 3243,
+    "lat": 59.464,
+    "long": 24.702587,
+    "name": "Paljassaare",
+    "country": "Estonia"
+  },
+  {
+    "id": 3244,
+    "lat": 59.083333,
+    "long": 22.6,
+    "name": "Tahkuna",
+    "country": "Estonia"
+  },
+  {
+    "id": 3245,
+    "lat": 59.437222,
+    "long": 24.745278,
+    "name": "Tallinn",
+    "country": "Estonia"
+  },
+  {
+    "id": 3246,
+    "lat": 62.23538333,
+    "long": -6.93303333,
+    "name": "FunningsfjÃƒÆ’Ã‚Â¸rÃƒÆ’Ã‚Â°ur",
+    "country": "Faroe Islands"
+  },
+  {
+    "id": 3247,
+    "lat": 62.04686667,
+    "long": -6.7716,
+    "name": "TÃƒÆ’Ã‚Â³rshavn",
+    "country": "Faroe Islands"
+  },
+  {
+    "id": 3248,
+    "lat": 62.30616679,
+    "long": -7.19471218,
+    "name": "TjÃƒÆ’Ã‚Â¸rnuvÃƒÆ’Ã‚Â­k",
+    "country": "Faroe Islands"
+  },
+  {
+    "id": 3249,
+    "lat": -18.1416,
+    "long": 178.442,
+    "name": "Suva",
+    "country": "Fiji"
+  },
+  {
+    "id": 3250,
+    "lat": 59.824444,
+    "long": 22.9685,
+    "name": "Hango",
+    "country": "Finland"
+  },
+  {
+    "id": 3251,
+    "lat": 60.2,
+    "long": 22.2,
+    "name": "Haraldsholm",
+    "country": "Finland"
+  },
+  {
+    "id": 3252,
+    "lat": 60.170833,
+    "long": 24.9375,
+    "name": "Helsinki",
+    "country": "Finland"
+  },
+  {
+    "id": 3253,
+    "lat": 60.466667,
+    "long": 26.941667,
+    "name": "Kotka",
+    "country": "Finland"
+  },
+  {
+    "id": 3254,
+    "lat": 60.1,
+    "long": 19.933333,
+    "name": "Mariehamn",
+    "country": "Finland"
+  },
+  {
+    "id": 3255,
+    "lat": 60.193056,
+    "long": 21.906944,
+    "name": "Nauvo",
+    "country": "Finland"
+  },
+  {
+    "id": 3256,
+    "lat": 60.45,
+    "long": 22.266667,
+    "name": "Turku",
+    "country": "Finland"
+  },
+  {
+    "id": 3257,
+    "lat": 63.166667,
+    "long": 22.0,
+    "name": "Vaasa",
+    "country": "Finland"
+  },
+  {
+    "id": 3258,
+    "lat": 41.915,
+    "long": 8.733333,
+    "name": "Ajaccio",
+    "country": "France"
+  },
+  {
+    "id": 3259,
+    "lat": 50.97416667,
+    "long": 1.896,
+    "name": "Calais",
+    "country": "France"
+  },
+  {
+    "id": 3260,
+    "lat": 43.543333,
+    "long": 7.05,
+    "name": "Cannes",
+    "country": "France"
+  },
+  {
+    "id": 3261,
+    "lat": 50.17223333,
+    "long": 1.48441667,
+    "name": "Cayeux-sur-Mer",
+    "country": "France"
+  },
+  {
+    "id": 3262,
+    "lat": 42.638333,
+    "long": 8.928333,
+    "name": "Ile Rousse",
+    "country": "France"
+  },
+  {
+    "id": 3263,
+    "lat": 48.7463,
+    "long": -3.54723333,
+    "name": "Lannion",
+    "country": "France"
+  },
+  {
+    "id": 3264,
+    "lat": 48.67563333,
+    "long": -2.88341667,
+    "name": "le Palus",
+    "country": "France"
+  },
+  {
+    "id": 3265,
+    "lat": 43.28536284,
+    "long": 5.37469109,
+    "name": "Marseille",
+    "country": "France"
+  },
+  {
+    "id": 3266,
+    "lat": 49.3609727,
+    "long": 1.63522907,
+    "name": "Paris",
+    "country": "France"
+  },
+  {
+    "id": 3267,
+    "lat": 47.8395,
+    "long": -4.34436667,
+    "name": "Penmarch",
+    "country": "France"
+  },
+  {
+    "id": 3268,
+    "lat": 48.56408333,
+    "long": -2.75718333,
+    "name": "Plerin",
+    "country": "France"
+  },
+  {
+    "id": 3269,
+    "lat": 49.89799072,
+    "long": 0.87430839,
+    "name": "Saint-Valery-en-Caux",
+    "country": "France"
+  },
+  {
+    "id": 3270,
+    "lat": 43.075,
+    "long": 5.895,
+    "name": "Toulon",
+    "country": "France"
+  },
+  {
+    "id": 3271,
+    "lat": 49.88275883,
+    "long": 0.77879738,
+    "name": "Veules-les-Roses",
+    "country": "France"
+  },
+  {
+    "id": 3272,
+    "lat": 4.9227,
+    "long": -52.3269,
+    "name": "Cayenne",
+    "country": "French Guiana"
+  },
+  {
+    "id": 3273,
+    "lat": -17.48654856,
+    "long": -149.84177872,
+    "name": "Moorea",
+    "country": "French Polynesia"
+  },
+  {
+    "id": 3274,
+    "lat": -17.509,
+    "long": -149.433593,
+    "name": "Papenoo",
+    "country": "French Polynesia"
+  },
+  {
+    "id": 3275,
+    "lat": -16.70988571,
+    "long": -151.46411429,
+    "name": "Uturoa",
+    "country": "French Polynesia"
+  },
+  {
+    "id": 3276,
+    "lat": -16.517,
+    "long": -151.75,
+    "name": "Vaitape",
+    "country": "French Polynesia"
+  },
+  {
+    "id": 3277,
+    "lat": 0.42691667,
+    "long": 9.42075,
+    "name": "Libreville",
+    "country": "Gabon"
+  },
+  {
+    "id": 3278,
+    "lat": 42.141944,
+    "long": 41.676389,
+    "name": "Poti",
+    "country": "Georgia"
+  },
+  {
+    "id": 3279,
+    "lat": 50.112,
+    "long": 8.685833,
+    "name": "Frankfurt",
+    "country": "Germany"
+  },
+  {
+    "id": 3280,
+    "lat": 53.66816667,
+    "long": 7.28246667,
+    "name": "Norden",
+    "country": "Germany"
+  },
+  {
+    "id": 3281,
+    "lat": 54.5,
+    "long": 11.216667,
+    "name": "Puttgarden",
+    "country": "Germany"
+  },
+  {
+    "id": 3282,
+    "lat": 54.25,
+    "long": 12.466667,
+    "name": "Ribnitz-Damgarten",
+    "country": "Germany"
+  },
+  {
+    "id": 3283,
+    "lat": 54.91,
+    "long": 8.3075,
+    "name": "Westerland",
+    "country": "Germany"
+  },
+  {
+    "id": 3284,
+    "lat": 5.54171667,
+    "long": -0.20441667,
+    "name": "Accra",
+    "country": "Ghana"
+  },
+  {
+    "id": 3285,
+    "lat": 5.552,
+    "long": -0.16908333,
+    "name": "South La",
+    "country": "Ghana"
+  },
+  {
+    "id": 3286,
+    "lat": 36.17363162,
+    "long": -5.31892081,
+    "name": "Gibraltar",
+    "country": "Gibraltar"
+  },
+  {
+    "id": 3287,
+    "lat": 28.1309,
+    "long": -15.44536667,
+    "name": "Las Palmas de Gran Canaria",
+    "country": "Gran Canaria (Spain)"
+  },
+  {
+    "id": 3288,
+    "lat": 35.52132401,
+    "long": 24.00614464,
+    "name": "Chania",
+    "country": "Greece"
+  },
+  {
+    "id": 3289,
+    "lat": 39.666667,
+    "long": 19.75,
+    "name": "Corfu",
+    "country": "Greece"
+  },
+  {
+    "id": 3290,
+    "lat": 37.81500795,
+    "long": 23.83222162,
+    "name": "Koropi",
+    "country": "Greece"
+  },
+  {
+    "id": 3291,
+    "lat": 64.1752729,
+    "long": -51.74211095,
+    "name": "Nuuk",
+    "country": "Greenland"
+  },
+  {
+    "id": 3292,
+    "lat": 60.72573332,
+    "long": -46.1761331,
+    "name": "Qaqortoq",
+    "country": "Greenland"
+  },
+  {
+    "id": 3293,
+    "lat": 12.14120512,
+    "long": -61.74974182,
+    "name": "Port Salines",
+    "country": "Grenada"
+  },
+  {
+    "id": 3294,
+    "lat": 16.27,
+    "long": -61.58,
+    "name": "Baie-Mahault",
+    "country": "Guadeloupe"
+  },
+  {
+    "id": 3295,
+    "lat": 16.016667,
+    "long": -61.75,
+    "name": "Baillif",
+    "country": "Guadeloupe"
+  },
+  {
+    "id": 3296,
+    "lat": 13.460833,
+    "long": 144.690833,
+    "name": "Piti",
+    "country": "Guam"
+  },
+  {
+    "id": 3297,
+    "lat": 13.55334418,
+    "long": 144.81248905,
+    "name": "Tanguisson",
+    "country": "Guam"
+  },
+  {
+    "id": 3298,
+    "lat": 13.52972386,
+    "long": 144.80067889,
+    "name": "Tumon",
+    "country": "Guam"
+  },
+  {
+    "id": 3299,
+    "lat": 15.72313296,
+    "long": -88.58983892,
+    "name": "Puerto Barrios",
+    "country": "Guatemala"
+  },
+  {
+    "id": 3300,
+    "lat": 13.92536921,
+    "long": -90.81766218,
+    "name": "Puerto San Jose",
+    "country": "Guatemala"
+  },
+  {
+    "id": 3301,
+    "lat": 49.50338333,
+    "long": -2.5334,
+    "name": "Lancresse Bay",
+    "country": "Guernsey"
+  },
+  {
+    "id": 3302,
+    "lat": 49.42356667,
+    "long": -2.55801667,
+    "name": "Saint Martin",
+    "country": "Guernsey"
+  },
+  {
+    "id": 3303,
+    "lat": 49.50017469,
+    "long": -2.508459,
+    "name": "Vale",
+    "country": "Guernsey"
+  },
+  {
+    "id": 3304,
+    "lat": 9.5500832,
+    "long": -13.65179194,
+    "name": "Conkary",
+    "country": "Guinea"
+  },
+  {
+    "id": 3305,
+    "lat": 11.85,
+    "long": -15.566667,
+    "name": "Bissau",
+    "country": "Guinea Bissau"
+  },
+  {
+    "id": 3306,
+    "lat": 6.8,
+    "long": -58.166667,
+    "name": "Georgetown",
+    "country": "Guyana"
+  },
+  {
+    "id": 3307,
+    "lat": 21.36419072,
+    "long": -158.12565708,
+    "name": "Kahe Point",
+    "country": "Hawaii"
+  },
+  {
+    "id": 3308,
+    "lat": 21.65094063,
+    "long": -158.23892801,
+    "name": "Keawaula",
+    "country": "Hawaii"
+  },
+  {
+    "id": 3309,
+    "lat": 21.47605454,
+    "long": -158.2334131,
+    "name": "Makaha",
+    "country": "Hawaii"
+  },
+  {
+    "id": 3310,
+    "lat": 21.467,
+    "long": -157.983333,
+    "name": "Oahu",
+    "country": "Hawaii"
+  },
+  {
+    "id": 3311,
+    "lat": 20.0234211,
+    "long": -155.81058449,
+    "name": "Samuel L Spencer Beach",
+    "country": "Hawaii"
+  },
+  {
+    "id": 3312,
+    "lat": 15.84142546,
+    "long": -87.94618857,
+    "name": "Puerto Cortes",
+    "country": "Honduras"
+  },
+  {
+    "id": 3313,
+    "lat": 15.2777965,
+    "long": -83.77115925,
+    "name": "Puerto Lempira",
+    "country": "Honduras"
+  },
+  {
+    "id": 3314,
+    "lat": 15.91448847,
+    "long": -85.95609126,
+    "name": "Trojillo",
+    "country": "Honduras"
+  },
+  {
+    "id": 3315,
+    "lat": 22.20846499,
+    "long": 114.25409792,
+    "name": "Cape D\\Aguilar",
+    "country": "Hong Kong"
+  },
+  {
+    "id": 3316,
+    "lat": 22.21596029,
+    "long": 114.20948303,
+    "name": "Chung Hom Kok",
+    "country": "Hong Kong"
+  },
+  {
+    "id": 3317,
+    "lat": 22.24489012,
+    "long": 114.18413636,
+    "name": "Deep Water Bay",
+    "country": "Hong Kong"
+  },
+  {
+    "id": 3318,
+    "lat": 22.22528,
+    "long": 113.929371,
+    "name": "Lantau",
+    "country": "Hong Kong"
+  },
+  {
+    "id": 3319,
+    "lat": 22.224505,
+    "long": 113.928274,
+    "name": "Tong Fuk",
+    "country": "Hong Kong"
+  },
+  {
+    "id": 3320,
+    "lat": 22.29163284,
+    "long": 114.26998898,
+    "name": "Tseung Kwan O",
+    "country": "Hong Kong"
+  },
+  {
+    "id": 3321,
+    "lat": 63.833,
+    "long": -22.433333,
+    "name": "GrindavÃƒÆ’Ã‚Â­k",
+    "country": "Iceland"
+  },
+  {
+    "id": 3322,
+    "lat": 63.61053333,
+    "long": -20.3458,
+    "name": "Landeyjarsandur",
+    "country": "Iceland"
+  },
+  {
+    "id": 3323,
+    "lat": 64.06834365,
+    "long": -21.9440603,
+    "name": "ReykjavÃƒÆ’Ã‚Â­k",
+    "country": "Iceland"
+  },
+  {
+    "id": 3324,
+    "lat": 65.2832,
+    "long": -13.97731667,
+    "name": "SeyÃƒÆ’Ã‚Â°isfjÃƒÆ’Ã‚Â¶rÃƒÆ’Ã‚Â°ur",
+    "country": "Iceland"
+  },
+  {
+    "id": 3325,
+    "lat": 63.41262497,
+    "long": -20.22573913,
+    "name": "Vestmannaeyjar",
+    "country": "Iceland"
+  },
+  {
+    "id": 3326,
+    "lat": 13.06048488,
+    "long": 80.28714084,
+    "name": "Chennai (Madras)",
+    "country": "India"
+  },
+  {
+    "id": 3327,
+    "lat": 9.9638,
+    "long": 76.2379,
+    "name": "Kochi",
+    "country": "India"
+  },
+  {
+    "id": 3328,
+    "lat": 10.1405,
+    "long": 76.17866667,
+    "name": "Kochi",
+    "country": "India"
+  },
+  {
+    "id": 3329,
+    "lat": 19.08060661,
+    "long": 72.8243698,
+    "name": "Mumbai",
+    "country": "India"
+  },
+  {
+    "id": 3330,
+    "lat": 8.440278,
+    "long": 76.923611,
+    "name": "Thiruvananthapuram",
+    "country": "India"
+  },
+  {
+    "id": 3331,
+    "lat": 8.81,
+    "long": 78.14,
+    "name": "Thoothukudi",
+    "country": "India"
+  },
+  {
+    "id": 3332,
+    "lat": 1.16404151,
+    "long": 104.13632562,
+    "name": "Batam",
+    "country": "Indonesia"
+  },
+  {
+    "id": 3333,
+    "lat": 1.68601592,
+    "long": 101.45580477,
+    "name": "Dumai",
+    "country": "Indonesia"
+  },
+  {
+    "id": 3334,
+    "lat": -6.09815435,
+    "long": 106.84630984,
+    "name": "Jakarta",
+    "country": "Indonesia"
+  },
+  {
+    "id": 3335,
+    "lat": 5.62413381,
+    "long": 95.5693799,
+    "name": "Landnig Station",
+    "country": "Indonesia"
+  },
+  {
+    "id": 3336,
+    "lat": 3.73424353,
+    "long": 98.79902233,
+    "name": "Medan",
+    "country": "Indonesia"
+  },
+  {
+    "id": 3337,
+    "lat": 0.0,
+    "long": 109.333333,
+    "name": "Pontianak",
+    "country": "Indonesia"
+  },
+  {
+    "id": 3338,
+    "lat": 27.183333,
+    "long": 56.266667,
+    "name": "Bandar-Abbas",
+    "country": "Iran"
+  },
+  {
+    "id": 3339,
+    "lat": 28.967,
+    "long": 50.833333,
+    "name": "Bushehr",
+    "country": "Iran"
+  },
+  {
+    "id": 3340,
+    "lat": 25.283333,
+    "long": 60.616667,
+    "name": "Chabahar",
+    "country": "Iran"
+  },
+  {
+    "id": 3341,
+    "lat": 29.567,
+    "long": 50.5,
+    "name": "Ganeveh",
+    "country": "Iran"
+  },
+  {
+    "id": 3342,
+    "lat": 29.98,
+    "long": 48.467,
+    "name": "Al Faw",
+    "country": "Iraq"
+  },
+  {
+    "id": 3343,
+    "lat": 54.30228333,
+    "long": -5.55426667,
+    "name": "Ballyhornan",
+    "country": "Ireland"
+  },
+  {
+    "id": 3344,
+    "lat": 54.53991667,
+    "long": -5.48376667,
+    "name": "Ballywalter",
+    "country": "Ireland"
+  },
+  {
+    "id": 3345,
+    "lat": 54.225,
+    "long": -9.991,
+    "name": "Belmullet",
+    "country": "Ireland"
+  },
+  {
+    "id": 3346,
+    "lat": 54.68206667,
+    "long": -5.8828,
+    "name": "Carrickfergus",
+    "country": "Ireland"
+  },
+  {
+    "id": 3347,
+    "lat": 53.383333,
+    "long": -6.2,
+    "name": "Clonshaugh",
+    "country": "Ireland"
+  },
+  {
+    "id": 3348,
+    "lat": 55.19858333,
+    "long": -6.66068333,
+    "name": "Coleraine",
+    "country": "Ireland"
+  },
+  {
+    "id": 3349,
+    "lat": 51.87984327,
+    "long": -8.28348209,
+    "name": "Cork",
+    "country": "Ireland"
+  },
+  {
+    "id": 3350,
+    "lat": 53.39633333,
+    "long": -6.12516667,
+    "name": "Dublin",
+    "country": "Ireland"
+  },
+  {
+    "id": 3351,
+    "lat": 53.43256667,
+    "long": -6.12443333,
+    "name": "Dublin",
+    "country": "Ireland"
+  },
+  {
+    "id": 3352,
+    "lat": 53.32381667,
+    "long": -6.20643333,
+    "name": "Dublin",
+    "country": "Ireland"
+  },
+  {
+    "id": 3353,
+    "lat": 53.3852,
+    "long": -6.10116667,
+    "name": "Dublin",
+    "country": "Ireland"
+  },
+  {
+    "id": 3354,
+    "lat": 52.1747,
+    "long": -6.59338333,
+    "name": "Kilmore Quay",
+    "country": "Ireland"
+  },
+  {
+    "id": 3355,
+    "lat": 52.1763,
+    "long": -6.5929,
+    "name": "Kilmore Quay",
+    "country": "Ireland"
+  },
+  {
+    "id": 3356,
+    "lat": 54.17528333,
+    "long": -4.42156667,
+    "name": "Groudle Bay",
+    "country": "Isle of Man"
+  },
+  {
+    "id": 3357,
+    "lat": 54.10263333,
+    "long": -4.57783333,
+    "name": "LANIS-1 Landing",
+    "country": "Isle of Man"
+  },
+  {
+    "id": 3358,
+    "lat": 54.2241,
+    "long": -4.6925,
+    "name": "Peel",
+    "country": "Isle of Man"
+  },
+  {
+    "id": 3359,
+    "lat": 32.83101719,
+    "long": 34.96340205,
+    "name": "Haifa",
+    "country": "Israel"
+  },
+  {
+    "id": 3360,
+    "lat": 33.03765864,
+    "long": 35.09262027,
+    "name": "Nahariya",
+    "country": "Israel"
+  },
+  {
+    "id": 3361,
+    "lat": 32.05606645,
+    "long": 34.74094175,
+    "name": "Tel Aviv",
+    "country": "Israel"
+  },
+  {
+    "id": 3362,
+    "lat": 41.13072045,
+    "long": 9.56136131,
+    "name": "Aranci",
+    "country": "Italy"
+  },
+  {
+    "id": 3363,
+    "lat": 41.125278,
+    "long": 16.866667,
+    "name": "Bari",
+    "country": "Italy"
+  },
+  {
+    "id": 3364,
+    "lat": 37.49872053,
+    "long": 15.09858668,
+    "name": "Catania",
+    "country": "Italy"
+  },
+  {
+    "id": 3365,
+    "lat": 37.66771553,
+    "long": 12.54163785,
+    "name": "Mazara",
+    "country": "Italy"
+  },
+  {
+    "id": 3366,
+    "lat": 37.63594812,
+    "long": 12.54571105,
+    "name": "Mazara del Vallo",
+    "country": "Italy"
+  },
+  {
+    "id": 3367,
+    "lat": 40.15,
+    "long": 18.483333,
+    "name": "Otranto",
+    "country": "Italy"
+  },
+  {
+    "id": 3368,
+    "lat": 38.1794108,
+    "long": 13.09313892,
+    "name": "Palermo",
+    "country": "Italy"
+  },
+  {
+    "id": 3369,
+    "lat": 36.733333,
+    "long": 14.85,
+    "name": "Pozallo",
+    "country": "Italy"
+  },
+  {
+    "id": 3370,
+    "lat": 44.3,
+    "long": 8.483333,
+    "name": "Savona",
+    "country": "Italy"
+  },
+  {
+    "id": 3371,
+    "lat": 38.016667,
+    "long": 12.516667,
+    "name": "Trapani",
+    "country": "Italy"
+  },
+  {
+    "id": 3372,
+    "lat": 17.95,
+    "long": -76.716667,
+    "name": "Harbour View",
+    "country": "Jamaica"
+  },
+  {
+    "id": 3373,
+    "lat": 17.983333,
+    "long": -76.8,
+    "name": "Kingston",
+    "country": "Jamaica"
+  },
+  {
+    "id": 3374,
+    "lat": 18.466667,
+    "long": -77.916667,
+    "name": "Montego Bay",
+    "country": "Jamaica"
+  },
+  {
+    "id": 3375,
+    "lat": 17.91492,
+    "long": -76.188169,
+    "name": "Morant Point",
+    "country": "Jamaica"
+  },
+  {
+    "id": 3376,
+    "lat": 18.416667,
+    "long": -77.116667,
+    "name": "Ocho Rios",
+    "country": "Jamaica"
+  },
+  {
+    "id": 3377,
+    "lat": 18.417,
+    "long": -77.116667,
+    "name": "Ocho Rios",
+    "country": "Jamaica"
+  },
+  {
+    "id": 3378,
+    "lat": 36.380301,
+    "long": 140.616147,
+    "name": "Ajigaura",
+    "country": "Japan"
+  },
+  {
+    "id": 3379,
+    "lat": 34.97047,
+    "long": 139.960195,
+    "name": "Chikura",
+    "country": "Japan"
+  },
+  {
+    "id": 3380,
+    "lat": 35.05943,
+    "long": 140.050336,
+    "name": "Emi",
+    "country": "Japan"
+  },
+  {
+    "id": 3381,
+    "lat": 33.600519,
+    "long": 130.370293,
+    "name": "Fukuoka",
+    "country": "Japan"
+  },
+  {
+    "id": 3382,
+    "lat": 43.166667,
+    "long": 141.316667,
+    "name": "Ishikari",
+    "country": "Japan"
+  },
+  {
+    "id": 3383,
+    "lat": 36.792527,
+    "long": 140.741799,
+    "name": "Kitaibaraki",
+    "country": "Japan"
+  },
+  {
+    "id": 3384,
+    "lat": 33.937,
+    "long": 130.711,
+    "name": "Kita-Kyushu",
+    "country": "Japan"
+  },
+  {
+    "id": 3385,
+    "lat": 35.005963,
+    "long": 139.974752,
+    "name": "Maruyama",
+    "country": "Japan"
+  },
+  {
+    "id": 3386,
+    "lat": 35.13075356,
+    "long": 139.63831891,
+    "name": "Miura",
+    "country": "Japan"
+  },
+  {
+    "id": 3387,
+    "lat": 32.218429,
+    "long": 131.562095,
+    "name": "Miyazaki",
+    "country": "Japan"
+  },
+  {
+    "id": 3388,
+    "lat": 37.170251,
+    "long": 138.224702,
+    "name": "Naoetsu",
+    "country": "Japan"
+  },
+  {
+    "id": 3389,
+    "lat": 35.29532832,
+    "long": 139.25469422,
+    "name": "Ninomiya",
+    "country": "Japan"
+  },
+  {
+    "id": 3390,
+    "lat": 26.212411,
+    "long": 127.675053,
+    "name": "Okinawa",
+    "country": "Japan"
+  },
+  {
+    "id": 3391,
+    "lat": 34.322629,
+    "long": 136.87935,
+    "name": "Shima",
+    "country": "Japan"
+  },
+  {
+    "id": 3392,
+    "lat": 35.68325163,
+    "long": 139.69768411,
+    "name": "Tokyo",
+    "country": "Japan"
+  },
+  {
+    "id": 3393,
+    "lat": 42.63299942,
+    "long": 141.59500122,
+    "name": "Tomakomai",
+    "country": "Japan"
+  },
+  {
+    "id": 3394,
+    "lat": 34.678846,
+    "long": 137.468086,
+    "name": "Toyohashi",
+    "country": "Japan"
+  },
+  {
+    "id": 3395,
+    "lat": 35.026511,
+    "long": 139.994003,
+    "name": "Wada",
+    "country": "Japan"
+  },
+  {
+    "id": 3396,
+    "lat": 29.516667,
+    "long": 35.0,
+    "name": "Aqaba",
+    "country": "Jordan"
+  },
+  {
+    "id": 3397,
+    "lat": -4.05971467,
+    "long": 39.68928107,
+    "name": "Mombasa",
+    "country": "Kenya"
+  },
+  {
+    "id": 3398,
+    "lat": -1.28,
+    "long": 36.81,
+    "name": "Nairobi",
+    "country": "Kenya"
+  },
+  {
+    "id": 3399,
+    "lat": -4.02621238,
+    "long": 39.71129668,
+    "name": "Nyali",
+    "country": "Kenya"
+  },
+  {
+    "id": 3400,
+    "lat": 29.369722,
+    "long": 47.978333,
+    "name": "Kuwait City",
+    "country": "Kuwait"
+  },
+  {
+    "id": 3401,
+    "lat": 8.717,
+    "long": 167.733333,
+    "name": "Reagan Test Site",
+    "country": "Kwajalein"
+  },
+  {
+    "id": 3402,
+    "lat": 56.511667,
+    "long": 21.013889,
+    "name": "Liepaja",
+    "country": "Latvia"
+  },
+  {
+    "id": 3403,
+    "lat": 57.383333,
+    "long": 21.55,
+    "name": "Ventspils",
+    "country": "Latvia"
+  },
+  {
+    "id": 3404,
+    "lat": 33.90474306,
+    "long": 35.55173224,
+    "name": "Beirut",
+    "country": "Lebanon"
+  },
+  {
+    "id": 3405,
+    "lat": 34.433333,
+    "long": 35.85,
+    "name": "Tripoli",
+    "country": "Lebanon"
+  },
+  {
+    "id": 3406,
+    "lat": 6.30219347,
+    "long": -10.80545436,
+    "name": "Monrovia",
+    "country": "Liberia"
+  },
+  {
+    "id": 3407,
+    "lat": 32.767,
+    "long": 22.633333,
+    "name": "Derna",
+    "country": "Libya"
+  },
+  {
+    "id": 3408,
+    "lat": 32.84785,
+    "long": 13.46823333,
+    "name": "Tripoli",
+    "country": "Libya"
+  },
+  {
+    "id": 3409,
+    "lat": 56.025278,
+    "long": 21.081667,
+    "name": "Sventoji",
+    "country": "Lithuania"
+  },
+  {
+    "id": 3410,
+    "lat": 22.18700114,
+    "long": 113.55185748,
+    "name": "Taipa",
+    "country": "Macau"
+  },
+  {
+    "id": 3411,
+    "lat": -18.015,
+    "long": 49.41666667,
+    "name": "Toamasina",
+    "country": "Madagascar"
+  },
+  {
+    "id": 3412,
+    "lat": -23.40926309,
+    "long": 43.69802068,
+    "name": "Toliara",
+    "country": "Madagascar"
+  },
+  {
+    "id": 3413,
+    "lat": 32.63653838,
+    "long": -16.91140369,
+    "name": "Funchal",
+    "country": "Madeira Islands"
+  },
+  {
+    "id": 3414,
+    "lat": 3.76746162,
+    "long": 103.34258444,
+    "name": "Kuantan",
+    "country": "Malaysia"
+  },
+  {
+    "id": 3415,
+    "lat": 2.18909638,
+    "long": 102.24138427,
+    "name": "Malacca Town",
+    "country": "Malaysia"
+  },
+  {
+    "id": 3416,
+    "lat": 2.43553793,
+    "long": 103.85956909,
+    "name": "Mersing",
+    "country": "Malaysia"
+  },
+  {
+    "id": 3417,
+    "lat": 5.56165,
+    "long": 100.3581333,
+    "name": "Penang",
+    "country": "Malaysia"
+  },
+  {
+    "id": 3418,
+    "lat": 4.216667,
+    "long": 73.533333,
+    "name": "Hulhumale",
+    "country": "Maldives"
+  },
+  {
+    "id": 3419,
+    "lat": 4.175,
+    "long": 73.508889,
+    "name": "Male",
+    "country": "Maldives"
+  },
+  {
+    "id": 3420,
+    "lat": 35.91528,
+    "long": 14.49417,
+    "name": "Balluta Bay",
+    "country": "Malta"
+  },
+  {
+    "id": 3421,
+    "lat": 35.94762231,
+    "long": 14.46657203,
+    "name": "St George\\s Bay",
+    "country": "Malta"
+  },
+  {
+    "id": 3422,
+    "lat": 35.98697853,
+    "long": 14.39017466,
+    "name": "St Paul\\s Bay",
+    "country": "Malta"
+  },
+  {
+    "id": 3423,
+    "lat": 8.780278,
+    "long": 167.737222,
+    "name": "Ebeye",
+    "country": "Marshall Islands"
+  },
+  {
+    "id": 3424,
+    "lat": 7.066667,
+    "long": 171.266667,
+    "name": "Majuro",
+    "country": "Marshall Islands"
+  },
+  {
+    "id": 3425,
+    "lat": 14.55751016,
+    "long": -61.09717846,
+    "name": "Le Lamentin",
+    "country": "Martinique"
+  },
+  {
+    "id": 3426,
+    "lat": 14.81603488,
+    "long": -61.23097369,
+    "name": "Martinique",
+    "country": "Martinique"
+  },
+  {
+    "id": 3427,
+    "lat": 18.07061755,
+    "long": -16.03602173,
+    "name": "Nouakchott",
+    "country": "Mauritania"
+  },
+  {
+    "id": 3428,
+    "lat": -20.50116667,
+    "long": 57.44756667,
+    "name": "Baie du Jacotet",
+    "country": "Mauritius"
+  },
+  {
+    "id": 3429,
+    "lat": -20.50105,
+    "long": 57.44608333,
+    "name": "Baie du Jacotet",
+    "country": "Mauritius"
+  },
+  {
+    "id": 3430,
+    "lat": -20.04122686,
+    "long": 57.51115821,
+    "name": "Terre Rouge",
+    "country": "Mauritius"
+  },
+  {
+    "id": 3431,
+    "lat": -12.74261772,
+    "long": 45.1668757,
+    "name": "LION2 Landing Site",
+    "country": "Mayotte"
+  },
+  {
+    "id": 3432,
+    "lat": 21.04218946,
+    "long": -86.81361065,
+    "name": "Cancun",
+    "country": "Mexico"
+  },
+  {
+    "id": 3433,
+    "lat": 23.22,
+    "long": -106.42,
+    "name": "MazatlÃƒÆ’Ã‚Â¡n",
+    "country": "Mexico"
+  },
+  {
+    "id": 3434,
+    "lat": 32.525,
+    "long": -117.033333,
+    "name": "Tijuana",
+    "country": "Mexico"
+  },
+  {
+    "id": 3435,
+    "lat": 20.21820141,
+    "long": -87.4236701,
+    "name": "Tulum",
+    "country": "Mexico"
+  },
+  {
+    "id": 3436,
+    "lat": 6.85,
+    "long": 158.216667,
+    "name": "Pohnpei",
+    "country": "Micronesia"
+  },
+  {
+    "id": 3437,
+    "lat": 43.7327,
+    "long": 7.4197,
+    "name": "Monaco",
+    "country": "Monaco"
+  },
+  {
+    "id": 3438,
+    "lat": 42.1,
+    "long": 19.1,
+    "name": "Bar",
+    "country": "Montenegro"
+  },
+  {
+    "id": 3439,
+    "lat": 16.71599579,
+    "long": -62.22910984,
+    "name": "Montserrat",
+    "country": "Montserrat"
+  },
+  {
+    "id": 3440,
+    "lat": 35.466667,
+    "long": -6.033333,
+    "name": "Asilah",
+    "country": "Morocco"
+  },
+  {
+    "id": 3441,
+    "lat": 33.62035526,
+    "long": -7.61997553,
+    "name": "Casablanca",
+    "country": "Morocco"
+  },
+  {
+    "id": 3442,
+    "lat": 35.62100705,
+    "long": -5.27243357,
+    "name": "Tetuan",
+    "country": "Morocco"
+  },
+  {
+    "id": 3443,
+    "lat": -25.97461783,
+    "long": 32.59493428,
+    "name": "Maputo",
+    "country": "Mozambique"
+  },
+  {
+    "id": 3444,
+    "lat": -5.94905833,
+    "long": 12.353,
+    "name": "Pointe-Noire",
+    "country": "Muanda"
+  },
+  {
+    "id": 3445,
+    "lat": 16.858,
+    "long": 94.391667,
+    "name": "Ngwesaung",
+    "country": "Myanmar"
+  },
+  {
+    "id": 3446,
+    "lat": 16.16976735,
+    "long": 95.79204551,
+    "name": "Pyapon",
+    "country": "Myanmar"
+  },
+  {
+    "id": 3447,
+    "lat": -22.674,
+    "long": 14.52366667,
+    "name": "Swakopmunt",
+    "country": "Namibia"
+  },
+  {
+    "id": 3448,
+    "lat": 52.373,
+    "long": 4.892222,
+    "name": "Amsterdam",
+    "country": "Netherlands"
+  },
+  {
+    "id": 3449,
+    "lat": 52.48761428,
+    "long": 4.58623045,
+    "name": "Beverwijk",
+    "country": "Netherlands"
+  },
+  {
+    "id": 3450,
+    "lat": 52.54931462,
+    "long": 4.60402043,
+    "name": "Castricum",
+    "country": "Netherlands"
+  },
+  {
+    "id": 3451,
+    "lat": 51.564,
+    "long": 3.4925,
+    "name": "Domburg",
+    "country": "Netherlands"
+  },
+  {
+    "id": 3452,
+    "lat": 53.4623,
+    "long": 6.81381667,
+    "name": "Eemshaven",
+    "country": "Netherlands"
+  },
+  {
+    "id": 3453,
+    "lat": 52.61891409,
+    "long": 4.62649914,
+    "name": "Egmond aan Zee",
+    "country": "Netherlands"
+  },
+  {
+    "id": 3454,
+    "lat": 52.44616667,
+    "long": 4.56528333,
+    "name": "IJmuiden",
+    "country": "Netherlands"
+  },
+  {
+    "id": 3455,
+    "lat": 52.28218059,
+    "long": 4.46262404,
+    "name": "Katwijk",
+    "country": "Netherlands"
+  },
+  {
+    "id": 3456,
+    "lat": 52.36758333,
+    "long": 4.52148333,
+    "name": "Zandvoort",
+    "country": "Netherlands"
+  },
+  {
+    "id": 3457,
+    "lat": 52.37776667,
+    "long": 4.52736667,
+    "name": "Zandvoort",
+    "country": "Netherlands"
+  },
+  {
+    "id": 3458,
+    "lat": 52.38546667,
+    "long": 4.53381667,
+    "name": "Zandvoort",
+    "country": "Netherlands"
+  },
+  {
+    "id": 3459,
+    "lat": 12.15942893,
+    "long": -68.20558673,
+    "name": "Bonaire",
+    "country": "Netherlands Antilles"
+  },
+  {
+    "id": 3460,
+    "lat": 18.09499968,
+    "long": -62.98646753,
+    "name": "St Martin",
+    "country": "Netherlands Antilles"
+  },
+  {
+    "id": 3461,
+    "lat": 12.09781584,
+    "long": -68.93588842,
+    "name": "Willemstad",
+    "country": "Netherlands Antilles"
+  },
+  {
+    "id": 3462,
+    "lat": -20.76421234,
+    "long": 167.13266948,
+    "name": "Lifou",
+    "country": "New Caledonia"
+  },
+  {
+    "id": 3463,
+    "lat": -20.723611,
+    "long": 166.430556,
+    "name": "Mouli Island",
+    "country": "New Caledonia"
+  },
+  {
+    "id": 3464,
+    "lat": -22.276,
+    "long": 166.458,
+    "name": "NoumÃƒÆ’Ã‚Â©a",
+    "country": "New Caledonia"
+  },
+  {
+    "id": 3465,
+    "lat": -20.949611,
+    "long": 165.3293,
+    "name": "Poindimie",
+    "country": "New Caledonia"
+  },
+  {
+    "id": 3466,
+    "lat": -36.840417,
+    "long": 174.739869,
+    "name": "Auckland",
+    "country": "New Zealand"
+  },
+  {
+    "id": 3467,
+    "lat": -36.78919,
+    "long": 174.77231,
+    "name": "Takapuna",
+    "country": "New Zealand"
+  },
+  {
+    "id": 3468,
+    "lat": -35.725,
+    "long": 174.323611,
+    "name": "Whangarei",
+    "country": "New Zealand"
+  },
+  {
+    "id": 3469,
+    "lat": -36.95988413,
+    "long": 174.46558036,
+    "name": "Whenuapai",
+    "country": "New Zealand"
+  },
+  {
+    "id": 3470,
+    "lat": 12.00735687,
+    "long": -83.75376329,
+    "name": "Bluefields",
+    "country": "Nicaragua"
+  },
+  {
+    "id": 3471,
+    "lat": 14.03224609,
+    "long": -83.37801066,
+    "name": "Puerto Cabezas",
+    "country": "Nicaragua"
+  },
+  {
+    "id": 3472,
+    "lat": 4.449167,
+    "long": 7.24,
+    "name": "Bonny Island",
+    "country": "Nigeria"
+  },
+  {
+    "id": 3473,
+    "lat": 6.42236667,
+    "long": 3.42833333,
+    "name": "Lagos",
+    "country": "Nigeria"
+  },
+  {
+    "id": 3474,
+    "lat": 6.41710875,
+    "long": 3.58409016,
+    "name": "Lagos",
+    "country": "Nigeria"
+  },
+  {
+    "id": 3475,
+    "lat": 6.426,
+    "long": 3.64021667,
+    "name": "Lekki",
+    "country": "Nigeria"
+  },
+  {
+    "id": 3476,
+    "lat": -29.00506043,
+    "long": 167.91534608,
+    "name": "Hawaiki Landing",
+    "country": "Norfolk"
+  },
+  {
+    "id": 3477,
+    "lat": 69.094444,
+    "long": 15.764444,
+    "name": "AndÃƒÆ’Ã‚Â¸y",
+    "country": "Norway"
+  },
+  {
+    "id": 3478,
+    "lat": 58.42683333,
+    "long": 8.77516667,
+    "name": "Arendal",
+    "country": "Norway"
+  },
+  {
+    "id": 3479,
+    "lat": 68.8,
+    "long": 16.545833,
+    "name": "Harstad",
+    "country": "Norway"
+  },
+  {
+    "id": 3480,
+    "lat": 78.25,
+    "long": 15.491667,
+    "name": "Hotellneset",
+    "country": "Norway"
+  },
+  {
+    "id": 3481,
+    "lat": 58.13483333,
+    "long": 8.01116667,
+    "name": "Kristiansand",
+    "country": "Norway"
+  },
+  {
+    "id": 3482,
+    "lat": 59.27421243,
+    "long": 5.50296652,
+    "name": "TysvÃƒÆ’Ã‚Â¦r",
+    "country": "Norway"
+  },
+  {
+    "id": 3483,
+    "lat": 23.680278,
+    "long": 58.1825,
+    "name": "Al Seeb",
+    "country": "Oman"
+  },
+  {
+    "id": 3484,
+    "lat": 23.73355648,
+    "long": 57.74694221,
+    "name": "Barka",
+    "country": "Oman"
+  },
+  {
+    "id": 3485,
+    "lat": 26.183333,
+    "long": 56.25,
+    "name": "Khasab",
+    "country": "Oman"
+  },
+  {
+    "id": 3486,
+    "lat": 23.62782389,
+    "long": 58.62932839,
+    "name": "Muscat",
+    "country": "Oman"
+  },
+  {
+    "id": 3487,
+    "lat": 45.597778,
+    "long": -123.944722,
+    "name": "Twin Rocks",
+    "country": "Oregon"
+  },
+  {
+    "id": 3488,
+    "lat": 24.81917247,
+    "long": 67.01283613,
+    "name": "Karachi",
+    "country": "Pakistan"
+  },
+  {
+    "id": 3489,
+    "lat": 8.95,
+    "long": -79.56666,
+    "name": "Balboa",
+    "country": "Panama"
+  },
+  {
+    "id": 3490,
+    "lat": 9.38035438,
+    "long": -79.87336909,
+    "name": "Battery Pratt",
+    "country": "Panama"
+  },
+  {
+    "id": 3491,
+    "lat": 9.35594597,
+    "long": -79.89939892,
+    "name": "Colon",
+    "country": "Panama"
+  },
+  {
+    "id": 3492,
+    "lat": 8.933333,
+    "long": -79.55,
+    "name": "Fort Amador",
+    "country": "Panama"
+  },
+  {
+    "id": 3493,
+    "lat": 9.4536306,
+    "long": -79.73181839,
+    "name": "Maria Chiquita",
+    "country": "Panama"
+  },
+  {
+    "id": 3494,
+    "lat": 9.13354502,
+    "long": -77.91915983,
+    "name": "Ustupo",
+    "country": "Panama"
+  },
+  {
+    "id": 3495,
+    "lat": -5.21000004,
+    "long": 145.78700256,
+    "name": "Madang",
+    "country": "Papua New Guinea"
+  },
+  {
+    "id": 3496,
+    "lat": -9.47815297,
+    "long": 147.1951221,
+    "name": "Port Moresby",
+    "country": "Papua New Guinea"
+  },
+  {
+    "id": 3497,
+    "lat": -12.28115617,
+    "long": -76.90875023,
+    "name": "Lurin",
+    "country": "Peru"
+  },
+  {
+    "id": 3498,
+    "lat": -4.1,
+    "long": -81.05,
+    "name": "Mancora",
+    "country": "Peru"
+  },
+  {
+    "id": 3499,
+    "lat": 13.74894386,
+    "long": 121.04736369,
+    "name": "Batangas",
+    "country": "Philippines"
+  },
+  {
+    "id": 3500,
+    "lat": 14.36831065,
+    "long": 120.80969356,
+    "name": "Capepisa",
+    "country": "Philippines"
+  },
+  {
+    "id": 3501,
+    "lat": 14.117,
+    "long": 122.95,
+    "name": "Daet",
+    "country": "Philippines"
+  },
+  {
+    "id": 3502,
+    "lat": 16.5,
+    "long": 120.416667,
+    "name": "La Union",
+    "country": "Philippines"
+  },
+  {
+    "id": 3503,
+    "lat": 14.07156017,
+    "long": 120.61229127,
+    "name": "Nasugbu",
+    "country": "Philippines"
+  },
+  {
+    "id": 3504,
+    "lat": 18.4,
+    "long": 121.516667,
+    "name": "Ballesteros",
+    "country": "Phillipines"
+  },
+  {
+    "id": 3505,
+    "lat": 54.183333,
+    "long": 15.583333,
+    "name": "Kolobrzeg",
+    "country": "Poland"
+  },
+  {
+    "id": 3506,
+    "lat": 54.26,
+    "long": 16.060833,
+    "name": "Mielno",
+    "country": "Poland"
+  },
+  {
+    "id": 3507,
+    "lat": 38.572,
+    "long": -9.19524833,
+    "name": "Fonte da Telha beach (BMH2)",
+    "country": "Portugal"
+  },
+  {
+    "id": 3508,
+    "lat": 38.7114704,
+    "long": -9.47869605,
+    "name": "Lisbon",
+    "country": "Portugal"
+  },
+  {
+    "id": 3509,
+    "lat": 37.10020485,
+    "long": -8.43412389,
+    "name": "Portimao",
+    "country": "Portugal"
+  },
+  {
+    "id": 3510,
+    "lat": 38.60635,
+    "long": -9.21148333,
+    "name": "Seixal",
+    "country": "Portugal"
+  },
+  {
+    "id": 3511,
+    "lat": 38.43565324,
+    "long": -9.11282662,
+    "name": "Sesimbra",
+    "country": "Portugal"
+  },
+  {
+    "id": 3512,
+    "lat": 14.904,
+    "long": -23.51766667,
+    "name": "Cape Verde",
+    "country": "Praia da Quebra Canela"
+  },
+  {
+    "id": 3513,
+    "lat": 18.439444,
+    "long": -66.01,
+    "name": "Isla Verde",
+    "country": "Puerto Rico"
+  },
+  {
+    "id": 3514,
+    "lat": 18.453889,
+    "long": -66.0825,
+    "name": "Miramar",
+    "country": "Puerto Rico"
+  },
+  {
+    "id": 3515,
+    "lat": 18.45429797,
+    "long": -66.0098887,
+    "name": "San Juan",
+    "country": "Puerto Rico"
+  },
+  {
+    "id": 3516,
+    "lat": 25.286667,
+    "long": 51.533333,
+    "name": "Doha",
+    "country": "Qatar"
+  },
+  {
+    "id": 3517,
+    "lat": 25.667,
+    "long": 52.41666666,
+    "name": "Halul",
+    "country": "Qatar"
+  },
+  {
+    "id": 3518,
+    "lat": 25.57472,
+    "long": 51.48639,
+    "name": "Sumaisma",
+    "country": "Qatar"
+  },
+  {
+    "id": 3519,
+    "lat": 11.57324647,
+    "long": 43.16205123,
+    "name": "Djibouti",
+    "country": "Republic of Djibouti"
+  },
+  {
+    "id": 3520,
+    "lat": -20.9,
+    "long": 55.53333333,
+    "name": "Sainte Marie",
+    "country": "Reunion"
+  },
+  {
+    "id": 3521,
+    "lat": -20.99563333,
+    "long": 55.2796,
+    "name": "Saint-Paul",
+    "country": "Reunion"
+  },
+  {
+    "id": 3522,
+    "lat": -20.99868333,
+    "long": 55.27825,
+    "name": "Saint-Paul",
+    "country": "Reunion"
+  },
+  {
+    "id": 3523,
+    "lat": 43.81233712,
+    "long": 28.5870257,
+    "name": "Mangalia",
+    "country": "Romania"
+  },
+  {
+    "id": 3524,
+    "lat": 64.73338999,
+    "long": 177.50788035,
+    "name": "Anaduir",
+    "country": "Russia"
+  },
+  {
+    "id": 3525,
+    "lat": 64.533,
+    "long": 40.533333,
+    "name": "Arkhangelsk",
+    "country": "Russia"
+  },
+  {
+    "id": 3526,
+    "lat": 59.55129102,
+    "long": 150.78750101,
+    "name": "Magadan",
+    "country": "Russia"
+  },
+  {
+    "id": 3527,
+    "lat": 59.55129102,
+    "long": 150.78750101,
+    "name": "Magadan",
+    "country": "Russia"
+  },
+  {
+    "id": 3528,
+    "lat": 68.99546626,
+    "long": 33.10992683,
+    "name": "Murmansk",
+    "country": "Russia"
+  },
+  {
+    "id": 3529,
+    "lat": 68.99546626,
+    "long": 33.10992683,
+    "name": "Murmansk",
+    "country": "Russia"
+  },
+  {
+    "id": 3530,
+    "lat": 42.74823012,
+    "long": 132.84721405,
+    "name": "Nakhodka",
+    "country": "Russia"
+  },
+  {
+    "id": 3531,
+    "lat": 46.65,
+    "long": 141.866667,
+    "name": "Nevelsk",
+    "country": "Russia"
+  },
+  {
+    "id": 3532,
+    "lat": 44.63247951,
+    "long": 37.78609679,
+    "name": "Novorossiysk",
+    "country": "Russia"
+  },
+  {
+    "id": 3533,
+    "lat": 53.60460417,
+    "long": 143.02784559,
+    "name": "Okha (Sakhalin)",
+    "country": "Russia"
+  },
+  {
+    "id": 3534,
+    "lat": 59.56247773,
+    "long": 151.26954232,
+    "name": "Ola (Magadan)",
+    "country": "Russia"
+  },
+  {
+    "id": 3535,
+    "lat": 53.05501747,
+    "long": 158.63227094,
+    "name": "Petropavlovsk-Kamchatskiy",
+    "country": "Russia"
+  },
+  {
+    "id": 3536,
+    "lat": 53.05501747,
+    "long": 158.63227094,
+    "name": "Petropavlovsk-Kamchatskiy",
+    "country": "Russia"
+  },
+  {
+    "id": 3537,
+    "lat": 53.05501747,
+    "long": 158.63227094,
+    "name": "Petropavlovsk-Kamchatskiy",
+    "country": "Russia"
+  },
+  {
+    "id": 3538,
+    "lat": 43.585278,
+    "long": 39.720278,
+    "name": "Sochi",
+    "country": "Russia"
+  },
+  {
+    "id": 3539,
+    "lat": 59.889722,
+    "long": 29.085556,
+    "name": "Sosnovy",
+    "country": "Russia"
+  },
+  {
+    "id": 3540,
+    "lat": 46.95746334,
+    "long": 142.73777669,
+    "name": "Ujno-Sahalinsk",
+    "country": "Russia"
+  },
+  {
+    "id": 3541,
+    "lat": 52.82957276,
+    "long": 156.27126559,
+    "name": "Ust-Bolsheretsk (Kamchatka)",
+    "country": "Russia"
+  },
+  {
+    "id": 3542,
+    "lat": 43.133333,
+    "long": 131.9,
+    "name": "Vladivostok",
+    "country": "Russia"
+  },
+  {
+    "id": 3543,
+    "lat": -1.93333,
+    "long": 30.05,
+    "name": "Kigali",
+    "country": "Rwanda"
+  },
+  {
+    "id": 3544,
+    "lat": 0.2923826,
+    "long": 6.76339479,
+    "name": "Santana",
+    "country": "SÃƒÆ’Ã‚Â£o TomÃƒÆ’Ã‚Â© and PrÃƒÆ’Ã‚Â­ncipe"
+  },
+  {
+    "id": 3545,
+    "lat": 17.3,
+    "long": -62.733333,
+    "name": "Basseterre",
+    "country": "Saint Kitts and Nevis"
+  },
+  {
+    "id": 3546,
+    "lat": 18.07037904,
+    "long": -63.07499596,
+    "name": "Galisbay",
+    "country": "Saint-Martin"
+  },
+  {
+    "id": 3547,
+    "lat": -13.833333,
+    "long": -171.766667,
+    "name": "Apia",
+    "country": "Samoa"
+  },
+  {
+    "id": 3548,
+    "lat": -14.279444,
+    "long": -170.700556,
+    "name": "Pago Pago",
+    "country": "Samoa"
+  },
+  {
+    "id": 3549,
+    "lat": 26.283333,
+    "long": 50.2,
+    "name": "Al-Khobar",
+    "country": "Saudi Arabia"
+  },
+  {
+    "id": 3550,
+    "lat": 21.53149855,
+    "long": 39.14107616,
+    "name": "Jeddah",
+    "country": "Saudi Arabia"
+  },
+  {
+    "id": 3551,
+    "lat": 23.76891115,
+    "long": 38.50031319,
+    "name": "Yanbu",
+    "country": "Saudi Arabia"
+  },
+  {
+    "id": 3552,
+    "lat": 58.59413333,
+    "long": -3.37316667,
+    "name": "Dunnet Bay",
+    "country": "Scotland"
+  },
+  {
+    "id": 3553,
+    "lat": 55.96093244,
+    "long": -3.31648444,
+    "name": "Edinburgh",
+    "country": "Scotland"
+  },
+  {
+    "id": 3554,
+    "lat": 14.67261333,
+    "long": -17.448545,
+    "name": "Dakar",
+    "country": "Senegal"
+  },
+  {
+    "id": 3555,
+    "lat": -4.6167,
+    "long": 55.45,
+    "name": "Victoria",
+    "country": "Seychelles"
+  },
+  {
+    "id": 3556,
+    "lat": 8.49021113,
+    "long": -13.28200181,
+    "name": "Freetown",
+    "country": "Sierra Leone"
+  },
+  {
+    "id": 3557,
+    "lat": 1.34636181,
+    "long": 103.97,
+    "name": "Changi",
+    "country": "Singapore"
+  },
+  {
+    "id": 3558,
+    "lat": 1.30546998,
+    "long": 103.93064017,
+    "name": "Katong",
+    "country": "Singapore"
+  },
+  {
+    "id": 3559,
+    "lat": 1.31939267,
+    "long": 103.64121321,
+    "name": "Tuas",
+    "country": "Singapore"
+  },
+  {
+    "id": 3560,
+    "lat": 1.31649506,
+    "long": 103.64507669,
+    "name": "Tuas",
+    "country": "Singapore"
+  },
+  {
+    "id": 3561,
+    "lat": 2.03333333,
+    "long": 45.35920096,
+    "name": "Mogadishu",
+    "country": "Somalia"
+  },
+  {
+    "id": 3562,
+    "lat": 10.433333,
+    "long": 45.016667,
+    "name": "Berbera",
+    "country": "Somalialand"
+  },
+  {
+    "id": 3563,
+    "lat": -26.204444,
+    "long": 28.045556,
+    "name": "Johannesburg",
+    "country": "South Africa"
+  },
+  {
+    "id": 3564,
+    "lat": -33.70816,
+    "long": 18.443135,
+    "name": "Melkbosstrand",
+    "country": "South Africa"
+  },
+  {
+    "id": 3565,
+    "lat": -28.96246667,
+    "long": 31.76831667,
+    "name": "Mtunzini",
+    "country": "South Africa"
+  },
+  {
+    "id": 3566,
+    "lat": -33.33996333,
+    "long": 18.161,
+    "name": "Yzerfontein",
+    "country": "South Africa"
+  },
+  {
+    "id": 3567,
+    "lat": 34.778,
+    "long": 128.640536,
+    "name": "Keoje",
+    "country": "South Korea"
+  },
+  {
+    "id": 3568,
+    "lat": 35.178228,
+    "long": 129.195528,
+    "name": "Pusan",
+    "country": "South Korea"
+  },
+  {
+    "id": 3569,
+    "lat": 36.831134,
+    "long": 126.189523,
+    "name": "Taean",
+    "country": "South Korea"
+  },
+  {
+    "id": 3570,
+    "lat": 41.383333,
+    "long": 2.183333,
+    "name": "Barcelona",
+    "country": "Spain"
+  },
+  {
+    "id": 3571,
+    "lat": 43.3868,
+    "long": -2.99736667,
+    "name": "Bilbao",
+    "country": "Spain"
+  },
+  {
+    "id": 3572,
+    "lat": 36.67326667,
+    "long": -6.4105,
+    "name": "Chipiona",
+    "country": "Spain"
+  },
+  {
+    "id": 3573,
+    "lat": 36.28361262,
+    "long": -6.12941253,
+    "name": "Conil",
+    "country": "Spain"
+  },
+  {
+    "id": 3574,
+    "lat": 28.01924708,
+    "long": -16.53277284,
+    "name": "El Medano",
+    "country": "Spain"
+  },
+  {
+    "id": 3575,
+    "lat": 36.433333,
+    "long": -5.133333,
+    "name": "Estepona",
+    "country": "Spain"
+  },
+  {
+    "id": 3576,
+    "lat": 39.566667,
+    "long": 2.65,
+    "name": "Palma",
+    "country": "Spain"
+  },
+  {
+    "id": 3577,
+    "lat": 36.617,
+    "long": -6.35,
+    "name": "Rota",
+    "country": "Spain"
+  },
+  {
+    "id": 3578,
+    "lat": 43.321,
+    "long": -1.985556,
+    "name": "San Sebastian",
+    "country": "Spain"
+  },
+  {
+    "id": 3579,
+    "lat": 39.467,
+    "long": -0.383333,
+    "name": "Valencia",
+    "country": "Spain"
+  },
+  {
+    "id": 3580,
+    "lat": 42.26836822,
+    "long": -8.85637538,
+    "name": "Vigo",
+    "country": "Spain"
+  },
+  {
+    "id": 3581,
+    "lat": 28.379017,
+    "long": -16.858349,
+    "name": "Buenavista",
+    "country": "Spain (Canary Islands)"
+  },
+  {
+    "id": 3582,
+    "lat": 28.65686372,
+    "long": -17.7400157,
+    "name": "La Palma Landing",
+    "country": "Spain (Canary Islands)"
+  },
+  {
+    "id": 3583,
+    "lat": 27.983,
+    "long": -15.37883667,
+    "name": "Playa La Salineta",
+    "country": "Spain (Canary Islands)"
+  },
+  {
+    "id": 3584,
+    "lat": 28.1829504,
+    "long": -16.44419665,
+    "name": "Tenerife",
+    "country": "Spain (Canary Islands)"
+  },
+  {
+    "id": 3585,
+    "lat": 39.29161528,
+    "long": 3.11500081,
+    "name": "Ses Covetes",
+    "country": "Spain (Majorca)"
+  },
+  {
+    "id": 3586,
+    "lat": 6.934444,
+    "long": 79.842778,
+    "name": "Colombo",
+    "country": "Sri Lanka"
+  },
+  {
+    "id": 3587,
+    "lat": 5.95,
+    "long": 80.533333,
+    "name": "Matara",
+    "country": "Sri Lanka"
+  },
+  {
+    "id": 3588,
+    "lat": 6.84319816,
+    "long": 79.85155395,
+    "name": "Mount Lavinia",
+    "country": "Sri Lanka"
+  },
+  {
+    "id": 3589,
+    "lat": 17.73174545,
+    "long": -64.88188914,
+    "name": "Butler\\s Bay",
+    "country": "St Croix"
+  },
+  {
+    "id": 3590,
+    "lat": -15.9030571,
+    "long": -5.70416737,
+    "name": "SAex Landing",
+    "country": "St Helena"
+  },
+  {
+    "id": 3591,
+    "lat": 14.02735363,
+    "long": -60.99550764,
+    "name": "Port Castries",
+    "country": "St Lucia"
+  },
+  {
+    "id": 3592,
+    "lat": 17.897908,
+    "long": -62.850556,
+    "name": "Gustavia",
+    "country": "St. BarthÃƒÆ’Ã‚Â©lemy"
+  },
+  {
+    "id": 3593,
+    "lat": 13.89232116,
+    "long": -61.07993993,
+    "name": "St. Lucia",
+    "country": "St. Lucia"
+  },
+  {
+    "id": 3594,
+    "lat": 13.166667,
+    "long": -61.233333,
+    "name": "Kingstown",
+    "country": "St. Vincent"
+  },
+  {
+    "id": 3595,
+    "lat": 19.57242113,
+    "long": 37.24435479,
+    "name": "Port Sudan",
+    "country": "Sudan"
+  },
+  {
+    "id": 3596,
+    "lat": 5.883333,
+    "long": -56.316667,
+    "name": "Totness",
+    "country": "Suriname"
+  },
+  {
+    "id": 3597,
+    "lat": 55.766667,
+    "long": 12.95,
+    "name": "Barseback",
+    "country": "Sweden"
+  },
+  {
+    "id": 3598,
+    "lat": 55.716667,
+    "long": 13.016667,
+    "name": "Bjarred",
+    "country": "Sweden"
+  },
+  {
+    "id": 3599,
+    "lat": 55.55,
+    "long": 12.916667,
+    "name": "Bunkeflostrand",
+    "country": "Sweden"
+  },
+  {
+    "id": 3600,
+    "lat": 57.866667,
+    "long": 19.05,
+    "name": "FÃƒÆ’Ã‚Â¥rÃƒÆ’Ã‚Â¶sund",
+    "country": "Sweden"
+  },
+  {
+    "id": 3601,
+    "lat": 57.7,
+    "long": 11.966667,
+    "name": "Gothenburg",
+    "country": "Sweden"
+  },
+  {
+    "id": 3602,
+    "lat": 56.05,
+    "long": 12.716667,
+    "name": "Helsingborg",
+    "country": "Sweden"
+  },
+  {
+    "id": 3603,
+    "lat": 57.434,
+    "long": 18.848033,
+    "name": "Katthammarsvik",
+    "country": "Sweden"
+  },
+  {
+    "id": 3604,
+    "lat": 59.766667,
+    "long": 18.7,
+    "name": "NorrtÃƒÆ’Ã‚Â¤lje",
+    "country": "Sweden"
+  },
+  {
+    "id": 3605,
+    "lat": 59.289042,
+    "long": 18.915,
+    "name": "Sandhamn",
+    "country": "Sweden"
+  },
+  {
+    "id": 3606,
+    "lat": 59.283333,
+    "long": 18.683333,
+    "name": "Stavsnas",
+    "country": "Sweden"
+  },
+  {
+    "id": 3607,
+    "lat": 59.35,
+    "long": 18.066667,
+    "name": "Stockholm",
+    "country": "Sweden"
+  },
+  {
+    "id": 3608,
+    "lat": 63.833333,
+    "long": 20.25,
+    "name": "Umea",
+    "country": "Sweden"
+  },
+  {
+    "id": 3609,
+    "lat": 60.0,
+    "long": 18.833333,
+    "name": "Vaddo",
+    "country": "Sweden"
+  },
+  {
+    "id": 3610,
+    "lat": 55.416667,
+    "long": 13.833333,
+    "name": "Ystad",
+    "country": "Sweden"
+  },
+  {
+    "id": 3611,
+    "lat": 34.89150984,
+    "long": 35.8731127,
+    "name": "Tartus",
+    "country": "Syria"
+  },
+  {
+    "id": 3612,
+    "lat": 22.25690024,
+    "long": 120.64681561,
+    "name": "Fangshan",
+    "country": "Taiwan"
+  },
+  {
+    "id": 3613,
+    "lat": 25.27992568,
+    "long": 121.5747124,
+    "name": "Pali",
+    "country": "Taiwan"
+  },
+  {
+    "id": 3614,
+    "lat": 25.18464304,
+    "long": 121.39588256,
+    "name": "Tamsui",
+    "country": "Taiwan"
+  },
+  {
+    "id": 3615,
+    "lat": 25.166667,
+    "long": 121.433333,
+    "name": "Tanshui",
+    "country": "Taiwan"
+  },
+  {
+    "id": 3616,
+    "lat": 24.8599207,
+    "long": 121.82576064,
+    "name": "Toucheng",
+    "country": "Taiwan"
+  },
+  {
+    "id": 3617,
+    "lat": -6.80161762,
+    "long": 39.29672434,
+    "name": "Dar es Salaam",
+    "country": "Tanzania"
+  },
+  {
+    "id": 3618,
+    "lat": 13.04155371,
+    "long": 100.10415963,
+    "name": "Petchaburi",
+    "country": "Thailand"
+  },
+  {
+    "id": 3619,
+    "lat": 6.57074111,
+    "long": 100.00428294,
+    "name": "Satun",
+    "country": "Thailand"
+  },
+  {
+    "id": 3620,
+    "lat": 7.206111,
+    "long": 100.596667,
+    "name": "Songkhla",
+    "country": "Thailand"
+  },
+  {
+    "id": 3621,
+    "lat": 13.174,
+    "long": 100.93,
+    "name": "Sri Racha",
+    "country": "Thailand"
+  },
+  {
+    "id": 3622,
+    "lat": 13.55145573,
+    "long": -16.55499492,
+    "name": "Banjul",
+    "country": "The Gambia"
+  },
+  {
+    "id": 3623,
+    "lat": 6.181,
+    "long": 1.39130833,
+    "name": "LomÃƒÆ’Ã‚Â©",
+    "country": "Togo"
+  },
+  {
+    "id": 3624,
+    "lat": -21.133,
+    "long": -175.2,
+    "name": "Tonga-Fiji Landing Station",
+    "country": "Tonga"
+  },
+  {
+    "id": 3625,
+    "lat": 10.683333,
+    "long": -61.633333,
+    "name": "Chaguaramas",
+    "country": "Trinidad"
+  },
+  {
+    "id": 3626,
+    "lat": 10.78190128,
+    "long": -61.38857413,
+    "name": "Trinidad",
+    "country": "Trinidad"
+  },
+  {
+    "id": 3627,
+    "lat": 37.266666,
+    "long": 9.8666666,
+    "name": "Bizerte",
+    "country": "Tunisia"
+  },
+  {
+    "id": 3628,
+    "lat": 36.85,
+    "long": 11.1,
+    "name": "Kelibia",
+    "country": "Tunisia"
+  },
+  {
+    "id": 3629,
+    "lat": 36.1,
+    "long": 32.966667,
+    "name": "Boyazi",
+    "country": "Turkey"
+  },
+  {
+    "id": 3630,
+    "lat": 38.29125138,
+    "long": 26.27428477,
+    "name": "Ciftlikkoy",
+    "country": "Turkey"
+  },
+  {
+    "id": 3631,
+    "lat": 41.8802,
+    "long": 27.9892,
+    "name": "Igneada",
+    "country": "Turkey"
+  },
+  {
+    "id": 3632,
+    "lat": 41.05433175,
+    "long": 29.03855022,
+    "name": "Istanbul",
+    "country": "Turkey"
+  },
+  {
+    "id": 3633,
+    "lat": 38.433333,
+    "long": 27.15,
+    "name": "Izmir",
+    "country": "Turkey"
+  },
+  {
+    "id": 3634,
+    "lat": 39.54622545,
+    "long": 26.60134131,
+    "name": "Kucukkuyu",
+    "country": "Turkey"
+  },
+  {
+    "id": 3635,
+    "lat": 36.84120378,
+    "long": 28.27766194,
+    "name": "Marmaris",
+    "country": "Turkey"
+  },
+  {
+    "id": 3636,
+    "lat": 38.16424294,
+    "long": 26.51931191,
+    "name": "Nergis",
+    "country": "Turkey"
+  },
+  {
+    "id": 3637,
+    "lat": 41.18504618,
+    "long": 29.07585538,
+    "name": "Rumeli",
+    "country": "Turkey"
+  },
+  {
+    "id": 3638,
+    "lat": 36.08015,
+    "long": 35.94568333,
+    "name": "Samadag",
+    "country": "Turkey"
+  },
+  {
+    "id": 3639,
+    "lat": 36.96597048,
+    "long": 27.26341288,
+    "name": "Turgutreis",
+    "country": "Turkey"
+  },
+  {
+    "id": 3640,
+    "lat": 36.77164064,
+    "long": 28.25434799,
+    "name": "Turunc",
+    "country": "Turkey"
+  },
+  {
+    "id": 3641,
+    "lat": 21.77344628,
+    "long": -72.24807834,
+    "name": "Providenciales",
+    "country": "Turks and Caicos Islands"
+  },
+  {
+    "id": 3642,
+    "lat": 24.467,
+    "long": 54.366667,
+    "name": "Abu Dhabi",
+    "country": "UAE"
+  },
+  {
+    "id": 3643,
+    "lat": 25.12469105,
+    "long": 56.35900097,
+    "name": "Al Fujaurah",
+    "country": "UAE"
+  },
+  {
+    "id": 3644,
+    "lat": 25.152222,
+    "long": 52.875,
+    "name": "Das",
+    "country": "UAE"
+  },
+  {
+    "id": 3645,
+    "lat": 25.264444,
+    "long": 55.311667,
+    "name": "Dubai",
+    "country": "UAE"
+  },
+  {
+    "id": 3646,
+    "lat": 0.3,
+    "long": 32.567,
+    "name": "Kampala",
+    "country": "Uganda"
+  },
+  {
+    "id": 3647,
+    "lat": 58.83701667,
+    "long": -2.90605,
+    "name": "Ayre of Cara",
+    "country": "UK"
+  },
+  {
+    "id": 3648,
+    "lat": 58.80858333,
+    "long": -2.91151667,
+    "name": "Ayre of Cara",
+    "country": "UK"
+  },
+  {
+    "id": 3649,
+    "lat": 57.6704,
+    "long": -2.55263333,
+    "name": "Banff",
+    "country": "UK"
+  },
+  {
+    "id": 3650,
+    "lat": 50.31971667,
+    "long": -3.61061667,
+    "name": "Dartmouth",
+    "country": "UK"
+  },
+  {
+    "id": 3651,
+    "lat": 54.21,
+    "long": -0.2893,
+    "name": "Filey",
+    "country": "UK"
+  },
+  {
+    "id": 3652,
+    "lat": 53.3088,
+    "long": -4.6328,
+    "name": "Holyhead",
+    "country": "UK"
+  },
+  {
+    "id": 3653,
+    "lat": 54.17995,
+    "long": -0.27021667,
+    "name": "Hunmanby",
+    "country": "UK"
+  },
+  {
+    "id": 3654,
+    "lat": 52.45166667,
+    "long": 1.73465,
+    "name": "Lowestoft",
+    "country": "UK"
+  },
+  {
+    "id": 3655,
+    "lat": 53.74411667,
+    "long": -3.02485,
+    "name": "Lytham St Annes",
+    "country": "UK"
+  },
+  {
+    "id": 3656,
+    "lat": 53.7744,
+    "long": -3.06706667,
+    "name": "Manchester",
+    "country": "UK"
+  },
+  {
+    "id": 3657,
+    "lat": 60.0056,
+    "long": -1.3247,
+    "name": "Maywick",
+    "country": "UK"
+  },
+  {
+    "id": 3658,
+    "lat": 51.54423333,
+    "long": -4.21023333,
+    "name": "Oxwich Bay",
+    "country": "UK"
+  },
+  {
+    "id": 3659,
+    "lat": 50.81156667,
+    "long": 0.35261667,
+    "name": "Pevensey Bay",
+    "country": "UK"
+  },
+  {
+    "id": 3660,
+    "lat": 55.6401,
+    "long": -4.80231667,
+    "name": "Saltcoats",
+    "country": "UK"
+  },
+  {
+    "id": 3661,
+    "lat": 59.99583333,
+    "long": -1.22555,
+    "name": "Sandwick",
+    "country": "UK"
+  },
+  {
+    "id": 3662,
+    "lat": 51.11718333,
+    "long": -4.22063333,
+    "name": "Saunton Sands",
+    "country": "UK"
+  },
+  {
+    "id": 3663,
+    "lat": 54.20871667,
+    "long": -0.28475,
+    "name": "Scarborough",
+    "country": "UK"
+  },
+  {
+    "id": 3664,
+    "lat": 50.0801,
+    "long": -5.6943,
+    "name": "Sennen Cove",
+    "country": "UK"
+  },
+  {
+    "id": 3665,
+    "lat": 54.21736667,
+    "long": -3.34981667,
+    "name": "Silecroft Beach",
+    "country": "UK"
+  },
+  {
+    "id": 3666,
+    "lat": 50.05369756,
+    "long": -5.69300501,
+    "name": "Skewjack",
+    "country": "UK"
+  },
+  {
+    "id": 3667,
+    "lat": 51.151,
+    "long": 1.38583333,
+    "name": "St Margaret\\s Bay",
+    "country": "UK"
+  },
+  {
+    "id": 3668,
+    "lat": 50.082,
+    "long": -5.699,
+    "name": "Whitesand Bay",
+    "country": "UK"
+  },
+  {
+    "id": 3669,
+    "lat": 46.39533929,
+    "long": 30.76492133,
+    "name": "Odesa",
+    "country": "Ukraine"
+  },
+  {
+    "id": 3670,
+    "lat": 52.14855,
+    "long": 1.60155,
+    "name": "Aldeburgh",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3671,
+    "lat": 51.36243109,
+    "long": 1.41262336,
+    "name": "Broadstairs",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3672,
+    "lat": 51.34886667,
+    "long": 1.43816667,
+    "name": "Dumpton",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3673,
+    "lat": 50.00573333,
+    "long": -5.16345,
+    "name": "Goonhilly",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3674,
+    "lat": 51.28145,
+    "long": -3.01511667,
+    "name": "Highbridge",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3675,
+    "lat": 51.48702764,
+    "long": -0.17558302,
+    "name": "London",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3676,
+    "lat": 50.04365,
+    "long": -5.65161667,
+    "name": "Porthcurno",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3677,
+    "lat": 54.62462255,
+    "long": -1.07967467,
+    "name": "Redcar",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3678,
+    "lat": 50.76656314,
+    "long": 0.10429608,
+    "name": "Seaford",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3679,
+    "lat": 52.20323333,
+    "long": 1.6218,
+    "name": "Sizewell",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3680,
+    "lat": 53.63965,
+    "long": -3.02933333,
+    "name": "Southport",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3681,
+    "lat": 53.60588333,
+    "long": -3.06476667,
+    "name": "Southport",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3682,
+    "lat": 53.60783333,
+    "long": -3.06233333,
+    "name": "Southport",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3683,
+    "lat": 52.18758333,
+    "long": 1.62161667,
+    "name": "Thorpeness",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3684,
+    "lat": 50.7933,
+    "long": -4.5565,
+    "name": "Widemouth Bay",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 3685,
+    "lat": 52.724167,
+    "long": 174.118889,
+    "name": "Shemya Island",
+    "country": "Unknown"
+  },
+  {
+    "id": 3686,
+    "lat": -34.9,
+    "long": -54.95,
+    "name": "Maldonado",
+    "country": "Uruguay"
+  },
+  {
+    "id": 3687,
+    "lat": 10.74053029,
+    "long": -61.48593382,
+    "name": "Macqueripe",
+    "country": "US Virgin Islands"
+  },
+  {
+    "id": 3688,
+    "lat": 17.75,
+    "long": -64.75,
+    "name": "St Croix",
+    "country": "US Virgin Islands"
+  },
+  {
+    "id": 3689,
+    "lat": 61.19566,
+    "long": -150.02606833,
+    "name": "Anchorage",
+    "country": "USA"
+  },
+  {
+    "id": 3690,
+    "lat": 57.052778,
+    "long": 135.331667,
+    "name": "Angoon",
+    "country": "USA"
+  },
+  {
+    "id": 3691,
+    "lat": 57.50133333,
+    "long": -134.58516667,
+    "name": "Angoon",
+    "country": "USA"
+  },
+  {
+    "id": 3692,
+    "lat": 43.251167,
+    "long": -124.3845,
+    "name": "Bandon",
+    "country": "USA"
+  },
+  {
+    "id": 3693,
+    "lat": 71.29128626,
+    "long": -156.79275042,
+    "name": "Barrow BMH",
+    "country": "USA"
+  },
+  {
+    "id": 3694,
+    "lat": 71.29128626,
+    "long": -156.79275042,
+    "name": "Barrow BMH",
+    "country": "USA"
+  },
+  {
+    "id": 3695,
+    "lat": 40.78035187,
+    "long": -72.77519817,
+    "name": "Bellport",
+    "country": "USA"
+  },
+  {
+    "id": 3696,
+    "lat": 26.37428465,
+    "long": -80.06690436,
+    "name": "Boca Raton",
+    "country": "USA"
+  },
+  {
+    "id": 3697,
+    "lat": 40.779167,
+    "long": -72.915278,
+    "name": "Brookhaven",
+    "country": "USA"
+  },
+  {
+    "id": 3698,
+    "lat": 43.984298,
+    "long": -124.102962,
+    "name": "Florence",
+    "country": "USA"
+  },
+  {
+    "id": 3699,
+    "lat": 28.91323333,
+    "long": -95.34206667,
+    "name": "Freeport",
+    "country": "USA"
+  },
+  {
+    "id": 3700,
+    "lat": 63.77801971,
+    "long": -171.72718159,
+    "name": "Gambell BMH",
+    "country": "USA"
+  },
+  {
+    "id": 3701,
+    "lat": 41.36883458,
+    "long": -71.6565021,
+    "name": "Green Hill",
+    "country": "USA"
+  },
+  {
+    "id": 3702,
+    "lat": 35.1176475,
+    "long": -120.60720462,
+    "name": "Grover Beach",
+    "country": "USA"
+  },
+  {
+    "id": 3703,
+    "lat": 47.865,
+    "long": -122.33216667,
+    "name": "Harbor Pointe",
+    "country": "USA"
+  },
+  {
+    "id": 3704,
+    "lat": 20.22088638,
+    "long": -155.78186534,
+    "name": "Hawaii",
+    "country": "USA"
+  },
+  {
+    "id": 3705,
+    "lat": 58.12401667,
+    "long": -134.75375,
+    "name": "Hawk Inlet",
+    "country": "USA"
+  },
+  {
+    "id": 3706,
+    "lat": 45.523056,
+    "long": -122.988333,
+    "name": "Hillsboro",
+    "country": "USA"
+  },
+  {
+    "id": 3707,
+    "lat": 26.02104045,
+    "long": -80.11976405,
+    "name": "Hollywood",
+    "country": "USA"
+  },
+  {
+    "id": 3708,
+    "lat": 59.63813333,
+    "long": -151.54066667,
+    "name": "Homer",
+    "country": "USA"
+  },
+  {
+    "id": 3709,
+    "lat": 40.603056,
+    "long": -73.656944,
+    "name": "Island Park",
+    "country": "USA"
+  },
+  {
+    "id": 3710,
+    "lat": 30.29403943,
+    "long": -81.39112861,
+    "name": "Jacksonville",
+    "country": "USA"
+  },
+  {
+    "id": 3711,
+    "lat": 58.3945,
+    "long": -134.77016667,
+    "name": "Juneau - AU East",
+    "country": "USA"
+  },
+  {
+    "id": 3712,
+    "lat": 58.285,
+    "long": -134.3875,
+    "name": "Juneau - SEAK",
+    "country": "USA"
+  },
+  {
+    "id": 3713,
+    "lat": 60.55183333,
+    "long": -151.27406833,
+    "name": "Kenai",
+    "country": "USA"
+  },
+  {
+    "id": 3714,
+    "lat": 55.3774,
+    "long": -131.72935,
+    "name": "Ketchikan",
+    "country": "USA"
+  },
+  {
+    "id": 3715,
+    "lat": 57.82028333,
+    "long": -152.35359333,
+    "name": "Kodiak",
+    "country": "USA"
+  },
+  {
+    "id": 3716,
+    "lat": 66.897222,
+    "long": -162.586,
+    "name": "Kotzebue BMH",
+    "country": "USA"
+  },
+  {
+    "id": 3717,
+    "lat": 34.02263122,
+    "long": -118.24090792,
+    "name": "Los Angeles",
+    "country": "USA"
+  },
+  {
+    "id": 3718,
+    "lat": 42.44586199,
+    "long": -70.95846034,
+    "name": "Lynn",
+    "country": "USA"
+  },
+  {
+    "id": 3719,
+    "lat": 40.09117995,
+    "long": -74.00512888,
+    "name": "Manasquan",
+    "country": "USA"
+  },
+  {
+    "id": 3720,
+    "lat": 40.13,
+    "long": -74.0430879,
+    "name": "Manasquan",
+    "country": "USA"
+  },
+  {
+    "id": 3721,
+    "lat": 25.82259802,
+    "long": -80.15791808,
+    "name": "Miami",
+    "country": "USA"
+  },
+  {
+    "id": 3722,
+    "lat": 30.32436319,
+    "long": -81.41184025,
+    "name": "Miami",
+    "country": "USA"
+  },
+  {
+    "id": 3723,
+    "lat": 56.5305,
+    "long": -132.696,
+    "name": "Mitkof",
+    "country": "USA"
+  },
+  {
+    "id": 3724,
+    "lat": 35.379167,
+    "long": -120.853333,
+    "name": "Morro Bay (Verizon)",
+    "country": "USA"
+  },
+  {
+    "id": 3725,
+    "lat": 57.45749167,
+    "long": -152.33477833,
+    "name": "Narrow Cape",
+    "country": "USA"
+  },
+  {
+    "id": 3726,
+    "lat": 45.61323961,
+    "long": -123.92939653,
+    "name": "Nedonna Beach",
+    "country": "USA"
+  },
+  {
+    "id": 3727,
+    "lat": 39.80650685,
+    "long": -74.13828421,
+    "name": "New Jersey",
+    "country": "USA"
+  },
+  {
+    "id": 3728,
+    "lat": 40.26339396,
+    "long": -73.96127334,
+    "name": "New York",
+    "country": "USA"
+  },
+  {
+    "id": 3729,
+    "lat": 60.707778,
+    "long": -151.262778,
+    "name": "Nikiski",
+    "country": "USA"
+  },
+  {
+    "id": 3730,
+    "lat": 64.49687154,
+    "long": -165.40399643,
+    "name": "Nome BMH",
+    "country": "USA"
+  },
+  {
+    "id": 3731,
+    "lat": 64.49687154,
+    "long": -165.40399643,
+    "name": "Nome BMH",
+    "country": "USA"
+  },
+  {
+    "id": 3732,
+    "lat": 40.902778,
+    "long": -73.344167,
+    "name": "Northport",
+    "country": "USA"
+  },
+  {
+    "id": 3733,
+    "lat": 42.2265917,
+    "long": -124.37389344,
+    "name": "Pacific City",
+    "country": "USA"
+  },
+  {
+    "id": 3734,
+    "lat": 45.2,
+    "long": -123.966667,
+    "name": "Pacific City",
+    "country": "USA"
+  },
+  {
+    "id": 3735,
+    "lat": 30.33285,
+    "long": -88.49406667,
+    "name": "Pascagoula",
+    "country": "USA"
+  },
+  {
+    "id": 3736,
+    "lat": 56.81848333,
+    "long": -132.92903333,
+    "name": "Petersburg",
+    "country": "USA"
+  },
+  {
+    "id": 3737,
+    "lat": 38.91122256,
+    "long": -123.6888623,
+    "name": "Point Arena",
+    "country": "USA"
+  },
+  {
+    "id": 3738,
+    "lat": 68.34899902,
+    "long": -166.79699707,
+    "name": "Point Hope",
+    "country": "USA"
+  },
+  {
+    "id": 3739,
+    "lat": 70.20331169,
+    "long": -148.45779575,
+    "name": "Prudhoe Bay",
+    "country": "USA"
+  },
+  {
+    "id": 3740,
+    "lat": 70.20331169,
+    "long": -148.45779575,
+    "name": "Prudhoe Bay",
+    "country": "USA"
+  },
+  {
+    "id": 3741,
+    "lat": 70.20331169,
+    "long": -148.45779575,
+    "name": "Prudhoe Bay",
+    "country": "USA"
+  },
+  {
+    "id": 3742,
+    "lat": 33.85686936,
+    "long": -118.39003907,
+    "name": "Redondo Beach",
+    "country": "USA"
+  },
+  {
+    "id": 3743,
+    "lat": 37.335278,
+    "long": -121.891944,
+    "name": "San Jose",
+    "country": "USA"
+  },
+  {
+    "id": 3744,
+    "lat": 35.2281824,
+    "long": -120.84921667,
+    "name": "San Luis Obispo (AT&T)",
+    "country": "USA"
+  },
+  {
+    "id": 3745,
+    "lat": 47.72269884,
+    "long": -122.405204,
+    "name": "Seattle",
+    "country": "USA"
+  },
+  {
+    "id": 3746,
+    "lat": 60.10839833,
+    "long": -149.43457333,
+    "name": "Seward",
+    "country": "USA"
+  },
+  {
+    "id": 3747,
+    "lat": 40.78599913,
+    "long": -72.69482174,
+    "name": "Shirley",
+    "country": "USA"
+  },
+  {
+    "id": 3748,
+    "lat": 57.09066667,
+    "long": -135.3895,
+    "name": "Sitka",
+    "country": "USA"
+  },
+  {
+    "id": 3749,
+    "lat": 39.56046669,
+    "long": -74.323657,
+    "name": "Tuckerton",
+    "country": "USA"
+  },
+  {
+    "id": 3750,
+    "lat": 39.614,
+    "long": -74.32804,
+    "name": "Tuckerton",
+    "country": "USA"
+  },
+  {
+    "id": 3751,
+    "lat": 61.12483333,
+    "long": -146.3425,
+    "name": "Valdez",
+    "country": "USA"
+  },
+  {
+    "id": 3752,
+    "lat": 27.641944,
+    "long": -80.391111,
+    "name": "Vero Beach",
+    "country": "USA"
+  },
+  {
+    "id": 3753,
+    "lat": 36.85,
+    "long": -75.9779,
+    "name": "Virginia Beach",
+    "country": "USA"
+  }
+]

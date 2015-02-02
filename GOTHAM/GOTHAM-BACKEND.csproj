@@ -121,6 +121,7 @@
     <Compile Include="Globals.cs" />
     <Compile Include="Gotham\API\AppHost.cs" />
     <Compile Include="Gotham\API\Resources\HelloResource.cs" />
+    <Compile Include="Gotham\API\Resources\NodeResource.cs" />
     <Compile Include="Gotham\API\ServiceStackConsoleHost.cs" />
     <Compile Include="Gotham\Application\Tools\AStarGrid.cs" />
     <Compile Include="Gotham\Application\Tools\CableGenerator.cs" />
