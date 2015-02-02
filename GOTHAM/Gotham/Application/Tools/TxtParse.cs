@@ -56,28 +56,29 @@ namespace GOTHAM.Gotham.Application.Tools
 
         // Text parsing for type 2 location format
         // name, lat, lng
-        public static List<LocationEntity> FromFile2(string path)
+        public static List<NodeEntity> FromFile2(string path)
         {
 
             // Read files to string-list and make empty locaions list
             var file = File.ReadAllLines(path, Encoding.Default);
             var lines = new List<string>(file);
-            var locations = new List<LocationEntity>();
+            var nodes = new List<NodeEntity>();
 
             foreach (var line in lines)
             {
-                var location = new LocationEntity();
+                var node = new NodeEntity();
                 var segment = line.Split(',');
                 var coord = Coordinate.newLatLng(
                     double.Parse(segment[1], CultureInfo.InvariantCulture),
                     double.Parse(segment[2], CultureInfo.InvariantCulture));
 
-                location.name = segment[0];
-                location.lat = coord.lat;
-                location.lng = coord.lng;
-                locations.Add(location);
+                node.name = segment[0];
+                node.tier = new TierEntity() { id = 1 };
+                node.lat = coord.lat;
+                node.lng = coord.lng;
+                nodes.Add(node);
             }
-            return locations;
+            return nodes;
         }
 
         // Text parsing for type 3 location format (GoogleMaps Javascript sea nodes)

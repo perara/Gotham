@@ -32,49 +32,64 @@ namespace GOTHAM
             // ========================================================================================
             // ===========================        TEST CODE       =====================================
 
-           
-            //var nodes = new List<NodeEntity>();
-            //TxtParse.FromFile4("C:\\temp\\SeaCableCables.txt");
-
-            //TxtParse.LocsToFile(locations, "C:\\temp\\SeaCableCablesTestOutput.txt");
-
-            var rawNodes = (Globals.GetInstance().getTable<NodeEntity>());
-            var nodesDict = new Dictionary<int, NodeEntity>();
-            var nodesList = new List<NodeEntity>();
-
-            foreach (var node in rawNodes)
+            var newNodes = TxtParse.FromFile2("C:\\temp\\tier2_missing_CountryCode.txt");
+            foreach (var node in newNodes)
             {
-                node.getSiblings();
-                nodesDict.Add(node.id, node);
-                nodesList.Add(node);
-            }
-            Console.WriteLine("Finished loading from DB");
-
-            //CableGenerator.ConnectCloseNodes(nodesList, 50);
-            //CableGenerator.ConnectNodes(1);
-
-
-
-            var node1 = nodesDict[3316];
-            var node2 = nodesDict[3482];
-            var testlist = new List<NodeEntity>();
-
-            var path1 = Pathfinder.TryRandom(node1, node2, nodesList);
-
-            foreach (var node in path1)
-            {
-                log.Info(node.country + ": \t\t" + node.name);
+                DBTool.Write(node);
             }
 
+            //var rawNodes = (Globals.GetInstance().getTable<NodeEntity>());
+            //var nodesDict = new Dictionary<int, NodeEntity>();
+            //var nodesList = new List<NodeEntity>();
 
-            Console.WriteLine("====================================================================");
+            //foreach (var node in rawNodes)
+            //{
+            //    node.getSiblings();
+            //    nodesDict.Add(node.id, node);
+            //    nodesList.Add(node);
+            //}
+            //Console.WriteLine("Finished loading from DB");
 
-            var path2 = Pathfinder.ByDistance(node1, node2, nodesList);
+            //var node1 = nodesDict[3316];
+            //var node2 = nodesDict[3482];
+            //var testlist = new List<NodeEntity>();
 
-            foreach (var node in path2)
-            {
-                log.Info(node.country + ": \t\t" + node.name);
-            }
+            //var tests = new List<Stack<NodeEntity>>();
+
+            //var numTries = 20000;
+            //var numTests = 20;
+            //var avgcount = 0;
+            //var timeStart = DateTime.Now;
+            //var path = Pathfinder.TryRandom(node1, node2, nodesList, 50000);
+            //var time = DateTime.Now - timeStart;
+            //Console.WriteLine("Jumps: " + path.Count + " in " + time.Seconds + "." + time.Milliseconds);
+
+            //for (int i = 0; i < 100000; i += 5000)
+            //{
+
+            //    
+            //    for (int j = 0; j < numTests; j++)
+            //    {
+            //        var test = Pathfinder.TryRandom(node1, node2, nodesList, i);
+            //        tests.Add(test);
+            //        avgcount += test.Count;
+            //    }
+
+            //    
+            //    tests.Clear();
+
+            //    Console.WriteLine("Jumps: " + avgcount / numTests + " with " + i + " paths in " + time.Seconds + "." + time.Milliseconds);
+
+            //    avgcount = 0;
+            //}
+            //Console.WriteLine("====================================================================");
+
+            //var path2 = Pathfinder.ByDistance(node1, node2, nodesList);
+
+            //foreach (var node in path2)
+            //{
+            //    log.Info(node.country + ": \t\t" + node.name);
+            //}
 
             //CableGenerator.ConnectNodes(1);
 

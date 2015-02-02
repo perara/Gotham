@@ -67,7 +67,7 @@ namespace GOTHAM.Model
             Map(x => x.lng).Not.Nullable();
 
             //HasOne(x => x.tier);
-            References(x => x.tier).Not.Nullable().Column("tier");
+            References(x => x.tier).Not.Nullable().Column("tier").Not.LazyLoad();
 
             HasManyToMany(x => x.cables)
                 .Cascade.All()
