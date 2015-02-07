@@ -12,15 +12,16 @@ namespace GOTHAM_TOOLS
     public class Pathfinder
     {
 
-        public static Stack<NodeEntity> TryRandom(NodeEntity start, NodeEntity goal, List<NodeEntity> nodes)
+        public static Stack<NodeEntity> TryRandom(NodeEntity start, NodeEntity goal, List<NodeEntity> nodes, int tryPaths)
         {
             var solution = new Stack<NodeEntity>();
             var tries = 0;
             var rnd = new Random();
             var minPath = Int32.MaxValue;
+            var time = DateTime.Now;
 
             // Run until end NodeEntity is reached
-            while (tries < 50000)
+            while (tries < tryPaths)
             {
                 var queue = new Stack<NodeEntity>();
                 var currentNode = start;
@@ -31,8 +32,6 @@ namespace GOTHAM_TOOLS
                 do
                 {
                     NodeEntity nextNode = null;
-                    var minDist = Double.MaxValue;
-
                     nextNode = currentNode.siblings[rnd.Next(currentNode.siblings.Count)];
 
                     queue.Push(nextNode);
@@ -50,6 +49,7 @@ namespace GOTHAM_TOOLS
 
                 tries++;
             }
+            //Console.WriteLine("RandomAlgorithm Path found in: " + (DateTime.Now - time).Milliseconds + " ms, with " + solution.Count + " jumps");
             return solution;
         }
 
@@ -99,6 +99,8 @@ namespace GOTHAM_TOOLS
             return queue;
         }
 
+
+        // TODO: Test and improve when land nodes are added
         public static Stack<NodeEntity> ByDistance(NodeEntity start, NodeEntity goal, List<NodeEntity> nodes)
         {
             var solution = new Stack<NodeEntity>();
@@ -106,6 +108,7 @@ namespace GOTHAM_TOOLS
             var timeout = 0;
             var tries = 0;
             var minPath = Int32.MaxValue;
+            var time = DateTime.Now;
 
             // Run until end NodeEntity is reached
             while (timeout < 5000)
@@ -155,24 +158,27 @@ namespace GOTHAM_TOOLS
 
                     //Console.WriteLine("Now in " + currentNodeEntity.country + ": " + currentNodeEntity.name);
 
-                } while (currentNode != goal && jumps < 200);
+                } while (currentNode != goal && jumps < 100);
                 tries++;
 
                 if (currentNode == goal && queue.Count < minPath)
                 {
-                    Console.WriteLine("FOUND A BETTER PATH");
+                    Console.WriteLine("FOUND A (BETTER) PATH");
                     solution = queue;
                     minPath = queue.Count;
                     return solution;
                 }
-                else
-                {
-                    ignore.Add(currentNode);
-                }
 
                 timeout++;
             }
+            Console.WriteLine("ClosestNode Path found in: " + (DateTime.Now - time).Milliseconds + " ms");
             return solution;
+        }
+
+        //TODO: Implement
+        public static void ACO(NodeEntity start, NodeEntity goal)
+        {
+
         }
     }
 }

@@ -10,85 +10,102 @@ using GOTHAM_TOOLS;
 
 namespace GOTHAM
 {
-  class Program
-  {
-    private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-
-    static void Main(string[] args)
+    class Program
     {
-
-      // ServiceStack API Server
-      ServiceStackConsoleHost.Start();
-
-      //Initiate logging class
-      log4net.Config.XmlConfigurator.Configure();
-
-      // Change decimal seperator to . instead of ,
-      System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-      customCulture.NumberFormat.NumberDecimalSeparator = ".";
-      CultureInfo.DefaultThreadCurrentCulture = customCulture;
-
-      // ========================================================================================
-      // ===========================        TEST CODE       =====================================
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
-      //var nodes = new List<NodeEntity>();
-      //TxtParse.FromFile4("C:\\temp\\SeaCableCables.txt");
+        static void Main(string[] args)
+        {
 
-      //TxtParse.LocsToFile(locations, "C:\\temp\\SeaCableCablesTestOutput.txt");
+            // ServiceStack API Server
+            ServiceStackConsoleHost.Start();
 
-      var rawNodes = Globals.GetInstance().getTable<NodeEntity>();
-      var nodesDict = new Dictionary<int, NodeEntity>();
-      var nodesList = new List<NodeEntity>();
+            //Initiate logging class
+            log4net.Config.XmlConfigurator.Configure();
 
-      foreach (var node in rawNodes)
-      {
-       
-        node.getSiblings();
-        nodesDict.Add(node.id, node);
-        nodesList.Add(node);
-      }
-      Console.WriteLine("Finished loading from DB");
+            // Change decimal seperator to . instead of ,
+            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+            CultureInfo.DefaultThreadCurrentCulture = customCulture;
 
-      //CableGenerator.ConnectCloseNodes(nodesList, 50);
-      //CableGenerator.ConnectNodes(1);
+            // ========================================================================================
+            // ===========================        TEST CODE       =====================================
 
 
 
-      var node1 = nodesDict[3316];
-      var node2 = nodesDict[3482];
-      var testlist = new List<NodeEntity>();
+            var newNodes = TxtParse.FromFile2("C:\\temp\\tier2_missing_CountryCode.txt");
+            foreach (var node in newNodes)
+            {
+                DBTool.Write(node);
+            }
 
-      var path1 = Pathfinder.TryRandom(node1, node2, nodesList);
+            
 
-      foreach (var node in path1)
-      {
-        log.Info(node.country + ": \t\t" + node.name);
-      }
+            //var path2 = Pathfinder.ByDistance(node1, node2, nodesList);
+
+            //foreach (var node in path2)
+            //{
+            //    log.Info(node.country + ": \t\t" + node.name);
+            //}
+
+            //var nodes = new List<NodeEntity>();
+            //TxtParse.FromFile4("C:\\temp\\SeaCableCables.txt");
+
+            //TxtParse.LocsToFile(locations, "C:\\temp\\SeaCableCablesTestOutput.txt");
+
+            var rawNodes = Globals.GetInstance().getTable<NodeEntity>();
+            var nodesDict = new Dictionary<int, NodeEntity>();
+            var nodesList = new List<NodeEntity>();
+
+            foreach (var node in rawNodes)
+            {
+
+                node.getSiblings();
+                nodesDict.Add(node.id, node);
+                nodesList.Add(node);
+            }
+            Console.WriteLine("Finished loading from DB");
+
+            //CableGenerator.ConnectCloseNodes(nodesList, 50);
+            //CableGenerator.ConnectNodes(1);
 
 
-      Console.WriteLine("====================================================================");
 
-      var path2 = Pathfinder.ByDistance(node1, node2, nodesList);
+            var node1 = nodesDict[3316];
+            var node2 = nodesDict[3482];
+            var testlist = new List<NodeEntity>();
 
-      foreach (var node in path2)
-      {
-        log.Info(node.country + ": \t\t" + node.name);
-      }
+            var path1 = Pathfinder.TryRandom(node1, node2, nodesList, 100000);
 
-      //CableGenerator.ConnectNodes(1);
-
-      // ========================================================================================
-      // ========================================================================================
-
-      log.Info("DOG FINISH");
-      Console.ReadLine();
+            foreach (var node in path1)
+            {
+                log.Info(node.country + ": \t\t" + node.name);
+            }
 
 
-    }// End Main
+            Console.WriteLine("====================================================================");
+
+            var path2 = Pathfinder.ByDistance(node1, node2, nodesList);
+
+            foreach (var node in path2)
+            {
+                log.Info(node.country + ": \t\t" + node.name);
+            }
+
+
+            //CableGenerator.ConnectNodes(1);
+
+            // ========================================================================================
+            // ========================================================================================
+
+            log.Info("DOG FINISH");
+            Console.ReadLine();
+
+
+        }// End Main
 
 
 
-  }// End Class
+    }// End Class
 }
