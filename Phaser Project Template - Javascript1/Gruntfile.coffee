@@ -1,8 +1,17 @@
 module.exports = (grunt)->
-
+  require('grunt-jsdoc-plugin')
   require('load-grunt-tasks') grunt
 
   grunt.initConfig
+
+    jsdoc: 
+      dist:
+        src: [
+          'src/*.js'
+          'test/*.js'
+        ]
+        dest: 'doc'
+  
     browserify:
       dist:
         files: 'build/main.js': 'src/main.coffee'
@@ -34,4 +43,5 @@ module.exports = (grunt)->
     clean: dist: files: 'build'
 
   grunt.registerTask 'build', ['clean', 'browserify', 'uglify']
+  grunt.registerTask 'jsdoc', ['jsdoc']
   grunt.registerTask 'default', ['build', 'connect', 'watch']

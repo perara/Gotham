@@ -24,6 +24,7 @@
     <Content Include="assets\img\menu_background.jpg" />
     <Content Include="assets\img\block.png" />
     <Content Include="assets\img\circle.png" />
+    <Content Include="assets\img\polygonMap.png" />
     <Content Include="assets\js\jquery.min.js" />
     <Content Include="assets\js\phaser.min.js" />
     <Content Include="assets\style.css" />
@@ -79,6 +80,12 @@
     </Content>
     <Content Include="src\controllers\MainController.coffee" />
     <Content Include="assets\json\world-50m.json" />
+    <Content Include="src\lib\config.coffee" />
+    <Content Include="src\lib\menu.coffee" />
+    <Content Include="src\lib\preload.coffee" />
+    <Content Include="src\lib\state.coffee" />
+    <Content Include="src\lib\VolumeAdjuster.coffee" />
+    <Content Include="assets\json\json.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
