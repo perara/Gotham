@@ -13,13 +13,13 @@ namespace GOTHAM.Gotham.Traffic
     // TODO: Change class and type\protocol to protected
     class ICMP : Ethernet, ILayer3
     {
-        protected enum icmp_Type { echoReply = 0, unreachable = 3, echo = 8, timeout = 11, tracert = 30 }
+        public enum icmp_Type { echoReply = 0, unreachable = 3, echo = 8, timeout = 11, tracert = 30 }
         // Applies for code 3, unreachable
-        protected enum icmp_Code { Net_Unreachable, Host_Unreachable, Protocol_Unreachable, Port_Unreachable }
+        public enum icmp_Code { Net_Unreachable, Host_Unreachable, Protocol_Unreachable, Port_Unreachable }
 
-        protected icmp_Type icmpType { get; set; }
-        protected icmp_Code icmpCode { get; set; }
-        protected string message { get; set; }
+        public icmp_Type icmpType { get; set; }
+        public icmp_Code icmpCode { get; set; }
+        public string message { get; set; }
 
         protected ICMP()
         {
@@ -30,17 +30,17 @@ namespace GOTHAM.Gotham.Traffic
     // TODO: Change class and type\protocol to protected
     class IP : Ethernet, ILayer3
     {
-        protected enum l4_type { TCP, UDP }
-        protected l4_type l4 { get; set; }
-        protected int ipVersion { get; set; }
-        protected IP src { get; set; }
-        protected IP dest { get; set; }
+        public enum l4_type { TCP, UDP }
+        public l4_type l4 { get; protected set; }
+        public int ipVersion { get; set; }
+        public IP ipSrc { get; set; }
+        public IP ipDest { get; set; }
 
 
         protected IP(IP src, IP dest, int version)
         {
-            this.src = src;
-            this.dest = dest;
+            this.ipSrc = src;
+            this.ipDest = dest;
 
            l3 = l3_type.IP;
         }

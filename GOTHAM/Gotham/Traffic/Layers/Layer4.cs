@@ -13,10 +13,10 @@ namespace GOTHAM.Gotham.Traffic
     // TODO: Change class and type\protocol to protected
     class TCP : IP, ILayer4
     {
-        protected enum l6_type { none, SSL, TLS }
-        protected l6_type l6 { get; set; }
-        public int srcPort { get; set; }
-        public int dstPort { get; set; }
+        public enum l6_type { none, SSL, TLS }
+        public l6_type l6 { get; protected set; }
+        public int portSrc { get; set; }
+        public int portDest { get; set; }
         public int length { get; set; }
 
 
@@ -30,10 +30,10 @@ namespace GOTHAM.Gotham.Traffic
     // TODO: Change class and type\protocol to protected
     class UDP : IP, ILayer4
     {
-        protected enum l6_type { none, DTLS }
-        protected l6_type l6 { get; set; }
-        public int srcPort { get; set; }
-        public int dstPort { get; set; }
+        public enum l6_type { none, DTLS }
+        public l6_type l6 { get; set; }
+        public int portSrc { get; set; }
+        public int portDest { get; set; }
         public int length { get; set; }
 
 

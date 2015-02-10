@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM.Gotham.Traffic.Misc
+namespace GOTHAM.Gotham.Traffic
 {
     public class PacketBuilder
     {
-        public static void HTTP()
-        {
-            var h = new HTTP();
-            
-        }
+        //public static HTTP NewHTTP()
+        //{
+        //    // I AM USEFUL!!!
+        //    return new HTTP();;
+        //}
+
+        
     }
 }

@@ -128,7 +128,7 @@
     <Compile Include="Gotham\Application\Tools\NodeGenerator.cs" />
     <Compile Include="Gotham\Application\Tools\Pathfinder.cs" />
     <Compile Include="Gotham\Application\Tools\TxtParse.cs" />
-    <Compile Include="Gotham\Traffic\Layers\Layer1.cs" />
+    <Compile Include="Gotham\Traffic\Layers\BaseFrame.cs" />
     <Compile Include="Gotham\Traffic\Layers\Layer3.cs" />
     <Compile Include="Gotham\Traffic\Layers\Layer2.cs" />
     <Compile Include="Gotham\Traffic\Layers\Layer4.cs" />

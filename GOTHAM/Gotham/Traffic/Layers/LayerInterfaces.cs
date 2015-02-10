@@ -12,8 +12,8 @@ namespace GOTHAM.Gotham.Traffic
 
     interface ILayer2
     {
-        MAC mac_dest { get; set; }
-        MAC mac_src { get; set; }
+        MAC macDest { get; set; }
+        MAC macSrc { get; set; }
     }
 
     interface ILayer3
@@ -23,8 +23,8 @@ namespace GOTHAM.Gotham.Traffic
 
     interface ILayer4
     {
-        int srcPort { get; set; }
-        int dstPort { get; set; }
+        int portSrc { get; set; }
+        int portDest { get; set; }
         int length { get; set; }
     }
 

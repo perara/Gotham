@@ -9,11 +9,23 @@ namespace GOTHAM.Gotham.Traffic
     // Presentation Layer
 
     // TODO: Change class and type\protocol to protected
-    class NoEncryption : TCP, ILayer6
+    class NoEncryption_TCP : TCP, ILayer6
     {
-        protected enum l7_type { HTTP, FTP, DNS }
-        protected l7_type l7 { get; set; }
-        protected NoEncryption()
+        public enum l7_type { HTTP, FTP, DNS }
+        public l7_type l7 { get; protected set; }
+
+        protected NoEncryption_TCP()
+        {
+            l6 = l6_type.none;
+        }
+    }
+
+    class NoEncryption_UDP : UDP, ILayer6
+    {
+        public enum l7_type { HTTP, FTP, DNS }
+        public l7_type l7 { get; protected set; }
+
+        protected NoEncryption_UDP()
         {
             l6 = l6_type.none;
         }
@@ -23,10 +35,10 @@ namespace GOTHAM.Gotham.Traffic
     // TODO: Change class and type\protocol to protected
     class SSL : TCP, ILayer6
     {
-        protected enum l7_type { HTTPS, SFTP, SSH }
-        protected l7_type l7 { get; set; }
-        protected Guid hash { get; set; }
-        protected int secVersion { get; set; }
+        public enum l7_type { HTTPS, SFTP, SSH }
+        public l7_type l7 { get; protected set; }
+        public Guid hash { get; set; }
+        public int secVersion { get; set; }
 
 
         protected SSL(Guid hash, int version)
@@ -40,10 +52,10 @@ namespace GOTHAM.Gotham.Traffic
 
     class TLS : TCP, ILayer6
     {
-        protected enum l7_type { HTTPS, SFTP, SSH }
-        protected l7_type l7 { get; set; }
-        protected Guid hash { get; set; }
-        protected int secVersion { get; set; }
+        public enum l7_type { HTTPS, SFTP, SSH }
+        public l7_type l7 { get; protected set; }
+        public Guid hash { get; set; }
+        public int secVersion { get; set; }
 
 
         protected TLS(Guid hash, int version)

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using GOTHAM.Tools;
 using System.Globalization;
 using GOTHAM_TOOLS;
+using GOTHAM.Gotham.Traffic;
 
 namespace GOTHAM
 {
@@ -35,7 +36,9 @@ namespace GOTHAM
             // ===========================        TEST CODE       =====================================
 
 
-
+            var test = new HTTP();
+            
+            
 
 
             //var newNodes = TxtParse.FromFile2("C:\\temp\\tier2_missing_CountryCode.txt");

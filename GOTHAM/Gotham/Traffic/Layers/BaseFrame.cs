@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GOTHAM.Gotham.Traffic
 {
-    class Layer1
+    class BaseFrame
     {
-        protected enum l2_type { Ethernet, Wifi }
-        protected l2_type l2;
+        public enum l2_type { Ethernet, Wifi }
+        public l2_type l2 { get; protected set; }
     }
 }
