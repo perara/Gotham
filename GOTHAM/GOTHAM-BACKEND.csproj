@@ -128,6 +128,17 @@
     <Compile Include="Gotham\Application\Tools\NodeGenerator.cs" />
     <Compile Include="Gotham\Application\Tools\Pathfinder.cs" />
     <Compile Include="Gotham\Application\Tools\TxtParse.cs" />
+    <Compile Include="Gotham\Traffic\Layers\Layer1.cs" />
+    <Compile Include="Gotham\Traffic\Layers\Layer3.cs" />
+    <Compile Include="Gotham\Traffic\Layers\Layer2.cs" />
+    <Compile Include="Gotham\Traffic\Layers\Layer4.cs" />
+    <Compile Include="Gotham\Traffic\Layers\Layer6.cs" />
+    <Compile Include="Gotham\Traffic\Layers\Layer7.cs" />
+    <Compile Include="Gotham\Traffic\Layers\LayerInterfaces.cs" />
+    <Compile Include="Gotham\Traffic\Misc\IP.cs" />
+    <Compile Include="Gotham\Traffic\Misc\MAC.cs" />
+    <Compile Include="Gotham\Traffic\Misc\Packet.cs" />
+    <Compile Include="Gotham\Traffic\Misc\PacketBuilder.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
