@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/src/GOTHAM-GAME/GOTHAM-GAME.iml" filepath="$PROJECT_DIR$/src/GOTHAM-GAME/GOTHAM-GAME.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/GOTHAM-GF/GOTHAM-GF.iml" filepath="$PROJECT_DIR$/src/GOTHAM-GF/GOTHAM-GF.iml" />
+      <module fileurl="file://$PROJECT_DIR$/htdocs/htdocs.iml" filepath="$PROJECT_DIR$/htdocs/htdocs.iml" />
+    </modules>
+  </component>
+</project>
