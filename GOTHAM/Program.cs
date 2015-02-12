@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using GOTHAM.Tools;
 using System.Globalization;
 using GOTHAM_TOOLS;
+using GOTHAM.Gotham.Traffic;
 
 namespace GOTHAM
 {
@@ -17,6 +18,8 @@ namespace GOTHAM
 
         static void Main(string[] args)
         {
+
+            //Gotham.Traffic.Test.FTP ft = new Gotham.Traffic.Test.FTP();
 
             // ServiceStack API Server
             ServiceStackConsoleHost.Start();
@@ -33,12 +36,16 @@ namespace GOTHAM
             // ===========================        TEST CODE       =====================================
 
 
+            var test = new HTTP();
+            
+            
 
-            var newNodes = TxtParse.FromFile2("C:\\temp\\tier2_missing_CountryCode.txt");
-            foreach (var node in newNodes)
-            {
-                DBTool.Write(node);
-            }
+
+            //var newNodes = TxtParse.FromFile2("C:\\temp\\tier2_missing_CountryCode.txt");
+            //foreach (var node in newNodes)
+            //{
+            //    DBTool.Write(node);
+            //}
 
             
 
