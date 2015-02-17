@@ -138,7 +138,6 @@
     <Compile Include="Gotham\Traffic\Misc\IP.cs" />
     <Compile Include="Gotham\Traffic\Misc\MAC.cs" />
     <Compile Include="Gotham\Traffic\Misc\Packet.cs" />
-    <Compile Include="Gotham\Traffic\Misc\PacketBuilder.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

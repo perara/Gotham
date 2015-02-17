@@ -61,17 +61,25 @@ namespace GOTHAM.Model.Tools
 
 
 
-      SessionFactory = Fluently.Configure()
-        .Database(MySQLConfiguration
-          .Standard
-          .ConnectionString(cs => cs.Server(sqlConfig["host"].ToString())
-            .Database(sqlConfig["database"].ToString())
-            .Username(sqlConfig["username"].ToString())
-            .Password(sqlConfig["password"].ToString())
-          ))
-           .Mappings(m =>
-            m.FluentMappings.AddFromNamespaceOf<NodeEntity>())
-      .BuildSessionFactory();
+      try
+      {
+          SessionFactory = Fluently.Configure()
+          .Database(MySQLConfiguration
+            .Standard
+            .ConnectionString(cs => cs.Server(sqlConfig["host"].ToString())
+              .Database(sqlConfig["database"].ToString())
+              .Username(sqlConfig["username"].ToString())
+              .Password(sqlConfig["password"].ToString())
+            ))
+             .Mappings(m =>
+              m.FluentMappings.AddFromNamespaceOf<NodeEntity>())
+        .BuildSessionFactory();
+      }
+      catch (Exception)
+      {
+          log.Error("Can't connect to database");
+          throw;
+      }
     }
 
   }

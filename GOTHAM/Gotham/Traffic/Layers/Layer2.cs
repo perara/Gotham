@@ -7,23 +7,35 @@ using System.Threading.Tasks;
 namespace GOTHAM.Gotham.Traffic
 {
     // TODO: Change class and type\protocol to protected
-    class Ethernet : BaseFrame, ILayer2
+    public class Ethernet : Layer2
     {
-        public enum l3_type { IP, ICMP }
-        public l3_type l3 { get; protected set ; }
-        public MAC macDest { get; set; }
-        public MAC macSrc { get; set; }
-
-
-        protected Ethernet(MAC dest, MAC source)
+        public Ethernet(MAC dest, MAC source)
         {
-            l2 = l2_type.Ethernet;
+            type = l2_type.Ethernet;
             macDest = dest;
             macSrc = source;
         }
-        protected Ethernet()
+
+        public Ethernet()
         {
-            l2 = l2_type.Ethernet;
+            type = l2_type.Ethernet;
         }
+
+    }
+
+    public class WIFI : Layer2
+    {
+        public WIFI(MAC dest, MAC source)
+        {
+            type = l2_type.Ethernet;
+            macDest = dest;
+            macSrc = source;
+        }
+
+        public WIFI()
+        {
+            type = l2_type.Ethernet;
+        }
+
     }
 }

@@ -7,39 +7,31 @@ using System.Threading.Tasks;
 namespace GOTHAM.Gotham.Traffic
 {
     // TODO: Change class and type\protocol to protected
-    
-
-
-    // TODO: Change class and type\protocol to protected
-    class TCP : IP, ILayer4
+    public class TCP : Layer4
     {
-        public enum l6_type { none, SSL, TLS }
-        public l6_type l6 { get; protected set; }
         public int portSrc { get; set; }
         public int portDest { get; set; }
         public int length { get; set; }
 
 
-        protected TCP()
+        public TCP()
         {
-            l4 = l4_type.TCP;
+            type = l4_type.TCP;
         }
     }
 
 
     // TODO: Change class and type\protocol to protected
-    class UDP : IP, ILayer4
+    public class UDP : Layer4
     {
-        public enum l6_type { none, DTLS }
-        public l6_type l6 { get; set; }
         public int portSrc { get; set; }
         public int portDest { get; set; }
         public int length { get; set; }
 
 
-        protected UDP()
+        public UDP()
         {
-            l4 = l4_type.UDP;
+            type = l4_type.UDP;
         }
     }
 }

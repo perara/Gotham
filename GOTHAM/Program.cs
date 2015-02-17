@@ -36,7 +36,9 @@ namespace GOTHAM
             // ===========================        TEST CODE       =====================================
 
 
-            var test = new HTTP();
+
+
+           
             
             
 
@@ -72,7 +74,8 @@ namespace GOTHAM
                 nodesDict.Add(node.id, node);
                 nodesList.Add(node);
             }
-            Console.WriteLine("Finished loading from DB");
+            log.Info("Finished loading from DB");
+            Console.WriteLine("====================================================================");
 
             //CableGenerator.ConnectCloseNodes(nodesList, 50);
             //CableGenerator.ConnectNodes(1);
@@ -83,24 +86,30 @@ namespace GOTHAM
             var node2 = nodesDict[3482];
             var testlist = new List<NodeEntity>();
 
-            var path1 = Pathfinder.TryRandom(node1, node2, nodesList, 100000);
+            var path = Pathfinder.TryRandom(node1, node2, nodesList, 100000);
 
-            foreach (var node in path1)
+            foreach (var node in path)
             {
-                log.Info(node.country + ": \t\t" + node.name);
+                var numspaces = 35 - node.country.Length;
+                var separator = "";
+                for (int i = 0; i < numspaces; i++) separator += " ";
+                log.Info(node.country + separator + node.name);
+
             }
 
 
             Console.WriteLine("====================================================================");
 
-            var path2 = Pathfinder.ByDistance(node1, node2, nodesList);
+            /*var path2 = Pathfinder.ByDistance(node1, node2, nodesList);
 
             foreach (var node in path2)
             {
                 log.Info(node.country + ": \t\t" + node.name);
             }
+            */
 
-
+            Packet packet = new Packet(path);
+            
             //CableGenerator.ConnectNodes(1);
 
             // ========================================================================================

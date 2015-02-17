@@ -7,30 +7,46 @@ using System.Threading.Tasks;
 
 namespace GOTHAM.Gotham.Traffic
 {
-    class HTTP : NoEncryption_TCP, ILayer7
+    public class HTTP : Layer7
     {
-        public string webServer { get; set; }
-        public DateTime date { get; set; }
-        public HostEntity host { get; set; }
-        public string data { get; set; }
-
-
         public HTTP()
         {
-            l7 = l7_type.HTTP;
+            type = l7_type.HTTP;
         }
     }
-    class RTSP : NoEncryption_UDP, ILayer7
+    public class FTP : Layer7
     {
-        public string webServer { get; set; }
-        public DateTime date { get; set; }
-        public HostEntity host { get; set; }
-        public string data { get; set; }
-
-
-        public RTSP()
+        public FTP()
         {
-            l7 = l7_type.HTTP;
+            type = l7_type.FTP;
+        }
+    }
+    public class DNS : Layer7
+    {
+        public DNS()
+        {
+            type = l7_type.DNS;
+        }
+    }
+    public class HTTPS : Layer7
+    {
+        public HTTPS()
+        {
+            type = l7_type.HTTPS;
+        }
+    }
+    public class SFTP : Layer7
+    {
+        public SFTP()
+        {
+            type = l7_type.SFTP;
+        }
+    }
+    public class SSH : Layer7
+    {
+        public SSH()
+        {
+            type = l7_type.SSH;
         }
     }
 }
