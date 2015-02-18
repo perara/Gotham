@@ -31,16 +31,13 @@ Gotham.Preload.onLoad (source, name, percent) ->
 Gotham.Preload.onComplete () ->
   console.log "Preload Complete"
 
-  renderer = new Gotham.Graphics.Renderer(1920, 1080, null, true)
-
   # Create World Scene
   scene_World = new GothamGame.scenes.World 0x333333, true
 
 
-
   # Add Scenes to renderer
-  renderer.addScene("World", scene_World)
-  renderer.setScene("World")
+  GothamGame.renderer.addScene("World", scene_World)
+  GothamGame.renderer.setScene("World")
   return
 
 

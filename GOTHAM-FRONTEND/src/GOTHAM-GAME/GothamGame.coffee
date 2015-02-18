@@ -9,6 +9,9 @@ WorldScene    = require "./scenes/World.coffee"
 class GothamGame
 
   window.GothamGame = GothamGame
+
+  @renderer = new Gotham.Graphics.Renderer 1920, 1080, null, true
+
   # Static Stuff
   @objects =
     "WorldMap" : WorldMap

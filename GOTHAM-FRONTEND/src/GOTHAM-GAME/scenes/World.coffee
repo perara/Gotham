@@ -13,8 +13,9 @@ class World extends Gotham.Graphics.Scene
 
 
     # Add Objects to scene
-    @.addObject object_WorldMap
     @.addObject object_TopBar
+    @.addObject object_WorldMap
+
 
 
 
