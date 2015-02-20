@@ -1,13 +1,12 @@
 ﻿using GOTHAM.Model;
 using GOTHAM.Model.Tools;
-using GOTHAM.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM.Gotham.Application.Tools
+namespace GOTHAM.Tools
 {
     class CableGenerator
     {

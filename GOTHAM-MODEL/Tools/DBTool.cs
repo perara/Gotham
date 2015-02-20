@@ -1,11 +1,12 @@
 ﻿using GOTHAM.Model;
+using GOTHAM.Model.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM.Model.Tools
+namespace GOTHAM.Tools
 {
     public class DBTool
     {

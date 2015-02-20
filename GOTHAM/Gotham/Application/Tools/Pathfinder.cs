@@ -7,14 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 
-namespace GOTHAM_TOOLS
+namespace GOTHAM.Tools
 {
     public class Pathfinder
     {
+        public List<KeyValuePair<int, NodeEntity>> solution = new List<KeyValuePair<int, NodeEntity>>();
 
-        public static Stack<NodeEntity> TryRandom(NodeEntity start, NodeEntity goal, List<NodeEntity> nodes, int tryPaths)
+
+        public Pathfinder TryRandom(NodeEntity start, NodeEntity goal, List<NodeEntity> nodes, int tryPaths)
         {
-            var solution = new Stack<NodeEntity>();
+            
             var tries = 0;
             var rnd = new Random();
             var minPath = Int32.MaxValue;
@@ -23,18 +25,18 @@ namespace GOTHAM_TOOLS
             // Run until end NodeEntity is reached
             while (tries < tryPaths)
             {
-                var queue = new Stack<NodeEntity>();
+                var queue = new List<KeyValuePair<int, NodeEntity>>();
                 var currentNode = start;
                 var jumps = 0;
 
-                queue.Push(start);
+                queue.Add(new KeyValuePair<int,NodeEntity>(start.id, start));
 
                 do
                 {
                     NodeEntity nextNode = null;
                     nextNode = currentNode.siblings[rnd.Next(currentNode.siblings.Count)];
 
-                    queue.Push(nextNode);
+                    queue.Add(new KeyValuePair<int,NodeEntity>(nextNode.id, nextNode));
                     currentNode = nextNode;
                     jumps++;
 
@@ -50,17 +52,16 @@ namespace GOTHAM_TOOLS
                 tries++;
             }
             //Console.WriteLine("RandomAlgorithm Path found in: " + (DateTime.Now - time).Milliseconds + " ms, with " + solution.Count + " jumps");
-            return solution;
+            return this;
         }
 
-        public static Stack<NodeEntity> AStar(NodeEntity start, NodeEntity goal)
+        public Pathfinder AStar(NodeEntity start, NodeEntity goal)
         {
-            var queue = new Stack<NodeEntity>();
             var currentNodeEntity = new NodeEntity();
             var ignore = new List<NodeEntity>();
 
             currentNodeEntity = start;
-            queue.Push(start);
+            solution.Add(new KeyValuePair<int,NodeEntity>(start.id, start));
 
             // Run until end NodeEntity is reached
             do
@@ -81,29 +82,28 @@ namespace GOTHAM_TOOLS
                 }
 
                 // If last NodeEntity is further away, add to ignore list and remove
-                var lastDist = GeoTool.GetDistance(queue.Last().GetCoordinates(), goal.GetCoordinates());
+                var lastDist = GeoTool.GetDistance(solution.Last().Value.GetCoordinates(), goal.GetCoordinates());
                 var currDist = GeoTool.GetDistance(nextNodeEntity.GetCoordinates(), goal.GetCoordinates());
 
                 if (lastDist > currDist)
                 {
-                    queue.Push(nextNodeEntity);
+                    solution.Add(new KeyValuePair<int,NodeEntity>(nextNodeEntity.id, nextNodeEntity));
                     ignore.Add(currentNodeEntity);
                     currentNodeEntity = nextNodeEntity;
                 }
                 else
                 {
-                    ignore.Add(queue.Last());
-                    queue.Pop();
+                    ignore.Add(solution.Last().Value);
+                    solution.Remove(solution.Last());
                 }
             } while (currentNodeEntity != goal);
-            return queue;
+            return this;
         }
 
 
         // TODO: Test and improve when land nodes are added
-        public static Stack<NodeEntity> ByDistance(NodeEntity start, NodeEntity goal, List<NodeEntity> nodes)
+        public Pathfinder ByDistance(NodeEntity start, NodeEntity goal, List<NodeEntity> nodes)
         {
-            var solution = new Stack<NodeEntity>();
             var ignore = new List<NodeEntity>();
             var timeout = 0;
             var tries = 0;
@@ -113,12 +113,12 @@ namespace GOTHAM_TOOLS
             // Run until end NodeEntity is reached
             while (timeout < 5000)
             {
-                var queue = new Stack<NodeEntity>();
+                var queue = new List<KeyValuePair<int, NodeEntity>>();
                 var currentNode = start;
                 var tempIgnore = new List<NodeEntity>();
                 var jumps = 0;
 
-                queue.Push(start);
+                queue.Add(new KeyValuePair<int,NodeEntity>(start.id, start));
 
                 do
                 {
@@ -142,16 +142,16 @@ namespace GOTHAM_TOOLS
 
                     if (nextNode == null)
                     {
-                        tempIgnore.Add(queue.Last());
+                        tempIgnore.Add(queue.Last().Value);
                         // Console.WriteLine("Dead end");
                         break;
                     }
 
                     // If last NodeEntity is further away, add to ignore list and remove
-                    var lastDist = GeoTool.GetDistance(queue.Last().GetCoordinates(), goal.GetCoordinates());
+                    var lastDist = GeoTool.GetDistance(queue.Last().Value.GetCoordinates(), goal.GetCoordinates());
                     var currDist = GeoTool.GetDistance(nextNode.GetCoordinates(), goal.GetCoordinates());
 
-                    queue.Push(nextNode);
+                    queue.Add(new KeyValuePair<int,NodeEntity>(nextNode.id, nextNode));
                     tempIgnore.Add(currentNode);
                     currentNode = nextNode;
                     jumps++;
@@ -166,19 +166,49 @@ namespace GOTHAM_TOOLS
                     Console.WriteLine("FOUND A (BETTER) PATH");
                     solution = queue;
                     minPath = queue.Count;
-                    return solution;
+                    return this;
                 }
 
                 timeout++;
             }
             Console.WriteLine("ClosestNode Path found in: " + (DateTime.Now - time).Milliseconds + " ms");
-            return solution;
+            return this;
         }
 
         //TODO: Implement
-        public static void ACO(NodeEntity start, NodeEntity goal)
+        public void ACO(NodeEntity start, NodeEntity goal)
         {
 
+        }
+
+        public Stack<int> toIdList()
+        {
+            var pathInt = new Stack<int>();
+
+            foreach (var node in solution)
+                pathInt.Push(node.Key);
+
+            return pathInt;
+        }
+
+        public Stack<NodeEntity> toNodeList()
+        {
+            var pathInt = new Stack<NodeEntity>();
+
+            foreach (var node in solution)
+                pathInt.Push(node.Value);
+
+            return pathInt;
+        }
+
+        public Dictionary<int, NodeEntity> toDictionary()
+        {
+            var pathInt = new Dictionary<int, NodeEntity>();
+
+            foreach (var node in solution)
+                pathInt.Add(node.Key, node.Value);
+
+            return pathInt;
         }
     }
 }

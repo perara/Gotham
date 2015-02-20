@@ -1,5 +1,5 @@
-﻿
-using FluentNHibernate.Mapping;
+﻿using FluentNHibernate.Mapping;
+
 namespace GOTHAM.Model
 {
     public class CableTypeEntity : BaseEntity

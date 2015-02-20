@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM.Gotham.Traffic
+namespace GOTHAM.Tools
 {
-    public class BaseFrame
+    public class Log
     {
-        public void Get()
-        {
+        
 
-        }
     }
 }

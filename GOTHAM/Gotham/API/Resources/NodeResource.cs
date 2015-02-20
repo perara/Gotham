@@ -1,5 +1,6 @@
-﻿using GOTHAM.Model;
-using GOTHAM.Model.Tools;
+﻿using GOTHAM.Tools;
+using GOTHAM.Model;
+
 using ServiceStack;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using NHibernate.Util;
 
-namespace GOTHAM.Gotham.API.Resources
+namespace GOTHAM.API
 {
   public class NodeResource
   {

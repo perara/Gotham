@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM.Gotham.Traffic
+namespace GOTHAM.Traffic
 {
     // Presentation Layer
 

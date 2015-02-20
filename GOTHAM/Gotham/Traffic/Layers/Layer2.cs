@@ -1,35 +1,34 @@
-﻿using System;
+﻿using GOTHAM.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM.Gotham.Traffic
+namespace GOTHAM.Traffic
 {
-    // TODO: Change class and type\protocol to protected
     public class Ethernet : Layer2
     {
-        public Ethernet(MAC dest, MAC source)
+        public Ethernet(HostEntity dest, HostEntity source)
         {
             type = l2_type.Ethernet;
-            macDest = dest;
-            macSrc = source;
+            this.source = source;
+            this.dest = dest;
         }
 
         public Ethernet()
         {
             type = l2_type.Ethernet;
         }
-
     }
 
     public class WIFI : Layer2
     {
-        public WIFI(MAC dest, MAC source)
+        public WIFI(HostEntity dest, HostEntity source)
         {
             type = l2_type.Ethernet;
-            macDest = dest;
-            macSrc = source;
+            this.source = source;
+            this.dest = dest;
         }
 
         public WIFI()

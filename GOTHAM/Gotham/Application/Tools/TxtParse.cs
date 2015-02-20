@@ -5,11 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GOTHAM.Model;
 using GOTHAM.Tools;
+using GOTHAM.Model;
 using GOTHAM.Model.Tools;
 
-namespace GOTHAM.Gotham.Application.Tools
+namespace GOTHAM.Tools
 {
     public class TxtParse
     {
@@ -166,9 +166,9 @@ namespace GOTHAM.Gotham.Application.Tools
 	        }
 
             foreach (var cable in cables) 
-                { DBTool.Write(cable); }
+                DBTool.Write(cable);
             foreach (var cable_part in cable_parts) 
-                { DBTool.Write(cable_part); }
+                DBTool.Write(cable_part);
         }
 
 

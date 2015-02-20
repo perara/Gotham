@@ -1,5 +1,5 @@
-﻿using GOTHAM.Gotham.Application.Tools;
-using GOTHAM.Tools;
+﻿using GOTHAM.Model;
+using GOTHAM.Model;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

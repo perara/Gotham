@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GOTHAM.Model;
 using GOTHAM.Tools;
+using GOTHAM.Model;
 
-namespace GOTHAM.Gotham.Application.Tools
+namespace GOTHAM.Tools
 {
     public class NodeGenerator
     {

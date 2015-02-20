@@ -43,7 +43,9 @@
     <Compile Include="FakeNameGenerator\FakeNameGenerator.cs" />
     <Compile Include="GeoTool.cs" />
     <Compile Include="HTTPRequest.cs" />
+    <Compile Include="IP.cs" />
     <Compile Include="LongRandom.cs" />
+    <Compile Include="MAC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

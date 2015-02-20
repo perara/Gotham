@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ServiceStack;
 using Funq;
 
-namespace GOTHAM.Gotham.API.Resources
+namespace GOTHAM.API
 {
   public class AppHost : AppHostBase
   {

@@ -2,7 +2,7 @@
 using ServiceStack;
 using System.Runtime.Remoting;
 
-namespace GOTHAM.Gotham.API
+namespace GOTHAM.API
 {
 
   public class ServiceStackConsoleHost : MarshalByRefObject
@@ -23,7 +23,7 @@ namespace GOTHAM.Gotham.API
       ServiceStackAppDomain.Load(assemblyName);
 
       // Create instance of our ServiceStack application
-      Handle = ServiceStackAppDomain.CreateInstance(assemblyName, "GOTHAM.Gotham.API.ServiceStackConsoleHost");
+      Handle = ServiceStackAppDomain.CreateInstance(assemblyName, "GOTHAM.API.ServiceStackConsoleHost");
 
       // Show that the main application is in a separate AppDomain
       log.InfoFormat("Main Application is running in AppDomain '{0}'", AppDomain.CurrentDomain.FriendlyName);

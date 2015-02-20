@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using GOTHAM.Model;
 using GOTHAM.Tools;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace GOTHAM.Model
         public virtual string name { get; set; }
         public virtual string country { get; set; }
         public virtual TierEntity tier { get; set; }
+        // TODO: Multiple hosts
+        public virtual HostEntity host { get; set; }
         public virtual int priority { get; set; }
         public virtual double bandwidth { get; set; }
         public virtual double lat { get; set; }

@@ -1,13 +1,12 @@
-﻿using System;
+﻿using GOTHAM.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM.Gotham.Traffic
+namespace GOTHAM.Traffic
 {
-    // Network Layer
-    // TODO: Change class and type\protocol to protected
     public class ICMP : Layer3
     {
         public enum icmp_Type { echoReply = 0, unreachable = 3, echo = 8, timeout = 11, tracert = 30 }
@@ -24,19 +23,17 @@ namespace GOTHAM.Gotham.Traffic
         }
     }
 
-    // TODO: Change class and type\protocol to protected
     public class IP : Layer3
     {
         
         public int ipVersion { get; set; }
-        public IP ipSrc { get; set; }
-        public IP ipDest { get; set; }
 
 
-        public IP(IP src, IP dest, int version)
+
+        public IP(HostEntity src, HostEntity dest, HostEntity version)
         {
-            this.ipSrc = src;
-            this.ipDest = dest;
+            this.source = src;
+            this.dest = dest;
 
            type = l3_type.IP;
         }

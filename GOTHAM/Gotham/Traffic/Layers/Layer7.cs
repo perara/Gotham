@@ -1,11 +1,11 @@
-﻿using GOTHAM.Model;
+﻿using GOTHAM.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM.Gotham.Traffic
+namespace GOTHAM.Traffic
 {
     public class HTTP : Layer7
     {

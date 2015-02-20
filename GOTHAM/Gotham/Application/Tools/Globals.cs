@@ -1,5 +1,7 @@
-﻿using GOTHAM.Model;
+﻿using GOTHAM.Tools;
 using GOTHAM.Model.Tools;
+using GOTHAM.Model;
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,7 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM
+
+namespace GOTHAM.Tools
 {
     public class Globals
     {
@@ -19,20 +22,24 @@ namespace GOTHAM
         }
         private Globals()
         {
-            // TODO: Hent fra database
+            DateTime time = DateTime.Now;
+            // TODO: Preload fra database
+            nodes = getTable<NodeEntity>();
+
+            log.Info((DateTime.Now - time).Seconds + "." + (DateTime.Now - time).Milliseconds);
+            //cables = getTable<CableEntity>();
         }
 
-
+        public List<NodeEntity> nodes;
+        public List<CableEntity> cables;
 
         // Global variables and objects
         public Point mapMax = new Point(1000, 1000);
 
-        public List<NodeEntity> rootNodes = new List<NodeEntity>();
-        public List<CableEntity> cables = new List<CableEntity>();
-
+        public readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // Convert to human readable bandwidth
-        static readonly string[] SizeSuffixes = { "bytes", "Kb", "Mb", "Gb", "Tb", "Pb", "Eb", "Zb", "Yb" };
+        readonly string[] SizeSuffixes = { "bytes", "Kb", "Mb", "Gb", "Tb", "Pb", "Eb", "Zb", "Yb" };
         public string BWSuffix(double value)
         {
             if (value < 0) { return "-" + BWSuffix(-value); }
@@ -49,12 +56,12 @@ namespace GOTHAM
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IList<T> getTable<T>()
+        public List<T> getTable<T>()
         {
             using (var session = EntityManager.GetSessionFactory().OpenSession())
             {
                 Type typeParameterType = typeof(T);
-                var data = session.CreateCriteria(typeParameterType).List<T>();
+                var data = session.CreateCriteria(typeParameterType).List<T>().ToList();
                 return data;
             }
         }

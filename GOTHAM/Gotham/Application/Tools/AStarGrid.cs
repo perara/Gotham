@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-using GOTHAM.Application.Tools;
+using GOTHAM.Tools;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -30,7 +30,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 
-namespace GOTHAM.Application.Tools
+namespace GOTHAM.Tools
 {
     public interface IPathNode<TUserContext>
     {

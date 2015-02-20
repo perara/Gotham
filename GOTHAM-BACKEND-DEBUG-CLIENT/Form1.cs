@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GOTHAM.Model;
+using GOTHAM.Tools;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
-using GOTHAM.Model.Tools;
+using GOTHAM.Tools;
 using GOTHAM.Tools;
 
 namespace GOTHAM_BACKEND_DEBUG
