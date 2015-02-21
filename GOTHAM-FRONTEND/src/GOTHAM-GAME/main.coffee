@@ -6,7 +6,7 @@ Gotham = require '../GOTHAM-GF/Gotham.coffee'
 GothamGame = require '../GOTHAM-GAME/GothamGame.coffee'
 
 
-
+Gotham.Preload.image("/assets/img/bottomBar.png", "bottomBar", "image")
 Gotham.Preload.image("/assets/img/topbar.png", "topBar", "image")
 Gotham.Preload.json("/assets/json/json.json", "map")
 #Gotham.Preload.image("http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg", "item", "jpg")
@@ -18,8 +18,6 @@ Gotham.Preload.json("/assets/json/json.json", "map")
 #sound.volume(0.3)
 #console.log sound
 #sound.play()
-
-
 
 # START GAME -----------------------------------
 
