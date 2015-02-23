@@ -19,7 +19,7 @@ namespace GOTHAM
 
         static void Main(string[] args)
         {
-
+            
             var sessions = new List<Stack<NodeEntity>>();
 
             // ServiceStack API Server
@@ -35,7 +35,7 @@ namespace GOTHAM
 
             // ========================================================================================
             // ===========================        TEST CODE       =====================================
-
+            /*
             var rawNodes = Globals.GetInstance().nodes;
             var nodesDict = new Dictionary<int, NodeEntity>();
             var nodesList = new List<NodeEntity>();
@@ -74,8 +74,11 @@ namespace GOTHAM
             log.Info(result);
             
             packet.PrintJson();
+            */
 
             var test = new MakeCon();
+
+            //hub.Send("Paul", "HALPOOO STUCK IN HUB");
             
             
             

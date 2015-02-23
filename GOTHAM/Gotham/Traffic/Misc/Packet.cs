@@ -87,23 +87,6 @@ namespace GOTHAM.Traffic
         }
 
         /// <summary>
-        /// Prints info about packet in log
-        /// </summary>
-        public void PrintLayers()
-        {
-
-            log.Info("=========================================");
-
-            log.Info("Link Layer: \t\t" + link.GetType().Name);
-            log.Info("Network Layer: \t" + network.GetType().Name);
-            log.Info("Transport Layer: \t" + transport.GetType().Name);
-            log.Info("Encryption Layer: \t" + encryption.GetType().Name);
-            log.Info("Application Layer: \t" + application.GetType().Name);
-
-            log.Info("=========================================");
-        }
-
-        /// <summary>
         /// Check the package structure integrity
         /// </summary>
         /// <returns></returns>
@@ -126,16 +109,40 @@ namespace GOTHAM.Traffic
             return true;
         }
 
+        /// <summary>
+        /// Converts this package to JSON string
+        /// </summary>
+        /// <returns></returns>
         public string ToJson()
         {
             consistent = IntegrityCheck();
             return JsonConvert.SerializeObject(this);
         }
 
+        /// <summary>
+        /// Print this packet to console
+        /// </summary>
         public void PrintJson()
         {
             var json = JsonConvert.SerializeObject(this, Formatting.Indented);
             log.Info(json);
+        }
+
+        /// <summary>
+        /// Prints info about packet in log
+        /// </summary>
+        public void PrintLayers()
+        {
+
+            log.Info("=========================================");
+
+            log.Info("Link Layer: \t\t" + link.GetType().Name);
+            log.Info("Network Layer: \t" + network.GetType().Name);
+            log.Info("Transport Layer: \t" + transport.GetType().Name);
+            log.Info("Encryption Layer: \t" + encryption.GetType().Name);
+            log.Info("Application Layer: \t" + application.GetType().Name);
+
+            log.Info("=========================================");
         }
     }
 }
