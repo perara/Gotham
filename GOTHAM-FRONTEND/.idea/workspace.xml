@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/GOTHAM-GAME/objects/WorldMap.coffee" line="54" mnemonic="3" />
-    <bookmark url="file://$PROJECT_DIR$/src/GOTHAM-GAME/objects/WorldMap.coffee" line="89" mnemonic="9" />
+    <bookmark url="file://$PROJECT_DIR$/src/GOTHAM-GAME/objects/WorldMap.coffee" line="55" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80b5d49e-0459-41d8-bccc-5f6117711fa8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/dependencies/addWheelListener.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Extensions/CanvasRenderer.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Extensions/DisplayObjectContainer.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/modules/internal/Lol.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Extensions/WebGLRenderer.coffee" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/.idea/compiler.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/.idea/encodings.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/dependencies/globalInput.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/.idea/gotham.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/.idea/misc.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/dependencies/mozAddWheelListener.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/.idea/copyright/profiles_settings.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/.idea/vcs.xml" />
+      <change type="MOVED" beforePath="C:\Users\PerArne\Documents\Visual Studio 2013\Projects\GOTHAM\GOTHAM-FRONTEND\src\GOTHAM-GF\modules\Graphics\Renderer.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Renderer.coffee" />
+      <change type="MOVED" beforePath="C:\Users\PerArne\Documents\Visual Studio 2013\Projects\GOTHAM\GOTHAM-FRONTEND\src\GOTHAM-GF\modules\Graphics\Scene.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Scene.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/htdocs/assets/img/topbar.png" afterPath="$PROJECT_DIR$/htdocs/assets/img/topbar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GOTHAM-GF/modules/GameLoop.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/modules/GameLoop.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GOTHAM-GF/Gotham.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/Gotham.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GOTHAM-GAME/GothamGame.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GAME/GothamGame.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Graphics.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Graphics.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Preload.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Preload.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Rectangle.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Rectangle.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Scene.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Scene.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GOTHAM-GAME/objects/TopBar.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GAME/objects/TopBar.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GOTHAM-GAME/scenes/World.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GAME/scenes/World.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GOTHAM-GAME/objects/WorldMap.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GAME/objects/WorldMap.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/htdocs/index.html" afterPath="$PROJECT_DIR$/htdocs/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GOTHAM-GAME/main.coffee" afterPath="$PROJECT_DIR$/src/GOTHAM-GAME/main.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -58,43 +64,61 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="globalInput.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/dependencies/globalInput.js">
+      <file leaf-file-name="Graphics.coffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.8448277" vertical-offset="243" max-vertical-offset="1836">
-              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.coffee" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/main.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="151" max-vertical-offset="833">
-              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2074">
+              <caret line="14" column="55" selection-start-line="14" selection-start-column="55" selection-end-line="14" selection-end-column="55" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Container.coffee" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Container.coffee">
+      <file leaf-file-name="Preload.coffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Preload.coffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2380">
+              <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DisplayObjectContainer.coffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Extensions/DisplayObjectContainer.coffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="748">
+              <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Renderer.coffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Renderer.coffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.275862" vertical-offset="51" max-vertical-offset="1326">
+              <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WorldMap.coffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/objects/WorldMap.coffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2327" max-vertical-offset="3162">
+              <caret line="162" column="33" selection-start-line="162" selection-start-column="33" selection-end-line="162" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WebGLRenderer.coffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Extensions/WebGLRenderer.coffee">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
-              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GothamGame.coffee" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/GothamGame.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-              <caret line="12" column="11" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="11" />
+              <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -103,28 +127,38 @@
       <file leaf-file-name="TopBar.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/objects/TopBar.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="782">
-              <caret line="12" column="35" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1020">
+              <caret line="26" column="22" selection-start-line="19" selection-start-column="3" selection-end-line="26" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Scene.coffee" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Scene.coffee">
+      <file leaf-file-name="GameLoop.coffee" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/GameLoop.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="918">
-              <caret line="29" column="75" selection-start-line="29" selection-start-column="75" selection-end-line="29" selection-end-column="75" />
+            <state vertical-scroll-proportion="0.29655173" vertical-offset="83" max-vertical-offset="867">
+              <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WorldMap.coffee" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/objects/WorldMap.coffee">
+      <file leaf-file-name="main.coffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/main.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5603448" vertical-offset="746" max-vertical-offset="2754">
-              <caret line="63" column="47" selection-start-line="63" selection-start-column="47" selection-end-line="63" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="799">
+              <caret line="8" column="60" selection-start-line="8" selection-start-column="51" selection-end-line="8" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CanvasRenderer.coffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Extensions/CanvasRenderer.coffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
+              <caret line="14" column="68" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -133,31 +167,39 @@
     </leaf>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/src/GOTHAM-GF" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/htdocs/index.html" />
-        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/GameLoop.coffee" />
-        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Renderer.coffee" />
-        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Graphics.coffee" />
         <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Texture.coffee" />
-        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Preload.coffee" />
         <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Sprtie.coffee" />
         <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Sprite.coffee" />
-        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics.coffee" />
         <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Rectangle.coffee" />
         <option value="$PROJECT_DIR$/src/GOTHAM-GAME/GothamGame.coffee" />
-        <option value="$PROJECT_DIR$/src/GOTHAM-GAME/main.coffee" />
         <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Container.coffee" />
-        <option value="$PROJECT_DIR$/src/GOTHAM-GAME/scenes/World.coffee" />
-        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Scene.coffee" />
-        <option value="$PROJECT_DIR$/src/GOTHAM-GAME/objects/TopBar.coffee" />
-        <option value="$PROJECT_DIR$/src/GOTHAM-GF/Gotham.coffee" />
         <option value="$PROJECT_DIR$/src/GOTHAM-GF/dependencies/addWheelListener.js" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/ScrollWheel.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/dependencies/mozAddWheelListener.js" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Scene.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Graphics.coffee" />
         <option value="$PROJECT_DIR$/src/GOTHAM-GF/dependencies/globalInput.js" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Renderer.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Preload.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GAME/scenes/World.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GAME/main.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/internal/ScrollWheel.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/PIXIExtensions.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GAME/objects/TopBar.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Extensions/DisplayObjectContainer.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/Gotham.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Renderer.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Extensions/WebGLRenderer.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/Extensions/CanvasRenderer.coffee" />
         <option value="$PROJECT_DIR$/src/GOTHAM-GAME/objects/WorldMap.coffee" />
+        <option value="$PROJECT_DIR$/src/GOTHAM-GF/modules/GameLoop.coffee" />
       </list>
     </option>
   </component>
@@ -217,7 +259,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -274,7 +315,25 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Graphics" />
+              <option name="myItemId" value="internal" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Gotham" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GOTHAM-GF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Extensions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -333,6 +392,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -356,6 +416,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\PerArne\Documents\Visual Studio 2013\Projects\GOTHAM\GOTHAM-FRONTEND\src\GOTHAM-GF\modules" />
+      <recent name="C:\Users\PerArne\Documents\Visual Studio 2013\Projects\GOTHAM\GOTHAM-FRONTEND\src\GOTHAM-GF\modules\internal" />
       <recent name="C:\Users\PerArne\Documents\Visual Studio 2013\Projects\GOTHAM\GOTHAM-FRONTEND\src\GOTHAM-GF" />
     </key>
   </component>
@@ -636,12 +698,13 @@
       <option name="number" value="Default" />
       <updated>1423669164137</updated>
       <workItem from="1423669167765" duration="20991000" />
-      <workItem from="1424201206651" duration="20586000" />
+      <workItem from="1424201206651" duration="33475000" />
+      <workItem from="1424438430439" duration="15164000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41577000" />
+    <option name="totallyTimeSpent" value="69630000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -664,7 +727,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -713,6 +776,9 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
       <option name="time" value="1" />
     </breakpoint-manager>
     <watches-manager />
@@ -722,6 +788,70 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="2091">
+          <caret line="43" column="14" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Graphics.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="391">
+          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/scenes/World.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="459">
+          <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Rectangle.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="204">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Renderer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="1326">
+          <caret line="48" column="33" selection-start-line="48" selection-start-column="33" selection-end-line="48" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/objects/WorldMap.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3060">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/internal/Lol.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="168" max-vertical-offset="1190">
+          <caret line="35" column="19" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/GothamGame.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="510">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/objects/WorldMap.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="918">
@@ -782,7 +912,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="221">
           <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -794,7 +923,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Scene.coffee">
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Scene.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="782">
           <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
@@ -814,6 +943,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="705">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -824,26 +954,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/GameLoop.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.69929075" vertical-offset="0" max-vertical-offset="782">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Renderer.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6028369" vertical-offset="425" max-vertical-offset="1258">
-          <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Sprite.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.05862069" vertical-offset="0" max-vertical-offset="580">
           <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -851,23 +965,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.49827588" vertical-offset="0" max-vertical-offset="580">
           <caret line="17" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="17" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Preload.coffee">
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Texture.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.524138" vertical-offset="1717" max-vertical-offset="2414">
-          <caret line="49" column="63" selection-start-line="49" selection-start-column="63" selection-end-line="49" selection-end-column="63" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
+          <caret line="7" column="24" selection-start-line="0" selection-start-column="0" selection-end-line="7" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Graphics.coffee">
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/dependencies/mozAddWheelListener.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17586207" vertical-offset="0" max-vertical-offset="580">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1190">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -879,100 +990,153 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics.coffee">
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/dependencies/globalInput.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="2091">
-          <caret line="37" column="4" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.7362069" vertical-offset="1103" max-vertical-offset="1836">
+          <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/GothamGame.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3224138" vertical-offset="0" max-vertical-offset="580">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Texture.coffee">
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Sound.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <caret line="7" column="24" selection-start-line="0" selection-start-column="0" selection-end-line="7" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/dependencies/addWheelListener.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="372" max-vertical-offset="1241">
-          <caret line="34" column="69" selection-start-line="34" selection-start-column="69" selection-end-line="34" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/Gotham.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.762069" vertical-offset="51" max-vertical-offset="714">
-          <caret line="29" column="16" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="16" />
+        <state vertical-scroll-proportion="-1.1689655" vertical-offset="678" max-vertical-offset="1411">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/scenes/World.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43965518" vertical-offset="0" max-vertical-offset="580">
-          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
+          <caret line="7" column="39" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/objects/TopBar.coffee">
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/Gotham.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="782">
-          <caret line="12" column="35" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="748">
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Scene.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="134" max-vertical-offset="901">
+          <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Container.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
+        <state vertical-scroll-proportion="0.14655173" vertical-offset="0" max-vertical-offset="580">
           <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/GothamGame.coffee">
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Graphics.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-          <caret line="12" column="11" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.17586207" vertical-offset="0" max-vertical-offset="580">
+          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/dependencies/globalInput.js">
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Preload.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.8448277" vertical-offset="243" max-vertical-offset="1836">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2380">
+          <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2074">
+          <caret line="14" column="55" selection-start-line="14" selection-start-column="55" selection-end-line="14" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/internal/Lol.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.5275862" vertical-offset="306" max-vertical-offset="1190">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Extensions/CanvasRenderer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
+          <caret line="14" column="68" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="68" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/main.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="253" max-vertical-offset="833">
-          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="799">
+          <caret line="8" column="60" selection-start-line="8" selection-start-column="51" selection-end-line="8" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Graphics/Scene.coffee">
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/objects/TopBar.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="918">
-          <caret line="29" column="75" selection-start-line="29" selection-start-column="75" selection-end-line="29" selection-end-column="75" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1020">
+          <caret line="26" column="22" selection-start-line="19" selection-start-column="3" selection-end-line="26" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GOTHAM-GAME/objects/WorldMap.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5603448" vertical-offset="746" max-vertical-offset="2754">
-          <caret line="63" column="47" selection-start-line="63" selection-start-column="47" selection-end-line="63" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2327" max-vertical-offset="3162">
+          <caret line="162" column="33" selection-start-line="162" selection-start-column="33" selection-end-line="162" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Extensions/WebGLRenderer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
+          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Extensions/DisplayObjectContainer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="748">
+          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/Renderer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.275862" vertical-offset="51" max-vertical-offset="1326">
+          <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GOTHAM-GF/modules/GameLoop.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29655173" vertical-offset="83" max-vertical-offset="867">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
           <folding />
         </state>
       </provider>
