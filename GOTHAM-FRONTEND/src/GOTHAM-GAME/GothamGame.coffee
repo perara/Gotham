@@ -11,6 +11,7 @@ class GothamGame
   window.GothamGame = GothamGame
 
   @renderer = new Gotham.Graphics.Renderer 1920, 1080, null, true
+  @network = null
 
   # Static Stuff
   @objects =
