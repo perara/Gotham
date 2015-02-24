@@ -171,15 +171,14 @@
     <Compile Include="Gotham\Application\Tools\NodeGenerator.cs" />
     <Compile Include="Gotham\Application\Tools\Pathfinder.cs" />
     <Compile Include="Gotham\Application\Tools\TxtParse.cs" />
-    <Compile Include="Gotham\Communication\ChatHub.cs" />
-    <Compile Include="Gotham\Communication\HttpApplication.cs" />
-    <Compile Include="Gotham\Communication\Startup.cs" />
+    <Compile Include="Gotham\Communication\SignalR.cs" />
     <Compile Include="Gotham\Traffic\Layers\Layer3.cs" />
     <Compile Include="Gotham\Traffic\Layers\Layer2.cs" />
     <Compile Include="Gotham\Traffic\Layers\Layer4.cs" />
     <Compile Include="Gotham\Traffic\Layers\Layer6.cs" />
     <Compile Include="Gotham\Traffic\Layers\Layer7.cs" />
     <Compile Include="Gotham\Traffic\Layers\BaseLayers.cs" />
+    <Compile Include="Gotham\Traffic\Misc\Connection.cs" />
     <Compile Include="Gotham\Traffic\Misc\Packet.cs" />
     <Compile Include="Gotham\Traffic\Misc\Session.cs" />
     <Compile Include="Program.cs" />
