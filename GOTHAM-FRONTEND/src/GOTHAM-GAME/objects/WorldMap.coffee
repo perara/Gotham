@@ -4,6 +4,19 @@ class WorldMap extends Gotham.Graphics.Container
 
   constructor: ->
     @name = "WorldMap"
+    @setNetworkHub("worldMap")
+    @addNetworkMethod "test", (name, json) ->
+      console.log json
+    @addNetworkMethod "fetchMap", (json) ->
+      console.log JSON.parse(json)
+
+    @network.onConnect =  (connection) ->
+      connection.server.send("Test", "Fest")
+      console.log connection.server
+      connection.server.requestMap()
+
+
+
     super
 
 
