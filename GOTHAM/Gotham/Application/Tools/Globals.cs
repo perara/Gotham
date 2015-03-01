@@ -8,12 +8,16 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NHibernate;
+using NHibernate.Linq;
 
 
 namespace GOTHAM.Tools
 {
     public class Globals
     {
+
+
         private static Globals INSTANCE = new Globals();
 
         public static Globals GetInstance()
@@ -56,12 +60,23 @@ namespace GOTHAM.Tools
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
+
         public List<T> getTable<T>()
         {
+            // SELECT * FROM X
+            // SELECT * FROM X where Y = Z and Z = KUK
+
             using (var session = EntityManager.GetSessionFactory().OpenSession())
             {
+
                 Type typeParameterType = typeof(T);
-                var data = session.CreateCriteria(typeParameterType).List<T>().ToList();
+                var data = session
+                   
+                    .CreateCriteria(typeParameterType)
+                    .SetCacheable(true)
+                    .SetCacheMode(CacheMode.Normal)
+                    .List<T>()
+                    .ToList();
                 return data;
             }
         }

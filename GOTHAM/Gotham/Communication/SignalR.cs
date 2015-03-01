@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using GOTHAM.Tools.Cache;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
+using Newtonsoft.Json;
 using Owin;
 using System;
 using System.Threading.Tasks;
@@ -44,11 +46,32 @@ namespace SignalRChat
             Clients.All.broadcastMessage(json);
         }
 
-        public void RequestMap(string name, string message)
+        public void UpdateNode()
         {
-            // Call the broadcastMessage method to update clients.
-            Clients.All.broadcastMessage(name, message);
-            Console.WriteLine("Message sendt from " + name + ": " + message);
+
+            // Sender Update på X node til alle clients
+            // 1. Get Node object | Cache
+            // 2. Jsonify | "Cache"
+            // 3. Send Node object | No Cache
+        
+
+        }
+
+        public void RequestMap()
+        {
+            Clients.Client(Context.ConnectionId).fetchMap(JsonConvert.SerializeObject(CacheEngine.Nodes));
+
+            // Denna her bli kjørt når spillet/frontend starte
+            // 1. Get Nodes | Cache
+            // 2. Jsonify | Cache
+            // 3. Send to client | No Cache
+
+            // For hver scroll
+            // 1. Client: Need Update x: 10, y: 20
+            // 2. Server: Query | Ikkje cache
+            //
+
+
         }
 
         // Sendt from client (Recieved on server)
@@ -58,8 +81,7 @@ namespace SignalRChat
             Clients.All.broadcastMessage(name, message);
             Console.WriteLine("Message sendt from " + name + ": " + message);
             Clients.All.test(name, message);
-            Clients.All.addContosoChatMessageToPage(name, message);
-        }    
+        }
     }
 
 

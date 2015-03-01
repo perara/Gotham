@@ -1,6 +1,7 @@
 ﻿using FluentNHibernate.Mapping;
 using GOTHAM.Model;
 using GOTHAM.Tools;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace GOTHAM.Model
 {
     public class NodeEntity : BaseEntity
     {
-
+        
         public virtual string name { get; set; }
         public virtual string country { get; set; }
         public virtual TierEntity tier { get; set; }
@@ -25,7 +26,10 @@ namespace GOTHAM.Model
         /// <summary>
         /// neighbors node, This can only be a node within the same Tier level
         /// </summary>
+        [JsonIgnore]
         public virtual IList<NodeEntity> siblings { get; set; }
+
+        [JsonIgnore]
         public virtual IList<CableEntity> cables { get; set; }
 
         //[Transient]
@@ -53,6 +57,10 @@ namespace GOTHAM.Model
                 }
             }
         }
+        public virtual string ToJson()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class NodeEntityMap : ClassMap<NodeEntity>
@@ -69,8 +77,10 @@ namespace GOTHAM.Model
             Map(x => x.lat).Not.Nullable();
             Map(x => x.lng).Not.Nullable();
 
-            //HasOne(x => x.tier);
-            References(x => x.tier).Not.Nullable().Column("tier").Not.LazyLoad();
+            References(x => x.tier)
+                .Not.Nullable()
+                .Column("tier")
+                .Not.LazyLoad();
 
             HasManyToMany(x => x.cables)
                 .Cascade.All()
@@ -78,16 +88,6 @@ namespace GOTHAM.Model
                 .ParentKeyColumn("node")
                 .ChildKeyColumn("cable")
                 .Not.LazyLoad();
-
-            // TODO: Check connected cables, then check nodes connected to those cables. Add to siblings list
-
-
-            //HasManyToMany(x => x.cables)
-            //   .Table("node_cable")
-            //   .ParentKeyColumn("cable")
-            //   .ChildKeyColumn("cable")
-            //   .Cascade.All();
-
 
         }
 

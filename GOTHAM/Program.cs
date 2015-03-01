@@ -9,6 +9,7 @@ using GOTHAM.Traffic;
 using Newtonsoft.Json;
 using Microsoft.AspNet.SignalR;
 using SignalRChat;
+using GOTHAM.Tools.Cache;
 
 namespace GOTHAM
 {
@@ -35,8 +36,10 @@ namespace GOTHAM
 
             // ========================================================================================
             // ===========================        TEST CODE       =====================================
-            /*
-            var rawNodes = Globals.GetInstance().nodes;
+            CacheEngine.Init();
+
+
+            var rawNodes = CacheEngine.Nodes;
             var nodesDict = new Dictionary<int, NodeEntity>();
             var nodesList = new List<NodeEntity>();
 
@@ -74,7 +77,9 @@ namespace GOTHAM
             log.Info(result);
             
             packet.PrintJson();
-            */
+
+            
+            log.Info(rawNodes[0].ToJson());
 
             var test = new MakeCon();
 

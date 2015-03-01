@@ -29,6 +29,7 @@ namespace GOTHAM.Model
             Map(x => x.distance);
             Map(x => x.name);
             Map(x => x.year);
+       
   
             References(x => x.type, "id").ReadOnly().Not.Nullable();
 

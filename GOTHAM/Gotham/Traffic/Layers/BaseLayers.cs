@@ -57,7 +57,7 @@ namespace GOTHAM.Traffic
         public enum l7_type { HTTP, FTP, DNS, HTTPS, SFTP, SSH }
         public l7_type type { get; protected set; }
 
-        public string webServer { get; set; }
+        public string hostApplication { get; set; }
         public DateTime date { get; set; }
         public HostEntity host { get; set; }
         public string data { get; set; }
