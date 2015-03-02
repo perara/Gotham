@@ -1,16 +1,11 @@
 ﻿using GOTHAM.Tools;
 using GOTHAM.Model;
-
 using ServiceStack;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using NHibernate.Util;
 
-namespace GOTHAM.API
+
+namespace GOTHAM.Gotham.Service.ServiceStack.Resources
 {
   public class NodeResource
   {

@@ -4,7 +4,7 @@ class WorldMap extends Gotham.Graphics.Container
 
   constructor: ->
     @name = "WorldMap"
-    @setNetworkHub("worldMap")
+    """@setNetworkHub("worldMap")
     @addNetworkMethod "test", (name, json) ->
       console.log json
     @addNetworkMethod "fetchMap", (json) ->
@@ -13,7 +13,7 @@ class WorldMap extends Gotham.Graphics.Container
     @network.onConnect =  (connection) ->
       connection.server.send("Test", "Fest")
       console.log connection.server
-      connection.server.requestMap()
+      connection.server.requestMap()"""
 
 
 
@@ -21,6 +21,8 @@ class WorldMap extends Gotham.Graphics.Container
 
 
   mapScale =
+    #x: 1
+    #y: 1
     x: 3.84
     y: 3.06
 
@@ -159,9 +161,17 @@ class WorldMap extends Gotham.Graphics.Container
     graphicsList = Gotham.Graphics.PolygonToGraphics(polygonList, true)
 
     # Add Each of the graphic objects to the world map
+    background.mask = backgroundMask
     for graphics, key in graphicsList
-      graphics.mask = backgroundMask
       mapContainer.addChild graphics
+
+      """texture = graphics.generateTexture()
+      sprite = new Gotham.Graphics.Sprite texture
+      sprite.position.x = graphics.minX
+      sprite.position.y = graphics.minY
+      sprite.interactive = true
+      mapContainer.addChild sprite"""
+
 
       # Hovering the graphics object
       graphics.mouseover =  (e) ->
@@ -177,6 +187,8 @@ class WorldMap extends Gotham.Graphics.Container
         this.beginFill(0xffffff, 0.5);
         this.blendMode = 0
         this.drawPolygon(this.polygon.points)
+
+
 
 
     # Find center of the map

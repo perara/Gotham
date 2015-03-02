@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ServiceStack;
 
-namespace GOTHAM.API
+namespace GOTHAM.Gotham.Service.ServiceStack.Resources
 {
 
   public class HelloResource

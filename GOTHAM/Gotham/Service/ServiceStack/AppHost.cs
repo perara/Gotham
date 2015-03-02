@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ServiceStack;
+﻿using ServiceStack;
 using Funq;
+using GOTHAM.Gotham.Service.ServiceStack.Resources;
 
-namespace GOTHAM.API
+namespace GOTHAM.Gotham.Service.ServiceStack
 {
   public class AppHost : AppHostBase
   {

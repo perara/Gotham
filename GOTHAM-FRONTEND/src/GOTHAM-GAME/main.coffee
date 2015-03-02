@@ -29,8 +29,15 @@ Gotham.Preload.onLoad (source, name, percent) ->
 Gotham.Preload.onComplete () ->
   console.log "Preload Complete"
 
+  # Create World Scene
+  scene_World = new GothamGame.scenes.World 0x333333, true
+
+  # Add Scenes to renderer
+  GothamGame.renderer.addScene("World", scene_World)
+  GothamGame.renderer.setScene("World")
+
   # Activate Network, And connect. Continue loading when done
-  GothamGame.network = new Gotham.Network "hybel.keel.no", 8080, "gotham"
+  """GothamGame.network = new Gotham.Network "hybel.keel.no", 8080, "gotham"
   GothamGame.network.connect (startConnection) ->
 
     # Create World Scene
@@ -41,6 +48,6 @@ Gotham.Preload.onComplete () ->
     GothamGame.renderer.setScene("World")
 
     # Finally start the Connection
-    connection = startConnection()
+    connection = startConnection()"""
 
 

@@ -2,7 +2,7 @@
 using ServiceStack;
 using System.Runtime.Remoting;
 
-namespace GOTHAM.API
+namespace GOTHAM.Gotham.Service.ServiceStack
 {
 
   public class ServiceStackConsoleHost : MarshalByRefObject
