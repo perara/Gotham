@@ -27,6 +27,7 @@ module.exports = (grunt)->
         files: [
           'src/**/*.coffee',
           'src/**/*.js',
+          'htdocs/*.html',
           'htdocs/assets/**/*.css',
           'htdocs/assets/**/*.png']
         tasks: ['build']

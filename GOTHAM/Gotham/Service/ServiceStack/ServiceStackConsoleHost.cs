@@ -23,7 +23,7 @@ namespace GOTHAM.Gotham.Service.ServiceStack
       ServiceStackAppDomain.Load(assemblyName);
 
       // Create instance of our ServiceStack application
-      Handle = ServiceStackAppDomain.CreateInstance(assemblyName, "GOTHAM.API.ServiceStackConsoleHost");
+      Handle = ServiceStackAppDomain.CreateInstance(assemblyName, "GOTHAM.Gotham.Service.ServiceStack.ServiceStackConsoleHost");
 
       // Show that the main application is in a separate AppDomain
       log.InfoFormat("Main Application is running in AppDomain '{0}'", AppDomain.CurrentDomain.FriendlyName);
