@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NHibernate.Linq;
 using GOTHAM.Tools;
 using GOTHAM.Model;
+using GOTHAM.Model.Tools;
 
 namespace GOTHAM.Tools
 {
@@ -19,9 +21,94 @@ namespace GOTHAM.Tools
         static double childMinBW = 0.01;
         static double childMaxBW = 0.2;
 
-        // Make new node
+        // Produces a general estimate of tier 1 nodes in each country based on population and continent
+        public static Dictionary<string, int> estimateNodes(List<CountryEntity> countries)
+        {
+            var results = new Dictionary<string, int>();
+            var total = 0;
+            foreach (var country in countries)
+            {
+                double nodes = 1;
+                double temp = country.population;
+                while (temp > 10)
+                {
+                    temp = (temp - (300000 * nodes));
+                    nodes++;
+                }
+                if (country.continent == "AF") nodes = (nodes * 0.5);
+                else if (country.continent == "AS") nodes = (nodes * 0.8);
+                else if (country.continent == "SA") nodes = (nodes * 0.8);
+
+                country.nodes = (int)nodes;
+                total += (int)nodes;
+                log.Info(country.name + " got " + (int)nodes + " nodes");
+                results.Add(country.countryCode, (int)nodes);
+            }
+            log.Info(total);
+            return results;
+        }
+
+        // Converts a list of locations to nodes
+        public static List<NodeEntity> convertLocToNode(List<LocationEntity> locations)
+        {
+            var nodes = new List<NodeEntity>();
+
+            foreach (var loc in locations)
+            {
+                var node = new NodeEntity();
+
+                node.lat = loc.lat;
+                node.lng = loc.lng;
+                node.country = loc.countrycode;
+                node.tier = new TierEntity() { id = 1 };
+                node.name = loc.name;
+
+                nodes.Add(node);
+            }
+            return nodes;
+        }
+
+        // Takes an estimate number of nodes for each country and gets a random city for each one (from database)
+        public static List<LocationEntity> generateFromEstimate(Dictionary<string, int> nodeEstimate)
+        {
+            var rand = new Random();
+            var locations = new List<LocationEntity>();
+
+            using (var session = EntityManager.GetSessionFactory().OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    foreach (var item in nodeEstimate)
+                    {
+                        var country = item.Key;
+                        var quantity = item.Value;
+                        var cities = session.Query<LocationEntity>()
+                            .Where(x => x.countrycode == item.Key)
+                            .OrderBy(x => x.Random)
+                            .Take(quantity)
+                            .ToList();
+
+                        if (cities.Count() == 0) continue;
+
+                        while (quantity > 0)
+                        {
+                            var loc = cities.ElementAt(rand.Next(0, cities.Count()));
+                            locations.Add(loc);
+                            quantity--;
+                        }
+
+                        log.Info(item.Key + ": " + item.Value);
+
+                    }
+                }// End transaction
+            }// End session
+            return locations;
+        }
+
+
+        // Make new node (For testing)
         // TODO Get relevant data
-        private static NodeEntity NewNode(TierEntity tier)
+        private static NodeEntity NewRandomNode(TierEntity tier)
         {
             var node = new NodeEntity();
 
@@ -35,8 +122,8 @@ namespace GOTHAM.Tools
             return node;
         }
 
-        
 
+        // Generates nodes with specific amount of siblings
         public void GenerateNodes(int siblings, long totBandwidth)
         {
             var nodes = new List<NodeEntity>();
@@ -47,7 +134,7 @@ namespace GOTHAM.Tools
             {
 
                 // Create a tier 2 Node
-                NodeEntity node = NewNode(new TierEntity() { id = 2 });
+                NodeEntity node = NewRandomNode(new TierEntity() { id = 2 });
                 node.cables = new List<CableEntity>();
                 node.bandwidth = totBandwidth;
                 nodes.Add(node);
@@ -63,7 +150,7 @@ namespace GOTHAM.Tools
                     bwCounter += bwCap;
 
                     // Create new Tier 3 Node
-                    var childNode = NewNode(new TierEntity() { id = 3 });
+                    var childNode = NewRandomNode(new TierEntity() { id = 3 });
                     childNode.cables = new List<CableEntity>();
 
                     // Add ChildNode to parentNode

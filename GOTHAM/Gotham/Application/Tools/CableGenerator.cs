@@ -10,6 +10,8 @@ namespace GOTHAM.Tools
 {
     class CableGenerator
     {
+        public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public static List<CableEntity> MakeCables(NodeEntity current, List<NodeEntity> nodes)
         {
             var cables = new List<CableEntity>();
@@ -128,6 +130,8 @@ namespace GOTHAM.Tools
         {
             var cableHashes = new List<string>();
             var foundDuplicate = false;
+            var newCables = new List<CableEntity>();
+            var newCableParts = new List<CablePartEntity>();
 
             foreach (var node1 in nodes)
             {
@@ -137,7 +141,7 @@ namespace GOTHAM.Tools
                     var dist = GeoTool.GetDistance(node1.GetCoordinates(), node2.GetCoordinates());
 
                     // Check if cable should be made
-                    if (node1 == node2 || node1.siblings.Contains(node2) || dist > maxDist) continue;
+                    if (node1 == node2 || node1.siblings.Contains(node2) || dist > maxDist || node1.siblings.Count() > 2 || node2.siblings.Count() > 2) continue;
                     
                     // Make cable
                     var cable = new CableEntity();
@@ -184,15 +188,60 @@ namespace GOTHAM.Tools
                     if (foundDuplicate) continue;
                     
                     // Write to database
-                    DBTool.Write(cable);
-                    DBTool.Write(cablePart1);
-                    DBTool.Write(cablePart2);
+                    newCables.Add(cable);
+                    newCableParts.Add(cablePart1);
+                    newCableParts.Add(cablePart2);
 
                     // Add to newCables list to prevent duplicate cables
                     cableHashes.Add(hash1);
-                    Console.WriteLine("Made new cable");
+                    if(newCables.Count() % 1000 == 0)
+                        Console.WriteLine(newCables.Count + " Cables");
                 }                
             }
+
+            log.Info("Press enter to add cables to database");
+            Console.ReadLine();
+
+            using (var session = EntityManager.GetSessionFactory().OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    for (int i = 0; i < newCables.Count; i++)
+                    {
+                        session.Save(newCables[i]);
+                        if (i % 50 == 0)
+                        {
+                            session.Flush();
+                            session.Clear();
+                        }
+
+                        // Prints persentage output each 100 entity
+                        if (i % 100 == 0)
+                        {
+                            double p = 100.0 / newCables.Count * i;
+                            log.Info((int)p + "%");
+                        }
+                    }
+
+                    for (int i = 0; i < newCableParts.Count; i++)
+                    {
+                        session.Save(newCableParts[i]);
+                        if (i % 50 == 0)
+                        {
+                            session.Flush();
+                            session.Clear();
+                        }
+
+                        // Prints persentage output each 100 entity
+                        if (i % 100 == 0)
+                        {
+                            double p = 100.0 / newCableParts.Count * i;
+                            log.Info((int)p + "%");
+                        }
+                    }
+                    transaction.Commit();
+                }// End transaction
+            }// End session
         }
     }
 }

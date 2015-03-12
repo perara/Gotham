@@ -8,11 +8,15 @@ using System.Threading.Tasks;
 using GOTHAM.Tools;
 using GOTHAM.Model;
 using GOTHAM.Model.Tools;
+using Newtonsoft.Json;
+using GOTHAM.Gotham.Application.Tools.Objects;
 
 namespace GOTHAM.Tools
 {
     public class TxtParse
     {
+        public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         // Write locations in list to predefined locations pattern in a file
         public static void LocsToFile(List<LocationEntity> locations, string path)
         {
@@ -171,6 +175,148 @@ namespace GOTHAM.Tools
                 DBTool.Write(cable_part);
         }
 
+        // Text parsing for type 3 location format (GoogleMaps Javascript sea nodes)
+        // countrycode(0), contrycode 2(1), countrynumber(2), countrycode 3(3), country(4), capital(5), size(6), population(7), continent(8)
+        public static void FromFile5(string path, string output = null)
+        {
 
+            // Read files to string-list and make empty locaions list
+            var file = File.ReadAllLines(path, Encoding.Default);
+            var lines = new List<string>(file);
+            var countries = new List<CountryEntity>();
+
+            foreach (var line in lines)
+            {
+                var country = new CountryEntity();
+                var segment = line.Split(',');
+                if (segment.Length != 9) throw new Exception("Inconsistent string detected at line: " + line);
+
+                country.name = segment[4];
+                country.countryCode = segment[0];
+                country.countryCodeExt = segment[1];
+                country.population = Int32.Parse(segment[7]);
+                country.size = Double.Parse(segment[6]);
+                country.continent = segment[8];
+
+                countries.Add(country);
+
+            }
+
+            using (var session = EntityManager.GetSessionFactory().OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    var batchSize = 20;
+                    for (int i = 0; i < countries.Count; i++)
+                    {
+                        session.Save(countries[i]);
+                        if (i % batchSize == 0)
+                        {
+                            session.Flush();
+                            session.Clear();
+                        }
+
+                        // Prints persentage output each 100 entity
+                        if (i % 100 == 0)
+                        {
+                            double p = 100.0 / countries.Count * i;
+                            log.Info((int)p + "%");
+                        }
+                    }
+                    transaction.Commit();
+                }// End transaction
+            }// End session
+
+
+            //foreach (var country in countries)
+            //    DBTool.Write(country);
+
+        }
+
+        // Text parsing for type 3 location format (GoogleMaps Javascript sea nodes)
+        // countrycode(0), contrycode 2(1), countrynumber(2), countrycode 3(3), country(4), capital(5), size(6), population(7), continent(8)
+        public static void FromFile6(string path, string output = null)
+        {
+
+            // Read files to string-list and make empty locaions list
+            var file = File.ReadAllLines(path, Encoding.Default);
+            var lines = new List<string>(file);
+            var countries = new List<CountryEntity>();
+
+            foreach (var line in lines)
+            {
+                var country = new CountryEntity();
+                var segment = line.Split(',');
+                if (segment.Length != 9) throw new Exception("Inconsistent string detected at line: " + line);
+
+                country.name = segment[4];
+                country.countryCode = segment[0];
+                country.countryCodeExt = segment[1];
+                country.population = Int32.Parse(segment[7]);
+                country.size = Double.Parse(segment[6]);
+                country.continent = segment[8];
+
+                countries.Add(country);
+
+            }
+
+            using (var session = EntityManager.GetSessionFactory().OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    var batchSize = 20;
+                    for (int i = 0; i < countries.Count; i++)
+                    {
+                        session.Save(countries[i]);
+                        if (i % batchSize == 0)
+                        {
+                            session.Flush();
+                            session.Clear();
+                        }
+
+                        // Prints persentage output each 100 entity
+                        if (i % 100 == 0)
+                        {
+                            double p = 100.0 / countries.Count * i;
+                            log.Info((int)p + "%");
+                        }
+                    }
+                    transaction.Commit();
+                }// End transaction
+            }// End session
+
+
+            //foreach (var country in countries)
+            //    DBTool.Write(country);
+
+        }
+
+        public static List<NodeJSON> JSONToNodes(string path)
+        {
+            var json = System.IO.File.ReadAllText(path);
+            var nodeList = JsonConvert.DeserializeObject<List<NodeJSON>>(json);
+            return nodeList;
+        }  
+
+
+        // Import nodes in json format
+        public static void FromJSON1(List<NodeJSON> jnodes)
+        {
+            var countries = Globals.GetInstance().getTable<CountryEntity>();
+            var nodes = new List<NodeEntity>();
+
+            foreach (var item in jnodes)
+            {
+                var node = new NodeEntity();
+
+                node.country = item.country;
+                node.name = item.name;
+                node.lat = Double.Parse(item.coordinates.latitude);
+                node.lng = Double.Parse(item.coordinates.longitude);
+                node.tier = new TierEntity() { id = 1 };
+                
+                DBTool.Write(node);
+            }
+        }
     }
 }

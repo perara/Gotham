@@ -16,8 +16,8 @@ namespace GOTHAM.Traffic
 
         public Session()
         {
-            // TODO: soureHost = path[0].getHost()
-            // TODO: targetHost = path[-1].getHost()
+            //var soureHost = path[0].getHost();
+            //var targetHost = path[-1].getHost();
         }
     }
 }

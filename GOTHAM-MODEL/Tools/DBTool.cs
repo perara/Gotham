@@ -50,7 +50,7 @@ namespace GOTHAM.Tools
             // Check if input is valid
             if (input.GetType().Namespace != "GOTHAM.Model")
             {
-                return;
+                throw new Exception("Object is not a part of the GOTHAM.Model namespace");
             }
 
             // Open up a transaction and stores data to database

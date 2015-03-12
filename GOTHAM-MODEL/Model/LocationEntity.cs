@@ -26,6 +26,7 @@ namespace GOTHAM.Model
             Map(x => x.name).Not.Nullable();
             Map(x => x.lat).Not.Nullable();
             Map(x => x.lng).Not.Nullable();
+            Map(x => x.Random).Formula("RAND()");
         }
     }
 }

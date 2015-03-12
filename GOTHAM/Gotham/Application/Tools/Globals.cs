@@ -29,13 +29,15 @@ namespace GOTHAM.Tools
             DateTime time = DateTime.Now;
             // TODO: Preload fra database
             nodes = getTable<NodeEntity>();
+            cables = getTable<CableEntity>();
 
             log.Info((DateTime.Now - time).Seconds + "." + (DateTime.Now - time).Milliseconds);
             //cables = getTable<CableEntity>();
         }
 
-        public List<NodeEntity> nodes;
-        public List<CableEntity> cables;
+        public List<NodeEntity> nodes = new List<NodeEntity>();
+        public List<CableEntity> cables = new List<CableEntity>();
+        
 
         // Global variables and objects
         public Point mapMax = new Point(1000, 1000);
@@ -71,7 +73,7 @@ namespace GOTHAM.Tools
 
                 Type typeParameterType = typeof(T);
                 var data = session
-                   
+
                     .CreateCriteria(typeParameterType)
                     .SetCacheable(true)
                     .SetCacheMode(CacheMode.Normal)

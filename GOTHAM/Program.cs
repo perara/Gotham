@@ -7,111 +7,180 @@ using GOTHAM.Gotham.Service.ServiceStack;
 using GOTHAM.Gotham.Service.SignalR;
 using GOTHAM.Traffic;
 using GOTHAM.Tools.Cache;
+using System.Threading;
+using GOTHAM.Model.Tools;
 
 namespace GOTHAM
 {
-  class Program
-  {
-    static log4net.ILog log = Globals.GetInstance().log;
-
-
-    static void Main(string[] args)
+    class Program
     {
-      /////////////////////////////////////////////////////////////////
-      //
-      // Initial Setup
-      //
-      /////////////////////////////////////////////////////////////////
-      
-      //
-      // Configure Log4Net
-      // 
-      log4net.Config.XmlConfigurator.Configure();
-
-      //
-      // Start ServiceStack API Server
-      //
-      ServiceStackConsoleHost.Start();
-
-      //
-      // Start SignalR
-      //
-      SignalR r = new SignalR();
-      r.Start();
-
-      //
-      // Init Cache Engine
-      //
-      CacheEngine.Init();
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Other stuff
-      //
-      /////////////////////////////////////////////////////////////////
+        public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
-      // Change decimal seperator to . instead of ,
-      System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-      customCulture.NumberFormat.NumberDecimalSeparator = ".";
-      CultureInfo.DefaultThreadCurrentCulture = customCulture;
+        static void Main(string[] args)
+        {
+            /////////////////////////////////////////////////////////////////
+            //
+            // Initial Setup
+            //
+            /////////////////////////////////////////////////////////////////
 
-      // ========================================================================================
-      // ===========================        TEST CODE       =====================================
+            //
+            // Configure Log4Net
+            // 
+            log4net.Config.XmlConfigurator.Configure();
 
+            //
+            // Start ServiceStack API Server
+            //
+            // TODO: Gir feilmelding ServiceStackConsoleHost.Start();
 
+            //
+            // Start SignalR
+            //
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                SignalR r = new SignalR();
+                r.Start();
+            }).Start();
 
-      var rawNodes = CacheEngine.Nodes;
-      var nodesDict = new Dictionary<int, NodeEntity>();
-      var nodesList = new List<NodeEntity>();
+            //
+            // Init Cache Engine
+            //
+            CacheEngine.Init();
 
-      foreach (var node in rawNodes)
-      {
-        node.getSiblings();
-        nodesDict.Add(node.id, node);
-        nodesList.Add(node);
-      }
-
-      Globals.GetInstance().log.Info("Finished loading from DB");
-      Console.WriteLine("====================================================================");
-
-
-      var node1 = nodesDict[3316];
-      var node2 = nodesDict[3482];
-      var testlist = new List<NodeEntity>();
-
-      var path = new Pathfinder().TryRandom(node1, node2, nodesList, 100000);
-
-      foreach (var node in path.toNodeList())
-      {
-        var numspaces = 35 - node.country.Length;
-        var separator = "";
-        for (int i = 0; i < numspaces; i++) separator += " ";
-        Globals.GetInstance().log.Info(node.country + separator + node.name);
-      }
-
-
-      Console.WriteLine("====================================================================");
-
-      Packet packet = new Packet(path).HTTP();
-      packet.PrintLayers();
-      var result = packet.IntegrityCheck() ? "success" : "fail";
-      log.Info(result);
-
-      packet.PrintJson();
+            /////////////////////////////////////////////////////////////////
+            //
+            // Other stuff
+            //
+            /////////////////////////////////////////////////////////////////
 
 
-      log.Info(rawNodes[0].ToJson());
+            // Change decimal seperator to . instead of ,
+            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+            CultureInfo.DefaultThreadCurrentCulture = customCulture;
+
+            // ========================================================================================
+            // ===========================        TEST CODE       =====================================
 
 
+            //var countries = Globals.GetInstance().getTable<CountryEntity>();
+            //var nodeEstimate = NodeGenerator.estimateNodes(countries);
+            //var newLocations = NodeGenerator.generateFromEstimate(nodeEstimate);
+            //var newNodes = NodeGenerator.convertLocToNode(newLocations);
+            //var batchSize = 50;
 
-      // ========================================================================================
-      // ========================================================================================
+            var nodes = Globals.GetInstance().getTable<NodeEntity>();
+            foreach (var item in nodes)
+            {
+                item.getSiblings();
+            }
 
-      Globals.GetInstance().log.Info("DOG FINISH");
-      Console.ReadLine();
+            CableGenerator.ConnectCloseNodes(nodes, 500);
+            
+            /*
+            using (var session = EntityManager.GetSessionFactory().OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    for (int i = 0; i < newCables.Count; i++)
+                    {
+                        session.Save(newCables[i]);
+                        if (i % batchSize == 0)
+                        {
+                            session.Flush();
+                            session.Clear();
+                        }
+
+                        // Prints persentage output each 100 entity
+                        if (i % 100 == 0)
+                        {
+                            double p = 100.0 / newCables.Count * i;
+                            log.Info((int)p + "%");
+                        }
+                    }
+                    transaction.Commit();
+                }// End transaction
+            }// End session
+            */
+
+            //log.Info(newLocations.Count);
 
 
-    }// End Main
-  }// End Class
+            //TxtParse.FromFile5("C:\\temp\\countries.txt");
+
+            //var oldNodes = Globals.GetInstance().nodes;
+            //var locations = Globals.GetInstance().getTable<LocationEntity>();
+            //var nodes = NodeGenerator.convertLocToNode(locations);
+
+            //foreach (var node in nodes)
+            //{
+
+            //var node = new NodeEntity();
+            //node.name = "test";
+            //node.lat = node.lng = 0;
+            //node.tier = new TierEntity() { id = 2 };
+
+            //DBTool.Write(node);
+
+            //}
+
+
+            /*
+
+              var rawNodes = CacheEngine.Nodes;
+              var nodesDict = new Dictionary<int, NodeEntity>();
+              var nodesList = new List<NodeEntity>();
+
+              foreach (var node in rawNodes)
+              {
+                node.getSiblings();
+                nodesDict.Add(node.id, node);
+                nodesList.Add(node);
+              }
+
+              Globals.GetInstance().log.Info("Finished loading from DB");
+              Console.WriteLine("====================================================================");
+
+
+              var node1 = nodesDict[3316];
+              var node2 = nodesDict[3482];
+              var testlist = new List<NodeEntity>();
+
+              var path = new Pathfinder().TryRandom(node1, node2, nodesList, 100000);
+
+              foreach (var node in path.toNodeList())
+              {
+                var numspaces = 35 - node.country.Length;
+                var separator = "";
+                for (int i = 0; i < numspaces; i++) separator += " ";
+                Globals.GetInstance().log.Info(node.country + separator + node.name);
+              }
+
+
+              Console.WriteLine("====================================================================");
+
+              Packet packet = new Packet(path).HTTP();
+              packet.PrintLayers();
+              var result = packet.IntegrityCheck() ? "success" : "fail";
+              log.Info(result);
+
+              packet.PrintJson();
+
+
+              log.Info(rawNodes[0].ToJson());
+                */
+
+
+            // ========================================================================================
+            // ========================================================================================
+
+            Globals.GetInstance().log.Info("DOG FINISH");
+            Console.ReadLine();
+
+
+        }// End Main
+    }// End Class
 }

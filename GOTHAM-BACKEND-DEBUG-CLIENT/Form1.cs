@@ -13,7 +13,8 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using GOTHAM.Tools;
-using GOTHAM.Tools;
+using GOTHAM.Model;
+using GOTHAM.Model.Tools;
 
 namespace GOTHAM_BACKEND_DEBUG
 {
@@ -79,13 +80,13 @@ namespace GOTHAM_BACKEND_DEBUG
                 switch (node.tier.id)
                 {
                     case 1:
-                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.red_dot);
+                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.red_small);
                         break;
                     case 2:
                         marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.green_small);
                         break;
                     case 3:
-                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.red_small);
+                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.yellow_small);
                         break;
                     case 4:
                         marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.blue_small);

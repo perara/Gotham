@@ -9,5 +9,6 @@ namespace GOTHAM.Model
     public class BaseEntity
     {
         public virtual int id { get; set; }
+        public virtual string Random { get; set; }
     }
 }

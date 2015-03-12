@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using FluentNHibernate.MappingModel.Output.Sorting;
-using GOTHAM.Gotham.Application;
 using NHibernate.Criterion;
 using NUnit.Framework;
 using GOTHAM.Tools;
 using GOTHAM.Model;
+using GOTHAM.Model.Tools;
 
 namespace GOTHAM.Gotham.Tests.Tools
 {
