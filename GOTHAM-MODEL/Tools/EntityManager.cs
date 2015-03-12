@@ -47,8 +47,9 @@ namespace GOTHAM.Model.Tools
                 sqlConfig = configuration["mysql"]["local"];
                 log.Info("Using SQL Configuration: Paul");
             }
-            else if (MachineName.Equals("PER-ARNE-PC"))
+            else if (MachineName.Equals("PER-ARNE"))
             {
+                //sqlConfig = configuration["mysql"]["production"];
                 sqlConfig = configuration["mysql"]["per"];
                 log.Info("Using SQL Configuration: Per");
             }
@@ -90,8 +91,9 @@ namespace GOTHAM.Model.Tools
                 SessionFactory = hibernateConfig.BuildSessionFactory();
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                
                 log.Error("Error in Database Configuration");
                 throw;
             }

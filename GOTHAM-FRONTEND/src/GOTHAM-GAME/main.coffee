@@ -1,3 +1,8 @@
+# TEST IF PIXIv3 is READY...
+
+#PIXXU = require './dependencies/pixi3.js'
+#class Polygon extends PIXXU.Polygon
+#console.log PIXXU
 
 # Gotham Library
 Gotham = require '../GOTHAM-GF/Gotham.coffee'
@@ -6,8 +11,16 @@ Gotham = require '../GOTHAM-GF/Gotham.coffee'
 GothamGame = require '../GOTHAM-GAME/GothamGame.coffee'
 
 
+# Top Bar
 Gotham.Preload.image("/assets/img/bottomBar.png", "bottomBar", "image")
 Gotham.Preload.image("/assets/img/topbar.png", "topBar", "image")
+
+# Menu
+Gotham.Preload.image("/assets/img/menu_button_texture.png", "menu_button", "image")
+Gotham.Preload.image("/assets/img/menu_background.jpg", "menu_background", "image")
+Gotham.Preload.mp3("./assets/audio/menu_theme.mp3", "menu_theme")
+
+
 Gotham.Preload.json("/assets/json/json.json", "map")
 #Gotham.Preload.image("http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg", "item", "jpg")
 #Gotham.Preload.image("http://blog.queensland.com/wp-content/uploads/2013/08/damien-leze_wide_angle_1.jpg", "item", "jpg")
@@ -23,31 +36,31 @@ Gotham.Preload.json("/assets/json/json.json", "map")
 
 # OnLoad Callback
 Gotham.Preload.onLoad (source, name, percent) ->
-  console.log(percent)
+  console.log("Preload: " + percent + "%")
 
 # OnComplete CallBack
 Gotham.Preload.onComplete () ->
-  console.log "Preload Complete"
-
-  # Create World Scene
-  scene_World = new GothamGame.scenes.World 0x333333, true
-
-  # Add Scenes to renderer
-  GothamGame.renderer.addScene("World", scene_World)
-  GothamGame.renderer.setScene("World")
+  console.log "Preload: Complete"
 
   # Activate Network, And connect. Continue loading when done
-  """GothamGame.network = new Gotham.Network "hybel.keel.no", 8080, "gotham"
+  GothamGame.network = new Gotham.Network "128.39.148.43", 8091, "gotham"
   GothamGame.network.connect (startConnection) ->
 
     # Create World Scene
     scene_World = new GothamGame.scenes.World 0x333333, true
+    scene_Menu  = new GothamGame.scenes.Menu 0x000000, true
 
     # Add Scenes to renderer
+
+
     GothamGame.renderer.addScene("World", scene_World)
-    GothamGame.renderer.setScene("World")
+    GothamGame.renderer.addScene("Menu", scene_Menu)
+
+
+
+    GothamGame.renderer.setScene("Menu")
 
     # Finally start the Connection
-    connection = startConnection()"""
+    connection = startConnection()
 
 

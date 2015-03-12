@@ -7,24 +7,25 @@ using System.Threading.Tasks;
 
 namespace GOTHAM.Tools.Cache
 {
-    public class CacheEngine
+  public class CacheEngine
+  {
+    public static CacheObject<NodeEntity> Nodes { get; set; }
+    public static CacheObject<CableEntity> Cables { get; set; }
+
+
+    private static bool inited = false;
+
+    public static void Init()
     {
-        public static CacheObject<NodeEntity> Nodes { get; set; }
-        public static CacheObject<CableEntity> Cables { get; set; }
+      if (!CacheEngine.inited)
+      {
 
-
-        private static bool inited = false;
-
-        public static void Init()
-        {
-            if(!CacheEngine.inited){
-               
-            Nodes = new CacheObject<NodeEntity>(Globals.GetInstance().getTable<NodeEntity>());
-            Cables = new CacheObject<CableEntity>(Globals.GetInstance().getTable<CableEntity>());
-                inited = true;
-            }
-        }
-
-
+        Nodes = new CacheObject<NodeEntity>(Globals.GetInstance().getTable<NodeEntity>());
+        Cables = new CacheObject<CableEntity>(Globals.GetInstance().getTable<CableEntity>());
+        inited = true;
+      }
     }
+
+
+  }
 }

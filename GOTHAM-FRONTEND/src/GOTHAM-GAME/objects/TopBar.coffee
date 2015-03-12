@@ -40,13 +40,22 @@ class TopBar extends Gotham.Graphics.Container
 
 
     # Create LAT long text
-    @coordinateText = new PIXI.Text("Lat: \nLng: ", {font: "bold 20px Arial", fill: "#ffffff", align: "left"});
+    @coordinateText = new Gotham.Graphics.Text("Lat: 0\nLng: 0", {font: "bold 20px Arial", fill: "#ffffff", align: "left"});
     @coordinateText.position.x = topBar.width/2
     @coordinateText.position.y = 0
     @coordinateText.anchor =
       x: 0
       y: 0
     @addChild(@coordinateText)
+
+    # Create LAT long text
+    @countryText = new Gotham.Graphics.Text("Country: None", {font: "bold 20px Arial", fill: "#ffffff", align: "left"});
+    @countryText.position.x = topBar.width/2 + 150
+    @countryText.position.y = 15
+    @countryText.anchor =
+      x: 0
+      y: 0
+    @addChild(@countryText)
 
 
 

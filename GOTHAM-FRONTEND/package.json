@@ -3,6 +3,9 @@
   "scripts": {
     "start": "npm install && bower install && grunt"
   },
+  "dependencies": {
+    "fwk": "1.0.x"
+  },
   "devDependencies": {
     "browserify": "^4.1.9",
     "coffeeify": "^0.6.0",

@@ -6,6 +6,7 @@ using Microsoft.Owin.Hosting;
 using Newtonsoft.Json;
 using Owin;
 using System;
+using System.Threading.Tasks;
 
 
 [assembly: OwinStartup(typeof(GOTHAM.Gotham.Service.SignalR.Startup))]
@@ -23,11 +24,14 @@ namespace GOTHAM.Gotham.Service.SignalR
       // See http://msdn.microsoft.com/en-us/library/system.net.httplistener.aspx 
       // for more information.
       string url = "http://*:8091";
-      using (WebApp.Start(url))
-      {
-        Console.WriteLine("Server running on {0}", url);
-        Console.ReadLine();
-      }
+      WebApp.Start(url);
+      Console.WriteLine("Server running on {0}", url);
+
+    }
+
+    public void Stop()
+    {
+  
     }
   }
 
@@ -36,73 +40,37 @@ namespace GOTHAM.Gotham.Service.SignalR
     public void Configuration(IAppBuilder app)
     {
       app.UseCors(CorsOptions.AllowAll);
-      app.MapSignalR("/gotham", new HubConfiguration());
+
+      var hubConfiguration = new HubConfiguration();
+      hubConfiguration.EnableDetailedErrors = true;
+
+      app.MapSignalR("/gotham", hubConfiguration);
     }
   }
 
-  //[HubName("GothamHub")]
-  public class WorldMap : Hub
+  public class ContosoChatHub : Hub
   {
-    public void UpdateAll(string json)
+    public override Task OnConnected()
     {
-      Clients.All.broadcastMessage(json);
+      // Add your own code here.
+      // For example: in a chat application, record the association between
+      // the current connection ID and user name, and mark the user as online.
+      // After the code in this method completes, the client is informed that
+      // the connection is established; for example, in a JavaScript client,
+      // the start().done callback is executed.
+      Console.WriteLine(":D");
+      return base.OnConnected();
     }
 
-    public void UpdateNode()
+
+    public override Task OnReconnected()
     {
-
-      // Sender Update på X node til alle clients
-      // 1. Get Node object | Cache
-      // 2. Jsonify | "Cache"
-      // 3. Send Node object | No Cache
-
-
-    }
-
-    public void RequestMap()
-    {
-      Clients.Client(Context.ConnectionId).fetchMap(JsonConvert.SerializeObject(CacheEngine.Nodes));
-
-      // Denna her bli kjørt når spillet/frontend starte
-      // 1. Get Nodes | Cache
-      // 2. Jsonify | Cache
-      // 3. Send to client | No Cache
-
-      // For hver scroll
-      // 1. Client: Need Update x: 10, y: 20
-      // 2. Server: Query | Ikkje cache
-      //
-
-
-    }
-
-    // Sendt from client (Recieved on server)
-    public void Send(string name, string message)
-    {
-      // Call the broadcastMessage method to update clients.
-      Clients.All.broadcastMessage(name, message);
-      Console.WriteLine("Message sendt from " + name + ": " + message);
-      Clients.All.test(name, message);
+      // Add your own code here.
+      // For example: in a chat application, you might have marked the
+      // user as offline after a period of inactivity; in that case 
+      // mark the user as online again.
+      return base.OnReconnected();
     }
   }
 
-
-
-  public class MicroTraffic : Hub
-  {
-    public void Update(string message)
-    {
-      // Call the broadcastMessage method to update clients.
-      Clients.All.broadcastMessage(message);
-      Console.WriteLine("HUB1, Message sendt from " + ": " + message);
-    }
-
-    // Sendt from client (Recieved on server)
-    public void Send(string name, string message)
-    {
-      // Call the broadcastMessage method to update clients.
-      Clients.All.broadcastMessage(name, message);
-      Console.WriteLine("HUB1, Message sendt from " + name + ": " + message);
-    }
-  }
 }
