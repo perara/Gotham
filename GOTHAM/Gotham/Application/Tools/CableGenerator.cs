@@ -21,18 +21,18 @@ namespace GOTHAM.Tools
             // TODO Change to A* algorithm
             foreach (var l1 in nodes)
             {
-                foreach (var l2 in l1.siblings)
+                foreach (var l2 in l1.Siblings())
                 {
-                    foreach (var l3 in l2.siblings)
+                  foreach (var l3 in l2.Siblings())
                     {
-                        foreach (var l4 in l3.siblings)
+                      foreach (var l4 in l3.Siblings())
                         {
-                            foreach (var l5 in l4.siblings)
+                          foreach (var l5 in l4.Siblings())
                             {
-                                if (!l5.siblings.Contains(current))
+                              if (!l5.Siblings().Contains(current))
                                 {
                                     double dist = GeoTool.GetDistance(current.GetCoordinates(), l1.GetCoordinates());
-                                    if (closest > dist && dist != 0.0 && !l1.siblings.Contains(current))
+                                    if (closest > dist && dist != 0.0 && !l1.Siblings().Contains(current))
                                     {
                                         closest = dist;
                                         closenode = l1;
@@ -52,7 +52,7 @@ namespace GOTHAM.Tools
             cable.distance = closest;
             cable.type = type;
             cables.Add(cable);
-            current.siblings.Add(closenode);
+            current.Siblings().Add(closenode);
 
             return cables;
         }
@@ -141,7 +141,7 @@ namespace GOTHAM.Tools
                     var dist = GeoTool.GetDistance(node1.GetCoordinates(), node2.GetCoordinates());
 
                     // Check if cable should be made
-                    if (node1 == node2 || node1.siblings.Contains(node2) || dist > maxDist || node1.siblings.Count() > 2 || node2.siblings.Count() > 2) continue;
+                    if (node1 == node2 || node1.Siblings().Contains(node2) || dist > maxDist || node1.Siblings().Count() > 2 || node2.Siblings().Count() > 2) continue;
                     
                     // Make cable
                     var cable = new CableEntity();

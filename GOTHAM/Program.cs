@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using GOTHAM.Model;
 using GOTHAM.Tools;
 using GOTHAM.Gotham.Service.ServiceStack;
@@ -14,7 +15,7 @@ namespace GOTHAM
 {
     class Program
     {
-        public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        public static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
         static void Main(string[] args)
@@ -22,6 +23,7 @@ namespace GOTHAM
             /////////////////////////////////////////////////////////////////
             //
             // Initial Setup
+            // Remember: Run Visual Studio as ADMINISTRATOR
             //
             /////////////////////////////////////////////////////////////////
 
@@ -32,8 +34,8 @@ namespace GOTHAM
 
             //
             // Start ServiceStack API Server
-            //
-            // TODO: Gir feilmelding ServiceStackConsoleHost.Start();
+            // 
+            ServiceStackConsoleHost.Start();
 
             //
             // Start SignalR
@@ -72,13 +74,15 @@ namespace GOTHAM
             //var newNodes = NodeGenerator.convertLocToNode(newLocations);
             //var batchSize = 50;
 
-            var nodes = Globals.GetInstance().getTable<NodeEntity>();
-            foreach (var item in nodes)
+           // var nodes = Globals.GetInstance().getTable<NodeEntity>();
+
+
+            /*foreach (var item in nodes)
             {
                 item.getSiblings();
-            }
+            }*/
 
-            CableGenerator.ConnectCloseNodes(nodes, 500);
+           // CableGenerator.ConnectCloseNodes(nodes, 500);
             
             /*
             using (var session = EntityManager.GetSessionFactory().OpenSession())

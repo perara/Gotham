@@ -4,12 +4,12 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using GOTHAM.Tools;
+
 using GOTHAM.Model;
 using GOTHAM.Model.Tools;
 using Newtonsoft.Json;
 using GOTHAM.Gotham.Application.Tools.Objects;
+using NHibernate.Util;
 
 namespace GOTHAM.Tools
 {
@@ -17,17 +17,26 @@ namespace GOTHAM.Tools
     {
         public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        // Write locations in list to predefined locations pattern in a file
-        public static void LocsToFile(List<LocationEntity> locations, string path)
+ 
+        /// <summary>
+        /// Write LocationEntities to file
+        /// Orders by CountryCode
+        /// </summary>
+        /// <param name="locations">List of LocationEntities</param>
+        /// <param name="path">Save File location</param>
+        public static void LocationToFile(List<LocationEntity> locations, string path)
         {
+            // Create File
             var file = File.AppendText(path);
-            var sortedLocations = locations.OrderBy(x => x.countrycode).ThenBy(x => x.name);
 
-            foreach (var location in sortedLocations)
-            {
-                var str = location.countrycode + "," + location.name + "," + location.lat + "," + location.lng;
-                file.WriteLine(str);
-            }
+           // Sorts the list, then save the location items to file
+           locations
+            .OrderBy(x => x.countrycode)
+            .ThenBy(x => x.name)
+            .ForEach(
+              location =>
+                file.WriteLine(location.countrycode + "," + location.name + "," + location.lat + "," + location.lng));
+
         }
 
         // Text parsing for type 1 location format

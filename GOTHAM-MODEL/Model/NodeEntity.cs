@@ -7,89 +7,109 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NHibernate.Mapping;
+using NHibernate.Util;
 
 namespace GOTHAM.Model
 {
-    public class NodeEntity : BaseEntity
+  public class NodeEntity : BaseEntity
+  {
+    /// <summary>
+    /// Name of the Node
+    /// </summary>
+    public virtual string name { get; set; }
+
+    /// <summary>
+    /// Country of the Node
+    /// TODO - Should be Entity
+    /// </summary>
+    public virtual string country { get; set; }
+
+    /// <summary>
+    /// Tier Entity of the Node - (Tier 1, Tier 2, Tier 3)
+    /// </summary>
+    public virtual TierEntity tier { get; set; }
+
+    /// <summary>
+    /// Host Entity of the Node - 
+    /// TODO - Support for multiple hosts? Paul - Elaborate?
+    /// </summary>
+    public virtual HostEntity host { get; set; }
+
+    /// <summary>
+    /// Node Priority - This is a weight to determine the speed/importance of the node
+    /// </summary>
+    public virtual int priority { get; set; }
+
+    /// <summary>
+    /// Bandwidth of the node in bytes?
+    /// </summary>
+    public virtual double bandwidth { get; set; }
+
+    /// <summary>
+    /// Latitude
+    /// </summary>
+    public virtual double lat { get; set; }
+
+    /// <summary>
+    /// Longitude
+    /// </summary>
+    public virtual double lng { get; set; }
+
+    /// <summary>
+    /// List of cables connected to this node
+    /// </summary>
+    [JsonIgnore]
+    public virtual IList<CableEntity> cables { get; set; }
+
+    /// <summary>
+    /// Function which instantiate a new Coordinate class with LatLng
+    /// </summary>
+    /// <returns>Coordinate.LatLng instance</returns>
+    public virtual Coordinate.LatLng GetCoordinates()
     {
-        
-        public virtual string name { get; set; }
-        public virtual string country { get; set; }
-        public virtual TierEntity tier { get; set; }
-        // TODO: Multiple hosts
-        public virtual HostEntity host { get; set; }
-        public virtual int priority { get; set; }
-        public virtual double bandwidth { get; set; }
-        public virtual double lat { get; set; }
-        public virtual double lng { get; set; }
-
-        /// <summary>
-        /// neighbors node, This can only be a node within the same Tier level
-        /// </summary>
-        [JsonIgnore]
-        public virtual IList<NodeEntity> siblings { get; set; }
-
-        [JsonIgnore]
-        public virtual IList<CableEntity> cables { get; set; }
-
-        //[Transient]
-        public virtual bool isMatch(NodeEntity node)
-        {
-            var lat = node.lat == this.lat ? true : false;
-            var lng = node.lng == this.lng ? true : false;
-            return lat && lng;
-        }
-        public virtual Coordinate.LatLng GetCoordinates()
-        {
-            return new Coordinate.LatLng(lat, lng);
-        }
-        public virtual void getSiblings()
-        {
-            siblings = new List<NodeEntity>();
-            foreach (var cable in cables)
-            {
-                foreach (var node in cable.nodes)
-                {
-                    if (this != node)
-                    {
-                        siblings.Add(node);
-                    }
-                }
-            }
-        }
-        public virtual string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
+      return new Coordinate.LatLng(lat, lng);
     }
 
-    public class NodeEntityMap : ClassMap<NodeEntity>
+    /// <summary>
+    /// Get all siblings to this node, Done via checking "this" nodes connected cables 
+    /// </summary>
+    /// <returns>List of nodes, siblings to "this" node</returns>
+    public virtual List<NodeEntity> Siblings()
     {
+      return (from cable in cables from node in cable.nodes where this != node select node).ToList();
+    }
 
-        public NodeEntityMap()
-        {
-            Table("node");
 
-            Id(x => x.id).Column("id").GeneratedBy.Identity();
-            Map(x => x.name).Not.Nullable();
-            Map(x => x.country).Not.Nullable();
-            Map(x => x.bandwidth).Not.Nullable();
-            Map(x => x.lat).Not.Nullable();
-            Map(x => x.lng).Not.Nullable();
+  }
 
-            References(x => x.tier)
-                .Not.Nullable()
-                .Column("tier")
-                .Not.LazyLoad();
+  public class NodeEntityMap : ClassMap<NodeEntity>
+  {
 
-            HasManyToMany(x => x.cables)
-                .Cascade.All()
-                .Table("node_cable")
-                .ParentKeyColumn("node")
-                .ChildKeyColumn("cable")
-                .Not.LazyLoad();
+    public NodeEntityMap()
+    {
+      Table("node");
 
-        }
+      Id(x => x.id).Column("id").GeneratedBy.Identity();
+      Map(x => x.name).Not.Nullable();
+      Map(x => x.country).Not.Nullable();
+      Map(x => x.bandwidth).Not.Nullable();
+      Map(x => x.lat).Not.Nullable();
+      Map(x => x.lng).Not.Nullable();
+
+      References(x => x.tier)
+          .Not.Nullable()
+          .Column("tier")
+          .Not.LazyLoad();
+
+      HasManyToMany(x => x.cables)
+          .Cascade.All()
+          .Table("node_cable")
+          .ParentKeyColumn("node")
+          .ChildKeyColumn("cable")
+          .Not.LazyLoad();
 
     }
+
+  }
 }

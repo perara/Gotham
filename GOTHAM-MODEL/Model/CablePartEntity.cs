@@ -4,16 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace GOTHAM.Model
 {
     public class CablePartEntity : BaseEntity
     {
+
+        [JsonIgnore]
         public virtual CableEntity cable { get; set; }
+
+
         public virtual int number { get; set; }
         public virtual double lat{ get; set; }
         public virtual double lng { get; set; }
-        
+
     }
 
     public class CablePartEntityMap : ClassMap<CablePartEntity>
@@ -28,6 +33,7 @@ namespace GOTHAM.Model
             Map(x => x.lat);
             Map(x => x.lng);
 
+    
             References(x => x.cable).Not.Nullable().Column("cable");
 
         }
