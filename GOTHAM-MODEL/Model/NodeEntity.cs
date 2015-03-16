@@ -89,7 +89,22 @@ namespace GOTHAM.Model
                 .ChildKeyColumn("cable")
                 .Not.LazyLoad();
 
+            /*
+            Map(x => x.siblings)
+                .Formula(@"SELECT AA.node
+                        FROM node_cable as AA
+                        WHERE AA.node != 3565
+                        AND AA.cable IN
+                        (
+                            SELECT * FROM
+                            (
+                                SELECT BB.cable
+                                FROM node_cable as BB
+                                WHERE BB.node = 3565
+                            ) AS subquery
+                        )");
+                //.Not.LazyLoad();
+            */
         }
-
     }
 }

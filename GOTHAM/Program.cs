@@ -66,20 +66,30 @@ namespace GOTHAM
             // ===========================        TEST CODE       =====================================
 
 
+
             //var countries = Globals.GetInstance().getTable<CountryEntity>();
             //var nodeEstimate = NodeGenerator.estimateNodes(countries);
             //var newLocations = NodeGenerator.generateFromEstimate(nodeEstimate);
             //var newNodes = NodeGenerator.convertLocToNode(newLocations);
             //var batchSize = 50;
-
             var nodes = Globals.GetInstance().getTable<NodeEntity>();
-            foreach (var item in nodes)
+
+            using (var session = EntityManager.GetSessionFactory().OpenSession())
             {
-                item.getSiblings();
+                using (var transaction = session.BeginTransaction())
+                {
+                    foreach (var node in nodes)
+                    {
+                        node.getSiblings();
+                    }
+                }
             }
 
-            CableGenerator.ConnectCloseNodes(nodes, 500);
-            
+
+
+            //DBTool.WriteList(new List<string>());
+            //CableGenerator.ConnectCloseNodes(nodes, 500);
+
             /*
             using (var session = EntityManager.GetSessionFactory().OpenSession())
             {

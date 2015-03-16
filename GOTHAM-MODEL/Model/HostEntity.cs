@@ -15,6 +15,9 @@ namespace GOTHAM.Model
         public virtual bool online { get; set; }
         public virtual PersonEntity owner { get; set; }
 
+        // TODO: Add to database and map
+        public virtual NodeEntity node { get; set; }
+
         // TODO: Use IP and MAC classes. (Exists in Tools project)
         public virtual string ip { get; set; }
         public virtual string mac { get; set; }

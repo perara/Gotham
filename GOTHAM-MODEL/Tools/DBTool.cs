@@ -12,8 +12,54 @@ namespace GOTHAM.Tools
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        // Store multiple entities to database
-        public static void WriteList(List<BaseEntity> input, int batchSize = 20)
+        /// <summary>
+        /// Writes a list of Entities to database. Example: List of NodeEntity
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="batchSize"></param>
+        public static void WriteList(object input, int batchSize = 50)
+        {
+
+            if (!(input is List<BaseEntity>))
+                throw new Exception("Tried to write invalid data to database. Must be a valid entity");
+
+            List<BaseEntity> list = (List<BaseEntity>)input;
+
+            log.Info(list[0]);
+
+            return;
+            // Open up a transaction and stores data to database 
+            using (var session = EntityManager.GetSessionFactory().OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        session.Save(list[i]);
+                        if (i % batchSize == 0)
+                        {
+                            session.Flush();
+                            session.Clear();
+                        }
+
+                        // Prints persentage output each 100 entity
+                        if (i % 100 == 0)
+                        {
+                            double p = 100.0 / list.Count * i;
+                            log.Info((int)p + "%");
+                        }
+                    }
+                    transaction.Commit();
+                }// End transaction
+            }// End session
+        }// End function
+
+        /// <summary>
+        /// Writes a list of Entities to database. Must be List of BaseEntity
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="batchSize"></param>
+        public static void WriteList(List<BaseEntity> input, int batchSize = 50)
         {
             // Open up a transaction and stores data to database 
             using (var session = EntityManager.GetSessionFactory().OpenSession())
@@ -41,12 +87,12 @@ namespace GOTHAM.Tools
             }// End session
         }// End function
 
-
-        // Store single entity to database
+        /// <summary>
+        /// Writes a single entity to database
+        /// </summary>
+        /// <param name="input"></param>
         public static void Write(BaseEntity input)
         {
-
-            // TODO: Deprecated?
             // Check if input is valid
             if (input.GetType().Namespace != "GOTHAM.Model")
             {
@@ -63,5 +109,7 @@ namespace GOTHAM.Tools
                 }// End transaction
             }// End session
         }// End function
+
+
     }//End Class
 }

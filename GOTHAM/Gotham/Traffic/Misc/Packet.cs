@@ -11,6 +11,9 @@ using Newtonsoft.Json.Serialization;
 
 namespace GOTHAM.Traffic
 {
+    /// <summary>
+    /// A single packet built on the OSI model containing relevant headers for each protocol and data
+    /// </summary>
     public class Packet //<L2, L3, L4, L6, L7>
     {
         /// <summary>

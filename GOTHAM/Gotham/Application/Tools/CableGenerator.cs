@@ -11,7 +11,8 @@ namespace GOTHAM.Tools
     class CableGenerator
     {
         public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+        
+        // Main cable generation algorithm. Iterate from left and connect to closest nodes to the right
         public static void GenerateCables(List<NodeEntity> nodes, int siblings)
         {
             var sortedNodes = nodes.OrderBy(o => o.lng).ToList();
@@ -138,8 +139,8 @@ namespace GOTHAM.Tools
         {
             var cableHashes = new List<string>();
             var foundDuplicate = false;
-            var newCables = new List<CableEntity>();
-            var newCableParts = new List<CablePartEntity>();
+            List<BaseEntity> newCables = new List<BaseEntity>();
+            List<BaseEntity> newCableParts = new List<BaseEntity>();
 
             foreach (var node1 in nodes)
             {
@@ -210,46 +211,56 @@ namespace GOTHAM.Tools
             log.Info("Press enter to add cables to database");
             Console.ReadLine();
 
-            using (var session = EntityManager.GetSessionFactory().OpenSession())
+            
+            DBTool.WriteList(newCables);
+            DBTool.WriteList(newCableParts);
+        }
+
+
+        // Prototype function for generation of node cables
+        public static List<CableEntity> MakeCables(NodeEntity current, List<NodeEntity> nodes)
+        {
+            var cables = new List<CableEntity>();
+            NodeEntity closenode = null;
+            double closest = Double.MaxValue;
+
+            // TODO Change to A* algorithm
+            foreach (var l1 in nodes)
             {
-                using (var transaction = session.BeginTransaction())
+                foreach (var l2 in l1.siblings)
                 {
-                    for (int i = 0; i < newCables.Count; i++)
+                    foreach (var l3 in l2.siblings)
                     {
-                        session.Save(newCables[i]);
-                        if (i % 50 == 0)
+                        foreach (var l4 in l3.siblings)
                         {
-                            session.Flush();
-                            session.Clear();
-                        }
-
-                        // Prints persentage output each 100 entity
-                        if (i % 100 == 0)
-                        {
-                            double p = 100.0 / newCables.Count * i;
-                            log.Info((int)p + "%");
+                            foreach (var l5 in l4.siblings)
+                            {
+                                if (!l5.siblings.Contains(current))
+                                {
+                                    double dist = GeoTool.GetDistance(current.GetCoordinates(), l1.GetCoordinates());
+                                    if (closest > dist && dist != 0.0 && !l1.siblings.Contains(current))
+                                    {
+                                        closest = dist;
+                                        closenode = l1;
+                                    }
+                                }
+                            }
                         }
                     }
+                }
+            }
 
-                    for (int i = 0; i < newCableParts.Count; i++)
-                    {
-                        session.Save(newCableParts[i]);
-                        if (i % 50 == 0)
-                        {
-                            session.Flush();
-                            session.Clear();
-                        }
+            var cable = new CableEntity();
+            var type = new CableTypeEntity() { id = 0 };
 
-                        // Prints persentage output each 100 entity
-                        if (i % 100 == 0)
-                        {
-                            double p = 100.0 / newCableParts.Count * i;
-                            log.Info((int)p + "%");
-                        }
-                    }
-                    transaction.Commit();
-                }// End transaction
-            }// End session
+            //cable.Node1 = current;
+            //cable.Node2 = closenode;
+            cable.distance = closest;
+            cable.type = type;
+            cables.Add(cable);
+            current.siblings.Add(closenode);
+
+            return cables;
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using GOTHAM.Model;
+using GOTHAM.Traffic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace GOTHAM.Tools.Cache
   {
     public static CacheObject<NodeEntity> Nodes { get; set; }
     public static CacheObject<CableEntity> Cables { get; set; }
+    public static List<Connection> Connections { get; set; }
 
 
     private static bool inited = false;
