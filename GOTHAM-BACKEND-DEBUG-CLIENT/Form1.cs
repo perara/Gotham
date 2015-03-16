@@ -199,6 +199,11 @@ namespace GOTHAM_BACKEND_DEBUG
                 lbl_CableList.Text += "\n" + cable.name;
             }
         }
+
+        private void MainMap_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

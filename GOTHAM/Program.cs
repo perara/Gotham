@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using GOTHAM.Model;
 using GOTHAM.Tools;
 using GOTHAM.Gotham.Service.ServiceStack;
@@ -13,178 +12,187 @@ using GOTHAM.Model.Tools;
 
 namespace GOTHAM
 {
-    class Program
+  class Program
+  {
+    public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+
+    static void Main(string[] args)
     {
-        public static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+      /////////////////////////////////////////////////////////////////
+      //
+      // Initial Setup
+      // NB: Run as Administrator!
+      //
+      /////////////////////////////////////////////////////////////////
+
+      //
+      // Configure Log4Net
+      // 
+      log4net.Config.XmlConfigurator.Configure();
+
+      //
+      // Start ServiceStack API Server
+      //
+      //
+      ServiceStackConsoleHost.Start();
+
+      //
+      // Start SignalR
+      //
+      new Thread(() =>
+      {
+        Thread.CurrentThread.IsBackground = true;
+        SignalR r = new SignalR();
+        r.Start();
+      }).Start();
+
+      //
+      // Init Cache Engine
+      //
+      CacheEngine.Init();
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Other stuff
+      //
+      /////////////////////////////////////////////////////////////////
 
 
-        static void Main(string[] args)
+      // Change decimal seperator to . instead of ,
+      System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+      customCulture.NumberFormat.NumberDecimalSeparator = ".";
+      CultureInfo.DefaultThreadCurrentCulture = customCulture;
+
+      // ========================================================================================
+      // ===========================        TEST CODE       =====================================
+
+
+
+      //var countries = Globals.GetInstance().getTable<CountryEntity>();
+      //var nodeEstimate = NodeGenerator.estimateNodes(countries);
+      //var newLocations = NodeGenerator.generateFromEstimate(nodeEstimate);
+      //var newNodes = NodeGenerator.convertLocToNode(newLocations);
+      //var batchSize = 50;
+      var nodes = Globals.GetInstance().getTable<NodeEntity>();
+
+      using (var session = EntityManager.GetSessionFactory().OpenSession())
+      {
+        using (var transaction = session.BeginTransaction())
         {
-            /////////////////////////////////////////////////////////////////
-            //
-            // Initial Setup
-            // Remember: Run Visual Studio as ADMINISTRATOR
-            //
-            /////////////////////////////////////////////////////////////////
-
-            //
-            // Configure Log4Net
-            // 
-            log4net.Config.XmlConfigurator.Configure();
-
-            //
-            // Start ServiceStack API Server
-            // 
-            ServiceStackConsoleHost.Start();
-
-            //
-            // Start SignalR
-            //
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-                SignalR r = new SignalR();
-                r.Start();
-            }).Start();
-
-            //
-            // Init Cache Engine
-            //
-            CacheEngine.Init();
-
-            /////////////////////////////////////////////////////////////////
-            //
-            // Other stuff
-            //
-            /////////////////////////////////////////////////////////////////
+          foreach (var node in nodes)
+          {
+            node.Siblings();
+          }
+        }
+      }
 
 
-            // Change decimal seperator to . instead of ,
-            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-            customCulture.NumberFormat.NumberDecimalSeparator = ".";
-            CultureInfo.DefaultThreadCurrentCulture = customCulture;
 
-            // ========================================================================================
-            // ===========================        TEST CODE       =====================================
+      //DBTool.WriteList(new List<string>());
+      //CableGenerator.ConnectCloseNodes(nodes, 500);
 
-
-            //var countries = Globals.GetInstance().getTable<CountryEntity>();
-            //var nodeEstimate = NodeGenerator.estimateNodes(countries);
-            //var newLocations = NodeGenerator.generateFromEstimate(nodeEstimate);
-            //var newNodes = NodeGenerator.convertLocToNode(newLocations);
-            //var batchSize = 50;
-
-           // var nodes = Globals.GetInstance().getTable<NodeEntity>();
-
-
-            /*foreach (var item in nodes)
-            {
-                item.getSiblings();
-            }*/
-
-           // CableGenerator.ConnectCloseNodes(nodes, 500);
-            
-            /*
-            using (var session = EntityManager.GetSessionFactory().OpenSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    for (int i = 0; i < newCables.Count; i++)
-                    {
-                        session.Save(newCables[i]);
-                        if (i % batchSize == 0)
-                        {
-                            session.Flush();
-                            session.Clear();
-                        }
-
-                        // Prints persentage output each 100 entity
-                        if (i % 100 == 0)
-                        {
-                            double p = 100.0 / newCables.Count * i;
-                            log.Info((int)p + "%");
-                        }
-                    }
-                    transaction.Commit();
-                }// End transaction
-            }// End session
-            */
-
-            //log.Info(newLocations.Count);
-
-
-            //TxtParse.FromFile5("C:\\temp\\countries.txt");
-
-            //var oldNodes = Globals.GetInstance().nodes;
-            //var locations = Globals.GetInstance().getTable<LocationEntity>();
-            //var nodes = NodeGenerator.convertLocToNode(locations);
-
-            //foreach (var node in nodes)
-            //{
-
-            //var node = new NodeEntity();
-            //node.name = "test";
-            //node.lat = node.lng = 0;
-            //node.tier = new TierEntity() { id = 2 };
-
-            //DBTool.Write(node);
-
-            //}
-
-
-            /*
-
-              var rawNodes = CacheEngine.Nodes;
-              var nodesDict = new Dictionary<int, NodeEntity>();
-              var nodesList = new List<NodeEntity>();
-
-              foreach (var node in rawNodes)
+      /*
+      using (var session = EntityManager.GetSessionFactory().OpenSession())
+      {
+          using (var transaction = session.BeginTransaction())
+          {
+              for (int i = 0; i < newCables.Count; i++)
               {
-                node.getSiblings();
-                nodesDict.Add(node.id, node);
-                nodesList.Add(node);
+                  session.Save(newCables[i]);
+                  if (i % batchSize == 0)
+                  {
+                      session.Flush();
+                      session.Clear();
+                  }
+
+                  // Prints persentage output each 100 entity
+                  if (i % 100 == 0)
+                  {
+                      double p = 100.0 / newCables.Count * i;
+                      log.Info((int)p + "%");
+                  }
               }
+              transaction.Commit();
+          }// End transaction
+      }// End session
+      */
 
-              Globals.GetInstance().log.Info("Finished loading from DB");
-              Console.WriteLine("====================================================================");
-
-
-              var node1 = nodesDict[3316];
-              var node2 = nodesDict[3482];
-              var testlist = new List<NodeEntity>();
-
-              var path = new Pathfinder().TryRandom(node1, node2, nodesList, 100000);
-
-              foreach (var node in path.toNodeList())
-              {
-                var numspaces = 35 - node.country.Length;
-                var separator = "";
-                for (int i = 0; i < numspaces; i++) separator += " ";
-                Globals.GetInstance().log.Info(node.country + separator + node.name);
-              }
+      //log.Info(newLocations.Count);
 
 
-              Console.WriteLine("====================================================================");
+      //TxtParse.FromFile5("C:\\temp\\countries.txt");
 
-              Packet packet = new Packet(path).HTTP();
-              packet.PrintLayers();
-              var result = packet.IntegrityCheck() ? "success" : "fail";
-              log.Info(result);
+      //var oldNodes = Globals.GetInstance().nodes;
+      //var locations = Globals.GetInstance().getTable<LocationEntity>();
+      //var nodes = NodeGenerator.convertLocToNode(locations);
 
-              packet.PrintJson();
+      //foreach (var node in nodes)
+      //{
 
+      //var node = new NodeEntity();
+      //node.name = "test";
+      //node.lat = node.lng = 0;
+      //node.tier = new TierEntity() { id = 2 };
 
-              log.Info(rawNodes[0].ToJson());
-                */
+      //DBTool.Write(node);
 
-
-            // ========================================================================================
-            // ========================================================================================
-
-            Globals.GetInstance().log.Info("DOG FINISH");
-            Console.ReadLine();
+      //}
 
 
-        }// End Main
-    }// End Class
+      /*
+
+        var rawNodes = CacheEngine.Nodes;
+        var nodesDict = new Dictionary<int, NodeEntity>();
+        var nodesList = new List<NodeEntity>();
+
+        foreach (var node in rawNodes)
+        {
+          node.getSiblings();
+          nodesDict.Add(node.id, node);
+          nodesList.Add(node);
+        }
+
+        Globals.GetInstance().log.Info("Finished loading from DB");
+        Console.WriteLine("====================================================================");
+
+
+        var node1 = nodesDict[3316];
+        var node2 = nodesDict[3482];
+        var testlist = new List<NodeEntity>();
+
+        var path = new Pathfinder().TryRandom(node1, node2, nodesList, 100000);
+
+        foreach (var node in path.toNodeList())
+        {
+          var numspaces = 35 - node.country.Length;
+          var separator = "";
+          for (int i = 0; i < numspaces; i++) separator += " ";
+          Globals.GetInstance().log.Info(node.country + separator + node.name);
+        }
+
+
+        Console.WriteLine("====================================================================");
+
+        Packet packet = new Packet(path).HTTP();
+        packet.PrintLayers();
+        var result = packet.IntegrityCheck() ? "success" : "fail";
+        log.Info(result);
+
+        packet.PrintJson();
+
+
+        log.Info(rawNodes[0].ToJson());
+          */
+
+
+      // ========================================================================================
+      // ========================================================================================
+
+      Globals.GetInstance().log.Info("DOG FINISH");
+      Console.ReadLine();
+
+
+    }// End Main
+  }// End Class
 }

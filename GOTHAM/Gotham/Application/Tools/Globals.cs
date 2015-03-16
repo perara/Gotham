@@ -1,7 +1,6 @@
 ﻿using GOTHAM.Tools;
 using GOTHAM.Model.Tools;
 using GOTHAM.Model;
-
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -62,7 +61,6 @@ namespace GOTHAM.Tools
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-
         public List<T> getTable<T>()
         {
             // SELECT * FROM X

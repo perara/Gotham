@@ -10,6 +10,9 @@ using GOTHAM.Model.Tools;
 
 namespace GOTHAM.Tools
 {
+    /// <summary>
+    /// Contains static functions for estimating, converting and generating Nodes. 
+    /// </summary>
     public class NodeGenerator
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -21,7 +24,11 @@ namespace GOTHAM.Tools
         static double childMinBW = 0.01;
         static double childMaxBW = 0.2;
 
-        // Produces a general estimate of tier 1 nodes in each country based on population and continent
+        /// <summary>
+        /// Produces a general estimate of tier 1 nodes in each country based on population and continent
+        /// </summary>
+        /// <param name="countries"></param>
+        /// <returns></returns>
         public static Dictionary<string, int> estimateNodes(List<CountryEntity> countries)
         {
             var results = new Dictionary<string, int>();
@@ -48,7 +55,11 @@ namespace GOTHAM.Tools
             return results;
         }
 
-        // Converts a list of locations to nodes
+        /// <summary>
+        /// Converts a list of Locations into Nodes
+        /// </summary>
+        /// <param name="locations"></param>
+        /// <returns></returns>
         public static List<NodeEntity> convertLocToNode(List<LocationEntity> locations)
         {
             var nodes = new List<NodeEntity>();
@@ -68,7 +79,12 @@ namespace GOTHAM.Tools
             return nodes;
         }
 
-        // Takes an estimate number of nodes for each country and gets a random city for each one (from database)
+        /// <summary>
+        /// Generates nodes from random cities of the specified country.
+        /// Dictionary containing [Country Code] and [Quantity to generate]
+        /// </summary>
+        /// <param name="nodeEstimate"></param>
+        /// <returns></returns>
         public static List<LocationEntity> generateFromEstimate(Dictionary<string, int> nodeEstimate)
         {
             var rand = new Random();
@@ -105,9 +121,11 @@ namespace GOTHAM.Tools
             return locations;
         }
 
-
-        // Make new node (For testing)
-        // TODO Get relevant data
+        /// <summary>
+        /// Make new node (For testing)
+        /// </summary>
+        /// <param name="tier"></param>
+        /// <returns></returns>
         private static NodeEntity NewRandomNode(TierEntity tier)
         {
             var node = new NodeEntity();
@@ -122,7 +140,11 @@ namespace GOTHAM.Tools
         }
 
 
-        // Generates nodes with specific amount of siblings
+        /// <summary>
+        /// Generates nodes with the specific amount of siblings
+        /// </summary>
+        /// <param name="siblings"></param>
+        /// <param name="totBandwidth"></param>
         public void GenerateNodes(int siblings, long totBandwidth)
         {
             var nodes = new List<NodeEntity>();

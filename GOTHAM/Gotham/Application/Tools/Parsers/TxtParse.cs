@@ -4,44 +4,47 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
+using GOTHAM.Tools;
 using GOTHAM.Model;
 using GOTHAM.Model.Tools;
 using Newtonsoft.Json;
 using GOTHAM.Gotham.Application.Tools.Objects;
-using NHibernate.Util;
 
 namespace GOTHAM.Tools
 {
+    /// <summary>
+    /// This class contains static functions for parsing text to objects and vice versa.
+    /// After converting to objects the function writes the new objects to the database.
+    /// </summary>
     public class TxtParse
     {
         public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
- 
         /// <summary>
-        /// Write LocationEntities to file
-        /// Orders by CountryCode
+        /// Writes a list of locations to file
+        /// countrycode,name,latitude,longitude
         /// </summary>
-        /// <param name="locations">List of LocationEntities</param>
-        /// <param name="path">Save File location</param>
-        public static void LocationToFile(List<LocationEntity> locations, string path)
+        /// <param name="locations"></param>
+        /// <param name="path"></param>
+        public static void LocsToFile(List<LocationEntity> locations, string path)
         {
-            // Create File
             var file = File.AppendText(path);
+            var sortedLocations = locations.OrderBy(x => x.countrycode).ThenBy(x => x.name);
 
-           // Sorts the list, then save the location items to file
-           locations
-            .OrderBy(x => x.countrycode)
-            .ThenBy(x => x.name)
-            .ForEach(
-              location =>
-                file.WriteLine(location.countrycode + "," + location.name + "," + location.lat + "," + location.lng));
-
+            foreach (var location in sortedLocations)
+            {
+                var str = location.countrycode + "," + location.name + "," + location.lat + "," + location.lng;
+                file.WriteLine(str);
+            }
         }
 
-        // Text parsing for type 1 location format
-        // contrycode, name2, name, ?, ?, lat, lng
-        public static List<LocationEntity> FromFile1(string path)
+        /// <summary>
+        /// Text parsing for type 1 location format
+        /// contrycode, name2, name, ?, ?, lat, lng
+        /// </summary>
+        /// <param name="path"></param>
+        public static void FromFile1(string path)
         {
 
             // Read files to string-list and make empty locaions list
@@ -64,11 +67,15 @@ namespace GOTHAM.Tools
                 locations.Add(location);
             }
 
-            return locations;
+            DBTool.WriteList(locations);
         }
 
-        // Text parsing for type 2 location format
-        // name, lat, lng
+        /// <summary>
+        /// Text parsing for type 2 location format
+        /// name(0), lat(1), lng(2)
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static List<NodeEntity> FromFile2(string path)
         {
 
@@ -94,9 +101,13 @@ namespace GOTHAM.Tools
             return nodes;
         }
 
-        // Text parsing for type 3 location format (GoogleMaps Javascript sea nodes)
-        // contrycode, name, lat, lng
-        public static List<NodeEntity> FromFile3(string path, string output = null)
+        
+        /// <summary>
+        /// Text parsing for type 3 location format (GoogleMaps Javascript sea nodes)
+        /// contrycode(0), name(1), lat(2), lng(3)
+        /// </summary>
+        /// <param name="path"></param>
+        public static void FromFile3(string path)
         {
 
             // Read files to string-list and make empty locaions list
@@ -120,14 +131,16 @@ namespace GOTHAM.Tools
                 nodes.Add(node);
 
             }
-            foreach (var node in nodes)
-            { DBTool.Write(node); }
 
-            return nodes;
+            DBTool.WriteList(nodes);
         }
 
-        // Text parsing for type 3 location format (GoogleMaps Javascript sea cables)
-        // name, capacity, url1, url2,distance, 0, 0, inservice, precise, notes, bound1lng, bount1lat, bound2.lng, bound2.lat, point, point, point, ++point++
+        /// <summary>
+        /// Text parsing for type 3 location format (GoogleMaps Javascript sea cables)
+        /// name, capacity, url1, url2,distance, 0, 0, inservice, precise, notes, bound1lng, bount1lat, bound2.lng, bound2.lat, point, point, point, ++point++
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="output"></param>
         public static void FromFile4(string path, string output = null)
         {
             // Read file and split lines into list 
@@ -141,18 +154,18 @@ namespace GOTHAM.Tools
 
             // Iterate through all cables
             foreach (var line in lines)
-	        {
+            {
                 var segments = line.Split(',').ToList();
-                
+
                 // Are we processing the same cable or is this a new cable? If yes, generate new cable entity
                 if (cables.Count == 0 || segments[0] != cables.Last().name)
                 {
                     var cable = new CableEntity();
-          
+
                     cable.name = segments[0];
                     cable.priority = 0;
                     cable.capacity = Double.Parse(segments[1]);
-                    cable.type = new CableTypeEntity(){id = 0};
+                    cable.type = new CableTypeEntity() { id = 0 };
                     cable.distance = Double.Parse(segments[4]);
                     cable.year = Int32.Parse(segments[7]);
                     cable_part_counter = 0;
@@ -176,12 +189,10 @@ namespace GOTHAM.Tools
                     cable_parts.Add(cablepart);
                 }
                 cable_part_counter = 0;
-	        }
+            }
 
-            foreach (var cable in cables) 
-                DBTool.Write(cable);
-            foreach (var cable_part in cable_parts) 
-                DBTool.Write(cable_part);
+            DBTool.WriteList(cables);
+            DBTool.WriteList(cable_parts);
         }
 
         // Text parsing for type 3 location format (GoogleMaps Javascript sea nodes)
@@ -211,39 +222,16 @@ namespace GOTHAM.Tools
 
             }
 
-            using (var session = EntityManager.GetSessionFactory().OpenSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    var batchSize = 20;
-                    for (int i = 0; i < countries.Count; i++)
-                    {
-                        session.Save(countries[i]);
-                        if (i % batchSize == 0)
-                        {
-                            session.Flush();
-                            session.Clear();
-                        }
-
-                        // Prints persentage output each 100 entity
-                        if (i % 100 == 0)
-                        {
-                            double p = 100.0 / countries.Count * i;
-                            log.Info((int)p + "%");
-                        }
-                    }
-                    transaction.Commit();
-                }// End transaction
-            }// End session
-
-
-            //foreach (var country in countries)
-            //    DBTool.Write(country);
+            DBTool.WriteList(countries);
 
         }
 
-        // Text parsing for type 3 location format (GoogleMaps Javascript sea nodes)
-        // countrycode(0), contrycode 2(1), countrynumber(2), countrycode 3(3), country(4), capital(5), size(6), population(7), continent(8)
+        /// <summary>
+        /// Text parsing for type 3 location format (GoogleMaps Javascript sea nodes)
+        /// countrycode(0), contrycode 2(1), countrynumber(2), countrycode 3(3), country(4), capital(5), size(6), population(7), continent(8)
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="output"></param>
         public static void FromFile6(string path, string output = null)
         {
 
@@ -269,46 +257,26 @@ namespace GOTHAM.Tools
 
             }
 
-            using (var session = EntityManager.GetSessionFactory().OpenSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    var batchSize = 20;
-                    for (int i = 0; i < countries.Count; i++)
-                    {
-                        session.Save(countries[i]);
-                        if (i % batchSize == 0)
-                        {
-                            session.Flush();
-                            session.Clear();
-                        }
-
-                        // Prints persentage output each 100 entity
-                        if (i % 100 == 0)
-                        {
-                            double p = 100.0 / countries.Count * i;
-                            log.Info((int)p + "%");
-                        }
-                    }
-                    transaction.Commit();
-                }// End transaction
-            }// End session
-
-
-            //foreach (var country in countries)
-            //    DBTool.Write(country);
-
+            DBTool.WriteList(countries);
         }
 
+        /// <summary>
+        /// Convert json string to a list of NodeJSON objects (not the same as NodeEntity)
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static List<NodeJSON> JSONToNodes(string path)
         {
             var json = System.IO.File.ReadAllText(path);
             var nodeList = JsonConvert.DeserializeObject<List<NodeJSON>>(json);
             return nodeList;
-        }  
+        }
 
 
-        // Import nodes in json format
+        /// <summary>
+        /// Import nodes from json. Requires country, name, lat, lng
+        /// </summary>
+        /// <param name="jnodes"></param>
         public static void FromJSON1(List<NodeJSON> jnodes)
         {
             var countries = Globals.GetInstance().getTable<CountryEntity>();
@@ -323,7 +291,7 @@ namespace GOTHAM.Tools
                 node.lat = Double.Parse(item.coordinates.latitude);
                 node.lng = Double.Parse(item.coordinates.longitude);
                 node.tier = new TierEntity() { id = 1 };
-                
+
                 DBTool.Write(node);
             }
         }
