@@ -1,6 +1,7 @@
 ﻿# Objects
 WorldMap = require "./objects/WorldMap.coffee"
 TopBar    = require "./objects/TopBar.coffee"
+Settings    = require "./objects/Settings.coffee"
 
 # Scenes
 LoadingScene  = require "./scenes/Loading.coffee"
@@ -22,6 +23,7 @@ class GothamGame
   @objects =
     "WorldMap" : WorldMap
     "TopBar" : TopBar
+    "Settings" : Settings
 
   @scenes =
     "Loading" : LoadingScene
