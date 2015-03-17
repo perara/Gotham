@@ -11,9 +11,17 @@ namespace GOTHAM.Model
     {
         public virtual CableEntity cable { get; set; }
         public virtual int number { get; set; }
-        public virtual double lat{ get; set; }
+        public virtual double lat { get; set; }
         public virtual double lng { get; set; }
-        
+
+        protected CablePartEntity() { }
+        public CablePartEntity(CableEntity cable, int number, double lat, double lng)
+        {
+            this.cable = cable;
+            this.number = number;
+            this.lat = lat;
+            this.lng = lng;
+        }
     }
 
     public class CablePartEntityMap : ClassMap<CablePartEntity>
@@ -28,9 +36,10 @@ namespace GOTHAM.Model
             Map(x => x.lat);
             Map(x => x.lng);
 
-            References(x => x.cable).Not.Nullable().Column("cable");
-
+            References(x => x.cable)
+                .Cascade.All()
+                .Not.Nullable()
+                .Column("cable");
         }
-
     }
 }

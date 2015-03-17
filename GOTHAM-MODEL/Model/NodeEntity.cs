@@ -12,7 +12,7 @@ namespace GOTHAM.Model
 {
     public class NodeEntity : BaseEntity
     {
-        
+
         public virtual string name { get; set; }
         public virtual string country { get; set; }
         public virtual TierEntity tier { get; set; }
@@ -31,6 +31,20 @@ namespace GOTHAM.Model
 
         [JsonIgnore]
         public virtual IList<CableEntity> cables { get; set; }
+
+        protected NodeEntity() { }
+        public NodeEntity(string name = "NoName") 
+        {
+            this.name = name;
+        }
+        public NodeEntity(string name, string country, TierEntity tier, double lat, double lng)
+        {
+            this.name = name;
+            this.country = country;
+            this.tier = tier;
+            this.lat = lat;
+            this.lng = lng;
+        }
 
         //[Transient]
         public virtual bool isMatch(NodeEntity node)

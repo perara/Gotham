@@ -14,10 +14,22 @@ namespace GOTHAM.Model
         public virtual int year { get; set; }
         public virtual IList<NodeEntity> nodes { get; set; }
         public virtual IList<CablePartEntity> cableParts { get; set; }
+
+        protected CableEntity() { }
+        public CableEntity(string name = "NoName")
+        {
+            this.name = name;
+        }
+        public CableEntity(double capacity, CableTypeEntity type, double distance, string name)
+        {
+            this.capacity = capacity;
+            this.type = type;
+            this.distance = distance;
+            this.name = name;
+        }
     }
     public class CableEntityMap : ClassMap<CableEntity>
     {
-
         public CableEntityMap()
         {
             Table("cable");
@@ -34,12 +46,12 @@ namespace GOTHAM.Model
             References(x => x.type, "id").ReadOnly().Not.Nullable();
 
             HasMany<CablePartEntity>(x => x.cableParts)
+            .Cascade.All()
             .Inverse()
             .KeyColumn("cable")
             .Not.LazyLoad();
 
             HasManyToMany(x => x.nodes)
-                .Cascade.All()
                 .Inverse()
                 .Table("node_cable")
                 .ParentKeyColumn("cable")

@@ -112,7 +112,7 @@ namespace GOTHAM_BACKEND_DEBUG
             var random = new Random();
             foreach (var cable in cables)
             {
-                if (cable.year > 2014) continue;
+                //if (cable.year > 2014) continue;
 
                 var parts = new List<PointLatLng>();
                 var color = Color.FromArgb(150, random.Next(255), random.Next(255), random.Next(255));

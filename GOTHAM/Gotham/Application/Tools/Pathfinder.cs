@@ -47,7 +47,7 @@ namespace GOTHAM.Tools
                 do
                 {
                     NodeEntity nextNode = null;
-                    nextNode = currentNode.siblings[rnd.Next(currentNode.siblings.Count)];
+                    nextNode = currentNode.siblings[rnd.Next(0, currentNode.siblings.Count - 1)];
 
                     queue.Add(new KeyValuePair<int,NodeEntity>(nextNode.id, nextNode));
                     currentNode = nextNode;
@@ -76,7 +76,7 @@ namespace GOTHAM.Tools
         /// <returns></returns>
         public Pathfinder AStar(NodeEntity start, NodeEntity goal)
         {
-            var currentNodeEntity = new NodeEntity();
+            var currentNodeEntity = new NodeEntity("Dummy");
             var ignore = new List<NodeEntity>();
 
             currentNodeEntity = start;
@@ -246,8 +246,11 @@ namespace GOTHAM.Tools
             var pathInt = new Dictionary<int, NodeEntity>();
 
             foreach (var node in solution)
+            {
+                // TODO: Remove nodes between duplicates (probably an unwanted loop)
+                if (pathInt.ContainsKey(node.Key)) pathInt.Remove(node.Key);
                 pathInt.Add(node.Key, node.Value);
-
+            }
             return pathInt;
         }
     }

@@ -66,13 +66,19 @@ namespace GOTHAM
             // ===========================        TEST CODE       =====================================
 
 
+            /*
+            var countries = Globals.GetInstance().getTable<CountryEntity>();
+            var nodeEstimate = NodeGenerator.estimateNodes(countries);
+            var newLocations = NodeGenerator.generateFromEstimate(nodeEstimate);
+            List<BaseEntity> newNodes = new List<BaseEntity>();
+            newNodes.AddRange(NodeGenerator.convertLocToNode(newLocations));
 
-            //var countries = Globals.GetInstance().getTable<CountryEntity>();
-            //var nodeEstimate = NodeGenerator.estimateNodes(countries);
-            //var newLocations = NodeGenerator.generateFromEstimate(nodeEstimate);
-            //var newNodes = NodeGenerator.convertLocToNode(newLocations);
-            //var batchSize = 50;
+            DBTool.WriteList(newNodes);
+            
+            */
             var nodes = Globals.GetInstance().getTable<NodeEntity>();
+            NodeEntity start = new NodeEntity();
+            NodeEntity end = new NodeEntity();
 
             using (var session = EntityManager.GetSessionFactory().OpenSession())
             {
@@ -81,11 +87,24 @@ namespace GOTHAM
                     foreach (var node in nodes)
                     {
                         node.getSiblings();
+                        if (node.id == 9743) start = node;
+                        if (node.id == 8368) end = node;
                     }
                 }
             }
 
+            //CableGenerator.ConnectNodes(50);
+            var path = new Pathfinder().TryRandom(start, end, 100000).toDictionary();
 
+            foreach (var item in path)
+            {
+                log.Info(item.Value.name);
+            }
+
+            //CableGenerator.ConnectSeaNodesToLand();
+
+            //NodeGenerator.fixSeaNodes();
+            //CableGenerator.GenerateCables(nodes, new Random().Next(2,3));
 
             //DBTool.WriteList(new List<string>());
             //CableGenerator.ConnectCloseNodes(nodes, 500);

@@ -66,13 +66,7 @@ namespace GOTHAM.Tools
 
             foreach (var loc in locations)
             {
-                var node = new NodeEntity();
-
-                node.lat = loc.lat;
-                node.lng = loc.lng;
-                node.country = loc.countrycode;
-                node.tier = new TierEntity() { id = 1 };
-                node.name = loc.name;
+                var node = new NodeEntity(loc.name, loc.countrycode, new TierEntity() { id = 1 }, loc.lat, loc.lng);
 
                 nodes.Add(node);
             }
@@ -104,14 +98,7 @@ namespace GOTHAM.Tools
                             .Take(quantity)
                             .ToList();
 
-                        if (cities.Count() == 0) continue;
-
-                        while (quantity > 0)
-                        {
-                            var loc = cities.ElementAt(rand.Next(0, cities.Count()));
-                            locations.Add(loc);
-                            quantity--;
-                        }
+                        locations.AddRange(cities);
 
                         log.Info(item.Key + ": " + item.Value);
 
@@ -128,14 +115,7 @@ namespace GOTHAM.Tools
         /// <returns></returns>
         private static NodeEntity NewRandomNode(TierEntity tier)
         {
-            var node = new NodeEntity();
-
-            node.lat = rnd.Next(Globals.GetInstance().mapMax.X);
-            node.lng = rnd.Next(Globals.GetInstance().mapMax.Y);
-            node.country = "Flette";
-            node.priority = rnd.Next(10);
-            node.tier = tier;
-            node.siblings = new List<NodeEntity>();
+            var node = new NodeEntity("test", "Flette", tier, rnd.Next(Globals.GetInstance().mapMax.X), rnd.Next(Globals.GetInstance().mapMax.Y));
 
             return node;
         }
@@ -202,6 +182,35 @@ namespace GOTHAM.Tools
                 }
                 log.Info("Bandwidth remaining: " + nodeBandwidth);
             }
+        }
+
+        public static void fixSeaNodes()
+        {
+            var seaNodes = Globals.GetInstance().nodes.Where(x => x.tier.id == 4).ToList();
+            var newSeaNodes = new List<NodeEntity>();
+            var test = new NodeEntity();
+            foreach (var node in seaNodes)
+            {
+                var existing = newSeaNodes.Where((x => x.name == node.name && x.country == node.country)).FirstOrDefault();
+
+                if (existing == null)
+                {
+                    var newNode = new NodeEntity(node.name, node.country, node.tier, node.lat, node.lng);
+                    newSeaNodes.Add(newNode);
+                }
+                else
+                {
+                    foreach (var part in node.cables)
+                    {
+                        existing.cables = new List<CableEntity>();
+                        existing.cables.Add(part);
+                    }
+                }
+            }
+
+            DBTool.WriteList(newSeaNodes);
+
+            //DBTool.WriteList(newSeaNodes);
         }
     }
 }

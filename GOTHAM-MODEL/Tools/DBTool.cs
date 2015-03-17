@@ -1,6 +1,7 @@
 ﻿using GOTHAM.Model;
 using GOTHAM.Model.Tools;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,15 +20,11 @@ namespace GOTHAM.Tools
         /// <param name="batchSize"></param>
         public static void WriteList(object input, int batchSize = 50)
         {
+            var list = ((IList)input).Cast<object>().ToList();
 
-            if (!(input is List<BaseEntity>))
+            if (!(list[0] is BaseEntity))
                 throw new Exception("Tried to write invalid data to database. Must be a valid entity");
 
-            List<BaseEntity> list = (List<BaseEntity>)input;
-
-            log.Info(list[0]);
-
-            return;
             // Open up a transaction and stores data to database 
             using (var session = EntityManager.GetSessionFactory().OpenSession())
             {
