@@ -179,13 +179,8 @@ namespace GOTHAM.Tools
 
                 for (int i = 0; i < partLocations.Count; i += 2)
                 {
-                    var cablepart = new CablePartEntity();
+                    var cablepart = new CablePartEntity(cables.Last(), cable_part_counter++, Double.Parse(partLocations[i + 1]), Double.Parse(partLocations[i]));
 
-                    // TODO Is ID generated if cable is not in database?
-                    cablepart.cable = cables.Last();
-                    cablepart.number = cable_part_counter++;
-                    cablepart.lat = Double.Parse(partLocations[i + 1]);
-                    cablepart.lng = Double.Parse(partLocations[i]);
                     cable_parts.Add(cablepart);
                 }
                 cable_part_counter = 0;
@@ -279,7 +274,7 @@ namespace GOTHAM.Tools
         /// <param name="jnodes"></param>
         public static void FromJSON1(List<NodeJSON> jnodes)
         {
-            var countries = Globals.GetInstance().getTable<CountryEntity>();
+            var countries = DBTool.getTable<CountryEntity>();
             var nodes = new List<NodeEntity>();
 
             foreach (var item in jnodes)

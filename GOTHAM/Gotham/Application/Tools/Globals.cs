@@ -26,17 +26,19 @@ namespace GOTHAM.Tools
         private Globals()
         {
             DateTime time = DateTime.Now;
-            // TODO: Preload fra database
-            nodes = getTable<NodeEntity>();
-            cables = getTable<CableEntity>();
 
-            log.Info((DateTime.Now - time).Seconds + "." + (DateTime.Now - time).Milliseconds);
+            //nodeCables = getTable<NodeCableEntity>();
+            //cableParts = getTable<CablePartEntity>();
+            nodes = DBTool.getTable<NodeEntity>();
             //cables = getTable<CableEntity>();
+
+            log.Info((DateTime.Now - time).Seconds + "." + (DateTime.Now - time).Milliseconds + " to load data from DB");
         }
 
         public List<NodeEntity> nodes = new List<NodeEntity>();
         public List<CableEntity> cables = new List<CableEntity>();
-        
+        public List<CablePartEntity> cableParts = new List<CablePartEntity>();
+        public List<NodeCableEntity> nodeCables = new List<NodeCableEntity>();
 
         // Global variables and objects
         public Point mapMax = new Point(1000, 1000);
@@ -61,24 +63,6 @@ namespace GOTHAM.Tools
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public List<T> getTable<T>()
-        {
-            // SELECT * FROM X
-            // SELECT * FROM X where Y = Z and Z = KUK
-
-            using (var session = EntityManager.GetSessionFactory().OpenSession())
-            {
-
-                Type typeParameterType = typeof(T);
-                var data = session
-
-                    .CreateCriteria(typeParameterType)
-                    .SetCacheable(true)
-                    .SetCacheMode(CacheMode.Normal)
-                    .List<T>()
-                    .ToList();
-                return data;
-            }
-        }
+        
     }
 }
