@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using GOTHAM.Tools.Cache;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace GOTHAM.Gotham.Service.SignalR.Hubs
 {
@@ -30,7 +32,15 @@ namespace GOTHAM.Gotham.Service.SignalR.Hubs
 
     public void RequestMap()
     {
-      Clients.Client(Context.ConnectionId).fetchMap(JsonConvert.SerializeObject(CacheEngine.Nodes));
+
+
+
+
+      Clients.Client(Context.ConnectionId).fetchMap(JsonConvert.SerializeObject(new
+      {
+        nodes = CacheEngine.Nodes,
+        cables = CacheEngine.Cables
+      }));
 
       // Denna her bli kjørt når spillet/frontend starte
       // 1. Get Nodes | Cache

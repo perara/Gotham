@@ -47,6 +47,7 @@ namespace GOTHAM.Tools
                 do
                 {
                     NodeEntity nextNode = null;
+
                     nextNode = currentNode.siblings[rnd.Next(0, currentNode.siblings.Count - 1)];
 
                     queue.Add(new KeyValuePair<int,NodeEntity>(nextNode.id, nextNode));
@@ -90,7 +91,7 @@ namespace GOTHAM.Tools
 
 
                 // Check siblings of currentNodeEntity for shortest distance
-                foreach (var NodeEntity in currentNodeEntity.siblings)
+                foreach (var NodeEntity in currentNodeEntity.Siblings())
                 {
                     var dist = GeoTool.GetDistance(NodeEntity.GetCoordinates(), goal.GetCoordinates());
                     if (dist < minDist && !ignore.Contains(NodeEntity))
@@ -153,9 +154,9 @@ namespace GOTHAM.Tools
                     
 
                     // Check siblings of currentNodeEntity for shortest distance
-                    foreach (var sibling1 in currentNode.siblings)
+                    foreach (var sibling1 in currentNode.Siblings())
                     {
-                        foreach (var sibling2 in sibling1.siblings)
+                      foreach (var sibling2 in sibling1.Siblings())
                         {
                             var dist = GeoTool.GetDistance(sibling2.GetCoordinates(), goal.GetCoordinates());
                             if (dist < minDist && !ignore.Contains(sibling1) && !tempIgnore.Contains(sibling1))

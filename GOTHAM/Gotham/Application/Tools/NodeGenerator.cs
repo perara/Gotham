@@ -156,7 +156,7 @@ namespace GOTHAM.Tools
                     childNode.cables = new List<CableEntity>();
 
                     // Add ChildNode to parentNode
-                    node.siblings.Add(childNode);
+                    node.Siblings().Add(childNode);
 
                     // Add a new Cable Beetwen nodes
                     var cable = CableGenerator.NewCable(node, childNode, bwCap);
@@ -174,7 +174,7 @@ namespace GOTHAM.Tools
                 log.Info(node.lat + " - " + node.lng + " - Pri: " + node.priority + " Bandwidth: " + Globals.GetInstance().BWSuffix(node.bandwidth));
 
                 // Iterate through each of the Tier 3 siblings
-                foreach (var sibling in node.siblings)
+                foreach (var sibling in node.Siblings())
                 {
                     var siblBandwidth = node.cables.FirstOrDefault(x => x.nodes[0] == sibling).capacity;
                     log.Info("\t" + sibling.lat + " - " + sibling.lng + " - Pri: " + sibling.priority + " Cable Cap: " + Globals.GetInstance().BWSuffix(siblBandwidth));
