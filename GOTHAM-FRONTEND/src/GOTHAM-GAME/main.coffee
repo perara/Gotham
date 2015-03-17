@@ -10,6 +10,8 @@ Gotham = require '../GOTHAM-GF/Gotham.coffee'
 # Scene Manager
 GothamGame = require '../GOTHAM-GAME/GothamGame.coffee'
 
+# World Map
+Gotham.Preload.image("/assets/img/map_marker.png", "map_marker", "image")
 
 # Top Bar
 Gotham.Preload.image("/assets/img/bottomBar.png", "bottomBar", "image")
@@ -20,6 +22,9 @@ Gotham.Preload.image("/assets/img/menu_button_texture.png", "menu_button", "imag
 Gotham.Preload.image("/assets/img/menu_background.jpg", "menu_background", "image")
 Gotham.Preload.mp3("./assets/audio/menu_theme.mp3", "menu_theme")
 
+# Settings
+Gotham.Preload.image("/assets/img/settings_background.jpg", "settings_background", "image")
+Gotham.Preload.image("/assets/img/settings_close.png", "settings_close", "image")
 
 Gotham.Preload.json("/assets/json/json.json", "map")
 #Gotham.Preload.image("http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg", "item", "jpg")
@@ -58,7 +63,7 @@ Gotham.Preload.onComplete () ->
 
 
 
-    GothamGame.renderer.setScene("Menu")
+    GothamGame.renderer.setScene("World")
 
     # Finally start the Connection
     connection = startConnection()

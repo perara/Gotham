@@ -2,20 +2,41 @@
 class Menu extends Gotham.Graphics.Scene
 
   create: ->
+    that = @
+
     @buttons = []
 
     @createBackground()
 
     @addButton "Single Player", ->
-      GothamGame.renderer.setScene("World")
-    @addButton "Settings"
-    @addButton "About"
-    @addButton "Exit"
+      that.setInteractive false
+      GothamGame.renderer.setScene "World"
+
+    @addButton "Settings", ->
+
+      that.setInteractive false
+
+      object_settings = new GothamGame.objects.Settings
+      object_settings.width = 1920
+      object_settings.height = 1080
+      object_settings.onInteractiveChange = (state) ->
+        if !state
+          that.removeObject object_settings
+          that.setInteractive true
+
+      that.addObject object_settings
+
+
+    @addButton "About", ->
+
+
+
+    @addButton "Exit", ->
+      window.location.href = "http://gotham.no";
+
+
     @drawButtons()
-
-
     @setupMusic()
-
 
 
 
@@ -79,6 +100,7 @@ class Menu extends Gotham.Graphics.Scene
       x: 0.5
       y: 0.5
     sprite.interactive = true
+    sprite.buttonMode = true
 
     # Create a text object
     text = new Gotham.Graphics.Text(text, {font: "bold 70px Arial", fill: "#ffffff", align: "center"}, 0,0)
@@ -94,6 +116,7 @@ class Menu extends Gotham.Graphics.Scene
 
     # Create Events
     sprite.mouseover = (mouseData) ->
+      console.log ":D"
       @scale =
         x: 0.8
         y: 0.8
@@ -103,6 +126,7 @@ class Menu extends Gotham.Graphics.Scene
       @scale = @originalScale
 
     sprite.click = (mouseData) ->
+
       onClick(mouseData)
 
     sprite.addChild text

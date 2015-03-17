@@ -26,6 +26,10 @@ class WorldMap extends Gotham.Graphics.Container
     @size = @size
 
 
+    # World Map Data
+    @nodes = new Object()
+
+
 
 
     # This callback returns a array with nodes from the server. These nodes should be processed by the WorldMap
@@ -35,9 +39,15 @@ class WorldMap extends Gotham.Graphics.Container
       # Parse data as JSON
       nodes = JSON.parse json
 
+
+      console.log nodes.cables
+
       # Iterate through each of the nodes and add to the map
-      for node in nodes
+      for node in nodes.nodes
         that.addNode node
+
+      for cable in nodes.cables
+        that.addCable cable
 
     @network.onConnect =  (connection) ->
       connection.server.send("Test", "Fest")
@@ -79,37 +89,154 @@ class WorldMap extends Gotham.Graphics.Container
         y: (@size.height / 2) / @originalMapScale.y
     return mapCoordinates
 
+  CoordinateToPixel: (lat, lng) ->
+    ret =
+    x: (lng * @getCoordFactors().longitude) + (@size.width / 2)
+    y: (lat * @getCoordFactors().latitude)  + (@size.height / 2)
+    return ret
+
   addNode: (node) ->
 
-    # Convert Longitude and Latitude to pixels
-    posX = (node.lng * @getCoordFactors().longitude) + (@size.width / 2)
-    posY = (node.lat * @getCoordFactors().latitude)  + (@size.height / 2)
 
-    # Draw Dot
-    nodeDot = new Gotham.Graphics.Graphics()
-    nodeDot.lineStyle(0);
-    nodeDot.beginFill(0xff0000, 1);
-    nodeDot.drawCircle(posX, posY, 1);
+    coordinates = @CoordinateToPixel(node.lat, node.lng)
+    gNode = new Gotham.Graphics.Sprite Gotham.Preload.fetch("map_marker", "image")
+    gNode.position =
+      x: coordinates.x
+      y: coordinates.y
+    """gNode.anchor =
+      x: 0.5
+      y: 0.5"""
+    gNode.width = 16
+    gNode.height = 16
+    gNode.setInteractive true
+    @nodeContainer.addChild gNode
 
-    # Add the node dot to map
-    @mapContainer.addChild nodeDot
+    # Add to global nodes list
+    # Also add a array for cables
+    gNode.cables = []
+    gNode.nodeData = node
+    @nodes[node.id] = gNode
+
+
+    gNode.mouseover = ->
+      for cable in @cables
+        for part in cable.cableParts
+          part.visible = true
+
+    gNode.mouseout = ->
+      for cable in @cables
+        for part in cable.cableParts
+          part.visible = false
+
+
+
+
+  addCable: (cable) ->
+
+    # Add Cable to each of the node id's
+    for nodeId in cable.nodeids
+      @nodes[nodeId].cables.push cable
+
+
+    # Determine first graphics location and move the pointer
+    firstLocation = @CoordinateToPixel(cable.cableParts[0].lat, cable.cableParts[0].lng)
+
+    # Create a new graphics element
+    graphics = new Gotham.Graphics.Graphics();
+    graphics.visible = false
+    graphics.lineStyle(1, 0xffd900, 1);
+
+    previousLocation =
+      x: -9000000
+      y: -9000000
+
+    isStart = true
+
+
+    testX = @size.width / 2
+    testY = @size.height  / 2
+
+    for i in [0...cable.cableParts.length]
+      partData = cable.cableParts[i]
+      currentLocation = @CoordinateToPixel(partData.lat, partData.lng)
+
+      if isStart or partData.number is 0
+        cable.cableParts[i] = graphics
+        graphics.moveTo(currentLocation.x, currentLocation.y)
+        isStart = false
+      else
+        graphics.lineTo(currentLocation.x, currentLocation.y);
+        previousLocation = currentLocation
+        cable.cableParts[i] = undefined
+
+    # Strip undefined values
+    cable.cableParts = cable.cableParts.filter (n) ->
+      return n if not undefined
+
+    @nodeContainer.addChild graphics
+
+
+  ###
+  This function scales the nodes according to the WorldMap Scaling
+  ###
+  scaleNodes: (zoomOut) ->
+
+    inorout = if zoomOut then 1 else -1
+
+    for key in Object.keys(@nodes)
+      node = @nodes[key]
+      if zoomOut
+        node.scale.x = (node.scale.x * 1.1)
+        node.scale.y = (node.scale.y * 1.1)
+      else
+        node.scale.x = (node.scale.x / 1.1)
+        node.scale.y = (node.scale.y / 1.1)
+
+    console.log  @nodes[3054].scale
+
+
+
+
+
+
 
 
   create: ->
     that = @
 
-    # Create a background
-    background = new Gotham.Graphics.Graphics
-    background.lineStyle(2, 0x0000FF, 1)
-    background.blendMode = PIXI.blendModes.ADD
-    background.drawRect(0,0,  @size.width, @size.height)
-    background.hitArea = new Gotham.Graphics.Rectangle 0,0,  @size.width, @size.height
-    background._size = @size
+
+    """
+    Fetch topBar object from the scene
+    """
+    topBarObject = @parent.getObject("TopBar")
+
+
+
+    """
+    Create the background
+    """
+    background = @createBackground()
     @addChild background
 
+
+
+    """
+    Create a container for world map
+    """
     @mapContainer = mapContainer = new Gotham.Graphics.Graphics
     mapContainer.interactive = true
     mapContainer.hitArea = new Gotham.Graphics.Rectangle 0,0,  @size.width, @size.height
+    background.addChild(mapContainer)
+
+    """
+    Activate WheelScrolling on the mapContainer
+    """
+    GothamGame.renderer.pixi.addWheelScrollObject(mapContainer)
+
+    """
+    This function checks weither the panning has gones outside the bounds of the map
+    Example: The map is dragged further east that russia, it should now stop
+    """
     mapContainer.borderCheck = (offsetX, offsetY) ->
       offsetX*=-1
       offsetY*=-1
@@ -143,18 +270,17 @@ class WorldMap extends Gotham.Graphics.Container
         if mapContainer.isZoomOut
           mapContainer.offset.y -= (that.size.height - that.originalScaledSize.height) - offsetY
 
-
-
-
-    background.addChild(mapContainer)
-
-    # Add Wheel Scrolling (Zooming)
-    GothamGame.renderer.pixi.addWheelScrollObject(mapContainer)
-
-
-    # Activate Panning - Return False and ignore if Longitude < -180 or > 180 and False if Latitude < -90 or > 90
+    """
+    Activate Panning - Return False and ignore if Longitude < -180 or > 180 and False if Latitude < -90 or > 90
+    """
     mapContainer.activatePan(mapContainer.borderCheck)
 
+    """
+    MapContainers mouse move:
+    * Calculates coordinate in lat,lng
+    * Determines country based on lat,lng
+    * Sets topBarText
+    """
     mapContainer.mousemove =  (e) ->
       interactionManager = new PIXI.InteractionManager()
       if(interactionManager.hitTest(background, e))
@@ -183,11 +309,14 @@ class WorldMap extends Gotham.Graphics.Container
           "Country: " + if country then country.name else "None"
         )
 
+    """
+    OnWheelScroll
+    """
     mapContainer.onWheelScroll = (e) ->
       direction = e.wheelDeltaY / Math.abs(e.wheelDeltaY)
 
       # -1 = Wheel out, 1 = Wheen In
-      mapContainer.isZoomOut = if direction == -1 then true else false
+      @isZoomOut = if direction == -1 then true else false
 
       # Scale Factor per scroll
       factor = 1.1
@@ -199,7 +328,7 @@ class WorldMap extends Gotham.Graphics.Container
 
 
       # Multiply Factor if zooming in, Divide if zooming out
-      if not mapContainer.isZoomOut
+      if not @isZoomOut
         nextScale =
           x : @scale.x * factor
           y : @scale.y * factor
@@ -233,28 +362,67 @@ class WorldMap extends Gotham.Graphics.Container
       # Scale and Position the map accordingly
       @scale = nextScale
 
+      ##############
+      #
+      # Scale Stuff
+      #
+      ##############
+      that.scaleNodes @isZoomOut
+
       # Set position in center
       @position.x = (diffSize.width / 2) + @offset.x
       @position.y = (diffSize.height / 2) + @offset.y
 
-      mapContainer.borderCheck(@position.x, @position.y)
+      @borderCheck(@position.x, @position.y)
       @isZoomOut = false
 
+    """
+    Create World Map
+    """
+    worldMap = @createMap()
+    mapContainer.addChildArray worldMap
+
+
+    """
+    Create a container for all nodes
+    """
+    @nodeContainer = nodeContainer = new Gotham.Graphics.Graphics
+    mapContainer.addChild nodeContainer
+
+
+    """
+    Determine Center of the map and create a red dot
+    """
+    middle = new Gotham.Graphics.Graphics()
+    middle.lineStyle(0);
+    middle.beginFill(0xff0000, 1);
+    middle.drawCircle((@originalSize.width / 2) / @originalMapScale.x, (@originalSize.height / 2) / @originalMapScale.y, 1);
+    mapContainer.addChild middle
 
 
 
 
 
+
+  createBackground: ->
+    background = new Gotham.Graphics.Graphics
+    background.lineStyle(2, 0x0000FF, 1)
+    background.blendMode = PIXI.blendModes.ADD
+    background.drawRect(0,0,  @size.width, @size.height)
+    background.hitArea = new Gotham.Graphics.Rectangle 0,0,  @size.width, @size.height
+    background._size = @size
 
     # Create mask background
     backgroundMask = new Gotham.Graphics.Graphics
     backgroundMask.beginFill(0x232323, 1)
     backgroundMask.drawRect(0,0,  @size.width, @size.height)
     @addChild backgroundMask
+    background.mask = backgroundMask
 
-    # Fetch the topBar scene object
-    topBarObject = @parent.getObject("TopBar")
 
+    return background
+
+  createMap: ->
     # Fetch JSON
     mapJson = Gotham.Preload.fetch("map", "json")
 
@@ -265,55 +433,37 @@ class WorldMap extends Gotham.Graphics.Container
     graphicsList = Gotham.Graphics.PolygonToGraphics(polygonList, true)
 
     # Add Each of the graphic objects to the world map
-    background.mask = backgroundMask
+    worldMap = []
     for graphics, key in graphicsList
 
 
-      # GRAPHICS PRIMITE EDITION
-      # Set bound padding to 0
-      """graphics.boundsPadding = 0
-      mapContainer.addChild graphics
-
-      # Hovering the graphics object
-      graphics.mouseover =  (e) ->
-        this.clear()
-        this.lineStyle(2, 0x000000, 1);
-        #this.blendMode = PIXI.blendModes.ADD
-        this.beginFill(0xffffff, 1);
-        this.drawPolygon(this.polygon.points)
-
-      # leave hovering the graphics object
-      graphics.mouseout =  (e) ->
-        this.clear()
-        this.lineStyle(2, 0x000000, 1);
-        this.beginFill(0xffffff, 0.5);
-        this.blendMode = 0
-        this.drawPolygon(this.polygon.points)
-     """
-
-
-      # SPRITE EDITION
-      # Generate a normal texture
+      """
+      Generate country texture
+      """
       texture = graphics.generateTexture()
 
-      # Generate a hover texture
+      """
+      Generate country texture, with hover effect
+      """
       graphics.clear()
       graphics.lineStyle(3, 0xFF0000, 1);
       graphics.blendMode = PIXI.blendModes.ADD
       graphics.drawPolygon(graphics.polygon.points)
       hoverTexture = graphics.generateTexture()
 
-      # Create a sprite
+      """
+      Create a country sprite, Using generated textures
+      """
       sprite = new Gotham.Graphics.Sprite texture
-      sprite.normalTexture = texture
       sprite.hoverTexture = hoverTexture
-
-
 
       sprite.position.x = graphics.minX
       sprite.position.y = graphics.minY
 
-      # Translate hitArea to correct position
+      """
+      Translate sprite position correctly.
+      Use polygon points to determine the position
+      """
       translatedPoints = []
       xory = 0
       for point in graphics.polygon.points
@@ -321,40 +471,35 @@ class WorldMap extends Gotham.Graphics.Container
           translatedPoints.push(point - sprite.x)
         else
           translatedPoints.push(point - sprite.y)
+
+
+      """
+      Create a hitarea of the translated points
+      Activate interaction
+      """
       hitarea = new PIXI.Polygon translatedPoints
       sprite.hitArea = hitarea
-      sprite.interactive = true
-      # Translate hitArea end
+      sprite.setInteractive true
 
-
-
-
-      mapContainer.addChild sprite
-
-
-      # Hovering the graphics object
+      """
+      Mouseover callback
+      """
       sprite.mouseover =  (e) ->
-        @bringToFront()
+        #@bringToFront()
         @texture = @hoverTexture
 
-
+      """
+      Mouseout callback
+      """
       sprite.mouseout =  (e) ->
         @texture = @normalTexture
 
+      worldMap.push sprite
+    return worldMap
 
 
 
 
-
-
-
-
-    # Find center of the map
-    middle = new Gotham.Graphics.Graphics()
-    middle.lineStyle(0);
-    middle.beginFill(0xff0000, 1);
-    middle.drawCircle((@originalSize.width / 2) / @originalMapScale.x, (@originalSize.height / 2) / @originalMapScale.y, 1);
-    mapContainer.addChild middle
 
 
 
