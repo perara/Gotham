@@ -48,7 +48,7 @@ namespace GOTHAM.Tools
                 {
                     NodeEntity nextNode = null;
 
-                    nextNode = currentNode.siblings[rnd.Next(0, currentNode.siblings.Count - 1)];
+                    nextNode = currentNode.Siblings()[rnd.Next(0, currentNode.Siblings().Count - 1)];
 
                     queue.Add(new KeyValuePair<int,NodeEntity>(nextNode.id, nextNode));
                     currentNode = nextNode;

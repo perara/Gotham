@@ -1,5 +1,6 @@
 ﻿using GOTHAM.Model;
 using GOTHAM.Model.Tools;
+using NHibernate;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -107,6 +108,29 @@ namespace GOTHAM.Tools
             }// End session
         }// End function
 
+        /// <summary>
+        /// Gets a list of all entities in database
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<T> getTable<T>()
+        {
+            // SELECT * FROM X
+            // SELECT * FROM X where Y = Z and Z = KUK
 
+            using (var session = EntityManager.GetSessionFactory().OpenSession())
+            {
+
+                Type typeParameterType = typeof(T);
+                var data = session
+
+                    .CreateCriteria(typeParameterType)
+                    .SetCacheable(true)
+                    .SetCacheMode(CacheMode.Normal)
+                    .List<T>()
+                    .ToList();
+                return data;
+            }
+        }
     }//End Class
 }

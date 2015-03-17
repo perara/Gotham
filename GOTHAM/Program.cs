@@ -76,22 +76,11 @@ namespace GOTHAM
             DBTool.WriteList(newNodes);
             
             */
-            var nodes = Globals.GetInstance().getTable<NodeEntity>();
+            var nodes = DBTool.getTable<NodeEntity>();
             NodeEntity start = new NodeEntity();
             NodeEntity end = new NodeEntity();
 
-            using (var session = EntityManager.GetSessionFactory().OpenSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    foreach (var node in nodes)
-                    {
-                        node.getSiblings();
-                        if (node.id == 9743) start = node;
-                        if (node.id == 8368) end = node;
-                    }
-                }
-            }
+            
 
             //CableGenerator.ConnectNodes(50);
             var path = new Pathfinder().TryRandom(start, end, 100000).toDictionary();

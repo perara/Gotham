@@ -136,8 +136,8 @@ namespace GOTHAM.Tools
         /// <param name="maxDistance"></param>
         public static void ConnectNodes(double maxDistance)
         {
-            var nodes = Globals.GetInstance().getTable<NodeEntity>();
-            var cables = Globals.GetInstance().getTable<CableEntity>();
+            var nodes = DBTool.getTable<NodeEntity>();
+            var cables = DBTool.getTable<CableEntity>();
             var nodeCables = new List<string>();
             var nodeCableEntities = new List<NodeCableEntity>();
 
@@ -226,7 +226,7 @@ namespace GOTHAM.Tools
                     var dist = GeoTool.GetDistance(node1.GetCoordinates(), node2.GetCoordinates());
 
                     // Check if cable should be made
-                    if (node1 == node2 || node1.siblings.Contains(node2) || dist > maxDist || node1.siblings.Count() > 2 || node2.siblings.Count() > 2) continue;
+                    if (node1 == node2 || node1.Siblings().Contains(node2) || dist > maxDist || node1.Siblings().Count() > 2 || node2.Siblings().Count() > 2) continue;
 
                     // Make cable
                     var cable = new CableEntity(0, new CableTypeEntity() { id = 0 }, 0, "Mini Cable");

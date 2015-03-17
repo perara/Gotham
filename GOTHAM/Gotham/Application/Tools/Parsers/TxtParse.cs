@@ -274,7 +274,7 @@ namespace GOTHAM.Tools
         /// <param name="jnodes"></param>
         public static void FromJSON1(List<NodeJSON> jnodes)
         {
-            var countries = Globals.GetInstance().getTable<CountryEntity>();
+            var countries = DBTool.getTable<CountryEntity>();
             var nodes = new List<NodeEntity>();
 
             foreach (var item in jnodes)

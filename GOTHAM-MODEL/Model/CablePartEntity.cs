@@ -37,14 +37,10 @@ namespace GOTHAM.Model
             Map(x => x.number);
             Map(x => x.lat);
             Map(x => x.lng);
-
-
+    
             References(x => x.cable)
-                .Cascade.All()
                 .Not.Nullable()
                 .Column("cable");
-    
-            References(x => x.cable).Not.Nullable().Column("cable");
 
         }
     }

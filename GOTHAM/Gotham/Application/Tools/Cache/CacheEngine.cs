@@ -22,8 +22,8 @@ namespace GOTHAM.Tools.Cache
       if (!CacheEngine.inited)
       {
 
-        Nodes = new CacheObject<NodeEntity>(Globals.GetInstance().getTable<NodeEntity>());
-        Cables = new CacheObject<CableEntity>(Globals.GetInstance().getTable<CableEntity>());
+        Nodes = new CacheObject<NodeEntity>(DBTool.getTable<NodeEntity>());
+        Cables = new CacheObject<CableEntity>(DBTool.getTable<CableEntity>());
         inited = true;
       }
     }

@@ -27,7 +27,7 @@ namespace GOTHAM.Gotham.Service.ServiceStack.Resources
     {
       public String Any(NodeList n)
       {
-        var  nodes = Globals.GetInstance().getTable<NodeEntity>();
+          var nodes = DBTool.getTable<NodeEntity>();
 
         JArray ret = new JArray();
 

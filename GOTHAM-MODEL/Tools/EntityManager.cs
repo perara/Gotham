@@ -98,7 +98,6 @@ namespace GOTHAM.Model.Tools
                 throw;
             }
         }
-
     }
 
     /// <summary>

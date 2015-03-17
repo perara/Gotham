@@ -12,7 +12,6 @@ using GOTHAM.Tools;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
-using GOTHAM.Tools;
 using GOTHAM.Model;
 using GOTHAM.Model.Tools;
 
@@ -27,14 +26,10 @@ namespace GOTHAM_BACKEND_DEBUG
 
         IList<NodeEntity> nodes = null;
         IList<CableEntity> cables = null;
-        IList<CablePartEntity> cableparts = null;
         GMapOverlay markersOverlay = null;
         
-
         Brush tempBrush = null;
         List<GMapRoute> tempRoutes = null;
-
-
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -63,9 +58,7 @@ namespace GOTHAM_BACKEND_DEBUG
             {
                 nodes = session.CreateCriteria<NodeEntity>().List<NodeEntity>();
                 cables = session.CreateCriteria<CableEntity>().List<CableEntity>();
-                //cableparts = session.CreateCriteria<CablePartEntity>().List<CablePartEntity>();
 
-                //Console.WriteLine(cableparts.First().cable.id);
                 Console.WriteLine();
 
             }

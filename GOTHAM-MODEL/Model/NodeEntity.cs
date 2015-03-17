@@ -62,8 +62,6 @@ namespace GOTHAM.Model
         [JsonIgnore]
         public virtual IList<CableEntity> cables { get; set; }
 
-        public virtual IList<NodeEntity> siblings { get; set; }
-
         /// <summary>
         /// Function which instantiate a new Coordinate class with LatLng
         /// </summary>
@@ -84,7 +82,6 @@ namespace GOTHAM.Model
         /// <param name="name"></param>
         public NodeEntity(string name = "NoName")
         {
-            this.siblings = Siblings();
             this.name = name;
         }
 
@@ -98,7 +95,6 @@ namespace GOTHAM.Model
         /// <param name="lng"></param>
         public NodeEntity(string name, string country, TierEntity tier, double lat, double lng)
         {
-            this.siblings = Siblings();
             this.name = name;
             this.country = country;
             this.tier = tier;
@@ -110,9 +106,14 @@ namespace GOTHAM.Model
         /// Get all siblings to this node, Done via checking "this" nodes connected cables 
         /// </summary>
         /// <returns>List of nodes, siblings to "this" node</returns>
-        public virtual List<NodeEntity> Siblings()
+        private List<NodeEntity> siblings { get; set; }
+        public  virtual List<NodeEntity> Siblings(bool forceUpdate = false)
         {
-            return (from cable in cables from node in cable.nodes where this != node select node).ToList();
+            if(siblings == null || forceUpdate){
+                siblings = (from cable in cables from node in cable.nodes where this != node select node).ToList();
+            }
+
+            return siblings;
         }
 
 
@@ -143,8 +144,6 @@ namespace GOTHAM.Model
                 .ParentKeyColumn("node")
                 .ChildKeyColumn("cable")
                 .Not.LazyLoad();
-
         }
-
     }
 }
