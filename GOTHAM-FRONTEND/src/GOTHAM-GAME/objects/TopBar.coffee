@@ -27,18 +27,6 @@ class TopBar extends Gotham.Graphics.Container
     topBar.height = 70
     @addChild(topBar)
 
-    bottomBarTexture = Gotham.Preload.fetch("bottomBar", "image")
-    bottomBar = new PIXI.Sprite(bottomBarTexture);
-    bottomBar.anchor =
-      x: 0
-      y: 0
-    bottomBar.position.x = 0;
-    bottomBar.position.y = 1080 - 70;
-    bottomBar.width = 1920
-    bottomBar.height = 70
-    @addChild(bottomBar)
-
-
     # Create LAT long text
     @coordinateText = new Gotham.Graphics.Text("Lat: 0\nLng: 0", {font: "bold 20px Arial", fill: "#ffffff", align: "left"});
     @coordinateText.position.x = topBar.width/2
@@ -56,6 +44,28 @@ class TopBar extends Gotham.Graphics.Container
       x: 0
       y: 0
     @addChild(@countryText)
+
+
+
+    bottomBarTexture = Gotham.Preload.fetch("bottomBar", "image")
+    bottomBar = new PIXI.Sprite(bottomBarTexture);
+    bottomBar.anchor =
+      x: 0
+      y: 0
+    bottomBar.position.x = 0;
+    bottomBar.position.y = 1080 - 70;
+    bottomBar.width = 1920
+    bottomBar.height = 70
+    @addChild(bottomBar)
+
+    button_terminal = new Gotham.Controls.Button "Terminal" , 50, 75
+    button_terminal.toggleOn = (e) ->
+    button_terminal.toggleOff = (e) ->
+
+    bottomBar.addChild button_terminal
+
+
+
 
 
 
