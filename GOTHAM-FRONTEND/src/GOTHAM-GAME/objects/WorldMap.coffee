@@ -8,47 +8,52 @@ class WorldMap extends Gotham.Graphics.Container
     @name = "WorldMap"
     @setNetworkHub("worldMap")
 
+    # The original map scale (The scale the map starts out with)
     @originalMapScale =
       x: 3.84
       y: 3.06
 
+    # The original map size (The size on init, no scaling)
     @originalSize =
       width: 7200
       height: 3600
 
+    # The size of the map after the original scaling is acounted for
     @originalScaledSize =
       width: @originalSize.width / @originalMapScale.x
       height: @originalSize.height / @originalMapScale.y
 
+    # Current Size of the Map
     @size = @originalScaledSize
-
-
-    @size = @size
-
-
-    # World Map Data
-    @nodes = new Object()
-
-
-
 
     # This callback returns a array with nodes from the server. These nodes should be processed by the WorldMap
     # A function which places these nodes must be used.
     @addNetworkMethod "fetchMap", (json) ->
 
       # Parse data as JSON
-      nodes = JSON.parse json
+      data = JSON.parse json
+
+      # Insert the nodes into the "node" table
+      db_node = GothamGame.Database.table("node")
+      db_node.insert data.nodes
+
+      # Insert cables into the "cables" table
+      db_cable = GothamGame.Database.table("cable")
+      db_cable.insert data.cables
+
+      # Fire World Scene's "onNodesLoaded" callback
+      that.parent.Callbacks.onNodesLoaded()
+
+      # Iterate Through the Node Table
+      db_node().each (row) ->
+        that.addNode row
+
+      # Iterate Through the Cable Table
+      db_cable().each (row) ->
+        that.addCable row
 
 
-      console.log nodes.cables
-
-      # Iterate through each of the nodes and add to the map
-      for node in nodes.nodes
-        that.addNode node
-
-      for cable in nodes.cables
-        that.addCable cable
-
+    # Runs when the SignalR client is connected to the server
     @network.onConnect =  (connection) ->
       connection.server.send("Test", "Fest")
       connection.server.requestMap()
@@ -97,25 +102,36 @@ class WorldMap extends Gotham.Graphics.Container
 
   addNode: (node) ->
 
-
+    # Convert Lat, Lng to Pixel's X and Y
     coordinates = @CoordinateToPixel(node.lat, node.lng)
+
+    # Create a node sprite
     gNode = new Gotham.Graphics.Sprite Gotham.Preload.fetch("map_marker", "image")
+
+    # Set position according to the Lat,Lng conversion
     gNode.position =
       x: coordinates.x
       y: coordinates.y
-    """gNode.anchor =
-      x: 0.5
-      y: 0.5"""
+
+    # Set Sprites Size
     gNode.width = 16
     gNode.height = 16
+
+    gNode.anchor =
+      x: 0.5
+      y: 0.5
+
+    # The Node should be interactive
     gNode.setInteractive true
+
+    # Add to the node container
     @nodeContainer.addChild gNode
 
-    # Add to global nodes list
-    # Also add a array for cables
-    gNode.cables = []
-    gNode.nodeData = node
-    @nodes[node.id] = gNode
+    # Add an array definition which should contain cables for this node @see addCable(cable)
+    node.cables = gNode.cables = []
+
+    # Add a sprite property to the node
+    node.sprite = gNode
 
 
     gNode.mouseover = ->
@@ -134,8 +150,14 @@ class WorldMap extends Gotham.Graphics.Container
   addCable: (cable) ->
 
     # Add Cable to each of the node id's
+
     for nodeId in cable.nodeids
-      @nodes[nodeId].cables.push cable
+
+      # Fetch the node
+      node = GothamGame.Database.table("node")({id: nodeId}).first()
+
+      # Push cable to the node
+      node.cables.push cable
 
 
     # Determine first graphics location and move the pointer
@@ -181,23 +203,21 @@ class WorldMap extends Gotham.Graphics.Container
   ###
   scaleNodes: (zoomOut) ->
 
+    # Determine weither its zoom in or zoom out
     inorout = if zoomOut then 1 else -1
 
-    for key in Object.keys(@nodes)
-      node = @nodes[key]
+    # Fetch node table
+    db_node = GothamGame.Database.table "node"
+
+    # Scale each of the nodes
+    db_node().each (row) ->
+      node = row.sprite
       if zoomOut
         node.scale.x = (node.scale.x * 1.1)
         node.scale.y = (node.scale.y * 1.1)
       else
         node.scale.x = (node.scale.x / 1.1)
         node.scale.y = (node.scale.y / 1.1)
-
-    console.log  @nodes[3054].scale
-
-
-
-
-
 
 
 
@@ -312,7 +332,12 @@ class WorldMap extends Gotham.Graphics.Container
     """
     OnWheelScroll
     """
+    mapContainer.mouseover = () ->
+      @canScroll = true
+    mapContainer.mouseout = () ->
+      @canScroll = false
     mapContainer.onWheelScroll = (e) ->
+      if not @canScroll then return
       direction = e.wheelDeltaY / Math.abs(e.wheelDeltaY)
 
       # -1 = Wheel out, 1 = Wheen In

@@ -2,7 +2,16 @@ module.exports = (grunt)->
   require('grunt-jsdoc-plugin')
   require('load-grunt-tasks') grunt
 
+  grunt.loadNpmTasks('grunt-codo');
   grunt.initConfig
+    codo:
+      options:
+        name: "Gotham Game Framework"
+        title: "Gotham Game Framwork API Documentation"
+        extra: ["LICENSE-MIT"]
+      src: ["./src/GOTHAM-GF/Gotham.coffee"]
+      dest: "./doc"
+
 
     jsdoc: 
       dist:
@@ -45,5 +54,5 @@ module.exports = (grunt)->
     clean: dist: files: 'build'
 
   grunt.registerTask 'build', ['clean', 'browserify'] # 'uglify'
-  grunt.registerTask 'jsdoc', ['jsdoc']
+  grunt.registerTask 'codo', ['codo']
   grunt.registerTask 'default', ['build', 'connect', 'watch']

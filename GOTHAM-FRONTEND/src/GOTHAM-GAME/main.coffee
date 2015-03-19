@@ -4,14 +4,43 @@
 #class Polygon extends PIXXU.Polygon
 #console.log PIXXU
 
+
+################################################
+##
+##
+## Dependencies
+##
+##
+################################################
 # Gotham Library
 Gotham = require '../GOTHAM-GF/Gotham.coffee'
 
-# Scene Manager
+# Include GothamGame
 GothamGame = require '../GOTHAM-GAME/GothamGame.coffee'
 
+################################################
+##
+##
+## Database
+##
+##
+################################################
+# Create Node Table
+db_nodes = GothamGame.Database.createTable "node"
+
+# Create Cable Table
+db_cables = GothamGame.Database.createTable "cable"
+
+################################################
+##
+##
+## Preloading
+##
+##
+################################################
 # World Map
 Gotham.Preload.image("/assets/img/map_marker.png", "map_marker", "image")
+Gotham.Preload.json("/assets/json/json.json", "map")
 
 # Top Bar
 Gotham.Preload.image("/assets/img/bottomBar.png", "bottomBar", "image")
@@ -26,18 +55,19 @@ Gotham.Preload.mp3("./assets/audio/menu_theme.mp3", "menu_theme")
 Gotham.Preload.image("/assets/img/settings_background.jpg", "settings_background", "image")
 Gotham.Preload.image("/assets/img/settings_close.png", "settings_close", "image")
 
-Gotham.Preload.json("/assets/json/json.json", "map")
-#Gotham.Preload.image("http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg", "item", "jpg")
-#Gotham.Preload.image("http://blog.queensland.com/wp-content/uploads/2013/08/damien-leze_wide_angle_1.jpg", "item", "jpg")
-#Gotham.Preload.image("http://static3.businessinsider.com/image/52cddfb169beddee2a6c2246/the-29-coolest-us-air-force-images-of-the-year.jpg", "item", "jpg")
+#NodeList
+Gotham.Preload.image("/assets/img/nodelist_background.jpg", "nodelist_background", "image")
 
-#Gotham.Preload.mp3("./assets/audio/menu.mp3", "boud")
-#sound = Gotham.Preload.fetch("boud", "audio", volume: 0.2)
-#sound.volume(0.3)
-#console.log sound
-#sound.play()
+#Terminal
+Gotham.Preload.image("/assets/img/terminal_background.png", "terminal_background", "image")
 
-# START GAME -----------------------------------
+################################################
+##
+##
+## Game Initialization
+##
+##
+################################################
 
 # OnLoad Callback
 Gotham.Preload.onLoad (source, name, percent) ->
