@@ -13,7 +13,7 @@
 ##
 ################################################
 # Gotham Library
-Gotham = require '../GOTHAM-GF/Gotham.coffee'
+Gotham = require '../GOTHAM-GF/src/Gotham.coffee'
 
 # Include GothamGame
 GothamGame = require '../GOTHAM-GAME/GothamGame.coffee'

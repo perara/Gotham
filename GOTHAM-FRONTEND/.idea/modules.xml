@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/src/GOTHAM-GAME/GOTHAM-GAME.iml" filepath="$PROJECT_DIR$/src/GOTHAM-GAME/GOTHAM-GAME.iml" />
-      <module fileurl="file://$PROJECT_DIR$/src/GOTHAM-GF/GOTHAM-GF.iml" filepath="$PROJECT_DIR$/src/GOTHAM-GF/GOTHAM-GF.iml" />
-      <module fileurl="file://$PROJECT_DIR$/htdocs/htdocs.iml" filepath="$PROJECT_DIR$/htdocs/htdocs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GOTHAM-FRONTEND.iml" filepath="$PROJECT_DIR$/GOTHAM-FRONTEND.iml" />
     </modules>
   </component>
 </project>
