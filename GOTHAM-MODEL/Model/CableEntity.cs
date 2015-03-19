@@ -51,7 +51,10 @@ namespace GOTHAM.Model
             Map(x => x.name);
             Map(x => x.year);
 
-            References(x => x.type, "id").Not.Nullable();
+            //References(x => x.type, "id")
+            //    .Not.Nullable();
+            HasOne<CableTypeEntity>(x => x.type);
+
 
             HasMany<CablePartEntity>(x => x.cableParts)
             .Cascade.All()

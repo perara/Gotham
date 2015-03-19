@@ -10,6 +10,7 @@ using GOTHAM.Model;
 using GOTHAM.Model.Tools;
 using Newtonsoft.Json;
 using GOTHAM.Gotham.Application.Tools.Objects;
+using GOTHAM.Tools.Cache;
 
 namespace GOTHAM.Tools
 {
@@ -123,7 +124,7 @@ namespace GOTHAM.Tools
                     double.Parse(segment[2]),
                     double.Parse(segment[3]));
 
-                node.country = segment[0];
+                node.countryCode = segment[0];
                 node.name = segment[1];
                 node.lat = coord.lat;
                 node.lng = coord.lng;
@@ -274,14 +275,14 @@ namespace GOTHAM.Tools
         /// <param name="jnodes"></param>
         public static void FromJSON1(List<NodeJSON> jnodes)
         {
-            var countries = DBTool.getTable<CountryEntity>();
+            var countries = CacheEngine.Countries;
             var nodes = new List<NodeEntity>();
 
             foreach (var item in jnodes)
             {
                 var node = new NodeEntity();
 
-                node.country = item.country;
+                node.countryCode = item.country;
                 node.name = item.name;
                 node.lat = Double.Parse(item.coordinates.latitude);
                 node.lng = Double.Parse(item.coordinates.longitude);

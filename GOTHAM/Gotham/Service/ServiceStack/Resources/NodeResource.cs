@@ -3,6 +3,7 @@ using GOTHAM.Model;
 using ServiceStack;
 using System;
 using Newtonsoft.Json.Linq;
+using GOTHAM.Tools.Cache;
 
 
 namespace GOTHAM.Gotham.Service.ServiceStack.Resources
@@ -27,7 +28,7 @@ namespace GOTHAM.Gotham.Service.ServiceStack.Resources
     {
       public String Any(NodeList n)
       {
-          var nodes = DBTool.getTable<NodeEntity>();
+          var nodes = CacheEngine.Nodes;
 
         JArray ret = new JArray();
 
@@ -37,7 +38,7 @@ namespace GOTHAM.Gotham.Service.ServiceStack.Resources
            new JProperty("long", x.lng),
            new JProperty("name", x.name),
            //new JProperty("tier", x.tier),
-           new JProperty("country", x.country)
+           new JProperty("country", x.countryCode)
           )));
 
 

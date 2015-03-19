@@ -25,20 +25,10 @@ namespace GOTHAM.Tools
         }
         private Globals()
         {
-            DateTime time = DateTime.Now;
-
-            //nodeCables = getTable<NodeCableEntity>();
-            //cableParts = getTable<CablePartEntity>();
-            nodes = DBTool.getTable<NodeEntity>();
-            //cables = getTable<CableEntity>();
-
-            log.Info((DateTime.Now - time).Seconds + "." + (DateTime.Now - time).Milliseconds + " to load data from DB");
+            
         }
 
-        public List<NodeEntity> nodes = new List<NodeEntity>();
-        public List<CableEntity> cables = new List<CableEntity>();
-        public List<CablePartEntity> cableParts = new List<CablePartEntity>();
-        public List<NodeCableEntity> nodeCables = new List<NodeCableEntity>();
+        
 
         // Global variables and objects
         public Point mapMax = new Point(1000, 1000);

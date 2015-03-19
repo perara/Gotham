@@ -8,6 +8,7 @@ using GOTHAM.Gotham.Service.SignalR;
 using GOTHAM.Traffic;
 using GOTHAM.Tools.Cache;
 using System.Threading;
+using System.Linq;
 using GOTHAM.Model.Tools;
 
 namespace GOTHAM
@@ -48,7 +49,12 @@ namespace GOTHAM
             //
             // Init Cache Engine
             //
+            DateTime time = DateTime.Now;
             CacheEngine.Init();
+            log.Info((DateTime.Now - time).Seconds + "." + (DateTime.Now - time).Milliseconds + " to initiate cache engine");
+
+
+
 
             /////////////////////////////////////////////////////////////////
             //
@@ -75,25 +81,39 @@ namespace GOTHAM
 
             DBTool.WriteList(newNodes);
             
-            */
-            var nodes = DBTool.getTable<NodeEntity>();
+           
+            
             NodeEntity start = new NodeEntity();
             NodeEntity end = new NodeEntity();
+             */
 
+            //NodeGenerator.fixNodeCountries();
+
+
+
+            var nodes = CacheEngine.Nodes;
+            //var node1 = nodes.Where(x => x.id == 16118).FirstOrDefault().GetCoordinates();
+            //var node2 = nodes.Where(x => x.id == 15866).FirstOrDefault().GetCoordinates();
+
+            //log.Info(GeoTool.GetDistance(node1, node2));
+
+
+            CableGenerator.ConnectNodes(50);
+            CableGenerator.ConnectSeaNodesToLand();
+            CableGenerator.GenerateCables(nodes, 2, 3);
             
 
-            //CableGenerator.ConnectNodes(50);
-            var path = new Pathfinder().TryRandom(start, end, 100000).toDictionary();
+            //var path = new Pathfinder().TryRandom(start, end, 100000).toDictionary();
 
-            foreach (var item in path)
-            {
-                log.Info(item.Value.name);
-            }
+            //foreach (var item in path)
+            //{
+            //    log.Info(item.Value.name);
+            //}
 
             //CableGenerator.ConnectSeaNodesToLand();
 
             //NodeGenerator.fixSeaNodes();
-            //CableGenerator.GenerateCables(nodes, new Random().Next(2,3));
+
 
             //DBTool.WriteList(new List<string>());
             //CableGenerator.ConnectCloseNodes(nodes, 500);
@@ -129,7 +149,7 @@ namespace GOTHAM
 
             //TxtParse.FromFile5("C:\\temp\\countries.txt");
 
-            //var oldNodes = Globals.GetInstance().nodes;
+            //var oldNodes = CacheEngine.Nodes;
             //var locations = Globals.GetInstance().getTable<LocationEntity>();
             //var nodes = NodeGenerator.convertLocToNode(locations);
 
@@ -195,7 +215,7 @@ namespace GOTHAM
             // ========================================================================================
             // ========================================================================================
 
-            Globals.GetInstance().log.Info("DOG FINISH");
+            log.Info("DOG FINISH");
             Console.ReadLine();
 
 

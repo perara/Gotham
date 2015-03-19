@@ -23,7 +23,7 @@ namespace GOTHAM.Model
         /// Country of the Node
         /// TODO - Should be Entity
         /// </summary>
-        public virtual string country { get; set; }
+        public virtual string countryCode { get; set; }
 
         /// <summary>
         /// Tier Entity of the Node - (Tier 1, Tier 2, Tier 3)
@@ -93,10 +93,10 @@ namespace GOTHAM.Model
         /// <param name="tier"></param>
         /// <param name="lat"></param>
         /// <param name="lng"></param>
-        public NodeEntity(string name, string country, TierEntity tier, double lat, double lng)
+        public NodeEntity(string name, string countryCode, TierEntity tier, double lat, double lng)
         {
             this.name = name;
-            this.country = country;
+            this.countryCode = countryCode;
             this.tier = tier;
             this.lat = lat;
             this.lng = lng;
@@ -128,7 +128,7 @@ namespace GOTHAM.Model
 
             Id(x => x.id).Column("id").GeneratedBy.Identity();
             Map(x => x.name).Not.Nullable();
-            Map(x => x.country).Not.Nullable();
+            Map(x => x.countryCode).Not.Nullable();
             Map(x => x.bandwidth).Not.Nullable();
             Map(x => x.lat).Not.Nullable();
             Map(x => x.lng).Not.Nullable();

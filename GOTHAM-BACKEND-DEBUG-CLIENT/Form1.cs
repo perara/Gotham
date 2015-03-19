@@ -92,7 +92,7 @@ namespace GOTHAM_BACKEND_DEBUG
                 var tt = new GMapToolTip(marker);
 
                 markersOverlay.Markers.Add(marker);
-                marker.ToolTipText = node.name.ToString() + "\n" + node.country.ToString();
+                marker.ToolTipText = node.name.ToString() + "\n" + node.countryCode.ToString();
                 marker.Tag = node;
                 
             }

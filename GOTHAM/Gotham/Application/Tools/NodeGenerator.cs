@@ -7,6 +7,7 @@ using NHibernate.Linq;
 using GOTHAM.Tools;
 using GOTHAM.Model;
 using GOTHAM.Model.Tools;
+using GOTHAM.Tools.Cache;
 
 namespace GOTHAM.Tools
 {
@@ -186,16 +187,16 @@ namespace GOTHAM.Tools
 
         public static void fixSeaNodes()
         {
-            var seaNodes = Globals.GetInstance().nodes.Where(x => x.tier.id == 4).ToList();
+            var seaNodes = CacheEngine.Nodes.Where(x => x.tier.id == 4).ToList();
             var newSeaNodes = new List<NodeEntity>();
             var test = new NodeEntity();
             foreach (var node in seaNodes)
             {
-                var existing = newSeaNodes.Where((x => x.name == node.name && x.country == node.country)).FirstOrDefault();
+                var existing = newSeaNodes.Where((x => x.name == node.name && x.countryCode == node.countryCode)).FirstOrDefault();
 
                 if (existing == null)
                 {
-                    var newNode = new NodeEntity(node.name, node.country, node.tier, node.lat, node.lng);
+                    var newNode = new NodeEntity(node.name, node.countryCode, node.tier, node.lat, node.lng);
                     newSeaNodes.Add(newNode);
                 }
                 else
@@ -211,6 +212,23 @@ namespace GOTHAM.Tools
             DBTool.WriteList(newSeaNodes);
 
             //DBTool.WriteList(newSeaNodes);
+        }
+
+        public static void fixNodeCountries()
+        {
+            var nodes = CacheEngine.Nodes;
+            var countries = CacheEngine.Countries;
+
+            foreach (var node in nodes)
+            {
+                var exists = countries.Where(x => x.name == node.countryCode).FirstOrDefault();
+
+                if (exists != null)
+                    node.countryCode = exists.countryCode;
+                else
+                    node.countryCode = node.countryCode.ToUpper();
+            }
+            DBTool.WriteList(nodes, false);
         }
     }
 }

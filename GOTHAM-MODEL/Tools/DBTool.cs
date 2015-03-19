@@ -19,7 +19,7 @@ namespace GOTHAM.Tools
         /// </summary>
         /// <param name="input"></param>
         /// <param name="batchSize"></param>
-        public static void WriteList(object input, int batchSize = 50)
+        public static void WriteList(object input, bool update = false, int batchSize = 50)
         {
             var list = ((IList)input).Cast<object>().ToList();
 
@@ -31,9 +31,16 @@ namespace GOTHAM.Tools
             {
                 using (var transaction = session.BeginTransaction())
                 {
-                    for (int i = 0; i < list.Count; i++)
+
+                    var i = 0;
+                    foreach (var item in list)
                     {
-                        session.Save(list[i]);
+
+                        if (update)
+                            session.Merge(item);
+                        else
+                            session.Save(item);
+
                         if (i % batchSize == 0)
                         {
                             session.Flush();
@@ -41,49 +48,20 @@ namespace GOTHAM.Tools
                         }
 
                         // Prints persentage output each 100 entity
-                        if (i % 100 == 0)
+                        if (i++ % 100 == 0)
                         {
                             double p = 100.0 / list.Count * i;
                             log.Info((int)p + "%");
                         }
+
                     }
+
+             
                     transaction.Commit();
                 }// End transaction
             }// End session
         }// End function
 
-        /// <summary>
-        /// Writes a list of Entities to database. Must be List of BaseEntity
-        /// </summary>
-        /// <param name="input"></param>
-        /// <param name="batchSize"></param>
-        public static void WriteList(List<BaseEntity> input, int batchSize = 50)
-        {
-            // Open up a transaction and stores data to database 
-            using (var session = EntityManager.GetSessionFactory().OpenSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    for (int i = 0; i < input.Count; i++)
-                    {
-                        session.Save(input[i]);
-                        if (i % batchSize == 0)
-                        {
-                            session.Flush();
-                            session.Clear();
-                        }
-
-                        // Prints persentage output each 100 entity
-                        if (i % 100 == 0)
-                        {
-                            double p = 100.0 / input.Count * i;
-                            log.Info((int)p + "%");
-                        }
-                    }
-                    transaction.Commit();
-                }// End transaction
-            }// End session
-        }// End function
 
         /// <summary>
         /// Writes a single entity to database
@@ -109,7 +87,7 @@ namespace GOTHAM.Tools
         }// End function
 
         /// <summary>
-        /// Gets a list of all entities in database
+        /// Gets a list of all entities in a table
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>

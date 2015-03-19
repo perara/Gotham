@@ -68,6 +68,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="GOTHAM-BACKEND\Tools\CableTest.cs" />
     <Compile Include="GOTHAM-BACKEND\Tools\CoordinateTest.cs" />
     <Compile Include="GOTHAM-BACKEND\Tools\HTTPRequestTest.cs" />
     <Compile Include="GOTHAM-BACKEND\Tools\NodeTest.cs" />

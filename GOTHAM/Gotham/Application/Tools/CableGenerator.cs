@@ -1,5 +1,6 @@
 ﻿using GOTHAM.Model;
 using GOTHAM.Model.Tools;
+using GOTHAM.Tools.Cache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,17 +18,19 @@ namespace GOTHAM.Tools
         /// </summary>
         /// <param name="nodes"></param>
         /// <param name="siblings"></param>
-        public static void GenerateCables(List<NodeEntity> nodes, int siblings)
+        public static void GenerateCables(List<NodeEntity> nodes, int minSiblings, int maxSiblings, int maxDistance = 10^12)
         {
+            log.Info("Making land cables between land nodes with " + minSiblings + "(min) to " + maxSiblings + "(max) siblings");
+
             var sortedNodes = nodes.OrderBy(o => o.lng).ToList();
             sortedNodes.Reverse();
             var newCables = new List<BaseEntity>();
-            //var newCableParts = new List<BaseEntity>();
+            var rnd = new Random();
 
 
             for (int i = sortedNodes.Count - 1; i >= 0; i--)
             {
-
+                var siblings = rnd.Next(minSiblings, maxSiblings);
                 var node = sortedNodes[i];
                 sortedNodes.RemoveAt(i);
 
@@ -71,6 +74,7 @@ namespace GOTHAM.Tools
 
                 foreach (var sibling in nodeList)
                 {
+                    if (GeoTool.GetDistance(sortedNodes[i].GetCoordinates(), sibling.Value.GetCoordinates()) > maxDistance) continue;
                     newCables.Add(NewCable(node, sibling.Value, 10000, sibling.Key));
                 }
             }
@@ -90,8 +94,11 @@ namespace GOTHAM.Tools
         /// <returns></returns>
         public static CableEntity NewCable(NodeEntity node1, NodeEntity node2, long bandwidth = 10000, double distance = 0)
         {
-            // Make cable and declare lists
-            var cable = new CableEntity(bandwidth, new CableTypeEntity() { id = 0 }, distance, "Land Cable (" + node1.id + "," + node2.id + ")");
+            // Make cable, get type and declare lists
+            var cableType = CacheEngine.CableTypes.Where(x => x.id == 0).FirstOrDefault();
+
+            var cable = new CableEntity(bandwidth, cableType, distance, "Land Cable (" + node1.id + "," + node2.id + ")");
+
             cable.cableParts = new List<CablePartEntity>();
             cable.nodes = new List<NodeEntity>();
 
@@ -99,12 +106,15 @@ namespace GOTHAM.Tools
             if (Math.Abs(node1.lng - node2.lng) > 80)
             {
                 log.Info("MADE EXTRA CABLE " + Math.Abs(node1.lng - node2.lng));
+
+                var toLeft = (node1.lng < 0) ? 180 : -180;
+
                 // Make cable 1 start and end point
                 var cableStart = new CablePartEntity(cable, 0, node1.lat, node1.lng);
-                var cableEnd = new CablePartEntity(cable, 1, (node2.lat + (node1.lat - node2.lat) / 2), -180);
+                var cableEnd = new CablePartEntity(cable, 1, (node2.lat + (node1.lat - node2.lat) / 2), toLeft * -1);
 
                 // Make cable 2 start and end point
-                var cableTwoStart = new CablePartEntity(cable, 0, (node2.lat + (node1.lat - node2.lat) / 2), 180);
+                var cableTwoStart = new CablePartEntity(cable, 0, (node2.lat + (node1.lat - node2.lat) / 2), toLeft);
                 var cableTwoEnd = new CablePartEntity(cable, 1, node2.lat, node2.lng);
 
                 // Add cable parts to cable
@@ -136,8 +146,10 @@ namespace GOTHAM.Tools
         /// <param name="maxDistance"></param>
         public static void ConnectNodes(double maxDistance)
         {
-            var nodes = DBTool.getTable<NodeEntity>();
-            var cables = DBTool.getTable<CableEntity>();
+            log.Info("Connecting cables to nodes closer than " + maxDistance + " Kilometers");
+
+            var nodes = CacheEngine.Nodes;
+            var cables = CacheEngine.Cables;
             var nodeCables = new List<string>();
             var nodeCableEntities = new List<NodeCableEntity>();
 
@@ -173,7 +185,7 @@ namespace GOTHAM.Tools
         /// <param name="current"></param>
         /// <param name="nodes"></param>
         /// <returns></returns>
-        public static CableEntity connectClosest(NodeEntity current, List<NodeEntity> nodes)
+        public static CableEntity connectClosest(NodeEntity current, List<NodeEntity> nodes, int maxDistance = 10^12)
         {
             var closest = nodes.Last();
             var closestDist = GeoTool.GetDistance(current.GetCoordinates(), closest.GetCoordinates());
@@ -187,7 +199,11 @@ namespace GOTHAM.Tools
                     closestDist = dist;
                 }
             }
-            return NewCable(current, closest, 10000);
+
+            if (closestDist > maxDistance) 
+                return null;
+
+            return NewCable(current, closest);
         }
 
         /// <summary>
@@ -287,16 +303,33 @@ namespace GOTHAM.Tools
         /// </summary>
         public static void ConnectSeaNodesToLand()
         {
-            var landNodes = Globals.GetInstance().nodes.Where(x => x.tier.id == 1).ToList();
-            var seaNodes = Globals.GetInstance().nodes.Where(x => x.tier.id == 4).ToList();
+            log.Info("Connecting sea nodes to the closest land node");
+
+            var landNodes = CacheEngine.Nodes.Where(x => x.tier.id == 1).ToList();
+            var seaNodes = CacheEngine.Nodes.Where(x => x.tier.id == 4).ToList();
             var newCables = new List<CableEntity>();
 
             foreach (var seaNode in seaNodes)
             {
-                newCables.Add(connectClosest(seaNode, landNodes));
+                var newNode = connectClosest(seaNode, landNodes);
+                if (newNode != null)
+                    newCables.Add(newNode);
             }
 
             DBTool.WriteList(newCables);
+        }
+
+        public static void consistencyCheck(List<NodeEntity> nodes, List<CableEntity> cables)
+        {
+
+
+            foreach (var cable in cables)
+            {
+                if (cable.nodes == null)
+                    log.Error("Consistency check: Cable with ID " + cable.id + "'s nodes is null");
+                if (cable.nodes.Count == 0)
+                    log.Error("Consistency check: Cable with ID " + cable.id + " is not connected to any nodes");
+            }
         }
     }
 }
