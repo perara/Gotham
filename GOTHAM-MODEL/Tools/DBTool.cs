@@ -48,9 +48,14 @@ namespace GOTHAM.Tools
                         }
 
                         // Prints persentage output each 100 entity
-                        if (i++ % 100 != 0) continue;
-                        log.Info((int)(100.0 / list.Count * i) + " %");
+                        if (i++ % 100 == 0)
+                        {
+                            double p = 100.0 / list.Count * i;
+                            log.Info((int)p + "%");
+                        }
+
                     }
+
                     transaction.Commit();
                 }// End transaction
             }// End session
@@ -63,46 +68,7 @@ namespace GOTHAM.Tools
         /// <param name="input"></param>
         public static void Write(BaseEntity input)
         {
-            // Check if input is valid
-            if (input.GetType().Namespace != "GOTHAM.Model")
-            {
-                throw new Exception("Object is not a part of the GOTHAM.Model namespace");
-            }
-
-            // Open up a transaction and stores data to database
-            using (var session = EntityManager.GetSessionFactory().OpenSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    session.Save(input);
-                    transaction.Commit();
-                }// End transaction
-            }// End session
+            WriteList(new List<BaseEntity>() { input });
         }// End function
-
-        /// <summary>
-        /// Gets a list of all entities in a table
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static List<T> getTable<T>()
-        {
-            // SELECT * FROM X
-            // SELECT * FROM X where Y = Z and Z = KUK
-
-            using (var session = EntityManager.GetSessionFactory().OpenSession())
-            {
-
-                Type typeParameterType = typeof(T);
-                var data = session
-
-                    .CreateCriteria(typeParameterType)
-                    .SetCacheable(true)
-                    .SetCacheMode(CacheMode.Normal)
-                    .List<T>()
-                    .ToList();
-                return data;
-            }
-        }
     }//End Class
 }

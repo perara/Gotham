@@ -114,8 +114,8 @@ class WorldMap extends Gotham.Graphics.Container
       y: coordinates.y
 
     # Set Sprites Size
-    gNode.width = 16
-    gNode.height = 16
+    gNode.width = 8
+    gNode.height = 8
 
     gNode.anchor =
       x: 0.5
@@ -135,11 +135,13 @@ class WorldMap extends Gotham.Graphics.Container
 
 
     gNode.mouseover = ->
+      @tint = 0xffff00
       for cable in @cables
         for part in cable.cableParts
           part.visible = true
 
     gNode.mouseout = ->
+      @tint = 0xffffff
       for cable in @cables
         for part in cable.cableParts
           part.visible = false
@@ -213,11 +215,11 @@ class WorldMap extends Gotham.Graphics.Container
     db_node().each (row) ->
       node = row.sprite
       if zoomOut
-        node.scale.x = (node.scale.x * 1.1)
-        node.scale.y = (node.scale.y * 1.1)
+        node.scale.x = (node.scale.x * 1.05)
+        node.scale.y = (node.scale.y * 1.05)
       else
-        node.scale.x = (node.scale.x / 1.1)
-        node.scale.y = (node.scale.y / 1.1)
+        node.scale.x = (node.scale.x / 1.05)
+        node.scale.y = (node.scale.y / 1.05)
 
 
 
@@ -357,19 +359,24 @@ class WorldMap extends Gotham.Graphics.Container
         nextScale =
           x : @scale.x * factor
           y : @scale.y * factor
-        @offset.x *= factor
-        @offset.y *= factor
       else
         nextScale =
           x : @scale.x / factor
           y : @scale.y / factor
-        @offset.x /= factor
-        @offset.y /= factor
 
 
       if nextScale.x < 1 or nextScale.y < 1 or nextScale.x > 10 or nextScale.y > 10
         @isZoomOut = false
         return
+
+      # Update offsets
+      if not @isZoomOut
+        @offset.x *= factor
+        @offset.y *= factor
+      else
+        @offset.x /= factor
+        @offset.y /= factor
+
 
       # Calculate diff on width and heighy between the two
       prevSize = that.originalScaledSize
