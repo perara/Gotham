@@ -1,7 +1,14 @@
-﻿using FluentNHibernate.Mapping;
+﻿using System.Diagnostics.CodeAnalysis;
+using FluentNHibernate.Mapping;
 
 namespace GOTHAM.Model
 {
+    [SuppressMessage("ReSharper", "DoNotCallOverridableMethodsInConstructor")]
+    [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "VirtualMemberNeverOverriden.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class CableTypeEntity : BaseEntity
   {
 

@@ -1,70 +1,72 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
-namespace GOTHAM.Tools
+namespace GOTHAM_TOOLS
 {
     public class Coordinate
     {
 
-        public static LatLng newLatLng()
+        public static LatLng NewLatLng()
         {
             return new LatLng();
         }
-        public static LatLng newLatLng(double lat, double lng)
+
+        public static LatLng NewLatLng(double lat, double lng)
         {
             return new LatLng(lat, lng);
         }
 
 
-        public static Polar newPolar()
+        public static Polar NewPolar()
         {
             return new Polar();
         }
-        public static Polar newPolar(int latDeg, int latMin, int latSec, int lngDeg, int lngMin, int lngSec)
+
+        public static Polar NewPolar(int latDeg, int latMin, int latSec, int lngDeg, int lngMin, int lngSec)
         {
             return new Polar(latDeg, latMin, latSec, lngDeg, lngMin, lngSec);
         }
 
-        
+
 
         public class LatLng : BaseCoordinate
         {
-            public double lat { get; set; }
-            public double lng { get; set; }
+            public double Lat { get; private set; }
+            public double Lng { get; private set; }
 
-            public LatLng() { }
+            public LatLng()
+            {
+            }
 
             public LatLng(double lat, double lng)
             {
-                this.lat = lat;
-                this.lng = lng;
+                Lat = lat;
+                Lng = lng;
             }
 
-            public Polar toPolar()
+            private Polar ToPolar()
             {
-                double latDeg = lat;
-                double latMin = 60 * (lat - latDeg);
-                double latSec = 3600 * (lat - latDeg - latMin / 60);
+                var latDeg = Lat;
+                var latMin = 60*(Lat - latDeg);
+                var latSec = 3600*(Lat - latDeg - latMin/60);
 
-                double lngDeg = lng;
-                double lngMin = 60 * (lng - lngDeg);
-                double lngSec = 3600 * (lng - lngDeg - lngMin / 60);
+                var lngDeg = Lng;
+                var lngMin = 60*(Lng - lngDeg);
+                var lngSec = 3600*(Lng - lngDeg - lngMin/60);
 
-                return new Polar(latDeg, (int)latMin, (int)latSec, lngDeg, (int)lngMin, (int)lngSec);
+                return new Polar(latDeg, (int) latMin, (int) latSec, lngDeg, (int) lngMin, (int) lngSec);
             }
 
-            public override object convert()
+            public override object Convert()
             {
-                return toPolar();
+                return ToPolar();
             }
+
             public LatLng ToRadians()
             {
-                var lat = (Math.PI / 180) * this.lat;
-                var lng = (Math.PI / 180) * this.lng;
-                return new LatLng(lat, lng);
+                var radLat = (Math.PI/180)*Lat;
+                var radLng = (Math.PI/180)*Lng;
+                return new LatLng(radLat, radLng);
             }
         }
 
@@ -72,7 +74,7 @@ namespace GOTHAM.Tools
         public abstract class BaseCoordinate
         {
 
-            public virtual Object convert()
+            public virtual Object Convert()
             {
                 return null;
             }
@@ -81,44 +83,40 @@ namespace GOTHAM.Tools
 
         public class Polar : BaseCoordinate
         {
-            public double LngDeg { get; set; }
-            public int LngMin { get; set; }
-            public int LngSec { get; set; }
-            public double LatDeg { get; set; }
-            public int LatMin { get; set; }
-            public int LatSec { get; set; }
+            private double LngDeg { get; set; }
+            private int LngMin { get; set; }
+            private int LngSec { get; set; }
+            private double LatDeg { get; set; }
+            private int LatMin { get; set; }
+            private int LatSec { get; set; }
 
-            public Polar() { }
+            public Polar()
+            {
+            }
+
             public Polar(double latDeg, int latMin, int latSec, double lngDeg, int lngMin, int lngSec)
             {
-                this.LngDeg = lngDeg;
-                this.LngMin = lngMin;
-                this.LngSec = lngSec;
-                this.LatDeg = latDeg;
-                this.LatMin = latMin;
-                this.LatSec = latSec;
+                LngDeg = lngDeg;
+                LngMin = lngMin;
+                LngSec = lngSec;
+                LatDeg = latDeg;
+                LatMin = latMin;
+                LatSec = latSec;
             }
 
-            public LatLng toLatLng()
+            [SuppressMessage("ReSharper", "PossibleLossOfFraction")]
+            private LatLng ToLatLng()
             {
-                double Lat = (LatDeg) + (LatMin) / 60 + (LatSec) / 3600;
-                double Lng = (LngDeg) + (LngMin) / 60 + (LngSec) / 3600;
-                return new LatLng(Lat, Lng);
+                var lat = (LatDeg) + LatMin/60 + (LatSec)/3600;
+                var lng = (LngDeg) + (LngMin)/60 + (LngSec)/3600;
+                return new LatLng(lat, lng);
             }
 
-            public override object convert()
+            public override object Convert()
             {
-                return toLatLng();
+                return ToLatLng();
             }
 
         }
-
     }
-
-
-    // 43.565548, 65.345435
-    // 24¤ 15' 30", 25¤ 11' 30"
-
-
-
 }

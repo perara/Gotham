@@ -1,16 +1,16 @@
-﻿using FluentNHibernate.Mapping;
-using GOTHAM.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
+using FluentNHibernate.Mapping;
 
 namespace GOTHAM.Model
 {
+    [SuppressMessage("ReSharper", "DoNotCallOverridableMethodsInConstructor")]
+    [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "VirtualMemberNeverOverriden.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
   public class CountryEntity : BaseEntity
   {
-    public virtual int Id { get; set; }
     public virtual string Name { get; set; }
     public virtual string CountryCode { get; set; }
     public virtual string CountryCodeExt { get; set; }

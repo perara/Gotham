@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GOTHAM_TOOLS
 {
-    class BWTools
+    static class BwTools
     {
-        readonly string[] SizeSuffixes = { "bytes", "Kb", "Mb", "Gb", "Tb", "Pb", "Eb", "Zb", "Yb" };
-        public string BWSuffix(double value)
+        static readonly string[] SizeSuffixes = { "bytes", "Kb", "Mb", "Gb", "Tb", "Pb", "Eb", "Zb", "Yb" };
+        public static string BwSuffix(double value)
         {
-            if (value < 0) { return "-" + BWSuffix(-value); }
-            if (value == 0) { return "0.0 bytes"; }
+            if (value < 0) { return "-" + BwSuffix(-value); }
+            if (value.Equals(0)) { return "0.0 bytes"; }
 
-            int mag = (int)Math.Log(value, 1024);
-            decimal adjustedSize = (decimal)value / (1L << (mag * 10));
+            var mag = (int)Math.Log(value, 1024);
+            var adjustedSize = (decimal)value / (1L << (mag * 10));
 
             return string.Format("{0:n1} {1}", adjustedSize, SizeSuffixes[mag]);
         }

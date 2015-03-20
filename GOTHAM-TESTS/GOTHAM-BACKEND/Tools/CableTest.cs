@@ -1,14 +1,7 @@
-﻿using GOTHAM.Model;
-using GOTHAM.Tools;
-using GOTHAM.Tools.Cache;
+﻿using GOTHAM.Application.Tools.Cache;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GOTHAM.Tests
+namespace GOTHAM_TESTS.Tools
 {
     class CableTest
     {

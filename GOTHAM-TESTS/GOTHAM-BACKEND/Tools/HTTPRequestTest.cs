@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using GOTHAM_TOOLS;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using GOTHAM.Model;
-using GOTHAM.Tools;
 
-namespace GOTHAM.Tests
+namespace GOTHAM_TESTS.Tools
 {
 
     [TestFixture]
-    class HTTPRequestTest
+    class HttpRequestTest
     {
 
         [Test]
@@ -22,11 +17,11 @@ namespace GOTHAM.Tests
             // Response with "Created" http://postcatcher.in/catchers/54b146db2310af02000014fc
 
             // Test POST Request
-            String postTest = new HTTPRequest()
-            .POST()
-            .setURL("http://postcatcher.in/catchers/54b146db2310af02000014fc")
-            .addPostData("test", "lol")
-            .execute();
+            var postTest = new HttpRequest()
+            .Post()
+            .SetUrl("http://postcatcher.in/catchers/54b146db2310af02000014fc")
+            .AddPostData("test", "lol")
+            .Execute();
 
             Assert.AreEqual(postTest, "Created");
         }
@@ -37,10 +32,10 @@ namespace GOTHAM.Tests
             // Response with IP
 
             // Test GET Request
-            String getTest = new HTTPRequest()
-              .GET()
-              .setURL("http://ip.jsontest.com/")
-              .execute();
+            String getTest = new HttpRequest()
+              .Get()
+              .SetUrl("http://ip.jsontest.com/")
+              .Execute();
 
 
             dynamic result = JObject.Parse(getTest);

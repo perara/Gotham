@@ -1,23 +1,20 @@
 ﻿using GOTHAM.Model;
-using GOTHAM.Model.Tools;
-using NHibernate;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GOTHAM.Tools
 {
-    public class DBTool
+    public static class DbTool
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Writes a list of Entities to database. Example: List of NodeEntity
         /// </summary>
         /// <param name="input"></param>
+        /// <param name="update"></param>
         /// <param name="batchSize"></param>
         public static void WriteList(object input, bool update = false, int batchSize = 50)
         {
@@ -48,12 +45,9 @@ namespace GOTHAM.Tools
                         }
 
                         // Prints persentage output each 100 entity
-                        if (i++ % 100 == 0)
-                        {
-                            double p = 100.0 / list.Count * i;
-                            log.Info((int)p + "%");
-                        }
-
+                        if (i++%100 != 0) continue;
+                        var p = 100.0 / list.Count * i;
+                        Log.Info((int)p + "%");
                     }
 
                     transaction.Commit();

@@ -59,5 +59,15 @@ namespace GOTHAM_BACKEND_DEBUG.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///.
+        /// </summary>
+        internal static string Form1_MainMap_OnRouteClick_ {
+            get {
+                return ResourceManager.GetString("Form1_MainMap_OnRouteClick_", resourceCulture);
+            }
+        }
     }
 }

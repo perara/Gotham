@@ -39,14 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BWTools.cs" />
+    <Compile Include="BwTools.cs" />
     <Compile Include="Coordinate.cs" />
-    <Compile Include="FakeNameGenerator\FakeNameGenerator.cs" />
+    <Compile Include="FakeNameGenerator.cs" />
     <Compile Include="GeoTool.cs" />
-    <Compile Include="HTTPRequest.cs" />
-    <Compile Include="IP.cs" />
+    <Compile Include="HttpRequest.cs" />
+    <Compile Include="IpAddr.cs" />
     <Compile Include="LongRandom.cs" />
-    <Compile Include="MAC.cs" />
+    <Compile Include="MacAddr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

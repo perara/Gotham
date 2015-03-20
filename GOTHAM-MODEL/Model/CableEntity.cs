@@ -1,9 +1,16 @@
 ﻿using FluentNHibernate.Mapping;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace GOTHAM.Model
 {
+    [SuppressMessage("ReSharper", "DoNotCallOverridableMethodsInConstructor")]
+    [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "VirtualMemberNeverOverriden.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class CableEntity : BaseEntity
     {
         public virtual int Priority { get; set; }
@@ -51,9 +58,9 @@ namespace GOTHAM.Model
             Map(x => x.Name);
             Map(x => x.Year);
 
-            References<CableTypeEntity>(x => x.Type, "id");
+            References(x => x.Type, "id");
 
-            HasMany<CablePartEntity>(x => x.CableParts)
+            HasMany(x => x.CableParts)
             .Cascade.All()
             .Inverse()
             .KeyColumn("cable")

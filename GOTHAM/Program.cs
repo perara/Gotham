@@ -1,24 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using GOTHAM.Model;
-using GOTHAM.Tools;
-using GOTHAM.Gotham.Service.ServiceStack;
-using GOTHAM.Gotham.Service.SignalR;
-using GOTHAM.Traffic;
-using GOTHAM.Tools.Cache;
 using System.Threading;
-using System.Linq;
-using GOTHAM.Model.Tools;
+using GOTHAM.Application.Tools.Cache;
+using GOTHAM.Service.SignalR;
 
 namespace GOTHAM
 {
-    class Program
+    static class Program
     {
-        public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-
-        static void Main(string[] args)
+        static void Main()
         {
             /////////////////////////////////////////////////////////////////
             //
@@ -42,8 +34,7 @@ namespace GOTHAM
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
-                SignalR r = new SignalR();
-                r.Start();
+                SignalR.Start();
             }).Start();
 
             //
@@ -51,7 +42,7 @@ namespace GOTHAM
             //
             DateTime time = DateTime.Now;
             CacheEngine.Init();
-            log.Info((DateTime.Now - time).Seconds + "." + (DateTime.Now - time).Milliseconds + " to initiate cache engine");
+            Log.Info((DateTime.Now - time).Seconds + "." + (DateTime.Now - time).Milliseconds + " to initiate cache engine");
 
 
 
@@ -64,7 +55,7 @@ namespace GOTHAM
 
 
             // Change decimal seperator to . instead of ,
-            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
             CultureInfo.DefaultThreadCurrentCulture = customCulture;
 
@@ -219,7 +210,7 @@ namespace GOTHAM
             // ========================================================================================
             // ========================================================================================
 
-            log.Info("DOG FINISH");
+            Log.Info("DOG FINISH");
             Console.ReadLine();
 
 

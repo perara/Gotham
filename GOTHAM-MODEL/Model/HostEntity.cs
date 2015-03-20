@@ -1,13 +1,15 @@
-﻿using GOTHAM.Tools;
+﻿using System.Diagnostics.CodeAnalysis;
 using FluentNHibernate.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GOTHAM_TOOLS;
 
 namespace GOTHAM.Model
 {
+    [SuppressMessage("ReSharper", "DoNotCallOverridableMethodsInConstructor")]
+    [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "VirtualMemberNeverOverriden.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class HostEntity : BaseEntity
     {
 
@@ -56,8 +58,6 @@ namespace GOTHAM.Model
             Map(x => x.Ip);
             Map(x => x.Mac);
             References(x => x.Owner);
-
         }
     }
-
 }

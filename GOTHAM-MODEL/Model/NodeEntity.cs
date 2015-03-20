@@ -1,17 +1,18 @@
 ﻿using FluentNHibernate.Mapping;
-using GOTHAM.Model;
-using GOTHAM.Tools;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NHibernate.Mapping;
-using NHibernate.Util;
+using GOTHAM_TOOLS;
 
 namespace GOTHAM.Model
 {
+    [SuppressMessage("ReSharper", "DoNotCallOverridableMethodsInConstructor")]
+    [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "VirtualMemberNeverOverriden.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class NodeEntity : BaseEntity
     {
         /// <summary>
@@ -95,11 +96,11 @@ namespace GOTHAM.Model
         /// <param name="lng"></param>
         public NodeEntity(string name, string countryCode, TierEntity tier, double lat, double lng)
         {
-            this.Name = name;
-            this.CountryCode = countryCode;
-            this.Tier = tier;
-            this.Lat = lat;
-            this.Lng = lng;
+            Name = name;
+            CountryCode = countryCode;
+            Tier = tier;
+            Lat = lat;
+            Lng = lng;
         }
 
         /// <summary>

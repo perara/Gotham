@@ -1,15 +1,14 @@
-﻿using FluentNHibernate.Mapping;
-using GOTHAM.Model.Tools;
-using GOTHAM.Tools;
-using NHibernate.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
+using FluentNHibernate.Mapping;
+using GOTHAM_TOOLS;
 
 namespace GOTHAM.Model
 {
+    [SuppressMessage("ReSharper", "DoNotCallOverridableMethodsInConstructor")]
+    [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "VirtualMemberNeverOverriden.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
     public class PersonEntity : BaseEntity
     {
         // Personal information
@@ -40,10 +39,10 @@ namespace GOTHAM.Model
         /// <summary>
         /// "Empty" constructor
         /// </summary>
-        /// <param name="country"></param>
-        public PersonEntity(string country = "*")
+        /// <param name="countryCode"></param>
+        public PersonEntity(string countryCode = "*")
         {
-            
+            CountryCode = countryCode;
         }
         public virtual Coordinate.LatLng GetCoords()
         {

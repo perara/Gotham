@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using FluentNHibernate.MappingModel.Output.Sorting;
+﻿using System.Linq;
+using GOTHAM.Application.Tools.Cache;
+using GOTHAM.Model;
+using GOTHAM.Tools;
 using NHibernate.Criterion;
 using NUnit.Framework;
-using GOTHAM.Tools;
-using GOTHAM.Model;
-using GOTHAM.Model.Tools;
-using GOTHAM.Tools.Cache;
 
-namespace GOTHAM.Tests
+namespace GOTHAM_TESTS.Tools
 {
     [TestFixture]
     class NodeTest
@@ -50,6 +43,8 @@ namespace GOTHAM.Tests
                       .CreateCriteria<NodeEntity>()
                       .Add(Restrictions.Eq("tier", tier))
                       .List<NodeEntity>();
+
+                    Assert.NotNull(nodes);
                 }
             }
         }

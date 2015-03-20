@@ -1,8 +1,7 @@
-﻿using GOTHAM.Tools.Cache;
+﻿using GOTHAM.Application.Tools.Cache;
 using NUnit.Framework;
-using System;
 
-namespace GOTHAM.Tests
+namespace GOTHAM_TESTS.Tools
 {
     [SetUpFixture]
     public class SetUpTests

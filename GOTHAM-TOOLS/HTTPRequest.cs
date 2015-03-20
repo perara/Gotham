@@ -1,50 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
 using System.Text;
 
-namespace GOTHAM.Tools
+namespace GOTHAM_TOOLS
 {
-  public  class HTTPRequest
+  public  class HttpRequest
   {
-
-
-
       public abstract class Request<T> where T : Request<T>
       {
-        protected WebClient client { get; set; }
+        protected WebClient Client { get; set; }
 
-        protected String url { get; set; }
+        protected String Url { get; set; }
 
         /// <summary>
         /// Sets Destination URL 
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public T setURL(String url)
+        public T SetUrl(String url)
         {
           // Initialize the WebClient
-          client = new WebClient();
+          Client = new WebClient();
 
           // Set URL
-          this.url = url;
+          Url = url;
           return (T)this;
         }
 
       }
 
-      public sealed class Post : Request<Post>
+      public sealed class PostObj : Request<PostObj>
       {
-        public const String APPLICATION_JSON = "application/json";
+        public const String ApplicationJson = "application/json";
 
 
-        NameValueCollection content { get; set; }
-        private String contentType { get; set; }
+        NameValueCollection Content { get; set; }
 
-        public Post()
+        public PostObj()
         {
-          content = new NameValueCollection();
+          Content = new NameValueCollection();
         }
 
         /// <summary>
@@ -53,9 +48,9 @@ namespace GOTHAM.Tools
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Post addPostData(String key, String value)
+        public PostObj AddPostData(String key, String value)
         {
-          content[key] = value;
+          Content[key] = value;
           return this;
         }
 
@@ -73,36 +68,36 @@ namespace GOTHAM.Tools
         /// Execute the Request
         /// </summary>
         /// <returns></returns>
-        public String execute()
+        public String Execute()
         {
         
-          var response = client.UploadValues(url, content);
+          var response = Client.UploadValues(Url, Content);
           return Encoding.Default.GetString(response);
         }
 
       }
 
-      public sealed class Get : Request<Get>
+      public sealed class GetObj : Request<GetObj>
       {
 
         /// <summary>
         /// Execute the Request
         /// </summary>
         /// <returns></returns>
-        public String execute()
+        public String Execute()
         {
-          return client.DownloadString(url);
+          return Client.DownloadString(Url);
         }
       }
 
-      public Post POST()
+      public PostObj Post()
       {
-        return new Post();
+        return new PostObj();
       }
 
-      public Get GET()
+      public GetObj Get()
       {
-        return new Get();
+        return new GetObj();
       }
 
 
