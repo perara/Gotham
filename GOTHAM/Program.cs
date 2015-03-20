@@ -10,11 +10,14 @@ using GOTHAM.Tools.Cache;
 using System.Threading;
 using System.Linq;
 using GOTHAM.Model.Tools;
+using GOTHAM.Repository;
+using NHibernate.Linq;
 
 namespace GOTHAM
 {
     class Program
     {
+       
         public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
@@ -29,7 +32,7 @@ namespace GOTHAM
             //
             // Configure Log4Net
             // 
-            log4net.Config.XmlConfigurator.Configure();
+            /*log4net.Config.XmlConfigurator.Configure();
 
             //
             // Start ServiceStack API Server
@@ -45,18 +48,38 @@ namespace GOTHAM
                 SignalR r = new SignalR();
                 r.Start();
             }).Start();
-
+            */
             //
             // Init Cache Engine
             //
-            DateTime time = DateTime.Now;
+            /*DateTime time = DateTime.Now;
             CacheEngine.Init();
-            log.Info((DateTime.Now - time).Seconds + "." + (DateTime.Now - time).Milliseconds + " to initiate cache engine");
+            log.Info((DateTime.Now - time).Seconds + "." + (DateTime.Now - time).Milliseconds + " to initiate cache engine");*/
 
 
 
 
-            /////////////////////////////////////////////////////////////////
+
+
+
+          using (var session = EntityManager.GetSessionFactory().OpenSession())
+          {
+            var start = DateTime.Now;
+            var test = session.Query<LocationEntity>().Where(x => x.name == "Andorra");
+            Console.WriteLine("NHibernate Took: " + (DateTime.Now - start).TotalMilliseconds);
+          }
+
+          using (var repo = new LocationRepository())
+          {
+
+            var start = DateTime.Now;
+            var test = repo.All.Where(x => x.name == "Andorra");
+            Console.WriteLine("EF6 Took: " + (DateTime.Now - start).TotalMilliseconds);
+
+          }
+
+
+          /////////////////////////////////////////////////////////////////
             //
             // Other stuff
             //
