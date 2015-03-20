@@ -56,7 +56,6 @@ namespace GOTHAM.Tools
 
                     }
 
-             
                     transaction.Commit();
                 }// End transaction
             }// End session
@@ -69,21 +68,7 @@ namespace GOTHAM.Tools
         /// <param name="input"></param>
         public static void Write(BaseEntity input)
         {
-            // Check if input is valid
-            if (input.GetType().Namespace != "GOTHAM.Model")
-            {
-                throw new Exception("Object is not a part of the GOTHAM.Model namespace");
-            }
-
-            // Open up a transaction and stores data to database
-            using (var session = EntityManager.GetSessionFactory().OpenSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    session.Save(input);
-                    transaction.Commit();
-                }// End transaction
-            }// End session
+            WriteList(new List<BaseEntity>() { input });
         }// End function
 
         /// <summary>
