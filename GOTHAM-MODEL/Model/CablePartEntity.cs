@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using GOTHAM.Tools;
 
 namespace GOTHAM.Model
 {
@@ -12,17 +13,21 @@ namespace GOTHAM.Model
     {
 
         [JsonIgnore]
-        public virtual CableEntity cable { get; set; }
-        public virtual int number { get; set; }
-        public virtual double lat { get; set; }
-        public virtual double lng { get; set; }
+        public virtual CableEntity Cable { get; set; }
+        public virtual int Number { get; set; }
+        public virtual double Lat { get; set; }
+        public virtual double Lng { get; set; }
         protected CablePartEntity() { }
         public CablePartEntity(CableEntity cable, int number, double lat, double lng)
         {
-            this.cable = cable;
-            this.number = number;
-            this.lat = lat;
-            this.lng = lng;
+            Cable = cable;
+            Number = number;
+            Lat = lat;
+            Lng = lng;
+        }
+        public virtual Coordinate.LatLng GetCoords()
+        {
+            return new Coordinate.LatLng(Lat, Lng);
         }
     }
 
@@ -32,13 +37,13 @@ namespace GOTHAM.Model
         {
             Table("cable_part");
 
-            Id(x => x.id).GeneratedBy.Identity();
+            Id(x => x.Id).GeneratedBy.Identity();
 
-            Map(x => x.number);
-            Map(x => x.lat);
-            Map(x => x.lng);
+            Map(x => x.Number);
+            Map(x => x.Lat);
+            Map(x => x.Lng);
     
-            References(x => x.cable)
+            References(x => x.Cable)
                 .Not.Nullable()
                 .Column("cable");
 

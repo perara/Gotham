@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM.Gotham.Tests.Tools
+namespace GOTHAM.Tests
 {
     [TestFixture]
     public class CoordinateTest

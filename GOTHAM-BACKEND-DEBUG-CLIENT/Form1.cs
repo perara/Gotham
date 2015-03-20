@@ -70,29 +70,29 @@ namespace GOTHAM_BACKEND_DEBUG
             {
                 GMarkerGoogle marker = null;
                 // TODO Find cleaner switch case
-                switch (node.tier.id)
+                switch (node.Tier.Id)
                 {
                     case 1:
-                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.red_small);
+                        marker = new GMarkerGoogle(new PointLatLng(node.Lat, node.Lng), GMarkerGoogleType.red_small);
                         break;
                     case 2:
-                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.green_small);
+                        marker = new GMarkerGoogle(new PointLatLng(node.Lat, node.Lng), GMarkerGoogleType.green_small);
                         break;
                     case 3:
-                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.yellow_small);
+                        marker = new GMarkerGoogle(new PointLatLng(node.Lat, node.Lng), GMarkerGoogleType.yellow_small);
                         break;
                     case 4:
-                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.blue_small);
+                        marker = new GMarkerGoogle(new PointLatLng(node.Lat, node.Lng), GMarkerGoogleType.blue_small);
                         break;
                     default:
-                        marker = new GMarkerGoogle(new PointLatLng(node.lat, node.lng), GMarkerGoogleType.orange);
+                        marker = new GMarkerGoogle(new PointLatLng(node.Lat, node.Lng), GMarkerGoogleType.orange);
                         break;
                 }
 
                 var tt = new GMapToolTip(marker);
 
                 markersOverlay.Markers.Add(marker);
-                marker.ToolTipText = node.name.ToString() + "\n" + node.countryCode.ToString();
+                marker.ToolTipText = node.Name.ToString() + "\n" + node.CountryCode.ToString();
                 marker.Tag = node;
                 
             }
@@ -109,28 +109,28 @@ namespace GOTHAM_BACKEND_DEBUG
 
                 var parts = new List<PointLatLng>();
                 var color = Color.FromArgb(150, random.Next(255), random.Next(255), random.Next(255));
-                var width = Math.Max(Math.Min((float)(cable.capacity * 0.001), 7), 2);
+                var width = Math.Max(Math.Min((float)(cable.Capacity * 0.001), 7), 2);
 
-                foreach (var part in cable.cableParts)
+                foreach (var part in cable.CableParts)
                 {
-                    if (part.number == 0)
+                    if (part.Number == 0)
                     {
                         GMapRoute r1 = new GMapRoute(parts, "route");
                         r1.Stroke = new Pen(new SolidBrush(color), width); // color; //Color.FromArgb(50, 20, 20, 200);
                         r1.IsHitTestVisible = true;
-                        r1.Name = cable.name;
+                        r1.Name = cable.Name;
                         r1.Tag = cable;
                         markersOverlay.Routes.Add(r1);
                         parts.Clear();
                     }
 
-                    parts.Add(new PointLatLng(part.lat, part.lng));
+                    parts.Add(new PointLatLng(part.Lat, part.Lng));
                 }// End foreach
 
                 GMapRoute r2 = new GMapRoute(parts, "route");
                 r2.Stroke = new Pen(new SolidBrush(color), width); // color; //Color.FromArgb(50, 20, 20, 200);
                 r2.IsHitTestVisible = true;
-                r2.Name = cable.name;
+                r2.Name = cable.Name;
                 r2.Tag = cable;
                 markersOverlay.Routes.Add(r2);
             }
@@ -146,8 +146,13 @@ namespace GOTHAM_BACKEND_DEBUG
 
         private void MainMap_OnRouteClick(GMapRoute item, MouseEventArgs e)
         {
-           
-            lbl_name.Text = item.Name;
+            var cable = (CableEntity)item.Tag;
+
+            lbl_lat.Text = "";
+            lbl_lng.Text = "";
+            tb_name.Text = item.Name;
+            tb_Distance.Text = cable.Distance.ToString();
+            tb_id.Text = cable.Id.ToString();
 
             if (tempRoutes != null)
             {
@@ -172,24 +177,24 @@ namespace GOTHAM_BACKEND_DEBUG
 
             lbl_NodeList.Text = "";
 
-            var cables = (CableEntity)item.Tag;
-
-            foreach (var cable in cables.nodes)
+            foreach (var node in cable.Nodes)
             {
-                lbl_NodeList.Text += "\n" + cable.name;
+                lbl_NodeList.Text += "\n" + cable.Name;
             }
         }
 
         private void MainMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
-            lbl_CableList.Text = "";
-
             var node = (NodeEntity)item.Tag;
 
-            foreach (var cable in node.cables)
+            lbl_CableList.Text = "";
+            tb_Distance.Text = "";
+            tb_id.Text = node.Id.ToString();
+
+            foreach (var cable in node.Cables)
             {
-                if (cable.year > 2014) continue;
-                lbl_CableList.Text += "\n" + cable.name;
+                if (cable.Year > 2014) continue;
+                lbl_CableList.Text += "\n" + cable.Name;
             }
         }
 

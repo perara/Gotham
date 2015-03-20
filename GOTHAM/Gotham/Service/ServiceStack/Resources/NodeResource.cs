@@ -33,12 +33,12 @@ namespace GOTHAM.Gotham.Service.ServiceStack.Resources
         JArray ret = new JArray();
 
         nodes.ForEach(x => ret.Add( new JObject(
-           new JProperty("id", x.id),
-           new JProperty("lat", x.lat),
-           new JProperty("long", x.lng),
-           new JProperty("name", x.name),
+           new JProperty("id", x.Id),
+           new JProperty("lat", x.Lat),
+           new JProperty("long", x.Lng),
+           new JProperty("name", x.Name),
            //new JProperty("tier", x.tier),
-           new JProperty("country", x.countryCode)
+           new JProperty("country", x.CountryCode)
           )));
 
 

@@ -19,7 +19,7 @@ namespace GOTHAM.Traffic
         /// <summary>
         /// Loads the logger from the global singleton class
         /// </summary>
-        log4net.ILog log = Globals.GetInstance().log;
+        log4net.ILog log = Globals.GetInstance().Log;
 
         /// <summary>
         /// Is this package consistent (realistic)
@@ -42,7 +42,7 @@ namespace GOTHAM.Traffic
         public Packet(Pathfinder path)
         {
             consistent = false;
-            pathId = path.toIdList();
+            pathId = path.ToIdList();
             //network.source = path.solution.First().Value.host;
             //network.dest = path.solution.Last().Value.host;
         }

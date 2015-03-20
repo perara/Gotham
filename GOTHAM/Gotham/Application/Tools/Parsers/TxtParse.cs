@@ -31,11 +31,11 @@ namespace GOTHAM.Tools
         public static void LocsToFile(List<LocationEntity> locations, string path)
         {
             var file = File.AppendText(path);
-            var sortedLocations = locations.OrderBy(x => x.countrycode).ThenBy(x => x.name);
+            var sortedLocations = locations.OrderBy(x => x.Countrycode).ThenBy(x => x.Name);
 
             foreach (var location in sortedLocations)
             {
-                var str = location.countrycode + "," + location.name + "," + location.lat + "," + location.lng;
+                var str = location.Countrycode + "," + location.Name + "," + location.Lat + "," + location.Lng;
                 file.WriteLine(str);
             }
         }
@@ -61,10 +61,10 @@ namespace GOTHAM.Tools
                     double.Parse(segment[5], CultureInfo.InvariantCulture),
                     double.Parse(segment[6], CultureInfo.InvariantCulture));
 
-                location.countrycode = segment[0];
-                location.name = segment[2];
-                location.lat = coord.lat;
-                location.lng = coord.lng;
+                location.Countrycode = segment[0];
+                location.Name = segment[2];
+                location.Lat = coord.lat;
+                location.Lng = coord.lng;
                 locations.Add(location);
             }
 
@@ -93,10 +93,10 @@ namespace GOTHAM.Tools
                     double.Parse(segment[1], CultureInfo.InvariantCulture),
                     double.Parse(segment[2], CultureInfo.InvariantCulture));
 
-                node.name = segment[0];
-                node.tier = new TierEntity() { id = 1 };
-                node.lat = coord.lat;
-                node.lng = coord.lng;
+                node.Name = segment[0];
+                node.Tier = new TierEntity() { Id = 1 };
+                node.Lat = coord.lat;
+                node.Lng = coord.lng;
                 nodes.Add(node);
             }
             return nodes;
@@ -124,11 +124,11 @@ namespace GOTHAM.Tools
                     double.Parse(segment[2]),
                     double.Parse(segment[3]));
 
-                node.countryCode = segment[0];
-                node.name = segment[1];
-                node.lat = coord.lat;
-                node.lng = coord.lng;
-                node.tier = new TierEntity() { id = 4 };
+                node.CountryCode = segment[0];
+                node.Name = segment[1];
+                node.Lat = coord.lat;
+                node.Lng = coord.lng;
+                node.Tier = new TierEntity() { Id = 4 };
                 nodes.Add(node);
 
             }
@@ -159,16 +159,16 @@ namespace GOTHAM.Tools
                 var segments = line.Split(',').ToList();
 
                 // Are we processing the same cable or is this a new cable? If yes, generate new cable entity
-                if (cables.Count == 0 || segments[0] != cables.Last().name)
+                if (cables.Count == 0 || segments[0] != cables.Last().Name)
                 {
                     var cable = new CableEntity();
 
-                    cable.name = segments[0];
-                    cable.priority = 0;
-                    cable.capacity = Double.Parse(segments[1]);
-                    cable.type = new CableTypeEntity() { id = 0 };
-                    cable.distance = Double.Parse(segments[4]);
-                    cable.year = Int32.Parse(segments[7]);
+                    cable.Name = segments[0];
+                    cable.Priority = 0;
+                    cable.Capacity = Double.Parse(segments[1]);
+                    cable.Type = new CableTypeEntity() { Id = 0 };
+                    cable.Distance = Double.Parse(segments[4]);
+                    cable.Year = Int32.Parse(segments[7]);
                     cable_part_counter = 0;
 
                     cables.Add(cable);
@@ -207,12 +207,12 @@ namespace GOTHAM.Tools
                 var segment = line.Split(',');
                 if (segment.Length != 9) throw new Exception("Inconsistent string detected at line: " + line);
 
-                country.name = segment[4];
-                country.countryCode = segment[0];
-                country.countryCodeExt = segment[1];
-                country.population = Int32.Parse(segment[7]);
-                country.size = Double.Parse(segment[6]);
-                country.continent = segment[8];
+                country.Name = segment[4];
+                country.CountryCode = segment[0];
+                country.CountryCodeExt = segment[1];
+                country.Population = Int32.Parse(segment[7]);
+                country.Size = Double.Parse(segment[6]);
+                country.Continent = segment[8];
 
                 countries.Add(country);
 
@@ -242,12 +242,12 @@ namespace GOTHAM.Tools
                 var segment = line.Split(',');
                 if (segment.Length != 9) throw new Exception("Inconsistent string detected at line: " + line);
 
-                country.name = segment[4];
-                country.countryCode = segment[0];
-                country.countryCodeExt = segment[1];
-                country.population = Int32.Parse(segment[7]);
-                country.size = Double.Parse(segment[6]);
-                country.continent = segment[8];
+                country.Name = segment[4];
+                country.CountryCode = segment[0];
+                country.CountryCodeExt = segment[1];
+                country.Population = Int32.Parse(segment[7]);
+                country.Size = Double.Parse(segment[6]);
+                country.Continent = segment[8];
 
                 countries.Add(country);
 
@@ -282,11 +282,11 @@ namespace GOTHAM.Tools
             {
                 var node = new NodeEntity();
 
-                node.countryCode = item.country;
-                node.name = item.name;
-                node.lat = Double.Parse(item.coordinates.latitude);
-                node.lng = Double.Parse(item.coordinates.longitude);
-                node.tier = new TierEntity() { id = 1 };
+                node.CountryCode = item.country;
+                node.Name = item.name;
+                node.Lat = Double.Parse(item.coordinates.latitude);
+                node.Lng = Double.Parse(item.coordinates.longitude);
+                node.Tier = new TierEntity() { Id = 1 };
 
                 DBTool.Write(node);
             }

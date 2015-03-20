@@ -12,7 +12,7 @@ namespace GOTHAM.Tools.Cache
 
         public CacheObject(List<T> newObjects)
         {
-            newObjects.ForEach(item => this.Add(item));
+            newObjects.ForEach(Add);
         }
 
         public void Refresh(int index)
@@ -39,7 +39,5 @@ namespace GOTHAM.Tools.Cache
            // var count = 0;
             //this.ForEach(item => Refresh(count++));
         }
-        
-
     }
 }

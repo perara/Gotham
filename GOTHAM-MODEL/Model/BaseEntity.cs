@@ -9,7 +9,7 @@ namespace GOTHAM.Model
 {
     public class BaseEntity
     {
-        public virtual int id { get; set; }
+        public virtual int Id { get; set; }
 
         [JsonIgnore]
         public virtual string Random { get; set; }

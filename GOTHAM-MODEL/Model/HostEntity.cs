@@ -11,16 +11,38 @@ namespace GOTHAM.Model
     public class HostEntity : BaseEntity
     {
 
-        public virtual string machineName { get; set; }
-        public virtual bool online { get; set; }
-        public virtual PersonEntity owner { get; set; }
+        public virtual string MachineName { get; set; }
+        public virtual bool Online { get; set; }
+        public virtual PersonEntity Owner { get; set; }
 
         // TODO: Add to database and map
-        public virtual NodeEntity node { get; set; }
+        public virtual NodeEntity Node { get; set; }
 
         // TODO: Use IP and MAC classes. (Exists in Tools project)
-        public virtual string ip { get; set; }
-        public virtual string mac { get; set; }
+        public virtual string Ip { get; set; }
+        public virtual string Mac { get; set; }
+
+        // Location
+        public virtual double Lat { get; set; }
+        public virtual double Lng { get; set; }
+
+        // Constructors
+        protected HostEntity() { }
+        public HostEntity(string machineName = "NoName")
+        {
+            MachineName = machineName;
+        }
+        public HostEntity(PersonEntity owner, NodeEntity node)
+        {
+            Owner = owner;
+            Lat = owner.Lat;
+            Lng = owner.Lng;
+            Node = node;
+        }
+        public virtual Coordinate.LatLng GetCoords()
+        {
+            return new Coordinate.LatLng(Owner.Lat, Owner.Lng);
+        }
     }
 
     public class HostEntityMap : ClassMap<HostEntity>
@@ -28,12 +50,12 @@ namespace GOTHAM.Model
         public HostEntityMap()
         {
             Table("host");
-            Id(x => x.id).GeneratedBy.Identity();
-            Map(x => x.machineName);
-            Map(x => x.online);
-            Map(x => x.ip);
-            Map(x => x.mac);
-            References(x => x.owner);
+            Id(x => x.Id).GeneratedBy.Identity();
+            Map(x => x.MachineName);
+            Map(x => x.Online);
+            Map(x => x.Ip);
+            Map(x => x.Mac);
+            References(x => x.Owner);
 
         }
     }

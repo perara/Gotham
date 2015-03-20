@@ -9,8 +9,8 @@ namespace GOTHAM.Model
 {
     public class NodeCableEntity : BaseEntity
     {
-        public virtual NodeEntity node { get; set; }
-        public virtual CableEntity cable { get; set; }
+        public virtual NodeEntity Node { get; set; }
+        public virtual CableEntity Cable { get; set; }
 
     }
     public class NodeCableEntityMap : ClassMap<NodeCableEntity>
@@ -19,10 +19,10 @@ namespace GOTHAM.Model
         {
             Table("node_cable");
 
-            Id(x => x.id).GeneratedBy.Identity();
+            Id(x => x.Id).GeneratedBy.Identity();
 
-            References(x => x.cable).Not.Nullable().Column("cable");
-            References(x => x.node).Not.Nullable().Column("node");
+            References(x => x.Cable).Not.Nullable().Column("cable");
+            References(x => x.Node).Not.Nullable().Column("node");
 
         }
     }

@@ -48,15 +48,9 @@ namespace GOTHAM.Tools
                         }
 
                         // Prints persentage output each 100 entity
-                        if (i++ % 100 == 0)
-                        {
-                            double p = 100.0 / list.Count * i;
-                            log.Info((int)p + "%");
-                        }
-
+                        if (i++ % 100 != 0) continue;
+                        log.Info((int)(100.0 / list.Count * i) + " %");
                     }
-
-             
                     transaction.Commit();
                 }// End transaction
             }// End session

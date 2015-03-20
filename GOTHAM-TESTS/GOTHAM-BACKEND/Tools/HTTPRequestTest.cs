@@ -9,7 +9,7 @@ using NUnit.Framework;
 using GOTHAM.Model;
 using GOTHAM.Tools;
 
-namespace GOTHAM.Gotham.Tests.Tools
+namespace GOTHAM.Tests
 {
 
     [TestFixture]

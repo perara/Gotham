@@ -1,11 +1,7 @@
-﻿using GOTHAM.Tools;
-using GOTHAM.Model;
+﻿using GOTHAM.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
 
 namespace GOTHAM.Tools
 {
@@ -17,7 +13,7 @@ namespace GOTHAM.Tools
         /// <summary>
         /// Current solution. Is overwritten if a new algorithm is excuted.
         /// </summary>
-        public List<KeyValuePair<int, NodeEntity>> solution = new List<KeyValuePair<int, NodeEntity>>();
+        public List<KeyValuePair<int, NodeEntity>> Solution = new List<KeyValuePair<int, NodeEntity>>();
 
 
         /// <summary>
@@ -33,7 +29,6 @@ namespace GOTHAM.Tools
             var tries = 0;
             var rnd = new Random();
             var minPath = Int32.MaxValue;
-            var time = DateTime.Now;
 
             // Run until end NodeEntity is reached
             while (tries < tryPaths)
@@ -42,15 +37,13 @@ namespace GOTHAM.Tools
                 var currentNode = start;
                 var jumps = 0;
 
-                queue.Add(new KeyValuePair<int,NodeEntity>(start.id, start));
+                queue.Add(new KeyValuePair<int,NodeEntity>(start.Id, start));
 
                 do
                 {
-                    NodeEntity nextNode = null;
+                    var nextNode = currentNode.GetSiblings()[rnd.Next(0, currentNode.GetSiblings().Count - 1)];
 
-                    nextNode = currentNode.Siblings()[rnd.Next(0, currentNode.Siblings().Count - 1)];
-
-                    queue.Add(new KeyValuePair<int,NodeEntity>(nextNode.id, nextNode));
+                    queue.Add(new KeyValuePair<int,NodeEntity>(nextNode.Id, nextNode));
                     currentNode = nextNode;
                     jumps++;
 
@@ -59,7 +52,7 @@ namespace GOTHAM.Tools
                 if (currentNode == goal && queue.Count < minPath)
                 {
                     // Console.WriteLine("FOUND A BETTER PATH");
-                    solution = queue;
+                    Solution = queue;
                     minPath = queue.Count;
                 }
 
@@ -77,11 +70,10 @@ namespace GOTHAM.Tools
         /// <returns></returns>
         public Pathfinder AStar(NodeEntity start, NodeEntity goal)
         {
-            var currentNodeEntity = new NodeEntity("Dummy");
             var ignore = new List<NodeEntity>();
 
-            currentNodeEntity = start;
-            solution.Add(new KeyValuePair<int,NodeEntity>(start.id, start));
+            var currentNodeEntity = start;
+            Solution.Add(new KeyValuePair<int,NodeEntity>(start.Id, start));
 
             // Run until end NodeEntity is reached
             do
@@ -91,30 +83,32 @@ namespace GOTHAM.Tools
 
 
                 // Check siblings of currentNodeEntity for shortest distance
-                foreach (var NodeEntity in currentNodeEntity.Siblings())
+                foreach (var nodeEntity in currentNodeEntity.GetSiblings())
                 {
-                    var dist = GeoTool.GetDistance(NodeEntity.GetCoordinates(), goal.GetCoordinates());
-                    if (dist < minDist && !ignore.Contains(NodeEntity))
-                    {
-                        minDist = dist;
-                        nextNodeEntity = NodeEntity;
-                    }
+                    var dist = GeoTool.GetDistance(nodeEntity.GetCoords(), goal.GetCoords());
+                    if (!(dist < minDist) || ignore.Contains(nodeEntity)) continue;
+                    minDist = dist;
+                    nextNodeEntity = nodeEntity;
                 }
 
                 // If last NodeEntity is further away, add to ignore list and remove
-                var lastDist = GeoTool.GetDistance(solution.Last().Value.GetCoordinates(), goal.GetCoordinates());
-                var currDist = GeoTool.GetDistance(nextNodeEntity.GetCoordinates(), goal.GetCoordinates());
+                var lastDist = GeoTool.GetDistance(Solution.Last().Value.GetCoords(), goal.GetCoords());
+
+                // Prevent possible nullpointer
+                if (nextNodeEntity == null) continue;
+
+                var currDist = GeoTool.GetDistance(nextNodeEntity.GetCoords(), goal.GetCoords());
 
                 if (lastDist > currDist)
                 {
-                    solution.Add(new KeyValuePair<int,NodeEntity>(nextNodeEntity.id, nextNodeEntity));
+                    Solution.Add(new KeyValuePair<int,NodeEntity>(nextNodeEntity.Id, nextNodeEntity));
                     ignore.Add(currentNodeEntity);
                     currentNodeEntity = nextNodeEntity;
                 }
                 else
                 {
-                    ignore.Add(solution.Last().Value);
-                    solution.Remove(solution.Last());
+                    ignore.Add(Solution.Last().Value);
+                    Solution.Remove(Solution.Last());
                 }
             } while (currentNodeEntity != goal);
             return this;
@@ -133,7 +127,6 @@ namespace GOTHAM.Tools
         {
             var ignore = new List<NodeEntity>();
             var timeout = 0;
-            var tries = 0;
             var minPath = Int32.MaxValue;
             var time = DateTime.Now;
 
@@ -145,7 +138,7 @@ namespace GOTHAM.Tools
                 var tempIgnore = new List<NodeEntity>();
                 var jumps = 0;
 
-                queue.Add(new KeyValuePair<int,NodeEntity>(start.id, start));
+                queue.Add(new KeyValuePair<int,NodeEntity>(start.Id, start));
 
                 do
                 {
@@ -154,17 +147,16 @@ namespace GOTHAM.Tools
                     
 
                     // Check siblings of currentNodeEntity for shortest distance
-                    foreach (var sibling1 in currentNode.Siblings())
+                    foreach (var sibling1 in currentNode.GetSiblings())
                     {
-                      foreach (var sibling2 in sibling1.Siblings())
-                        {
-                            var dist = GeoTool.GetDistance(sibling2.GetCoordinates(), goal.GetCoordinates());
-                            if (dist < minDist && !ignore.Contains(sibling1) && !tempIgnore.Contains(sibling1))
-                            {
-                                minDist = dist;
-                                nextNode = sibling1;
-                            }
-                        }
+                      foreach (var dist in sibling1
+                          .GetSiblings()
+                          .Select(sibling2 => GeoTool.GetDistance(sibling2.GetCoords(), goal.GetCoords()))
+                          .Where(dist => dist < minDist && !ignore.Contains(sibling1) && !tempIgnore.Contains(sibling1)))
+                      {
+                          minDist = dist;
+                          nextNode = sibling1;
+                      }
                     }
 
                     if (nextNode == null)
@@ -175,21 +167,20 @@ namespace GOTHAM.Tools
                     }
 
                     // If last NodeEntity is further away, add to ignore list and remove
-                    var lastDist = GeoTool.GetDistance(queue.Last().Value.GetCoordinates(), goal.GetCoordinates());
-                    var currDist = GeoTool.GetDistance(nextNode.GetCoordinates(), goal.GetCoordinates());
+                    var lastDist = GeoTool.GetDistance(queue.Last().Value.GetCoords(), goal.GetCoords());
+                    var currDist = GeoTool.GetDistance(nextNode.GetCoords(), goal.GetCoords());
 
-                    queue.Add(new KeyValuePair<int,NodeEntity>(nextNode.id, nextNode));
+                    queue.Add(new KeyValuePair<int,NodeEntity>(nextNode.Id, nextNode));
                     tempIgnore.Add(currentNode);
                     currentNode = nextNode;
                     jumps++;
 
                 } while (currentNode != goal && jumps < 100);
-                tries++;
 
                 if (currentNode == goal && queue.Count < minPath)
                 {
                     Console.WriteLine("FOUND A (BETTER) PATH");
-                    solution = queue;
+                    Solution = queue;
                     minPath = queue.Count;
                     return this;
                 }
@@ -205,7 +196,7 @@ namespace GOTHAM.Tools
         /// </summary>
         /// <param name="start"></param>
         /// <param name="goal"></param>
-        public void ACO(NodeEntity start, NodeEntity goal)
+        public void Aco(NodeEntity start, NodeEntity goal)
         {
 
         }
@@ -214,11 +205,11 @@ namespace GOTHAM.Tools
         /// Returns the solution of the latest generated path as an Stack if Node ID's
         /// </summary>
         /// <returns></returns>
-        public Stack<int> toIdList()
+        public Stack<int> ToIdList()
         {
             var pathInt = new Stack<int>();
 
-            foreach (var node in solution)
+            foreach (var node in Solution)
                 pathInt.Push(node.Key);
 
             return pathInt;
@@ -228,11 +219,11 @@ namespace GOTHAM.Tools
         /// Returns the solution of the latest generated path as an Stack if NodeEntities
         /// </summary>
         /// <returns></returns>
-        public Stack<NodeEntity> toNodeList()
+        public Stack<NodeEntity> ToNodeList()
         {
             var pathInt = new Stack<NodeEntity>();
 
-            foreach (var node in solution)
+            foreach (var node in Solution)
                 pathInt.Push(node.Value);
 
             return pathInt;
@@ -242,11 +233,11 @@ namespace GOTHAM.Tools
         ///  Returns the solution of the latest generated path as a Dictionary of Node ID's and NodeEntities
         /// </summary>
         /// <returns></returns>
-        public Dictionary<int, NodeEntity> toDictionary()
+        public Dictionary<int, NodeEntity> ToDictionary()
         {
             var pathInt = new Dictionary<int, NodeEntity>();
 
-            foreach (var node in solution)
+            foreach (var node in Solution)
             {
                 // TODO: Remove nodes between duplicates (probably an unwanted loop)
                 if (pathInt.ContainsKey(node.Key)) pathInt.Remove(node.Key);

@@ -1,63 +1,57 @@
 ﻿using GOTHAM.Model;
-using GOTHAM.Model.Tools;
 using GOTHAM.Tools.Cache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GOTHAM.Tools
 {
     class CableGenerator
     {
-        public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        public static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Main cable generation algorithm. Iterate from left and connect to closest nodes on the right
         /// </summary>
         /// <param name="nodes"></param>
-        /// <param name="siblings"></param>
-        public static void GenerateCables(List<NodeEntity> nodes, int minSiblings, int maxSiblings, int maxDistance = 10^12)
+        /// <param name="minSiblings"></param>
+        /// <param name="maxSiblings"></param>
+        /// <param name="maxDistance"></param>
+        public static void GenerateCables(List<NodeEntity> nodes, int minSiblings, int maxSiblings, int maxDistance = Int32.MaxValue)
         {
-            log.Info("Making land cables between land nodes with " + minSiblings + "(min) to " + maxSiblings + "(max) siblings");
+            Log.Info("Making land cables between land nodes with " + minSiblings + "(min) to " + maxSiblings + "(max) siblings");
 
-            var sortedNodes = nodes.OrderBy(o => o.lng).ToList();
+            var sortedNodes = nodes.OrderBy(o => o.Lng).ToList();
             sortedNodes.Reverse();
             var newCables = new List<BaseEntity>();
             var rnd = new Random();
 
 
-            for (int i = sortedNodes.Count - 1; i >= 0; i--)
+            for (var i = sortedNodes.Count - 1; i >= 0; i--)
             {
                 var siblings = rnd.Next(minSiblings, maxSiblings);
                 var node = sortedNodes[i];
                 sortedNodes.RemoveAt(i);
 
-                if (node.tier.id != 1) continue;
-
-                var cable = new CableEntity(10000, new CableTypeEntity() { id = 0 }, 0, "Land Cable");
-                var cableParts = new List<CablePartEntity>();
-
-                cable.nodes = new List<NodeEntity>();
+                if (node.Tier.Id != 1) continue;
 
                 var nodeList = new Dictionary<double, NodeEntity>();
-
-                //SortedDictionary<double, NodeEntity> nodeList = new SortedDictionary<double, NodeEntity>();
-
 
                 foreach (var neighbor in sortedNodes)
                 {
                     //Console.WriteLine("Attempting to add: " + neighbor.id + "|" + neighbor.name);
                     // Calculate Distance
-                    var distance = GeoTool.GetDistance(node.GetCoordinates(), neighbor.GetCoordinates());
+                    var distance = GeoTool.GetDistance(node.GetCoords(), neighbor.GetCoords());
+
+                    // Skip if distance is greater than maxDistance
+                    if (distance > maxDistance) continue;
 
                     // Skip if self or same position
-                    var exists = nodeList.Where(x => x.Value.lat == neighbor.lat && x.Value.lng == neighbor.lng).FirstOrDefault();
+                    var exists = nodeList.FirstOrDefault(x => x.Value.Lat.Equals(neighbor.Lat) && x.Value.Lng.Equals(neighbor.Lng));
                     if (exists.Value != null || node == neighbor) continue;
 
                     // See if there is a "worse"/"further away" element in the dict
-                    var worstElement = nodeList.Where(x => x.Key > distance && x.Value.lng > neighbor.lng).FirstOrDefault();
+                    var worstElement = nodeList.FirstOrDefault(x => x.Key > distance && x.Value.Lng > neighbor.Lng);
 
                     // If there is no worse element in the dict and there is still room for an sibling,
                     // Add to the list
@@ -72,15 +66,12 @@ namespace GOTHAM.Tools
                     }
                 }
 
-                foreach (var sibling in nodeList)
-                {
-                    if (GeoTool.GetDistance(sortedNodes[i].GetCoordinates(), sibling.Value.GetCoordinates()) > maxDistance) continue;
-                    newCables.Add(NewCable(node, sibling.Value, 10000, sibling.Key));
-                }
+                nodeList.ToList()
+                    .ForEach(x => newCables.Add(NewCable(node, x.Value, 10000, x.Key)));
+
             }
-
             DBTool.WriteList(newCables);
-
+            Log.Info("Made " + newCables.Count + " new node to node connections");
         }
 
 
@@ -95,47 +86,51 @@ namespace GOTHAM.Tools
         public static CableEntity NewCable(NodeEntity node1, NodeEntity node2, long bandwidth = 10000, double distance = 0)
         {
             // Make cable, get type and declare lists
-            var cableType = CacheEngine.CableTypes.Where(x => x.id == 0).FirstOrDefault();
+            var cableType = CacheEngine.CableTypes.FirstOrDefault();
 
-            var cable = new CableEntity(bandwidth, cableType, distance, "Land Cable (" + node1.id + "," + node2.id + ")");
+            var cable = new CableEntity(bandwidth, cableType, distance, "Land Cable (" + node1.Id + "," + node2.Id + ")")
+            {
+                CableParts = new List<CablePartEntity>(),
+                Nodes = new List<NodeEntity>(),
+                Distance = 0
+            };
 
-            cable.cableParts = new List<CablePartEntity>();
-            cable.nodes = new List<NodeEntity>();
 
             // If cable crosses -180/180 latitude, make extra cable part
-            if (Math.Abs(node1.lng - node2.lng) > 80)
+            if (Math.Abs(node1.Lng - node2.Lng) > 80)
             {
-                log.Info("MADE EXTRA CABLE " + Math.Abs(node1.lng - node2.lng));
-
-                var toLeft = (node1.lng < 0) ? 180 : -180;
+                var toLeft = (node1.Lng < 0) ? 180 : -180;
 
                 // Make cable 1 start and end point
-                var cableStart = new CablePartEntity(cable, 0, node1.lat, node1.lng);
-                var cableEnd = new CablePartEntity(cable, 1, (node2.lat + (node1.lat - node2.lat) / 2), toLeft * -1);
+                var cableStart = new CablePartEntity(cable, 0, node1.Lat, node1.Lng);
+                var cableEnd = new CablePartEntity(cable, 1, (node2.Lat + (node1.Lat - node2.Lat) / 2), toLeft * -1);
+                cable.Distance += GeoTool.GetDistance(cableStart.GetCoords(), cableEnd.GetCoords());
 
                 // Make cable 2 start and end point
-                var cableTwoStart = new CablePartEntity(cable, 0, (node2.lat + (node1.lat - node2.lat) / 2), toLeft);
-                var cableTwoEnd = new CablePartEntity(cable, 1, node2.lat, node2.lng);
+                var cableTwoStart = new CablePartEntity(cable, 0, (node2.Lat + (node1.Lat - node2.Lat) / 2), toLeft);
+                var cableTwoEnd = new CablePartEntity(cable, 1, node2.Lat, node2.Lng);
+                cable.Distance += GeoTool.GetDistance(cableTwoStart.GetCoords(), cableTwoEnd.GetCoords());
 
                 // Add cable parts to cable
-                cable.cableParts.Add(cableStart);
-                cable.cableParts.Add(cableEnd);
-                cable.cableParts.Add(cableTwoStart);
-                cable.cableParts.Add(cableTwoEnd);
+                cable.CableParts.Add(cableStart);
+                cable.CableParts.Add(cableEnd);
+                cable.CableParts.Add(cableTwoStart);
+                cable.CableParts.Add(cableTwoEnd);
             }
             else
             {
                 // Make cable start and end point
-                var cableStart = new CablePartEntity(cable, 0, node1.lat, node1.lng);
-                var cableEnd = new CablePartEntity(cable, 1, node2.lat, node2.lng);
+                var cableStart = new CablePartEntity(cable, 0, node1.Lat, node1.Lng);
+                var cableEnd = new CablePartEntity(cable, 1, node2.Lat, node2.Lng);
+                cable.Distance += GeoTool.GetDistance(cableStart.GetCoords(), cableEnd.GetCoords());
 
                 // Add cable parts to cable
-                cable.cableParts.Add(cableStart);
-                cable.cableParts.Add(cableEnd);
+                cable.CableParts.Add(cableStart);
+                cable.CableParts.Add(cableEnd);
             }
             // Refference this cable in each node
-            node1.cables.Add(cable);
-            node2.cables.Add(cable);
+            node1.Cables.Add(cable);
+            node2.Cables.Add(cable);
 
             return cable;
         }
@@ -144,66 +139,84 @@ namespace GOTHAM.Tools
         /// Connects cable and nodes within the defined distance (ex. 5 KM, Connects cables within 5 KM of each node) and writes cables to DB
         /// </summary>
         /// <param name="maxDistance"></param>
-        public static void ConnectNodes(double maxDistance)
+        public static void ConnectNodesToCables(int maxDistance = 50)
         {
-            log.Info("Connecting cables to nodes closer than " + maxDistance + " Kilometers");
+            Log.Info("Connecting cables to nodes closer than " + maxDistance + " Kilometers");
 
             var nodes = CacheEngine.Nodes;
-            var cables = CacheEngine.Cables;
-            var nodeCables = new List<string>();
+            var cableParts = CacheEngine.CableParts;
+            var nodeCables = CacheEngine.NodeCables;
+            var newNodeCables = new List<string>();
             var nodeCableEntities = new List<NodeCableEntity>();
 
             foreach (var node in nodes)
             {
-                foreach (var cable in cables)
+                foreach (var part in cableParts)
                 {
-                    foreach (var part in cable.cableParts)
-                    {
-                        var nodePos = new Coordinate.LatLng(node.lat, node.lng);
-                        var partPos = new Coordinate.LatLng(part.lat, part.lng);
-                        var dist = GeoTool.GetDistance(nodePos, partPos);
+                    var dist = GeoTool.GetDistance(node.GetCoords(), part.GetCoords());
+                    if (dist > maxDistance) continue;
 
-                        if (dist < maxDistance)
-                        {
-                            var pair = new KeyValuePair<int, int>(node.id, cable.id);
+                    var exists = nodeCables.Any(x => x.Cable.Id == part.Cable.Id && x.Node.Id == node.Id);
+                    if (exists) continue;
 
-                            if (!nodeCables.Contains(pair.ToString()))
-                            {
-                                nodeCables.Add(pair.ToString());
-                                nodeCableEntities.Add(Connect(cable, node));
-                            }
-                        }
-                    }// End part
-                }// End cable
+                    var pair = new KeyValuePair<int, int>(node.Id, part.Cable.Id);
+                    if (newNodeCables.Contains(pair.ToString())) continue;
+
+                    newNodeCables.Add(pair.ToString());
+                    nodeCableEntities.Add(Connect(part.Cable, node));
+
+
+                }// End part
             }// End node
             DBTool.WriteList(nodeCableEntities);
+            Log.Info("Made " + nodeCableEntities.Count + " node to cable connections");
         }
 
         /// <summary>
-        /// Connects the input node(current) to the closest node in list(nodes) and returns the cable generated
+        /// Returns the closest node in list(nodes)
         /// </summary>
         /// <param name="current"></param>
         /// <param name="nodes"></param>
+        /// <param name="maxDistance"></param>
         /// <returns></returns>
-        public static CableEntity connectClosest(NodeEntity current, List<NodeEntity> nodes, int maxDistance = 10^12)
+        public static NodeEntity GetClosestNode(NodeEntity current, List<NodeEntity> nodes, int maxDistance = Int32.MaxValue)
         {
             var closest = nodes.Last();
-            var closestDist = GeoTool.GetDistance(current.GetCoordinates(), closest.GetCoordinates());
+            var closestDist = GeoTool.GetDistance(current.GetCoords(), closest.GetCoords());
 
             foreach (var node in nodes)
             {
-                var dist = GeoTool.GetDistance(current.GetCoordinates(), node.GetCoordinates());
-                if (dist < closestDist)
-                {
-                    closest = node;
-                    closestDist = dist;
-                }
+                var dist = GeoTool.GetDistance(current.GetCoords(), node.GetCoords());
+                if (dist > closestDist) continue;
+
+                closest = node;
+                closestDist = dist;
             }
 
-            if (closestDist > maxDistance) 
-                return null;
+            return (closestDist > maxDistance) ? null : closest;
+        }
 
-            return NewCable(current, closest);
+        /// <summary>
+        /// Returns the closest node in list(nodes)
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="nodes"></param>
+        /// <param name="maxDistance"></param>
+        /// <returns></returns>
+        public static NodeEntity GetClosestNode(PersonEntity current, List<NodeEntity> nodes, int maxDistance = Int32.MaxValue)
+        {
+            var closest = nodes.Last();
+            var closestDist = GeoTool.GetDistance(current.GetCoords(), closest.GetCoords());
+
+            foreach (var node in nodes)
+            {
+                var dist = GeoTool.GetDistance(current.GetCoords(), node.GetCoords());
+                if (dist > closestDist) continue;
+
+                closest = node;
+                closestDist = dist;
+            }
+            return (closestDist > maxDistance) ? null : closest;
         }
 
         /// <summary>
@@ -214,10 +227,7 @@ namespace GOTHAM.Tools
         public static NodeCableEntity Connect(CableEntity cable, NodeEntity node)
         {
 
-            var nodeCable = new NodeCableEntity();
-            nodeCable.cable = cable;
-            nodeCable.node = node;
-
+            var nodeCable = new NodeCableEntity { Cable = cable, Node = node };
             return nodeCable;
         }
 
@@ -228,50 +238,50 @@ namespace GOTHAM.Tools
         /// <param name="maxDist"></param>
         public static void ConnectCloseNodes(List<NodeEntity> nodes, int maxDist)
         {
-            var cableHashes = new List<string>();
-            var foundDuplicate = false;
+            Log.Info("Connecting nodes to nodes closer than " + maxDist + " kilometers");
 
-            List<CableEntity> newCables = new List<CableEntity>();
-            List<CablePartEntity> newCableParts = new List<CablePartEntity>();
+            var cableHashes = new List<string>();
+
+            var newCables = new List<CableEntity>();
+            var newCableParts = new List<CablePartEntity>();
 
             foreach (var node1 in nodes)
             {
                 foreach (var node2 in nodes)
                 {
-                    foundDuplicate = false;
-                    var dist = GeoTool.GetDistance(node1.GetCoordinates(), node2.GetCoordinates());
+                    var foundDuplicate = false;
+                    var dist = GeoTool.GetDistance(node1.GetCoords(), node2.GetCoords());
 
                     // Check if cable should be made
-                    if (node1 == node2 || node1.Siblings().Contains(node2) || dist > maxDist || node1.Siblings().Count() > 2 || node2.Siblings().Count() > 2) continue;
+                    if (node1 == node2 || node1.GetSiblings().Contains(node2) || dist > maxDist || node1.GetSiblings().Count() > 2 || node2.GetSiblings().Count() > 2) continue;
 
                     // Make cable
-                    var cable = new CableEntity(0, new CableTypeEntity() { id = 0 }, 0, "Mini Cable");
-                    cable.cableParts = new List<CablePartEntity>();
-                    cable.nodes = new List<NodeEntity>();
+                    var cable = new CableEntity(0, new CableTypeEntity() { Id = 0 }, 0, "Mini Cable");
+                    cable.CableParts = new List<CablePartEntity>();
+                    cable.Nodes = new List<NodeEntity>();
 
                     // Make cableparts
-                    var cablePart1 = new CablePartEntity(cable, 0, node1.lat, node1.lng);
-                    var cablePart2 = new CablePartEntity(cable, 1, node2.lat, node2.lng);
+                    var cablePart1 = new CablePartEntity(cable, 0, node1.Lat, node1.Lng);
+                    var cablePart2 = new CablePartEntity(cable, 1, node2.Lat, node2.Lng);
 
-                    cable.cableParts.Add(cablePart1);
-                    cable.cableParts.Add(cablePart2);
+                    cable.CableParts.Add(cablePart1);
+                    cable.CableParts.Add(cablePart2);
 
-                    cable.nodes.Add(node1);
-                    cable.nodes.Add(node2);
+                    cable.Nodes.Add(node1);
+                    cable.Nodes.Add(node2);
 
-                    var coord1 = Coordinate.newLatLng(node1.lat, node1.lng);
-                    var coord2 = Coordinate.newLatLng(node2.lat, node2.lng);
+                    var coord1 = Coordinate.newLatLng(node1.Lat, node1.Lng);
+                    var coord2 = Coordinate.newLatLng(node2.Lat, node2.Lng);
 
                     var hash1 = (coord1.lat + coord1.lng + coord2.lat + coord2.lng).ToString();
 
                     // Check if cable is already made
                     foreach (var cableHash in cableHashes)
                     {
-                        if (cableHash == hash1)
-                        {
-                            foundDuplicate = true;
-                            break;
-                        }
+                        if (cableHash != hash1) continue;
+                        foundDuplicate = true;
+                        break;
+
                     }
 
                     // Continue if cable is already made
@@ -279,56 +289,53 @@ namespace GOTHAM.Tools
 
                     // Write to database
                     newCables.Add(cable);
-                    //newCableParts.Add(cablePart1);
-                    //newCableParts.Add(cablePart2);
 
                     // Add to newCables list to prevent duplicate cables
                     cableHashes.Add(hash1);
-                    if (newCables.Count() % 1000 == 0)
-                        Console.WriteLine(newCables.Count + " Cables");
                 }
             }
 
-            log.Info("Press enter to add cables to database");
-            Console.ReadLine();
-
-
             DBTool.WriteList(newCables);
             DBTool.WriteList(newCableParts);
+            Log.Info("Made " + newCables.Count + " connections between nodes");
         }
 
 
         /// <summary>
         /// Connects all sea nodes to the closest land node and writes the cables to DB
         /// </summary>
-        public static void ConnectSeaNodesToLand()
+        public static void ConnectSeaNodesToLand(int maxDistance = 10^12)
         {
-            log.Info("Connecting sea nodes to the closest land node");
+            Log.Info("Connecting sea nodes to the closest land node");
 
-            var landNodes = CacheEngine.Nodes.Where(x => x.tier.id == 1).ToList();
-            var seaNodes = CacheEngine.Nodes.Where(x => x.tier.id == 4).ToList();
+            var landNodes = CacheEngine.Nodes.Where(x => x.Tier.Id == 1).ToList();
+            var seaNodes = CacheEngine.Nodes.Where(x => x.Tier.Id == 4).ToList();
             var newCables = new List<CableEntity>();
 
             foreach (var seaNode in seaNodes)
             {
-                var newNode = connectClosest(seaNode, landNodes);
-                if (newNode != null)
-                    newCables.Add(newNode);
+                var closest = GetClosestNode(seaNode, landNodes, maxDistance);
+                if (closest == null) continue;
+                newCables.Add(NewCable(seaNode, closest));
             }
 
             DBTool.WriteList(newCables);
+            Log.Info("Made " + newCables.Count + " cables from sea nodes to land nodes");
         }
 
-        public static void consistencyCheck(List<NodeEntity> nodes, List<CableEntity> cables)
+        public static void ConsistencyCheck(List<NodeEntity> nodes, List<CableEntity> cables)
         {
 
 
             foreach (var cable in cables)
             {
-                if (cable.nodes == null)
-                    log.Error("Consistency check: Cable with ID " + cable.id + "'s nodes is null");
-                if (cable.nodes.Count == 0)
-                    log.Error("Consistency check: Cable with ID " + cable.id + " is not connected to any nodes");
+                if (cable.Nodes == null)
+                {
+                    Log.Error("Consistency check: Cable with ID " + cable.Id + "'s nodes is null");
+                    continue;
+                }
+                if (cable.Nodes.Count == 0)
+                    Log.Error("Consistency check: Cable with ID " + cable.Id + " is not connected to any nodes");
             }
         }
     }

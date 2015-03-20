@@ -6,33 +6,33 @@ namespace GOTHAM.Model
 {
     public class CableEntity : BaseEntity
     {
-        public virtual int priority { get; set; }
-        public virtual double capacity { get; set; }
-        public virtual double distance { get; set; }
-        public virtual string name { get; set; }
-        public virtual int year { get; set; }
+        public virtual int Priority { get; set; }
+        public virtual double Capacity { get; set; }
+        public virtual double Distance { get; set; }
+        public virtual string Name { get; set; }
+        public virtual int Year { get; set; }
 
         [JsonIgnore] //TODO - Why is it bugged in JSONconvert?
-        public virtual CableTypeEntity type { get; set; }
+        public virtual CableTypeEntity Type { get; set; }
 
         [JsonIgnore]
-        public virtual IList<NodeEntity> nodes { get; set; }
+        public virtual IList<NodeEntity> Nodes { get; set; }
 
-        public virtual IList<int> nodeids { get; set; }
+        public virtual IList<int> NodeIds { get; set; }
 
-        public virtual IList<CablePartEntity> cableParts { get; set; }
+        public virtual IList<CablePartEntity> CableParts { get; set; }
 
         protected CableEntity() { }
         public CableEntity(string name = "NoName")
         {
-            this.name = name;
+            Name = name;
         }
         public CableEntity(double capacity, CableTypeEntity type, double distance, string name)
         {
-            this.capacity = capacity;
-            this.type = type;
-            this.distance = distance;
-            this.name = name;
+            Capacity = capacity;
+            Type = type;
+            Distance = distance;
+            Name = name;
         }
     }
 
@@ -43,26 +43,23 @@ namespace GOTHAM.Model
         {
             Table("cable");
 
-            Id(x => x.id).GeneratedBy.Identity();
+            Id(x => x.Id).GeneratedBy.Identity();
 
-            Map(x => x.priority);
-            Map(x => x.capacity);
-            Map(x => x.distance);
-            Map(x => x.name);
-            Map(x => x.year);
+            Map(x => x.Priority);
+            Map(x => x.Capacity);
+            Map(x => x.Distance);
+            Map(x => x.Name);
+            Map(x => x.Year);
 
-            //References(x => x.type, "id")
-            //    .Not.Nullable();
-            HasOne<CableTypeEntity>(x => x.type);
+            References<CableTypeEntity>(x => x.Type, "id");
 
-
-            HasMany<CablePartEntity>(x => x.cableParts)
+            HasMany<CablePartEntity>(x => x.CableParts)
             .Cascade.All()
             .Inverse()
             .KeyColumn("cable")
             .Not.LazyLoad();
 
-            HasManyToMany(x => x.nodes)
+            HasManyToMany(x => x.Nodes)
                 .Inverse()
                 .Table("node_cable")
                 .ParentKeyColumn("cable")
@@ -70,7 +67,7 @@ namespace GOTHAM.Model
                 .Not.LazyLoad();
 
 
-            HasManyToMany(x => x.nodeids)
+            HasManyToMany(x => x.NodeIds)
                 .Cascade.All()
                 .Inverse()
                 .Table("node_cable")

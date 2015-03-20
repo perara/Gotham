@@ -12,7 +12,7 @@ using GOTHAM.Model;
 using GOTHAM.Model.Tools;
 using GOTHAM.Tools.Cache;
 
-namespace GOTHAM.Gotham.Tests.Tools
+namespace GOTHAM.Tests
 {
     [TestFixture]
     class NodeTest
@@ -25,10 +25,10 @@ namespace GOTHAM.Gotham.Tests.Tools
 
             foreach (var node in nodes)
             {
-                Assert.NotNull(node.cables, "Node with ID " + node.id + "'s cables are null");
-                Assert.Greater(node.cables.Count, 0, "Node with ID " + node.id + " is not connected to any cables");
-                Assert.IsNotEmpty(node.name, "Node with ID " + node.id + " does not have a name");
-                Assert.AreEqual(node.countryCode.Count(), 2, "Node with ID " + node.id + " has a long countrycode. Is this country name?");
+                Assert.NotNull(node.Cables, "Node with ID " + node.Id + "'s cables are null");
+                Assert.Greater(node.Cables.Count, 0, "Node with ID " + node.Id + " is not connected to any cables");
+                Assert.IsNotEmpty(node.Name, "Node with ID " + node.Id + " does not have a name");
+                Assert.AreEqual(node.CountryCode.Count(), 2, "Node with ID " + node.Id + " has a long countrycode. Is this country name?");
             }
         }
 

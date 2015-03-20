@@ -168,6 +168,7 @@
     <Compile Include="Gotham\Application\Tools\Cache\CacheObject.cs" />
     <Compile Include="Gotham\Application\Tools\Globals.cs" />
     <Compile Include="Gotham\Application\Tools\Objects\NodeJSON.cs" />
+    <Compile Include="Gotham\Application\Tools\SessionGenerator.cs" />
     <Compile Include="Gotham\Service\ServiceStack\AppHost.cs" />
     <Compile Include="Gotham\Service\ServiceStack\Resources\HelloResource.cs" />
     <Compile Include="Gotham\Service\ServiceStack\Resources\NodeResource.cs" />

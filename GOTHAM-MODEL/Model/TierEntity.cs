@@ -9,7 +9,7 @@ namespace GOTHAM.Model
 {
     public class TierEntity : BaseEntity
     {
-        public virtual string name { get; set; }
+        public virtual string Name { get; set; }
 
     }
 
@@ -19,8 +19,8 @@ namespace GOTHAM.Model
         public TierEntityMap()
         {
             Table("tier");
-            Id(x => x.id).GeneratedBy.Identity();
-            Map(x => x.name).ReadOnly();
+            Id(x => x.Id).GeneratedBy.Identity();
+            Map(x => x.Name).ReadOnly();
         }
 
 

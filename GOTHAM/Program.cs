@@ -91,16 +91,20 @@ namespace GOTHAM
 
 
 
-            var nodes = CacheEngine.Nodes;
+            //CableGenerator.ConnectNodesToCables();
             //var node1 = nodes.Where(x => x.id == 16118).FirstOrDefault().GetCoordinates();
             //var node2 = nodes.Where(x => x.id == 15866).FirstOrDefault().GetCoordinates();
 
             //log.Info(GeoTool.GetDistance(node1, node2));
 
+            // Connect nodes to cables
+            //CableGenerator.ConnectNodes(50);
 
-            CableGenerator.ConnectNodes(50);
-            CableGenerator.ConnectSeaNodesToLand();
-            CableGenerator.GenerateCables(nodes, 2, 3);
+            // Connect Sea nodes to land nodes
+            //CableGenerator.ConnectSeaNodesToLand(1000);
+
+            // Generate cables between land nodes
+            //CableGenerator.GenerateCables(nodes, 2, 2, 1700);
             
 
             //var path = new Pathfinder().TryRandom(start, end, 100000).toDictionary();

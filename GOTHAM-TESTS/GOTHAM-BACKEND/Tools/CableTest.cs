@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GOTHAM_TESTS.GOTHAM_BACKEND.Tools
+namespace GOTHAM.Tests
 {
     class CableTest
     {
@@ -19,11 +19,11 @@ namespace GOTHAM_TESTS.GOTHAM_BACKEND.Tools
 
             foreach (var cable in cables)
             {
-                Assert.NotNull(cable.nodes, "Cable with ID " + cable.id + "'s nodes are null");
-                Assert.Greater(cable.nodes.Count, 0, "Cable with ID " + cable.id + " is not connected to any nodes");
-                Assert.IsNotEmpty(cable.name, "Cable with ID " + cable.id + " does not have a name");
-                Assert.Greater(cable.cableParts.Count, 0, "Cable with ID " + cable.id + " does not have any cable parts");
-                Assert.NotNull(cable.type, "Cable with ID " + cable.id + " does not have a cable type");
+                Assert.NotNull(cable.Nodes, "Cable with ID " + cable.Id + "'s nodes are null");
+                Assert.Greater(cable.Nodes.Count, 0, "Cable with ID " + cable.Id + " is not connected to any nodes");
+                Assert.IsNotEmpty(cable.Name, "Cable with ID " + cable.Id + " does not have a name");
+                Assert.Greater(cable.CableParts.Count, 0, "Cable with ID " + cable.Id + " does not have any cable parts");
+                Assert.NotNull(cable.Type, "Cable with ID " + cable.Id + " does not have a cable type");
             }
         }
     }

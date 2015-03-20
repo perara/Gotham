@@ -18,6 +18,7 @@ namespace GOTHAM.Traffic
         public HostEntity targetHost { get; set; }
         public Stack<Packet> packets { get; set; }
 
+        
         /// <summary>
         /// Finds a path between source and target nodes and stores packages exchanged.
         /// </summary>
@@ -25,9 +26,11 @@ namespace GOTHAM.Traffic
         /// <param name="targetHost"></param>
         public Session(HostEntity sourceHost, HostEntity targetHost)
         {
-            var startNode = sourceHost.node;
-            var endNode = targetHost.node;
-            path = new Pathfinder().TryRandom(startNode, endNode, 10000).toDictionary();
+            var startNode = sourceHost.Node;
+            var endNode = targetHost.Node;
+            path = new Pathfinder().TryRandom(startNode, endNode, 10000).ToDictionary();
         }
+
+
     }
 }

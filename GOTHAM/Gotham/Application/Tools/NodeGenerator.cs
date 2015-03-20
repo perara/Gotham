@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NHibernate.Linq;
-using GOTHAM.Tools;
 using GOTHAM.Model;
 using GOTHAM.Model.Tools;
 using GOTHAM.Tools.Cache;
@@ -16,43 +13,43 @@ namespace GOTHAM.Tools
     /// </summary>
     public class NodeGenerator
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // Generates random numbers for bandwidth
-        static Random rnd = new Random();
+        static readonly Random Rnd = new Random();
 
         // Set the minimum and maximum amount of bandwidth a tier 3 node can have
-        static double childMinBW = 0.01;
-        static double childMaxBW = 0.2;
+        private const double ChildMinBw = 0.01;
+        private const double ChildMaxBw = 0.2;
 
         /// <summary>
         /// Produces a general estimate of tier 1 nodes in each country based on population and continent
         /// </summary>
         /// <param name="countries"></param>
         /// <returns></returns>
-        public static Dictionary<string, int> estimateNodes(List<CountryEntity> countries)
+        public static Dictionary<string, int> EstimateNodes(List<CountryEntity> countries)
         {
             var results = new Dictionary<string, int>();
             var total = 0;
             foreach (var country in countries)
             {
                 double nodes = 1;
-                double temp = country.population;
+                double temp = country.Population;
                 while (temp > 10)
                 {
                     temp = (temp - (300000 * nodes));
                     nodes++;
                 }
-                if (country.continent == "AF") nodes = (nodes * 0.5);
-                else if (country.continent == "AS") nodes = (nodes * 0.8);
-                else if (country.continent == "SA") nodes = (nodes * 0.8);
+                if (country.Continent == "AF") nodes = (nodes * 0.5);
+                else if (country.Continent == "AS") nodes = (nodes * 0.8);
+                else if (country.Continent == "SA") nodes = (nodes * 0.8);
 
-                country.nodes = (int)nodes;
+                country.Nodes = (int)nodes;
                 total += (int)nodes;
-                log.Info(country.name + " got " + (int)nodes + " nodes");
-                results.Add(country.countryCode, (int)nodes);
+                Log.Info(country.Name + " got " + (int)nodes + " nodes");
+                results.Add(country.CountryCode, (int)nodes);
             }
-            log.Info(total);
+            Log.Info("Total of " + total + " locations");
             return results;
         }
 
@@ -61,16 +58,14 @@ namespace GOTHAM.Tools
         /// </summary>
         /// <param name="locations"></param>
         /// <returns></returns>
-        public static List<NodeEntity> convertLocToNode(List<LocationEntity> locations)
+        public static List<NodeEntity> ConvertLocToNode(List<LocationEntity> locations)
         {
             var nodes = new List<NodeEntity>();
 
-            foreach (var loc in locations)
-            {
-                var node = new NodeEntity(loc.name, loc.countrycode, new TierEntity() { id = 1 }, loc.lat, loc.lng);
+            locations.ToList()
+                .ForEach(x => nodes.Add(
+                    new NodeEntity(x.Name, x.Countrycode, new TierEntity() { Id = 1 }, x.Lat, x.Lng)));
 
-                nodes.Add(node);
-            }
             return nodes;
         }
 
@@ -80,31 +75,26 @@ namespace GOTHAM.Tools
         /// </summary>
         /// <param name="nodeEstimate"></param>
         /// <returns></returns>
-        public static List<LocationEntity> generateFromEstimate(Dictionary<string, int> nodeEstimate)
+        public static List<LocationEntity> GenerateFromEstimate(Dictionary<string, int> nodeEstimate)
         {
-            var rand = new Random();
             var locations = new List<LocationEntity>();
 
             using (var session = EntityManager.GetSessionFactory().OpenSession())
             {
-                using (var transaction = session.BeginTransaction())
+                foreach (var item in nodeEstimate)
                 {
-                    foreach (var item in nodeEstimate)
-                    {
-                        var country = item.Key;
-                        var quantity = item.Value;
-                        var cities = session.Query<LocationEntity>()
-                            .Where(x => x.countrycode == item.Key)
-                            .OrderBy(x => x.Random)
-                            .Take(quantity)
-                            .ToList();
+                    var quantity = item.Value;
+                    var cities = session.Query<LocationEntity>()
+                        .Where(x => x.Countrycode == item.Key)
+                        .OrderBy(x => x.Random)
+                        .Take(quantity)
+                        .ToList();
 
-                        locations.AddRange(cities);
+                    locations.AddRange(cities);
 
-                        log.Info(item.Key + ": " + item.Value);
+                    Log.Info(item.Key + ": " + item.Value);
 
-                    }
-                }// End transaction
+                }
             }// End session
             return locations;
         }
@@ -116,7 +106,7 @@ namespace GOTHAM.Tools
         /// <returns></returns>
         private static NodeEntity NewRandomNode(TierEntity tier)
         {
-            var node = new NodeEntity("test", "Flette", tier, rnd.Next(Globals.GetInstance().mapMax.X), rnd.Next(Globals.GetInstance().mapMax.Y));
+            var node = new NodeEntity("test", "Flette", tier, Rnd.Next(Globals.GetInstance().MapMax.X), Rnd.Next(Globals.GetInstance().MapMax.Y));
 
             return node;
         }
@@ -133,31 +123,31 @@ namespace GOTHAM.Tools
             //var cables = new List<CableEntity>();
 
             // Generate Tier 2 Nodes
-            for (int i = 0; i < siblings; i++)
+            for (var i = 0; i < siblings; i++)
             {
 
                 // Create a tier 2 Node
-                NodeEntity node = NewRandomNode(new TierEntity() { id = 2 });
-                node.cables = new List<CableEntity>();
-                node.bandwidth = totBandwidth;
+                NodeEntity node = NewRandomNode(new TierEntity() { Id = 2 });
+                node.Cables = new List<CableEntity>();
+                node.Bandwidth = totBandwidth;
                 nodes.Add(node);
 
                 long bwCounter = 0;
 
                 // Check if total child bandwidth exeedes parent bandwidth
-                while (bwCounter < node.bandwidth)
+                while (bwCounter < node.Bandwidth)
                 {
                     // Make bandwidth cap for child and add to BW counter
-                    var bwCap = LongRandom.Next((long)(node.bandwidth * childMinBW), (long)(node.bandwidth * childMaxBW));
+                    var bwCap = LongRandom.Next((long)(node.Bandwidth * ChildMinBw), (long)(node.Bandwidth * ChildMaxBw));
                     bwCap = (bwCap + 50) / 1000 * 1000;
                     bwCounter += bwCap;
 
                     // Create new Tier 3 Node
-                    var childNode = NewRandomNode(new TierEntity() { id = 3 });
-                    childNode.cables = new List<CableEntity>();
+                    var childNode = NewRandomNode(new TierEntity() { Id = 3 });
+                    childNode.Cables = new List<CableEntity>();
 
                     // Add ChildNode to parentNode
-                    node.Siblings().Add(childNode);
+                    node.GetSiblings().Add(childNode);
 
                     // Add a new Cable Beetwen nodes
                     var cable = CableGenerator.NewCable(node, childNode, bwCap);
@@ -169,66 +159,59 @@ namespace GOTHAM.Tools
             // Iterate through tier 2 nodes
             foreach (var node in nodes)
             {
-                var nodeBandwidth = node.bandwidth;
+                var nodeBandwidth = node.Bandwidth;
 
-                log.Info("\n");
-                log.Info(node.lat + " - " + node.lng + " - Pri: " + node.priority + " Bandwidth: " + Globals.GetInstance().BWSuffix(node.bandwidth));
+                Log.Info("\n");
+                Log.Info(node.Lat + " - " + node.Lng + " - Pri: " + node.Priority + " Bandwidth: " + Globals.GetInstance().BwSuffix(node.Bandwidth));
 
                 // Iterate through each of the Tier 3 siblings
-                foreach (var sibling in node.Siblings())
+                foreach (var sibling in node.GetSiblings())
                 {
-                    var siblBandwidth = node.cables.FirstOrDefault(x => x.nodes[0] == sibling).capacity;
-                    log.Info("\t" + sibling.lat + " - " + sibling.lng + " - Pri: " + sibling.priority + " Cable Cap: " + Globals.GetInstance().BWSuffix(siblBandwidth));
+                    var siblBandwidth = node.Cables.FirstOrDefault(x => x.Nodes[0] == sibling).Capacity;
+                    Log.Info("\t" + sibling.Lat + " - " + sibling.Lng + " - Pri: " + sibling.Priority + " Cable Cap: " + Globals.GetInstance().BwSuffix(siblBandwidth));
                     nodeBandwidth -= siblBandwidth;
                 }
-                log.Info("Bandwidth remaining: " + nodeBandwidth);
+                Log.Info("Bandwidth remaining: " + nodeBandwidth);
             }
         }
 
-        public static void fixSeaNodes()
+        public static void FixSeaNodes()
         {
-            var seaNodes = CacheEngine.Nodes.Where(x => x.tier.id == 4).ToList();
+            var seaNodes = CacheEngine.Nodes.Where(x => x.Tier.Id == 4).ToList();
             var newSeaNodes = new List<NodeEntity>();
-            var test = new NodeEntity();
+
             foreach (var node in seaNodes)
             {
-                var existing = newSeaNodes.Where((x => x.name == node.name && x.countryCode == node.countryCode)).FirstOrDefault();
+                var tempNode = node;
+                var existing = newSeaNodes.Where((x => x.Name == tempNode.Name && x.CountryCode == tempNode.CountryCode)).FirstOrDefault();
 
                 if (existing == null)
                 {
-                    var newNode = new NodeEntity(node.name, node.countryCode, node.tier, node.lat, node.lng);
+                    var newNode = new NodeEntity(node.Name, node.CountryCode, node.Tier, node.Lat, node.Lng);
                     newSeaNodes.Add(newNode);
                 }
                 else
-                {
-                    foreach (var part in node.cables)
-                    {
-                        existing.cables = new List<CableEntity>();
-                        existing.cables.Add(part);
-                    }
-                }
+                    foreach (var part in node.Cables)
+                        existing.Cables = new List<CableEntity> {part};
             }
 
             DBTool.WriteList(newSeaNodes);
-
+            Log.Info("Fixed " + newSeaNodes.Count + " sea nodes");
             //DBTool.WriteList(newSeaNodes);
         }
 
-        public static void fixNodeCountries()
+        public static void FixNodeCountries()
         {
             var nodes = CacheEngine.Nodes;
             var countries = CacheEngine.Countries;
 
             foreach (var node in nodes)
             {
-                var exists = countries.Where(x => x.name == node.countryCode).FirstOrDefault();
-
-                if (exists != null)
-                    node.countryCode = exists.countryCode;
-                else
-                    node.countryCode = node.countryCode.ToUpper();
+                var exists = countries.FirstOrDefault(x => x.Name == node.CountryCode);
+                node.CountryCode = (exists != null) ? exists.CountryCode : node.CountryCode.ToUpper();
             }
-            DBTool.WriteList(nodes, false);
+            DBTool.WriteList(nodes);
+            Log.Info("Fixed " + nodes.Count + " nodes");
         }
     }
 }

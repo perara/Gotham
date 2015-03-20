@@ -5,7 +5,7 @@ namespace GOTHAM.Model
     public class CableTypeEntity : BaseEntity
   {
 
-    public virtual string name { get; set; }
+    public virtual string Name { get; set; }
 
   }
 
@@ -15,8 +15,8 @@ namespace GOTHAM.Model
         public CableTypeEntityMap()
         {
             Table("cable_type");
-            Id(x => x.id).GeneratedBy.Identity();
-            Map(x => x.name);
+            Id(x => x.Id).GeneratedBy.Identity();
+            Map(x => x.Name);
 
         }
     }

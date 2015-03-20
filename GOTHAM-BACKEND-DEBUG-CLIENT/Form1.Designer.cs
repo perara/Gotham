@@ -31,11 +31,15 @@
             this.MainMap = new GMap.NET.WindowsForms.GMapControl();
             this.lbl_lat = new System.Windows.Forms.Label();
             this.lbl_lng = new System.Windows.Forms.Label();
-            this.lbl_name = new System.Windows.Forms.Label();
             this.lbl_list_type = new System.Windows.Forms.Label();
             this.lbl_CableList = new System.Windows.Forms.Label();
             this.lbl_NodeList = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.lbl_distance = new System.Windows.Forms.Label();
+            this.tb_Distance = new System.Windows.Forms.TextBox();
+            this.tb_id = new System.Windows.Forms.TextBox();
+            this.lbl_id = new System.Windows.Forms.Label();
+            this.tb_name = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // MainMap
@@ -87,16 +91,6 @@
             this.lbl_lng.TabIndex = 2;
             this.lbl_lng.Text = "LONGITUDE";
             // 
-            // lbl_name
-            // 
-            this.lbl_name.AutoSize = true;
-            this.lbl_name.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_name.Location = new System.Drawing.Point(858, 973);
-            this.lbl_name.Name = "lbl_name";
-            this.lbl_name.Size = new System.Drawing.Size(377, 39);
-            this.lbl_name.TabIndex = 3;
-            this.lbl_name.Text = "                                        ";
-            // 
             // lbl_list_type
             // 
             this.lbl_list_type.AutoSize = true;
@@ -133,16 +127,64 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Connected Nodes";
             // 
+            // lbl_distance
+            // 
+            this.lbl_distance.AutoSize = true;
+            this.lbl_distance.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_distance.Location = new System.Drawing.Point(1341, 989);
+            this.lbl_distance.Name = "lbl_distance";
+            this.lbl_distance.Size = new System.Drawing.Size(72, 20);
+            this.lbl_distance.TabIndex = 8;
+            this.lbl_distance.Text = "Distance";
+            // 
+            // tb_Distance
+            // 
+            this.tb_Distance.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_Distance.Location = new System.Drawing.Point(1419, 986);
+            this.tb_Distance.Name = "tb_Distance";
+            this.tb_Distance.Size = new System.Drawing.Size(197, 26);
+            this.tb_Distance.TabIndex = 9;
+            // 
+            // tb_id
+            // 
+            this.tb_id.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_id.Location = new System.Drawing.Point(1751, 986);
+            this.tb_id.Name = "tb_id";
+            this.tb_id.Size = new System.Drawing.Size(107, 26);
+            this.tb_id.TabIndex = 11;
+            // 
+            // lbl_id
+            // 
+            this.lbl_id.AutoSize = true;
+            this.lbl_id.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_id.Location = new System.Drawing.Point(1719, 989);
+            this.lbl_id.Name = "lbl_id";
+            this.lbl_id.Size = new System.Drawing.Size(26, 20);
+            this.lbl_id.TabIndex = 10;
+            this.lbl_id.Text = "ID";
+            // 
+            // tb_name
+            // 
+            this.tb_name.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_name.Location = new System.Drawing.Point(794, 979);
+            this.tb_name.Name = "tb_name";
+            this.tb_name.Size = new System.Drawing.Size(462, 35);
+            this.tb_name.TabIndex = 12;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1904, 1042);
+            this.Controls.Add(this.tb_name);
+            this.Controls.Add(this.tb_id);
+            this.Controls.Add(this.lbl_id);
+            this.Controls.Add(this.tb_Distance);
+            this.Controls.Add(this.lbl_distance);
             this.Controls.Add(this.lbl_NodeList);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lbl_CableList);
             this.Controls.Add(this.lbl_list_type);
-            this.Controls.Add(this.lbl_name);
             this.Controls.Add(this.lbl_lng);
             this.Controls.Add(this.lbl_lat);
             this.Controls.Add(this.MainMap);
@@ -159,11 +201,15 @@
         private GMap.NET.WindowsForms.GMapControl MainMap;
         private System.Windows.Forms.Label lbl_lat;
         private System.Windows.Forms.Label lbl_lng;
-        private System.Windows.Forms.Label lbl_name;
         private System.Windows.Forms.Label lbl_list_type;
         private System.Windows.Forms.Label lbl_CableList;
         private System.Windows.Forms.Label lbl_NodeList;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbl_distance;
+        private System.Windows.Forms.TextBox tb_Distance;
+        private System.Windows.Forms.TextBox tb_id;
+        private System.Windows.Forms.Label lbl_id;
+        private System.Windows.Forms.TextBox tb_name;
     }
 }
 
