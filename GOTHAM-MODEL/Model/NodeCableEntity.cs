@@ -8,6 +8,7 @@ namespace GOTHAM.Model
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     [SuppressMessage("ReSharper", "VirtualMemberNeverOverriden.Global")]
     [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class NodeCableEntity : BaseEntity
     {
         public virtual NodeEntity Node { get; set; }

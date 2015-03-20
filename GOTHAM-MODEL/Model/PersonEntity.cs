@@ -9,6 +9,7 @@ namespace GOTHAM.Model
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     [SuppressMessage("ReSharper", "VirtualMemberNeverOverriden.Global")]
     [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class PersonEntity : BaseEntity
     {
         // Personal information

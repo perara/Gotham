@@ -41,7 +41,6 @@
   <ItemGroup>
     <Compile Include="BwTools.cs" />
     <Compile Include="Coordinate.cs" />
-    <Compile Include="FakeNameGenerator.cs" />
     <Compile Include="GeoTool.cs" />
     <Compile Include="HttpRequest.cs" />
     <Compile Include="IpAddr.cs" />
