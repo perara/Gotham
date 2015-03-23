@@ -168,6 +168,7 @@
     <Compile Include="Application\Tools\Cache\CacheObject.cs" />
     <Compile Include="Application\Tools\Globals.cs" />
     <Compile Include="Application\Tools\SessionGenerator.cs" />
+    <Compile Include="Application\Tools\ZipUnzip.cs" />
     <Compile Include="Traffic\Json\JsonObjects.cs" />
     <Compile Include="Service\ServiceStack\AppHost.cs" />
     <Compile Include="Service\ServiceStack\Resources\HelloResource.cs" />

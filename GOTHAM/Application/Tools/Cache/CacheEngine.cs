@@ -3,6 +3,7 @@ using System.Linq;
 using GOTHAM.Model;
 using GOTHAM.Tools;
 using GOTHAM.Traffic.Misc;
+using Newtonsoft.Json;
 using NHibernate;
 
 namespace GOTHAM.Application.Tools.Cache
@@ -17,6 +18,8 @@ namespace GOTHAM.Application.Tools.Cache
         public static CacheObject<NodeCableEntity> NodeCables { get; private set; }
         public static CacheObject<CableTypeEntity> CableTypes { get; private set; }
         public static CacheObject<CountryEntity> Countries { get; private set; }
+
+        public static string JsonNodesAndCables { get; private set; }
 
         private static bool _inited;
 
@@ -68,8 +71,19 @@ namespace GOTHAM.Application.Tools.Cache
                             .List<CountryEntity>()
                             .ToList());
 
+
+                
+                JsonNodesAndCables = JsonConvert.SerializeObject(ZipUnzip.ZipToBytes(JsonConvert.SerializeObject(new
+                {
+                    nodes = CacheEngine.Nodes,
+                    cables = CacheEngine.Cables
+                })));
+
+                
+
                 _inited = true;
             }
         }
+        
     }
 }

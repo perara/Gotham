@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading;
+using GOTHAM.Application.Tools;
 using GOTHAM.Application.Tools.Cache;
 using GOTHAM.Service.SignalR;
+using Newtonsoft.Json;
 
 namespace GOTHAM
 {
@@ -62,6 +64,11 @@ namespace GOTHAM
             // ========================================================================================
             // ===========================        TEST CODE       =====================================
 
+            using (var file = new System.IO.StreamWriter(@"C:\temp\nodesCables.txt"))
+            {
+                file.Write(CacheEngine.JsonNodesAndCables);
+            }
+
 
             /*
             var countries = Globals.GetInstance().getTable<CountryEntity>();
@@ -96,7 +103,7 @@ namespace GOTHAM
 
             // Generate cables between land nodes
             //CableGenerator.GenerateCables(nodes, 2, 2, 1700);
-            
+
 
             //var path = new Pathfinder().TryRandom(start, end, 100000).toDictionary();
 
