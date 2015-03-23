@@ -5,23 +5,6 @@ module.exports = (grunt)->
   grunt.loadNpmTasks('grunt-codo');
 
   grunt.initConfig
-    codo:
-      options:
-        name: "Gotham Game Framework"
-        title: "Gotham Game Framwork API Documentation"
-        extra: ["LICENSE-MIT"]
-      src: ["./src/GOTHAM-GF/Gotham.coffee"]
-      dest: "./doc"
-
-
-    jsdoc: 
-      dist:
-        src: [
-          'src/*.js'
-          'test/*.js'
-        ]
-        dest: 'doc'
-  
     browserify:
       dist:
         files: 'htdocs/build/main.js': 'src/GOTHAM-GAME/main.coffee'
@@ -36,7 +19,7 @@ module.exports = (grunt)->
       coffee:
         files: [
           'src/**/*.coffee',
-          'src/**/*.js',
+          #'src/**/*.js',
           'htdocs/*.html',
           'htdocs/assets/**/*.css',
           'htdocs/assets/**/*.png']

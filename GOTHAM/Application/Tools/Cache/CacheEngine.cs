@@ -18,6 +18,9 @@ namespace GOTHAM.Application.Tools.Cache
         public static CacheObject<NodeCableEntity> NodeCables { get; private set; }
         public static CacheObject<CableTypeEntity> CableTypes { get; private set; }
         public static CacheObject<CountryEntity> Countries { get; private set; }
+        public static CacheObject<HostEntity> Hosts { get; private set; }
+
+        
 
         public static string JsonNodesAndCables { get; private set; }
 
@@ -71,15 +74,18 @@ namespace GOTHAM.Application.Tools.Cache
                             .List<CountryEntity>()
                             .ToList());
 
-
+                Hosts = new CacheObject<HostEntity>(session
+                            .CreateCriteria(typeof(HostEntity))
+                            .SetCacheable(true)
+                            .SetCacheMode(CacheMode.Normal)
+                            .List<HostEntity>()
+                            .ToList());
                 
                 JsonNodesAndCables = JsonConvert.SerializeObject(ZipUnzip.ZipToBytes(JsonConvert.SerializeObject(new
                 {
                     nodes = CacheEngine.Nodes,
                     cables = CacheEngine.Cables
                 })));
-
-                
 
                 _inited = true;
             }

@@ -20,13 +20,17 @@ class World extends Gotham.Graphics.Scene
 
     # Create the Terminal Object
     object_Terminal = new GothamGame.objects.Terminal
+    object_Terminal.create();
+    console.log object_Terminal
+    object_Terminal.Show();
+
 
 
 
 
     # Add Objects to scene
     @.addObject object_TopBar
-    @.addObject object_WorldMap
+    #@.addObject object_WorldMap
     #@.addObject object_Terminal
 
     @Callbacks.onNodesLoaded = ->

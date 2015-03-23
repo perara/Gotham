@@ -80,7 +80,7 @@ class NodeList extends Gotham.Graphics.Container
         node_item_background.addChild node_marker
 
         # Create Name Text
-        node_name = new Gotham.Graphics.Text((if row.name.length > 20 then row.name.substring(0,20) + "..." else row.name), {font: "bold 20px Arial", fill: "#ffffff", align: "left"});
+        node_name = new Gotham.Graphics.Text((if row.Name.length > 20 then row.name.substring(0,20) + "..." else row.Name), {font: "bold 20px Arial", fill: "#ffffff", align: "left"});
         node_name.width = node_item_background.width / node_item_background.scale.x
         node_name.position.x =  node_marker.width  + (node_marker.y)
         node_name.position.y = (node_item_background.height / 2) / node_item_background.scale.y
@@ -88,7 +88,7 @@ class NodeList extends Gotham.Graphics.Container
         node_item_background.addChild node_name
 
         # Create Tier Text
-        node_tier = new Gotham.Graphics.Text("Tier " + row.tier.id, {font: "bold 15px Arial", fill: "#3399ff", align: "left"});
+        node_tier = new Gotham.Graphics.Text("Tier " + row.Tier.id, {font: "bold 15px Arial", fill: "#3399ff", align: "left"});
         node_tier.width = node_item_background.width / node_item_background.scale.x
         node_tier.position.x =  (node_item_background.width / node_item_background.scale.x) -  node_tier.width
         node_tier.position.y = 10 / node_item_background.scale.y

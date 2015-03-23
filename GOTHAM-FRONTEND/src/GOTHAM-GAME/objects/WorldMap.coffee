@@ -30,6 +30,8 @@ class WorldMap extends Gotham.Graphics.Container
     # A function which places these nodes must be used.
     @addNetworkMethod "fetchMap", (json) ->
 
+
+
       # Parse data as JSON
       data = JSON.parse json
 
@@ -103,7 +105,7 @@ class WorldMap extends Gotham.Graphics.Container
   addNode: (node) ->
 
     # Convert Lat, Lng to Pixel's X and Y
-    coordinates = @CoordinateToPixel(node.lat, node.lng)
+    coordinates = @CoordinateToPixel(node.Lat, node.Lng)
 
     # Create a node sprite
     gNode = new Gotham.Graphics.Sprite Gotham.Preload.fetch("map_marker", "image")
@@ -137,13 +139,13 @@ class WorldMap extends Gotham.Graphics.Container
     gNode.mouseover = ->
       @tint = 0xffff00
       for cable in @cables
-        for part in cable.cableParts
+        for part in cable.CableParts
           part.visible = true
 
     gNode.mouseout = ->
       @tint = 0xffffff
       for cable in @cables
-        for part in cable.cableParts
+        for part in cable.CableParts
           part.visible = false
 
 
@@ -153,17 +155,17 @@ class WorldMap extends Gotham.Graphics.Container
 
     # Add Cable to each of the node id's
 
-    for nodeId in cable.nodeids
+    for NodeId in cable.NodeIds
 
       # Fetch the node
-      node = GothamGame.Database.table("node")({id: nodeId}).first()
+      node = GothamGame.Database.table("node")({Id: NodeId}).first()
 
       # Push cable to the node
       node.cables.push cable
 
 
     # Determine first graphics location and move the pointer
-    firstLocation = @CoordinateToPixel(cable.cableParts[0].lat, cable.cableParts[0].lng)
+    firstLocation = @CoordinateToPixel(cable.CableParts[0].Lat, cable.CableParts[0].Lng)
 
     # Create a new graphics element
     graphics = new Gotham.Graphics.Graphics();
@@ -180,21 +182,21 @@ class WorldMap extends Gotham.Graphics.Container
     testX = @size.width / 2
     testY = @size.height  / 2
 
-    for i in [0...cable.cableParts.length]
-      partData = cable.cableParts[i]
-      currentLocation = @CoordinateToPixel(partData.lat, partData.lng)
+    for i in [0...cable.CableParts.length]
+      partData = cable.CableParts[i]
+      currentLocation = @CoordinateToPixel(partData.Lat, partData.Lng)
 
       if isStart or partData.number is 0
-        cable.cableParts[i] = graphics
+        cable.CableParts[i] = graphics
         graphics.moveTo(currentLocation.x, currentLocation.y)
         isStart = false
       else
         graphics.lineTo(currentLocation.x, currentLocation.y);
         previousLocation = currentLocation
-        cable.cableParts[i] = undefined
+        cable.CableParts[i] = undefined
 
     # Strip undefined values
-    cable.cableParts = cable.cableParts.filter (n) ->
+    cable.CableParts = cable.CableParts.filter (n) ->
       return n if not undefined
 
     @nodeContainer.addChild graphics
