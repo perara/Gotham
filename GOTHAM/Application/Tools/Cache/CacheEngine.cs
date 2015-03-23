@@ -3,6 +3,7 @@ using System.Linq;
 using GOTHAM.Model;
 using GOTHAM.Tools;
 using GOTHAM.Traffic.Misc;
+using Microsoft.Owin;
 using NHibernate;
 
 namespace GOTHAM.Application.Tools.Cache
@@ -17,6 +18,9 @@ namespace GOTHAM.Application.Tools.Cache
         public static CacheObject<NodeCableEntity> NodeCables { get; private set; }
         public static CacheObject<CableTypeEntity> CableTypes { get; private set; }
         public static CacheObject<CountryEntity> Countries { get; private set; }
+        public static CacheObject<HostEntity> Hosts { get; private set; }
+
+        
 
         private static bool _inited;
 
@@ -67,6 +71,14 @@ namespace GOTHAM.Application.Tools.Cache
                             .SetCacheMode(CacheMode.Normal)
                             .List<CountryEntity>()
                             .ToList());
+
+                Hosts = new CacheObject<HostEntity>(session
+                            .CreateCriteria(typeof(HostEntity))
+                            .SetCacheable(true)
+                            .SetCacheMode(CacheMode.Normal)
+                            .List<HostEntity>()
+                            .ToList());
+
 
                 _inited = true;
             }

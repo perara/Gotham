@@ -14,6 +14,7 @@ class TopBar extends Gotham.Graphics.Container
 
 
   create: ->
+    that = @
 
     # Create Top Bar Texture
     topBarTexture = Gotham.Preload.fetch("topBar", "image")
@@ -60,7 +61,9 @@ class TopBar extends Gotham.Graphics.Container
 
     button_terminal = new Gotham.Controls.Button "Terminal" , 50, 75
     button_terminal.toggleOn = (e) ->
+      that.parent.getObject("Terminal").Show()
     button_terminal.toggleOff = (e) ->
+      that.parent.getObject("Terminal").Hide()
 
     bottomBar.addChild button_terminal
 

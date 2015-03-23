@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using FluentNHibernate.Mapping;
 using GOTHAM_TOOLS;
+using NHibernate.Mapping;
 
 namespace GOTHAM.Model
 {
@@ -28,6 +29,9 @@ namespace GOTHAM.Model
         public virtual double Lat { get; set; }
         public virtual double Lng { get; set; }
 
+        // Filesystem
+        public virtual FilesystemEntity Filesystem { get; set; }
+
         // Constructors
         protected HostEntity() { }
         public HostEntity(string machineName = "NoName")
@@ -53,11 +57,12 @@ namespace GOTHAM.Model
         {
             Table("host");
             Id(x => x.Id).GeneratedBy.Identity();
-            Map(x => x.MachineName);
-            Map(x => x.Online);
-            Map(x => x.Ip);
-            Map(x => x.Mac);
-            References(x => x.Owner);
+            Map(x => x.MachineName, "machine_name");
+            Map(x => x.Online, "online");
+            Map(x => x.Ip, "ip");
+            Map(x => x.Mac, "mac");
+            References(x => x.Owner, "owner").Not.LazyLoad();
+            References(x => x.Filesystem, "filesystem").Not.LazyLoad();
         }
     }
 }

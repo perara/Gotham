@@ -23,7 +23,7 @@ namespace GOTHAM.Model
         public virtual string Username { get; set; }
         public virtual string Password { get; set; }
         public virtual int Telephone { get; set; }
-        public virtual int CcNumber { get; set; }
+        public virtual long CcNumber { get; set; }
         public virtual string Occupation { get; set; }
         public virtual string Company { get; set; }
         public virtual string Vehicle { get; set; }
@@ -57,23 +57,23 @@ namespace GOTHAM.Model
         {
             Table("person");
             Id(x => x.Id).GeneratedBy.Identity();
-            Map(x => x.Gender).Not.Nullable();
-            Map(x => x.Givenname).Not.Nullable();
-            Map(x => x.Surname).Not.Nullable();
-            Map(x => x.Address).Not.Nullable();
-            Map(x => x.City).Not.Nullable();
-            Map(x => x.CountryCode).Not.Nullable();
-            Map(x => x.Email).Not.Nullable();
-            Map(x => x.Username).Not.Nullable();
-            Map(x => x.Password).Not.Nullable();
-            Map(x => x.Telephone).Not.Nullable();
-            Map(x => x.CcNumber).Not.Nullable();
-            Map(x => x.Occupation).Not.Nullable();
-            Map(x => x.Company).Not.Nullable();
-            Map(x => x.Vehicle).Not.Nullable();
+            Map(x => x.Gender, "gender").Not.Nullable();
+            Map(x => x.Givenname, "givenname").Not.Nullable();
+            Map(x => x.Surname, "surname").Not.Nullable();
+            Map(x => x.Address, "streetaddress").Not.Nullable();
+            Map(x => x.City, "city").Not.Nullable();
+            Map(x => x.CountryCode, "country").Not.Nullable();
+            Map(x => x.Email, "emailaddress").Not.Nullable();
+            Map(x => x.Username, "username").Not.Nullable();
+            Map(x => x.Password, "password").Not.Nullable();
+            Map(x => x.Telephone, "telephonenumber").Not.Nullable();
+            Map(x => x.CcNumber, "ccnumber").Not.Nullable();
+            Map(x => x.Occupation, "occupation").Not.Nullable();
+            Map(x => x.Company, "company").Not.Nullable();
+            Map(x => x.Vehicle, "vehicle").Not.Nullable();
 
-            Map(x => x.Lat).Not.Nullable();
-            Map(x => x.Lng).Not.Nullable();
+            Map(x => x.Lat, "lat").Not.Nullable();
+            Map(x => x.Lng, "lng").Not.Nullable();
 
             Map(x => x.Random).Formula("RAND()");
         }

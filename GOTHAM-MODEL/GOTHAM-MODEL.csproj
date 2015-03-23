@@ -65,6 +65,7 @@
     <Compile Include="Model\BaseEntity.cs" />
     <Compile Include="Model\CablePartEntity.cs" />
     <Compile Include="Model\CountryEntity.cs" />
+    <Compile Include="Model\FilesystemEntity.cs" />
     <Compile Include="Model\NodeCableEntity.cs" />
     <Compile Include="Tools\EntityManager.cs" />
     <Compile Include="Model\CableEntity.cs" />

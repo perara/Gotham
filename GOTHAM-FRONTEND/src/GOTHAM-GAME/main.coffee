@@ -18,6 +18,10 @@ Gotham = require '../GOTHAM-GF/src/Gotham.coffee'
 # Include GothamGame
 GothamGame = require '../GOTHAM-GAME/GothamGame.coffee'
 
+
+require './dependencies/jquery-ui.min'
+
+
 ################################################
 ##
 ##
@@ -69,9 +73,12 @@ Gotham.Preload.image("/assets/img/terminal_background.png", "terminal_background
 ##
 ################################################
 
+
+
 # OnLoad Callback
 Gotham.Preload.onLoad (source, name, percent) ->
   console.log("Preload: " + percent + "%")
+
 
 # OnComplete CallBack
 Gotham.Preload.onComplete () ->
@@ -97,5 +104,4 @@ Gotham.Preload.onComplete () ->
 
     # Finally start the Connection
     connection = startConnection()
-
 
