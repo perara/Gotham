@@ -67,6 +67,15 @@
     <Compile Include="Model\CountryEntity.cs" />
     <Compile Include="Model\FilesystemEntity.cs" />
     <Compile Include="Model\NodeCableEntity.cs" />
+    <Compile Include="Model\UserEntity.cs" />
+    <Compile Include="Repository\Abstract\IReadRepository.cs" />
+    <Compile Include="Repository\Abstract\IReadWriteRepository.cs" />
+    <Compile Include="Repository\Abstract\IUnitOfWork.cs" />
+    <Compile Include="Repository\Abstract\IWriteRepository.cs" />
+    <Compile Include="Repository\Abstract\Repository.cs" />
+    <Compile Include="Repository\Abstract\UnitOfWork.cs" />
+    <Compile Include="Repository\NodeRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Tools\EntityManager.cs" />
     <Compile Include="Model\CableEntity.cs" />
     <Compile Include="Model\CableTypeEntity.cs" />

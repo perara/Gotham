@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace GOTHAM.Tools
 {
+    [Obsolete]
     public static class DbTool
     {
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -16,6 +17,7 @@ namespace GOTHAM.Tools
         /// <param name="input"></param>
         /// <param name="update"></param>
         /// <param name="batchSize"></param>
+        [Obsolete]
         public static void WriteList(object input, bool update = false, int batchSize = 50)
         {
             var list = ((IList)input).Cast<object>().ToList();
@@ -60,6 +62,7 @@ namespace GOTHAM.Tools
         /// Writes a single entity to database
         /// </summary>
         /// <param name="input"></param>
+        [Obsolete]
         public static void Write(BaseEntity input)
         {
             WriteList(new List<BaseEntity>() { input });

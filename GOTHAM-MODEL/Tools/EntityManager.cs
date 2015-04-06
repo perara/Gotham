@@ -9,6 +9,7 @@ using FluentNHibernate.Mapping.Providers;
 using GOTHAM.Model;
 using Newtonsoft.Json.Linq;
 using NHibernate;
+using NHibernate.Caches.SysCache;
 
 namespace GOTHAM.Tools
 {
@@ -76,11 +77,18 @@ namespace GOTHAM.Tools
                 // Set Mappings
                 hibernateConfig.Mappings(m => m.FluentMappings.AddFromNamespaceOf<NodeEntity>());
 
-                // Configure Cache
-                hibernateConfig.Cache(c => c.UseQueryCache()
-                .UseSecondLevelCache()
-                .ProviderClass<NHibernate.Cache.HashtableCacheProvider>());
-            
+
+                hibernateConfig.ExposeConfiguration(c =>
+                {
+                    c.SetProperty("cache.provider_class", "NHibernate.Cache.HashtableCacheProvider");
+                    c.SetProperty("cache.use_second_level_cache", "true");
+                    c.SetProperty("cache.use_query_cache", "true");
+                });
+
+
+                //hibernateConfig.Cache(c => c.UseQueryCache().UseSecondLevelCache().ProviderClass<SysCacheProvider>());
+
+
 
                 // Generate Session Factory
                 SessionFactory = hibernateConfig.BuildSessionFactory();

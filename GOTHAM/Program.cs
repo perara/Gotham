@@ -1,8 +1,16 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using GOTHAM.Application.Tools.Cache;
+using GOTHAM.Model;
+using GOTHAM.Repository;
+using GOTHAM.Repository.Abstract;
 using GOTHAM.Service.SignalR;
+using GOTHAM.Service.WebAPI;
+using GOTHAM.Tools;
+using IronPython.Modules;
 
 namespace GOTHAM
 {
@@ -12,6 +20,10 @@ namespace GOTHAM
 
         static void Main()
         {
+
+
+            
+
             /////////////////////////////////////////////////////////////////
             //
             // Initial Setup
@@ -25,8 +37,15 @@ namespace GOTHAM
 
             //
             // Start ServiceStack API Server
+            // (Kjør VS/App som ADMIN)
             //
-            // TODO: Gir feilmelding ServiceStackConsoleHost.Start();
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                WebApi webApi = new WebApi();
+
+            }).Start();
+  
 
             //
             // Start SignalR
@@ -44,9 +63,6 @@ namespace GOTHAM
             CacheEngine.Init();
             Log.Info((DateTime.Now - time).Seconds + "." + (DateTime.Now - time).Milliseconds + " to initiate cache engine");
 
-
-
-
             /////////////////////////////////////////////////////////////////
             //
             // Other stuff
@@ -59,8 +75,26 @@ namespace GOTHAM
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
             CultureInfo.DefaultThreadCurrentCulture = customCulture;
 
+
+
+
             // ========================================================================================
             // ===========================        TEST CODE       =====================================
+
+            /*// Create Unit of work session
+var work = new UnitOfWork();
+
+// Create General Repository for UserEntity
+var userRepo = work.GetRepository<UserEntity>();
+
+// Henta alle
+Console.WriteLine(userRepo.All().ToList());
+            
+// Finn per
+Console.WriteLine(userRepo.FindBy(x => x.Username == "per"));
+
+// Dispose session
+work.Dispose();*/
 
 
             /*
