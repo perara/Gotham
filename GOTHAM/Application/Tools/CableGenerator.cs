@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using GOTHAM.Application.Tools.Cache;
 using GOTHAM.Model;
+using GOTHAM.Repository.Abstract;
 using GOTHAM.Tools;
 using GOTHAM_TOOLS;
 
@@ -89,7 +89,10 @@ namespace GOTHAM.Application.Tools
         public static CableEntity NewCable(NodeEntity node1, NodeEntity node2, long bandwidth = 10000, double distance = 0)
         {
             // Make cable, get type and declare lists
-            var cableType = CacheEngine.CableTypes.FirstOrDefault();
+            var work = new UnitOfWork();
+            var cableType = work.GetRepository<CableTypeEntity>().All().FirstOrDefault();
+            work.Dispose();
+
 
             var cable = new CableEntity(bandwidth, cableType, distance, "Land Cable (" + node1.Id + "," + node2.Id + ")")
             {
@@ -145,10 +148,12 @@ namespace GOTHAM.Application.Tools
         public static void ConnectNodesToCables(int maxDistance = 50)
         {
             Log.Info("Connecting cables to nodes closer than " + maxDistance + " Kilometers");
+            var work = new UnitOfWork();
+            var nodes = work.GetRepository<NodeEntity>().All().ToList();
+            var cableParts = work.GetRepository<CablePartEntity>().All().ToList();
+            var nodeCables = work.GetRepository<NodeCableEntity>().All().ToList();
+            work.Dispose();
 
-            var nodes = CacheEngine.Nodes;
-            var cableParts = CacheEngine.CableParts;
-            var nodeCables = CacheEngine.NodeCables;
             var newNodeCables = new List<string>();
             var nodeCableEntities = new List<NodeCableEntity>();
 
@@ -258,7 +263,7 @@ namespace GOTHAM.Application.Tools
                     if (node1 == node2 || node1.GetSiblings().Contains(node2) || dist > maxDist || node1.GetSiblings().Count() > 2 || node2.GetSiblings().Count() > 2) continue;
 
                     // Make cable
-                    var cable = new CableEntity(0, new CableTypeEntity() {Id = 0}, 0, "Mini Cable")
+                    var cable = new CableEntity(0, new CableTypeEntity() { Id = 0 }, 0, "Mini Cable")
                     {
                         CableParts = new List<CablePartEntity>(),
                         Nodes = new List<NodeEntity>()
@@ -305,12 +310,17 @@ namespace GOTHAM.Application.Tools
         public static void ConnectSeaNodesToLand(int maxDistance = 10^12)
         {
             Log.Info("Connecting sea nodes to the closest land node");
+            var work = new UnitOfWork();
+            var landNodeRepository = work.GetRepository<NodeEntity>().All().Where(x => x.Tier.Id == 1).ToList();
+            var seaNodeRepository = work.GetRepository<NodeEntity>().All().Where(x => x.Tier.Id == 4).ToList();
+            var newCables = (from seaNode in seaNodeRepository let closest = GetClosestNode(seaNode, landNodeRepository, maxDistance) where closest != null select NewCable(seaNode, closest)).ToList();
 
-            var landNodes = CacheEngine.Nodes.Where(x => x.Tier.Id == 1).ToList();
-            var seaNodes = CacheEngine.Nodes.Where(x => x.Tier.Id == 4).ToList();
-            var newCables = (from seaNode in seaNodes let closest = GetClosestNode(seaNode, landNodes, maxDistance) where closest != null select NewCable(seaNode, closest)).ToList();
+            // Save newCables
+            var cableRepository = work.GetRepository<CableEntity>();
+            cableRepository.Add(newCables);
+    
+            work.Dispose();
 
-            DbTool.WriteList(newCables);
             Log.Info("Made " + newCables.Count + " cables from sea nodes to land nodes");
         }
 

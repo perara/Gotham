@@ -161,8 +161,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\Tools\Cache\CacheEngine.cs" />
-    <Compile Include="Application\Tools\Cache\CacheObject.cs" />
     <Compile Include="Application\Tools\Globals.cs" />
     <Compile Include="Application\Tools\SessionGenerator.cs" />
     <Compile Include="Service\WebAPI\Resources\NodeController.cs" />

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GOTHAM.Application.Tools.Cache;
 using GOTHAM.Model;
+using GOTHAM.Repository.Abstract;
 using GOTHAM.Tools;
 using GOTHAM.Traffic.Misc;
 using NHibernate.Linq;
@@ -36,16 +36,24 @@ namespace GOTHAM.Application.Tools
 
         public static HostEntity GetPrivateHost()
         {
+            var work = new UnitOfWork();
+            var nodes = work.GetRepository<NodeEntity>().All().ToList();
+            work.Dispose();
+
             var rndPerson = GetHost(false);
-            var node = CableGenerator.GetClosestNode(rndPerson, CacheEngine.Nodes);
+            var node = CableGenerator.GetClosestNode(rndPerson, nodes);
 
             return new HostEntity(rndPerson, node);
         }
 
         public static HostEntity GetBusinessHost()
         {
+            var work = new UnitOfWork();
+            var nodes = work.GetRepository<NodeEntity>().All().ToList();
+            work.Dispose();
+
             var rndPerson = GetHost(true);
-            var node = CableGenerator.GetClosestNode(rndPerson, CacheEngine.Nodes);
+            var node = CableGenerator.GetClosestNode(rndPerson, nodes);
 
             return new HostEntity(rndPerson, node);
         }

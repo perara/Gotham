@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
+using System.Reflection;
 using System.Threading;
 using GOTHAM.Application.Tools;
-using GOTHAM.Application.Tools.Cache;
 using GOTHAM.Model;
-using GOTHAM.Repository;
 using GOTHAM.Repository.Abstract;
 using GOTHAM.Service.SignalR;
 using GOTHAM.Service.WebAPI;
-using GOTHAM.Tools;
-using IronPython.Modules;
-using Newtonsoft.Json;
+using NHibernate.Util;
 
 namespace GOTHAM
 {
@@ -22,9 +18,39 @@ namespace GOTHAM
 
         static void Main()
         {
+          
+
+            /*// Create Unit of work session
+            var work = new UnitOfWork();
+
+            // Create General Repository for UserEntity
+            var userRepo = work.GetRepository<NodeEntity>();
+
+            // Finn per
+            DateTime startTime = DateTime.Now;
+            var test = userRepo.All().ToList();
+            foreach (var i in test)
+            {
+                Console.WriteLine(i.Id);
+            }
+            Console.WriteLine(userRepo.All());
+            Console.WriteLine(DateTime.Now - startTime);
+            startTime = DateTime.Now;
+            Console.WriteLine(userRepo.All());
+            Console.WriteLine(DateTime.Now - startTime);
+
+            // Dispose session
+            work.Dispose();
+
+            // Create Unit of work session
+            work = new UnitOfWork();
+            userRepo = work.GetRepository<NodeEntity>();
+            startTime = DateTime.Now;
+            Console.WriteLine(userRepo.All());
+            Console.WriteLine(DateTime.Now - startTime);
+            work.Dispose();*/
 
 
-            
 
             /////////////////////////////////////////////////////////////////
             //
@@ -47,7 +73,7 @@ namespace GOTHAM
                 WebApi webApi = new WebApi();
 
             }).Start();
-  
+
 
             //
             // Start SignalR
@@ -62,8 +88,24 @@ namespace GOTHAM
             // Init Cache Engine
             //
             DateTime time = DateTime.Now;
-            CacheEngine.Init();
-            Log.Info((DateTime.Now - time).Seconds + "." + (DateTime.Now - time).Milliseconds + " to initiate cache engine");
+            var ns = typeof(BaseEntity).Namespace;
+            var types = typeof(BaseEntity).Assembly.GetExportedTypes()
+            .Where(t => t.Namespace == ns);
+
+            var cacheWork = new UnitOfWork();
+            types.ForEach(x =>
+            {
+                Log.Info("Caching " + x.Name + "...");
+                MethodInfo repoMethod = typeof(UnitOfWork).GetMethod("GetRepository");
+                MethodInfo generic = repoMethod.MakeGenericMethod(x);
+                var repository = generic.Invoke(cacheWork, null);
+
+                MethodInfo getAllMethod = repository.GetType().GetMethod("All");
+                getAllMethod.Invoke(repository, null);
+
+            });
+            cacheWork.Dispose();
+            Log.Info((DateTime.Now - time).Seconds + "." + (DateTime.Now - time).Milliseconds + " to init cache");
 
             /////////////////////////////////////////////////////////////////
             //
@@ -76,8 +118,6 @@ namespace GOTHAM
             var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
             CultureInfo.DefaultThreadCurrentCulture = customCulture;
-
-
 
 
             // ========================================================================================

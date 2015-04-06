@@ -26,7 +26,7 @@ namespace GOTHAM.Model
         public UserEntityMap()
         {
             Table("user");
-            Cache.ReadOnly();
+            Cache.ReadWrite();
             Id(x => x.Id).GeneratedBy.Identity();
 
             Map(x => x.Username);

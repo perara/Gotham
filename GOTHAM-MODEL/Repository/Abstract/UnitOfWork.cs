@@ -4,8 +4,10 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GOTHAM.Model;
 using GOTHAM.Tools;
 using NHibernate;
+using NHibernate.SqlCommand;
 
 namespace GOTHAM.Repository.Abstract
 {

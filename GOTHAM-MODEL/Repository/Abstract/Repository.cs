@@ -71,12 +71,13 @@ namespace GOTHAM.Repository.Abstract
 
         public System.Linq.IQueryable<TEntity> All()
         {
-            return _session.Query<TEntity>();
+
+            return _session.Query<TEntity>().Cacheable();
         }
 
         public TEntity FindBy(System.Linq.Expressions.Expression<System.Func<TEntity, bool>> expression)
         {
-            return FilterBy(expression).SingleOrDefault();
+            return FilterBy(expression).Cacheable().SingleOrDefault();
         }
 
         public TEntity FindBy(object id)
@@ -86,7 +87,7 @@ namespace GOTHAM.Repository.Abstract
 
         public System.Linq.IQueryable<TEntity> FilterBy(System.Linq.Expressions.Expression<System.Func<TEntity, bool>> expression)
         {
-            return All().Where(expression).AsQueryable();
+            return All().Where(expression).AsQueryable().Cacheable();
         }
 
         #endregion

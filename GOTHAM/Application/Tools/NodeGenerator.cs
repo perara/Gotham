@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GOTHAM.Application.Tools.Cache;
 using GOTHAM.Model;
+using GOTHAM.Repository.Abstract;
 using GOTHAM.Tools;
 using GOTHAM_TOOLS;
 using NHibernate.Linq;
@@ -128,7 +128,7 @@ namespace GOTHAM.Application.Tools
             {
 
                 // Create a tier 2 Node
-                NodeEntity node = NewRandomNode(new TierEntity() { Id = 2 });
+                var node = NewRandomNode(new TierEntity { Id = 2 });
                 node.Cables = new List<CableEntity>();
                 node.Bandwidth = totBandwidth;
                 nodes.Add(node);
@@ -180,7 +180,11 @@ namespace GOTHAM.Application.Tools
 
         public static void FixSeaNodes()
         {
-            var seaNodes = CacheEngine.Nodes.Where(x => x.Tier.Id == 4).ToList();
+            var work = new UnitOfWork();
+            var nodeRepository = work.GetRepository<NodeEntity>();
+            var seaNodes = nodeRepository.FilterBy(x => x.Tier.Id == 4).ToList();
+            work.Dispose();
+
             var newSeaNodes = new List<NodeEntity>();
 
             foreach (var node in seaNodes)
@@ -191,6 +195,7 @@ namespace GOTHAM.Application.Tools
                 if (existing == null)
                 {
                     var newNode = new NodeEntity(node.Name, node.CountryCode, node.Tier, node.Lat, node.Lng);
+                    newNode.Priority = 1;
                     newSeaNodes.Add(newNode);
                 }
                 else
@@ -198,22 +203,39 @@ namespace GOTHAM.Application.Tools
                         existing.Cables = new List<CableEntity> {part};
             }
 
-            DbTool.WriteList(newSeaNodes);
+            work = new UnitOfWork();
+            var cableRepository = work.GetRepository<NodeEntity>();
+            cableRepository.Add(newSeaNodes);
+            work.Dispose();
+
             Log.Info("Fixed " + newSeaNodes.Count + " sea nodes");
-            //DBTool.WriteList(newSeaNodes);
         }
 
         public static void FixNodeCountries()
         {
-            var nodes = CacheEngine.Nodes;
-            var countries = CacheEngine.Countries;
+            // Start work
+            var work = new UnitOfWork();
+
+            // Fetch repositories
+            var nodeRepository = work.GetRepository<NodeEntity>();
+            var countryRepository = work.GetRepository<NodeEntity>();
+
+
+            var nodes = nodeRepository.All().ToList();
+            var countries = countryRepository.All().ToList();
 
             foreach (var node in nodes)
             {
                 var exists = countries.FirstOrDefault(x => x.Name == node.CountryCode);
                 node.CountryCode = (exists != null) ? exists.CountryCode : node.CountryCode.ToUpper();
             }
-            DbTool.WriteList(nodes);
+
+            // Save Nodes
+            countryRepository.Add(nodes);
+
+            // Dispose
+            work.Dispose();
+
             Log.Info("Fixed " + nodes.Count + " nodes");
         }
     }

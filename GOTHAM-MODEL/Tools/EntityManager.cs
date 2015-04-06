@@ -80,13 +80,14 @@ namespace GOTHAM.Tools
 
                 hibernateConfig.ExposeConfiguration(c =>
                 {
-                    c.SetProperty("cache.provider_class", "NHibernate.Cache.HashtableCacheProvider");
+                    c.SetProperty("cache.provider_class", "NHibernate.Caches.SysCache.SysCacheProvider, NHibernate.Caches.SysCache");
                     c.SetProperty("cache.use_second_level_cache", "true");
                     c.SetProperty("cache.use_query_cache", "true");
+                    c.SetProperty("expiration", "86400");
                 });
 
 
-                //hibernateConfig.Cache(c => c.UseQueryCache().UseSecondLevelCache().ProviderClass<SysCacheProvider>());
+                hibernateConfig.Cache(c => c.UseQueryCache().UseSecondLevelCache().ProviderClass<SysCacheProvider>());
 
 
 
