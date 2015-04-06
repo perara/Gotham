@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
+using GOTHAM.Application.Tools;
 using GOTHAM.Application.Tools.Cache;
 using GOTHAM.Model;
 using GOTHAM.Repository;
@@ -11,6 +12,7 @@ using GOTHAM.Service.SignalR;
 using GOTHAM.Service.WebAPI;
 using GOTHAM.Tools;
 using IronPython.Modules;
+using Newtonsoft.Json;
 
 namespace GOTHAM
 {
@@ -81,6 +83,7 @@ namespace GOTHAM
             // ========================================================================================
             // ===========================        TEST CODE       =====================================
 
+
             /*// Create Unit of work session
 var work = new UnitOfWork();
 
@@ -94,9 +97,13 @@ Console.WriteLine(userRepo.All().ToList());
 Console.WriteLine(userRepo.FindBy(x => x.Username == "per"));
 
 // Dispose session
-work.Dispose();*/
+work.Dispose();
 
-
+            using (var file = new System.IO.StreamWriter(@"C:\temp\nodesCables.txt"))
+            {
+                file.Write(CacheEngine.JsonNodesAndCables);
+            }
+*/
             /*
             var countries = Globals.GetInstance().getTable<CountryEntity>();
             var nodeEstimate = NodeGenerator.estimateNodes(countries);
@@ -130,7 +137,7 @@ work.Dispose();*/
 
             // Generate cables between land nodes
             //CableGenerator.GenerateCables(nodes, 2, 2, 1700);
-            
+
 
             //var path = new Pathfinder().TryRandom(start, end, 100000).toDictionary();
 

@@ -169,6 +169,7 @@
     <Compile Include="Service\SignalR\Hubs\Terminal.cs" />
     <Compile Include="Service\WebAPI\Resources\UserController.cs" />
     <Compile Include="Service\WebAPI\WebAPI.cs" />
+    <Compile Include="Application\Tools\ZipUnzip.cs" />
     <Compile Include="Traffic\Json\JsonObjects.cs" />
     <Compile Include="Application\Tools\CableGenerator.cs" />
     <Compile Include="Application\Tools\NodeGenerator.cs" />

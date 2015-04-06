@@ -29,12 +29,15 @@ namespace GOTHAM.Service.SignalR.Hubs
 
 
 
-
+      Clients.Client(Context.ConnectionId).fetchMap(CacheEngine.JsonNodesAndCables);
+        /*
       Clients.Client(Context.ConnectionId).fetchMap(JsonConvert.SerializeObject(new
       {
         nodes = CacheEngine.Nodes,
         cables = CacheEngine.Cables
       }));
+        */
+
 
       // Denna her bli kjørt når spillet/frontend starte
       // 1. Get Nodes | Cache
