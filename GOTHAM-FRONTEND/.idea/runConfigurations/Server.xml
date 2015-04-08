@@ -1,7 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Server" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="node_modules/grunt-cli/bin/grunt" working-dir="$PROJECT_DIR$">
-    <RunnerSettings RunnerId="Basic" />
-    <ConfigurationWrapper RunnerId="Basic" />
-    <method />
-  </configuration>
-</component>
