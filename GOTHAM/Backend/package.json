@@ -15,7 +15,12 @@
     "mysql": "^2.6.1",
     "sequelize": "^2.0.5",
     "socket.io": "^1.3.5",
-    "asyncawait": "~0.7.4"
+    "asyncawait": "~0.7.4",
+    "co": "~4.5.1",
+    "should": "~5.2.0",
+    "mocha": "~2.2.4",
+    "chai": "~2.2.0",
+    "chai-as-promised": "~4.3.0"
   },
   "devDependencies": {
     "nodeunit": "^0.9.1",

@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) ->
       bandwidth:
         type: "DOUBLE"
         allowNull: false
-      lag:
+      lat:
         type: DataTypes.DECIMAL
         allowNull: false
       lng:

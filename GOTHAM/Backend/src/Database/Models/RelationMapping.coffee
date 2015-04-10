@@ -6,6 +6,7 @@ class RelationMapping
   constructor: (Model) ->
     @Model = Model
     @CableMapping()
+    @HostMapping()
 
 
   CableMapping: ->
@@ -18,6 +19,14 @@ class RelationMapping
     {
       foreignKey: 'type'
     }
+
+  HostMapping: ->
+    @Model.Host.belongsTo @Model.Filesystem,
+      {
+        foreignKey: 'filesystem'
+        foreignKeyConstraint:true
+      }
+
 
   NodeMapping: ->
 

@@ -2,19 +2,22 @@ io      =     require 'socket.io'
 http    =     require 'http'
 log = require('log4js').getLogger("SocketIO")
 
-
+Client = require './Client.coffee'
 StringTools = require '../Tools/StringTools.coffee'
 
 class SocketServer
+
+  @Client = Client
 
   constructor: (port, debug)->
     @_port = port
     @_debug = debug
     @_server = null
     @_socket = null
+    @clients = {}
 
     @onConnect = ->
-      console.log "wtf"
+      throw new Error "Should be overriden"
 
     @_rooms = []
 
@@ -25,7 +28,17 @@ class SocketServer
   Stop: ->
     @_socket.close()
 
+  SetDatabase: (database) ->
+    @_database = database
+
+  GetDatabase: ->
+    return @_database
+
   RegisterRoom: (room) ->
+    # Sets the database
+    room.SetDatabase @GetDatabase()
+    room.SetSocketServer @
+    log.info "[SOCKET]: Registering room #{room.constructor.name}"
     @_rooms.push room
 
   AddToRooms: (client) ->
@@ -36,6 +49,13 @@ class SocketServer
   Socket: () ->
     return @_socket
 
+  AddClient: (client) ->
+    @clients[client.id] = client
+
+  GetClient: (clientID) ->
+    return @clients[clientID]
+
+
 
   _CreateServer: ->
     that = @
@@ -43,11 +63,28 @@ class SocketServer
       response.writeHead(200,{ 'Content-Type': 'text/html' });
       response.end '<h1>Gotham Backend</h1>'
 
+  _OverrideEmitter: (_socket)->
+
+    emit = _socket.emit
+
+    _socket.emit = ->
+      log.info("[EMITTER] ", Array.prototype.slice.call(arguments));
+      emit.apply _socket, arguments
+
+    $emit = _socket.$emit
+    _socket.$emit = ->
+      log.info('[EMITTER] ',Array.prototype.slice.call(arguments));
+      $emit.apply _socket, arguments
+
+
+
 
   _StartServer: ->
     that = @
     @_server.listen @_port
     @_socket = io.listen @_server
+    @_OverrideEmitter @_socket
+
     @_socket.on 'connection', (client) ->
       that.onConnect(client)
 
