@@ -21,6 +21,10 @@ GothamGame = require './GothamGame.coffee'
 # Jquery UI
 require './dependencies/jquery-ui.min'
 
+socket = io.connect('//localhost:8080');
+socket.emit 'i am god', "Hest"
+
+
 ################################################
 ##
 ##

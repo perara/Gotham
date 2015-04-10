@@ -22,9 +22,27 @@ namespace GOTHAM
 
         static void Main()
         {
-            var factory = EntityManager.GetSessionFactory();
+
+ 
+
+            {
+            // Create General Repository for UserEntity
+           
+            using (var session = EntityManager.GetSessionFactory().OpenSession())
+            {
+                 var start = DateTime.Now;
+                session.Query<CableEntity>();
+                var end = DateTime.Now - start;
+                Console.WriteLine(end.TotalMilliseconds);
+            }
 
 
+
+            Console.ReadKey();
+
+            }
+
+      
             /*// Create Unit of work session
         var work = new UnitOfWork();
 
