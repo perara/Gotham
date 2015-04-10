@@ -28,11 +28,7 @@ namespace GOTHAM.Traffic.Misc
         public Pathfinder Path { get; set; }
         public Stack<int> PathId { get; set; }
         public int Id { get; set; }
-        public Layer2 Link { get; set; }
-        public Layer3 Network { get; set; }
-        public Layer4 Transport { get; set; }
-        public Layer6 Encryption { get; set; }
-        public Layer7 Application { get; set; }
+
 
 
         public Packet(Pathfinder path)

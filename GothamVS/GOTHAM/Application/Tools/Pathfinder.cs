@@ -218,7 +218,7 @@ namespace GOTHAM.Application.Tools
 
             return pathInt;
         }
-
+        
         /// <summary>
         /// Returns the solution of the latest generated path as an Stack if NodeEntities
         /// </summary>
