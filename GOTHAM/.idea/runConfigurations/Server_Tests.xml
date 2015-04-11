@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Server Tests" type="mocha-javascript-test-runner" factoryName="Mocha">
+    <node-options />
+    <working-directory>$PROJECT_DIR$</working-directory>
+    <pass-parent-env>true</pass-parent-env>
+    <envs />
+    <ui>TDD</ui>
+    <extra-mocha-options>--compilers coffee:coffee-script/register</extra-mocha-options>
+    <test-directory>$PROJECT_DIR$/Backend/src/Tests</test-directory>
+    <recursive>true</recursive>
+    <method />
+  </configuration>
+</component>

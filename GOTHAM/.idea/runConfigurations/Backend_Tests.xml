@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Backend Tests" type="NodeunitConfigurationType" factoryName="Nodeunit" singleton="true">
+    <setting name="nodePath" value="C:/Program Files/nodejs/node" />
+    <envs />
+    <setting name="passParentEnvVars" value="true" />
+    <setting name="nodeunitModuleDir" value="$PROJECT_DIR$/Backend/node_modules/nodeunit" />
+    <setting name="workingDirectory" value="$PROJECT_DIR$" />
+    <setting name="testType" value="DIRECTORY" />
+    <setting name="directory" value="Backend/src/Tests" />
+    <method />
+  </configuration>
+</component>

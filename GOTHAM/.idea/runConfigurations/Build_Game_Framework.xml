@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Build Game Framework" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="node_modules/grunt-cli/bin/grunt" working-dir="$PROJECT_DIR$/GameFramework">
+    <profiling log-folder="." record-internal="true">
+      <option name="gnuplotExecutable" value="" />
+      <option name="tickPackage" value="" />
+      <option name="v8ProfilerPackage" value="" />
+    </profiling>
+    <method />
+  </configuration>
+</component>

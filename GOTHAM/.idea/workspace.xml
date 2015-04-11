@@ -59,26 +59,7 @@
     </treeState>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0264e508-36aa-4535-bc5b-df0ac85b7765" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GameFramework/src/Dependencies/socket.io.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameFramework/src/Modules/Pattern/MVC/Controller.coffee" afterPath="$PROJECT_DIR$/GameFramework/src/Modules/Pattern/MVC/Controller.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameFramework/src/Dependencies/Dependencies.coffee" afterPath="$PROJECT_DIR$/GameFramework/src/Dependencies/Dependencies.coffee" />
-      <change type="MODIFICATION" beforePath="I:\Dropbox\Programmering\Projects\_Unimportant\_GOTHAM\Gotham\Backend\src\Networking\Rooms\GeneralRoom.coffee" afterPath="$PROJECT_DIR$/Backend/src/Networking/Rooms/GeneralRoom.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameFramework/dist/Gotham-dep.js" afterPath="$PROJECT_DIR$/GameFramework/dist/Gotham-dep.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameFramework/dist/Gotham-dep.min.js" afterPath="$PROJECT_DIR$/GameFramework/dist/Gotham-dep.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameFramework/dist/Gotham.js" afterPath="$PROJECT_DIR$/GameFramework/dist/Gotham.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameFramework/dist/Gotham.min.js" afterPath="$PROJECT_DIR$/GameFramework/dist/Gotham.min.js" />
-      <change type="MODIFICATION" beforePath="I:\Dropbox\Programmering\Projects\_Unimportant\_GOTHAM\Gotham\Backend\src\Networking\Rooms\HostRoom.coffee" afterPath="$PROJECT_DIR$/Backend/src/Networking/Rooms/HostRoom.coffee" />
-      <change type="MODIFICATION" beforePath="I:\Dropbox\Programmering\Projects\_Unimportant\_GOTHAM\Gotham\Backend\src\Main.coffee" afterPath="$PROJECT_DIR$/Backend/src/Main.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameFramework/src/Modules/Network.coffee" afterPath="$PROJECT_DIR$/GameFramework/src/Modules/Network.coffee" />
-      <change type="MODIFICATION" beforePath="I:\Dropbox\Programmering\Projects\_Unimportant\_GOTHAM\Gotham\Backend\src\Database\Models\RelationMapping.coffee" afterPath="$PROJECT_DIR$/Backend/src/Database/Models/RelationMapping.coffee" />
-      <change type="MODIFICATION" beforePath="I:\Dropbox\Programmering\Projects\_Unimportant\_GOTHAM\Gotham\Backend\src\Networking\SocketServer.coffee" afterPath="$PROJECT_DIR$/Backend/src/Networking/SocketServer.coffee" />
-      <change type="MODIFICATION" beforePath="I:\Dropbox\Programmering\Projects\_Unimportant\_GOTHAM\Gotham\Game\src\objects\Controller\TerminalController.coffee" afterPath="$PROJECT_DIR$/Game/src/objects/Controller/TerminalController.coffee" />
-      <change type="MODIFICATION" beforePath="I:\Dropbox\Programmering\Projects\_Unimportant\_GOTHAM\Gotham\Game\src\objects\Controller\WorldMapController.coffee" afterPath="$PROJECT_DIR$/Game/src/objects/Controller/WorldMapController.coffee" />
-      <change type="MODIFICATION" beforePath="I:\Dropbox\Programmering\Projects\_Unimportant\_GOTHAM\Gotham\Game\src\main.coffee" afterPath="$PROJECT_DIR$/Game/src/main.coffee" />
-      <change type="MODIFICATION" beforePath="I:\Dropbox\Programmering\Projects\_Unimportant\_GOTHAM\Gotham\.idea\vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="I:\Dropbox\Programmering\Projects\_Unimportant\_GOTHAM\Gotham\.idea\workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="0264e508-36aa-4535-bc5b-df0ac85b7765" name="Default" comment="" />
     <ignored path="Gotham.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -678,7 +659,7 @@
       <recent name="I:\Dropbox\Programmering\Projects\_Unimportant\_GOTHAM\Gotham\Game" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.Frontend Server">
+  <component name="RunManager" selected="Nodeunit.Backend Tests">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -1157,59 +1138,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="Server Tests" type="mocha-javascript-test-runner" factoryName="Mocha">
-      <node-options />
-      <working-directory>$PROJECT_DIR$</working-directory>
-      <pass-parent-env>true</pass-parent-env>
-      <envs />
-      <ui>TDD</ui>
-      <extra-mocha-options>--compilers coffee:coffee-script/register</extra-mocha-options>
-      <test-directory>$PROJECT_DIR$/Backend/src/Tests</test-directory>
-      <recursive>true</recursive>
-      <method />
-    </configuration>
-    <configuration default="false" name="Build Game Framework" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="node_modules/grunt-cli/bin/grunt" working-dir="$PROJECT_DIR$/GameFramework">
-      <profiling log-folder="." record-internal="true">
-        <option name="gnuplotExecutable" value="" />
-        <option name="tickPackage" value="" />
-        <option name="v8ProfilerPackage" value="" />
-      </profiling>
-      <method />
-    </configuration>
-    <configuration default="false" name="Build Game" type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="node_modules/grunt-cli/bin/grunt" application-parameters="build" working-dir="$PROJECT_DIR$/Game">
-      <profiling log-folder="." record-internal="true">
-        <option name="gnuplotExecutable" value="" />
-        <option name="tickPackage" value="" />
-        <option name="v8ProfilerPackage" value="" />
-      </profiling>
-      <method />
-    </configuration>
-    <configuration default="false" name="Frontend Server" type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="node_modules/grunt-cli/bin/grunt" working-dir="$PROJECT_DIR$/Game">
-      <profiling log-folder="." record-internal="true">
-        <option name="gnuplotExecutable" value="" />
-        <option name="tickPackage" value="" />
-        <option name="v8ProfilerPackage" value="" />
-      </profiling>
-      <method />
-    </configuration>
-    <configuration default="false" name="Backend Server" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="src/Main.coffee" working-dir="$PROJECT_DIR$/Backend" coffeescript-path="I:\Dropbox\Programmering\Projects\_Unimportant\_GOTHAM\Gotham\Backend\node_modules\coffee-script\bin\coffee" coffeescript-run="true">
-      <profiling log-folder="." record-internal="true">
-        <option name="gnuplotExecutable" value="" />
-        <option name="tickPackage" value="" />
-        <option name="v8ProfilerPackage" value="" />
-      </profiling>
-      <method />
-    </configuration>
-    <configuration default="false" name="Backend Tests" type="NodeunitConfigurationType" factoryName="Nodeunit">
-      <setting name="nodePath" value="C:/Program Files/nodejs/node" />
-      <envs />
-      <setting name="passParentEnvVars" value="true" />
-      <setting name="nodeunitModuleDir" value="$PROJECT_DIR$/Backend/node_modules/nodeunit" />
-      <setting name="workingDirectory" value="$PROJECT_DIR$" />
-      <setting name="testType" value="DIRECTORY" />
-      <setting name="directory" value="Backend/src/Tests" />
-      <method />
-    </configuration>
     <list size="7">
       <item index="0" class="java.lang.String" itemvalue="Karma.Unnamed" />
       <item index="1" class="java.lang.String" itemvalue="Mocha.Server Tests" />
@@ -1234,12 +1162,12 @@
       <workItem from="1428506077462" duration="53516000" />
       <workItem from="1428680927690" duration="13509000" />
       <workItem from="1428757533936" duration="196000" />
-      <workItem from="1428757750258" duration="137000" />
+      <workItem from="1428757750258" duration="954000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69090000" />
+    <option name="totallyTimeSpent" value="69907000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1252,7 +1180,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1264,7 +1192,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TeamCity" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32946146" sideWeight="0.49635416" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="TeamCity" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32946146" sideWeight="0.49635416" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
