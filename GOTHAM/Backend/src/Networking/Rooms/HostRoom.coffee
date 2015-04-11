@@ -11,12 +11,14 @@ class HostRoom extends Room
 
     @AddEvent "GetHost", (data) ->
       client = that.GetClient(@id)
-      that.log.info "[HostRoom] Login called" + data
+
+
+      that.log.info "[HostRoom] GetHost called" + data
 
       that.Database.Model.Host.find(
         where:
           owner: client.user.id
-        include: [that.Database.Model.Filesystem]
+        include: [that.Database.Model.Filesystem, that.Database.Model.Person]
       )
       .then((host) ->
 

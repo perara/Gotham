@@ -9,10 +9,11 @@ class GeneralRoom extends Room
   define: ->
     that = @
 
-    @AddEvent "Login", (data) ->
+    @AddEvent "Login", (json) ->
+      data = JSON.parse(json)
       client = that.GetClient @id
 
-      that.log.info "[GeneralRoom] Login called" + data
+      that.log.info "[GeneralRoom] Login called: " + data
 
       that.log.info "---- Attempting to login with #{data.username}:#{data.password}"
 

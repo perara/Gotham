@@ -21,8 +21,6 @@ GothamGame = require './GothamGame.coffee'
 # Jquery UI
 require './dependencies/jquery-ui.min'
 
-socket = io.connect('//localhost:8080');
-socket.emit 'i am god', "Hest"
 
 
 ################################################
@@ -90,9 +88,13 @@ Gotham.Preload.onComplete () ->
   console.log "Preload: Complete"
 
   # Activate Network, And connect. Continue loading when done
-  GothamGame.network = new Gotham.Network "128.39.148.43", 8091, "gotham"
-  GothamGame.network.webAPI.port = 8085
+  GothamGame.network = new Gotham.Network "//localhost", 8081
   GothamGame.network.connect (startConnection) ->
+    user =
+      username: "per"
+      password: "per"
+    GothamGame.network.Socket.emit 'Login', JSON.stringify(user)
+    GothamGame.network.Socket.on 'Login', (user) ->
 
     # Create World Scene
     scene_World = new GothamGame.scenes.World 0x333333, true
@@ -106,7 +108,4 @@ Gotham.Preload.onComplete () ->
 
 
     GothamGame.renderer.setScene("World")
-
-    # Finally start the Connection
-    connection = startConnection()
 

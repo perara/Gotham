@@ -27,6 +27,13 @@ class RelationMapping
         foreignKeyConstraint:true
       }
 
+    @Model.Host.belongsTo @Model.Person,
+      {
+        foreignKey: 'owner'
+        foreignKeyConstraint:true
+      }
+
+
 
   NodeMapping: ->
 

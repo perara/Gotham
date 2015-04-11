@@ -14,24 +14,16 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
   create_nodes: ->
     that = @
 
-    # This callback returns a array with nodes from the server. These nodes should be processed by the WorldMap
-    # A function which places these nodes must be used.
-    GothamGame.network.getJSON "/api/Node" , (data) ->
+    GothamGame.network.Socket.emit 'GetNodes'
+    GothamGame.network.Socket.emit 'GetCables'
+
+
+    GothamGame.network.Socket.on "GetNodes" , (json) ->
+      nodes = JSON.parse json
 
       # Insert the nodes into the "node" table
       db_node = GothamGame.Database.table("node")
-      db_node.insert data.nodes
-
-      # Insert cables into the "cables" table
-      db_cable = GothamGame.Database.table("cable")
-      db_cable.insert data.cables
-
-
-      # Iterate Through the Cable Table
-      start = new Date().getTime()
-      db_cable().each (row) ->
-        that.View.addCable row
-      console.log "Process Cables: " + (new Date().getTime() - start) + "ms"
+      db_node.insert nodes
 
       # Iterate Through the Node Table
       start = new Date().getTime()
@@ -40,22 +32,18 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
       console.log "Process Nodes: " + (new Date().getTime() - start) + "ms"
 
 
+    GothamGame.network.Socket.on "GetCables" , (json) ->
+      cables = JSON.parse json
 
-      """
-      _cableTask = ->
-        db_row = db_temp {name: "cableTask"}
-        row = db_row.first()
-        that.View.addCable row.cables.pop()
+      # Insert cables into the "cables" table
+      db_cable = GothamGame.Database.table("cable")
+      db_cable.insert cables
 
-        if row.cables.length < 1
-          return false
-        else
-          return true
-      Gotham.GameLoop.addTask _cableTask
-      """
-
-
-
+      # Iterate Through the Cable Table
+      start = new Date().getTime()
+      db_cable().each (row) ->
+        that.View.addCable row
+      console.log "Process Cables: " + (new Date().getTime() - start) + "ms"
 
 
 

@@ -37,16 +37,12 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
 
     @Networking()
     @HandleInput()
-    @Boot()
 
   Networking: () ->
     that = @
 
-    @setNetwork GothamGame.network
-    @addNetworkListener "onConnect", (connection) ->
-      console.log (":D")
-      connection.server.getTerminal()
-    @addNetworkCallback "getTerminal", (json)->
+    GothamGame.network.Socket.emit 'GetHost'
+    GothamGame.network.Socket.on "GetHost", (json)->
 
       json = JSON.parse(json)
 
@@ -54,6 +50,8 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
       that._fs = new Filesystem(json.Filesystem)
       that._fs.onError = (errMsg) ->
         that.console.add errMsg
+
+      that.Boot()
 
 
 
@@ -69,7 +67,7 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
       "",
       "  System load:  0.18                Processes:           162",
       "  Usage of /:   16.6% of 157.36GB   Users logged in:     0",
-      "  Memory usage: 48%                 IP address for eth0: ", ##{@._data.Ip}
+      "  Memory usage: 48%                 IP address for eth0: #{@._data.ip}",
       "  Swap usage:   0%                  IP address for eth1: 10.131.240.142",
       "",
       "  Graph this data and manage this system at:",
@@ -104,15 +102,15 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
 
         if that.__tabCount is 1
 
-
           files = that._fs.findFiles command._args
+
           output = ""
           for file in files
-            ext = if file.Extension != "dir" then ".#{file.Extension}" else ""
-            output += "#{file.Name}#{ext}    "
+            ext = if file.extension != "dir" then ".#{file.extension}" else ""
+            output += "#{file.name}#{ext}    "
 
           if files.length == 1
-            $(obj).val("#{command._command} #{files[0].Name}")
+            $(obj).val("#{command._command} #{files[0].name}")
           else if files.length > 1
             that.console.add output
             that.View.Redraw()
@@ -149,7 +147,7 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
 
     command = new Command @, input
 
-    @console.add "#{@_data.Owner.Givenname}@#{@_data.MachineName}:~# #{command.getText()}"
+    @console.add "#{@_data.Person.givenname}@#{@_data.machine_name}:~# #{command.getText()}"
     @console.addHistory command
 
     if command.isCommand()
@@ -214,8 +212,10 @@ class Command
 class Filesystem
 
   constructor: (json) ->
-    @_fs = @Parse(json)
-    @_root = @Parse(json)
+
+
+    @_fs = @Parse(json.data)
+    @_root = @Parse(json.data)
     @onError = ->
 
 
@@ -225,20 +225,17 @@ class Filesystem
       root = @_fs.parent
     return root
 
-  Parse: (json) ->
-
+  Parse: (root) ->
     # Function for creating parent node on "node"
     createParentNode = (node, parent) ->
       node.parent = parent
 
-      # Create parent for node's children
-      for childNode in node.Children
-        createParentNode childNode, node
+      for key, value of node.children
+        createParentNode(value, node)
 
+    createParentNode root, null
 
-    # Create the parent node property
-    createParentNode json, null
-    return json
+    return root
 
   # Attempts to navigate through the file system, returning the resulting node if found
   #
@@ -265,8 +262,8 @@ class Filesystem
 
       # Search after dir
       found = null
-      for child in curr.Children
-        if child.Name is _path
+      for filename, child of curr.children
+        if filename is _path
           found = child
           break
       curr = found
@@ -281,17 +278,20 @@ class Filesystem
 
     matches = []
     for pattern in args
-      for child in @_fs.Children
+      for filename, child of @_fs.children
         #console.log "Pattern: " + pattern + " | ChildName: " + child.Name + " | Flag: " + (pattern.indexOf child.Name > -1)
-        if child.Name.contains pattern
-          matches.push child
+        if filename.contains pattern
+          matches.push
+            extension: child.extension
+            name: filename
     return matches
 
   ls: ->
     output = ""
-    for child in @_fs.Children
-      ext = if child.Extension != "dir" then ".#{child.Extension}" else ""
-      output += "#{child.Name}#{ext}    "
+
+    for filename, child of @_fs.children
+      ext = if child.extension != "dir" then ".#{child.extension}" else ""
+      output += "#{filename}#{ext}    "
     return output
 
   mv: (args) ->
@@ -307,13 +307,13 @@ class Filesystem
       return
 
     # Delete Parent's child reference
-    sourceNode.parent.Children.remove sourceNode
+    sourceNode.parent.children.remove sourceNode
 
     # Delete Parent reference
     sourceNode.parent = null
 
     # Add source as a Child to the target
-    targetNode.Children.push sourceNode
+    targetNode.children.push sourceNode
 
     # Add source's parent to the target
     sourceNode.parent = targetNode
@@ -327,11 +327,10 @@ class Filesystem
     else
       path = ""
 
-
     curr = @navigate path
 
     if curr
-      if curr.Extension is "dir"
+      if curr.extension is "dir"
         @_fs = curr
       else
         @onError "-bash: cd: #{path}: Not a directory"

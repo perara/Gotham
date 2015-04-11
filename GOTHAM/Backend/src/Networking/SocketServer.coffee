@@ -16,8 +16,9 @@ class SocketServer
     @_socket = null
     @clients = {}
 
-    @onConnect = ->
-      throw new Error "Should be overriden"
+    @onConnect = -> throw new Error "Should be overriden"
+    @onDisconnect = -> throw new Error "Should be overriden"
+
 
     @_rooms = []
 
@@ -51,6 +52,9 @@ class SocketServer
 
   AddClient: (client) ->
     @clients[client.id] = client
+
+  RemoveClient: (client) ->
+    delete @clients[client.id]
 
   GetClient: (clientID) ->
     return @clients[clientID]
@@ -86,7 +90,19 @@ class SocketServer
     @_OverrideEmitter @_socket
 
     @_socket.on 'connection', (client) ->
+
+      # Create client item, add the client and add rtooms to the client
+      clientData = new SocketServer.Client(client)
+      that.AddClient clientData
+      that.AddToRooms client
+
+      # Run callback
       that.onConnect(client)
+
+      # Disconnect Callback definition
+      client.on 'disconnect', ->
+        that.RemoveClient client
+        that.onDisconnect(client)
 
 
 

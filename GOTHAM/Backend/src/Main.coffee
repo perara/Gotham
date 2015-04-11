@@ -1,35 +1,24 @@
 cfg     =     require './config.json'
 SocketServer = require './Networking/SocketServer.coffee'
 Database = require './Database/Database.coffee'
-
-
+log = require('log4js').getLogger("Main")
 
 
 
 
 
 database = new Database()
-server = new SocketServer 4443
+server = new SocketServer 8081
 server.SetDatabase database
+server.RegisterRoom new (require './Networking/Rooms/HostRoom.coffee')()
 server.RegisterRoom new (require './Networking/Rooms/UserRoom.coffee')()
 server.RegisterRoom new (require './Networking/Rooms/WorldMapRoom.coffee')()
 server.RegisterRoom new (require './Networking/Rooms/GeneralRoom.coffee')()
 server.Start()
 server.onConnect = (_client) ->
-
-  server.AddClient _client
-  _clientInfo = new SocketServer.Client(_client)
-  server.AddToRooms _client
-  _client.Info = _clientInfo
-
-
-
-client = require('socket.io-client')('http://localhost:4443');
-client.on 'connect', ->
-@client = client
-@server = server
-
-
+  log.info "[SERVER] Client Connected #{_client.id}"
+server.onDisconnect = (_client) ->
+  log.info "[SERVER] Client Disconnected #{_client.id}"
 
 """
 server = new SocketServer 4443, true
