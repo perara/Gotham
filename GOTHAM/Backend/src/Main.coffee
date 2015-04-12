@@ -20,6 +20,18 @@ server.onConnect = (_client) ->
 server.onDisconnect = (_client) ->
   log.info "[SERVER] Client Disconnected #{_client.id}"
 
+
+
+"""
+database.Model.Cable.find(
+  {
+    where:
+      id: 4706
+    include: [database.Model.CablePart]
+  }
+).then (parts) ->
+  console.log parts
+"""
 """
 server = new SocketServer 4443, true
 server.RegisterRoom new (require './Networking/Rooms/UserRoom.coffee')()

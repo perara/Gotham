@@ -1,102 +1,48 @@
-# TEST IF PIXIv3 is READY...
-
-#PIXXU = require './dependencies/pixi3.js'
-#class Polygon extends PIXXU.Polygon
-#console.log PIXXU
-
-################################################
-##
-##
-## Dependencies
-##
-##
-################################################
-# Gotham Library
 Gotham = require '../../GameFramework/src/Gotham.coffee'
-
-# Include GothamGame
 GothamGame = require './GothamGame.coffee'
-
-
-# Jquery UI
 require './dependencies/jquery-ui.min'
 
 
 
-################################################
-##
-##
-## Database
-##
-##
-################################################
-# Create Node Table
-db_nodes = GothamGame.Database.createTable "node"
 
-# Create Cable Table
-db_cables = GothamGame.Database.createTable "cable"
+setup =
+  started: false
 
-# Create Temp Table
-db_cables = GothamGame.Database.createTable "temp"
-################################################
-##
-##
-## Preloading
-##
-##
-################################################
-# World Map
-Gotham.Preload.image("/assets/img/map_marker.png", "map_marker", "image")
-Gotham.Preload.json("/assets/json/json.json", "map")
+  database: ->
+    # Create Node Table
+    db_nodes = GothamGame.Database.createTable "node"
 
-# Top Bar
-Gotham.Preload.image("/assets/img/bottomBar.png", "bottomBar", "image")
-Gotham.Preload.image("/assets/img/topbar.png", "topBar", "image")
+    # Create Cable Table
+    db_cables = GothamGame.Database.createTable "cable"
 
-# Menu
-Gotham.Preload.image("/assets/img/menu_button_texture.png", "menu_button", "image")
-Gotham.Preload.image("/assets/img/menu_background.jpg", "menu_background", "image")
-Gotham.Preload.mp3("./assets/audio/menu_theme.mp3", "menu_theme")
+    # Create Temp Table
+    db_cables = GothamGame.Database.createTable "temp"
+  preload: ->
+    # World Map
+    Gotham.Preload.image("/assets/img/map_marker.png", "map_marker", "image")
+    Gotham.Preload.json("/assets/json/json.json", "map")
 
-# Settings
-Gotham.Preload.image("/assets/img/settings_background.jpg", "settings_background", "image")
-Gotham.Preload.image("/assets/img/settings_close.png", "settings_close", "image")
+    # Top Bar
+    Gotham.Preload.image("/assets/img/bottomBar.png", "bottomBar", "image")
+    Gotham.Preload.image("/assets/img/topbar.png", "topBar", "image")
 
-#NodeList
-Gotham.Preload.image("/assets/img/nodelist_background.jpg", "nodelist_background", "image")
+    # Menu
+    Gotham.Preload.image("/assets/img/menu_button_texture.png", "menu_button", "image")
+    Gotham.Preload.image("/assets/img/menu_background.jpg", "menu_background", "image")
+    Gotham.Preload.mp3("./assets/audio/menu_theme.mp3", "menu_theme")
 
-#Terminal
-Gotham.Preload.image("/assets/img/terminal_background.png", "terminal_background", "image")
+    # Settings
+    Gotham.Preload.image("/assets/img/settings_background.jpg", "settings_background", "image")
+    Gotham.Preload.image("/assets/img/settings_close.png", "settings_close", "image")
 
-################################################
-##
-##
-## Game Initialization
-##
-##
-################################################
+    #NodeList
+    Gotham.Preload.image("/assets/img/nodelist_background.jpg", "nodelist_background", "image")
 
+    #Terminal
+    Gotham.Preload.image("/assets/img/terminal_background.png", "terminal_background", "image")
+  startGame: ->
 
-
-# OnLoad Callback
-Gotham.Preload.onLoad (source, name, percent) ->
-  console.log("Preload: " + percent + "%")
-
-
-# OnComplete CallBack
-Gotham.Preload.onComplete () ->
-  console.log "Preload: Complete"
-
-  # Activate Network, And connect. Continue loading when done
-  GothamGame.network = new Gotham.Network "//localhost", 8081
-  GothamGame.network.connect (startConnection) ->
-    user =
-      username: "per"
-      password: "per"
-    GothamGame.network.Socket.emit 'Login', JSON.stringify(user)
-    GothamGame.network.Socket.on 'Login', (user) ->
-
-    # Create World Scene
+    # Create Scenes
     scene_World = new GothamGame.scenes.World 0x333333, true
     scene_Menu  = new GothamGame.scenes.Menu 0x000000, true
 
@@ -105,7 +51,63 @@ Gotham.Preload.onComplete () ->
     GothamGame.renderer.addScene("World", scene_World)
     GothamGame.renderer.addScene("Menu", scene_Menu)
 
-
-
+    # Set Start Scene
     GothamGame.renderer.setScene("World")
+  startNetwork: ->
+    GothamGame.network = new Gotham.Network "//localhost", 8081
+    GothamGame.network.connect()
+
+    GothamGame.network.onConnect = ->
+      # Start game when connected
+      if not setup.started
+        setup.startGame()
+        setup.started = true
+    GothamGame.network.onReconnecting = ->
+      console.log "Attempting to reconnect"
+    GothamGame.network.onReconnect = ->
+      console.log "Reconnected!"
+
+
+
+
+
+# Setup Database
+setup.database()
+
+#Setup Preloading
+setup.preload()
+
+
+Gotham.Preload.onLoad (source, name, percent) ->
+  console.log("Preload: " + percent + "%")
+
+Gotham.Preload.onComplete () ->
+  console.log "Preload: Complete"
+
+  # Start networking when preloading is done
+  setup.startNetwork()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

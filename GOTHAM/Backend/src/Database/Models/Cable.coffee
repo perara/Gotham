@@ -3,7 +3,7 @@
 
 
 module.exports = (sequelize, DataTypes) ->
-  Cable = sequelize.define 'Cable',
+  return sequelize.define 'Cable',
     {
       id:
         type: DataTypes.INTEGER
@@ -27,15 +27,9 @@ module.exports = (sequelize, DataTypes) ->
       name:
         type: DataTypes.STRING
         allowNull: false
-    }
-    ,
+    },
     {
 
       tableName: 'cable'
       timestamps: false
     }
-
-
-
-
-  return Cable

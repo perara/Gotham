@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GOTHAM-MODEL")]
+[assembly: AssemblyTitle("Gotham-Model")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GOTHAM-MODEL")]
+[assembly: AssemblyProduct("Gotham-Model")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("cb9a76f3-e8c6-4ed0-a9bc-f11966649e93")]
+[assembly: Guid("b0084a0e-0053-41be-9a34-b5769316088c")]
 
 // Version information for an assembly consists of the following four values:
 //

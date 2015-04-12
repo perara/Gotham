@@ -1,0 +1,37 @@
+﻿{
+
+    "mysql": {
+        "per": {
+            "host": "localhost",
+            "port": 3306,
+            "database": "gotham",
+            "username": "root",
+            "password": "root"
+        },
+        "paul": {
+            "host": "hybel.keel.no",
+            "port": 3306,
+            "database": "gotham",
+            "username": "root",
+            "password": "%123zombies",
+			"usage": "read-write"
+
+        },
+
+		"local": {
+            "host": "localhost",
+            "port": 3306,
+            "database": "gotham",
+            "username": "root",
+            "password": "",
+        },
+       
+        "production": {
+           "host": "hybel.keel.no",
+            "port": 3306,
+            "database": "gotham",
+            "username": "root",
+            "password": "%123zombies%"
+        }
+    }
+}

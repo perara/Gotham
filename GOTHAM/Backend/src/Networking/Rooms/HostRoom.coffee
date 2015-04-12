@@ -5,6 +5,8 @@ Room = require './Room.coffee'
 
 class HostRoom extends Room
 
+  userid = 1 #TODO remove later on
+
 
   define: ->
     that = @
@@ -17,7 +19,7 @@ class HostRoom extends Room
 
       that.Database.Model.Host.find(
         where:
-          owner: client.user.id
+          owner: userid #client.user.id
         include: [that.Database.Model.Filesystem, that.Database.Model.Person]
       )
       .then((host) ->
