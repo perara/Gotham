@@ -12,5 +12,5 @@ class UDP extends Layer4
   setType: ->
     return "UDP"
 
-module exports = TCP
-module exports = UDP
+module.exports = TCP
+module.exports = UDP

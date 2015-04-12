@@ -24,9 +24,9 @@ class SSH extends Layer7
   setType: ->
     return "SSH"
 
-module exports = HTTP
-module exports = FTP
-module exports = DNS
-module exports = HTTPS
-module exports = SFTP
-module exports = SSH
+module.exports = HTTP
+module.exports = FTP
+module.exports = DNS
+module.exports = HTTPS
+module.exports = SFTP
+module.exports = SSH

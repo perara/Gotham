@@ -19,7 +19,7 @@ class DTLS extends Layer6
   setType: ->
     return "DTLS"
 
-module exports = NoEncryption
-module exports = SSL
-module exports = TLS
-module exports = DTLS
+module.exports = NoEncryption
+module.exports = SSL
+module.exports = TLS
+module.exports = DTLS

@@ -35,5 +35,5 @@ class IP extends Layer3
   setType: ->
     return "IP"
 
-module exports = ICMP
-module exports = IP
+module.exports = ICMP
+module.exports = IP

@@ -49,4 +49,4 @@ class LayerStructure
     @layers.L6 = TLS
     @layers.L7 = HTTPS
 
-
+module.exports = LayerStructure

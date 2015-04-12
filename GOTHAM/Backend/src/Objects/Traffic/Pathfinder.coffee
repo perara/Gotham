@@ -48,3 +48,5 @@ class Pathfinder
     pairs = {}
     pairs[node.id] = node for node in solution
     return pairs
+
+module.exports = Pathfinder

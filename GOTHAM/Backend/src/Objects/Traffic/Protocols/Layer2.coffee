@@ -12,5 +12,5 @@ class Wifi extends Layer2
   setType: ->
     return "Wifi"
 
-module exports = Ethernet
-module exports = Wifi
+module.exports = Ethernet
+module.exports = Wifi

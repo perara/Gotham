@@ -4,3 +4,5 @@ class Connection
 
     @sessions = []
     @host = host
+
+module.exports = Connection

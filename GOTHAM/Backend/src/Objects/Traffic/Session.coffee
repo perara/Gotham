@@ -37,3 +37,6 @@ class Session
     log.Info("Application Layer: \t" + @layers.L7.type)
 
     log.Info("=========================================")
+
+
+module.exports = Session

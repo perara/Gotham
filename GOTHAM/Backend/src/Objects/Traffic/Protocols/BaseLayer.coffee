@@ -5,5 +5,4 @@ class BaseLayer
   setType: ->
     throw new Error "Must be overrided"
 
-
-module exports = BaseLayer
+module.exports = BaseLayer
