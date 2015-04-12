@@ -89,20 +89,6 @@ suite 'Networking Tests', ->
 
     setTimeout(done,5000)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @client.on 'terminate', (data) ->
 
 

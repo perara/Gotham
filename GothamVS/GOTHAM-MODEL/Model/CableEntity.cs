@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
-namespace GOTHAM.Model
+namespace Gotham.Model
 {
     [SuppressMessage("ReSharper", "DoNotCallOverridableMethodsInConstructor")]
     [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
@@ -65,7 +65,7 @@ namespace GOTHAM.Model
              .Cascade.All()
              .Inverse()
              .KeyColumn("cable")
-             .LazyLoad();
+             .Not.LazyLoad();
 
 
             References(x => x.Type, "id");

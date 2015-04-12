@@ -303,13 +303,20 @@
       worldMap.push sprite
     return worldMap
 
+  clearNodeContainer: ->
+    for i in @nodeContainer.children
+      if i
+        i.texture.destroy false
+        sprite = @nodeContainer.removeChild i
+        sprite = null
+
 
   # Adds a nopde to the node container
   #
   # @param node {Object} The Node Data
   addNode: (node) ->
     # Convert Lat, Lng to Pixel's X and Y
-    coordinates = @CoordinateToPixel(node.Lat, node.Lng)
+    coordinates = @CoordinateToPixel(node.lat, node.lng)
 
     # Create a node sprite
     gNode = new Gotham.Graphics.Sprite Gotham.Preload.fetch("map_marker", "image")

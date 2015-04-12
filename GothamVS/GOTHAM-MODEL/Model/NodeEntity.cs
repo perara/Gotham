@@ -1,11 +1,11 @@
-﻿using FluentNHibernate.Mapping;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using GOTHAM_TOOLS;
+using FluentNHibernate.Mapping;
+using Gotham.Tools;
+using Newtonsoft.Json;
 
-namespace GOTHAM.Model
+namespace Gotham.Model
 {
     [SuppressMessage("ReSharper", "DoNotCallOverridableMethodsInConstructor")]
     [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
@@ -149,7 +149,7 @@ namespace GOTHAM.Model
                 .Table("node_cable")
                 .ParentKeyColumn("node")
                 .ChildKeyColumn("cable")
-                .LazyLoad();
+                .Not.LazyLoad();
 
             HasManyToMany(x => x.CableIds)
                 .Cascade.All()

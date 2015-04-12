@@ -1,9 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using FluentNHibernate.Mapping;
 using Newtonsoft.Json;
-using GOTHAM_TOOLS;
+using Gotham.Tools;
 
-namespace GOTHAM.Model
+
+namespace Gotham.Model
 {
     [SuppressMessage("ReSharper", "DoNotCallOverridableMethodsInConstructor")]
     [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
