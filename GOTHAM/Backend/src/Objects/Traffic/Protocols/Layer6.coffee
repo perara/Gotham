@@ -1,3 +1,5 @@
+BaseLayer = require './BaseLayer.coffee'
+
 class Layer6 extends BaseLayer
   constructor: (hash, version) ->
     @hash = hash

@@ -20,6 +20,18 @@ server.onConnect = (_client) ->
 server.onDisconnect = (_client) ->
   log.info "[SERVER] Client Disconnected #{_client.id}"
 
+#############################
+# Testing of pathfinder
+
+
+
+
+
+
+
+
+#############################
+
 
 
 database.Model.Cable.all(

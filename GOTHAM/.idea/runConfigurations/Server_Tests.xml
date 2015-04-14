@@ -8,6 +8,10 @@
     <extra-mocha-options>--compilers coffee:coffee-script/register</extra-mocha-options>
     <test-directory>$PROJECT_DIR$/Backend/src/Tests</test-directory>
     <recursive>true</recursive>
+    <RunnerSettings RunnerId="MochaDebugRunner" />
+    <RunnerSettings RunnerId="RunnerForMochaJavaScript" />
+    <ConfigurationWrapper RunnerId="MochaDebugRunner" />
+    <ConfigurationWrapper RunnerId="RunnerForMochaJavaScript" />
     <method />
   </configuration>
 </component>
