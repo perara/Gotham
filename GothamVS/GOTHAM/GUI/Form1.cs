@@ -10,6 +10,7 @@ using GMap.NET.WindowsForms.Markers;
 using Gotham.Model;
 using Gotham.Model.Tools;
 using GOTHAM.Repository.Abstract;
+using Gotham.Application.Generators;
 
 
 // ReSharper disable LocalizableElement
@@ -47,17 +48,24 @@ namespace Gotham.Application.GUI
             MainMap.Position = new PointLatLng(30, 0);
 
             LoadEntities();
+
+            CableGenerator.ConnectNodesToCables();
+
             DrawNodes();
             DrawCables();
         }
 
         public void LoadEntities()
         {
-            using (var session = EntityManager.GetSessionFactory().OpenSession())
-            {
-                _nodes = session.CreateCriteria<NodeEntity>().List<NodeEntity>();
-                _cables = session.CreateCriteria<CableEntity>().List<CableEntity>();
-            }
+            //using (var session = EntityManager.GetSessionFactory().OpenSession())
+            //{
+            var work = new UnitOfWork();
+            _nodes = work.GetRepository<NodeEntity>().All().ToList();
+            _cables = work.GetRepository<CableEntity>().All().ToList();
+            work.Dispose();
+                //_nodes = session.CreateCriteria<NodeEntity>().List<NodeEntity>();
+                //_cables = session.CreateCriteria<CableEntity>().List<CableEntity>();
+            //}
         }
 
         public void DrawNodes()

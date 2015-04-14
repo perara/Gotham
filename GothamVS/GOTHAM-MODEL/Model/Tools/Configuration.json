@@ -9,11 +9,11 @@
             "password": "root"
         },
         "paul": {
-            "host": "hybel.keel.no",
+            "host": "localhost",
             "port": 3306,
             "database": "gotham",
             "username": "root",
-            "password": "%123zombies",
+            "password": "",
         },
 
 		"local": {
