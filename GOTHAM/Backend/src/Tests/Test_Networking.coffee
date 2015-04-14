@@ -25,7 +25,9 @@ suite 'Networking Tests', ->
     server.RegisterRoom new (require '../Networking/Rooms/GeneralRoom.coffee')()
     server.Start()
     server.onConnect = (_client) ->
-      log.info "[SERVER] Adding client #{_client.id}"
+      log.info "[SERVER] Client Connected #{_client.id}"
+    server.onDisconnect = (_client) ->
+      log.info "[SERVER] Client Disconnected #{_client.id}"
 
       clientData = new SocketServer.Client(_client)
       server.AddClient clientData
@@ -60,7 +62,7 @@ suite 'Networking Tests', ->
       password: "per"
 
     # Emit stuff
-    @client.emit('Login', login)
+    @client.emit('Login', JSON.stringify(login))
     @client.emit('GetNodes', "")
     @client.emit('GetHost', "")
     @client.emit('GetCables', "")
@@ -83,8 +85,10 @@ suite 'Networking Tests', ->
       expect(data).to.be.equal("OK")
       expect(data).to.be.a('String')
 
+
     @client.on 'Terminate', (data) ->
       @disconnect()
+      done()
 
 
     setTimeout(done,5000)
