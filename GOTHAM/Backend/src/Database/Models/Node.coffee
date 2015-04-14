@@ -36,4 +36,16 @@ module.exports = (sequelize, DataTypes) ->
     {
       tableName: 'node'
       timestamps: false
+      getterMethods:
+        Siblings: ->
+          result = []
+          for cable in this.Cables
+            for node in cable.Nodes
+              if node.id != this.id
+                result.push node
+          return result
+
+
+
+
     }
