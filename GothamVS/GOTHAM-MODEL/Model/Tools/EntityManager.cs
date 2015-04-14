@@ -40,7 +40,7 @@ namespace Gotham.Model.Tools
             var machineName = Environment.MachineName;
             if (machineName.Equals("GRAV"))
             {
-                sqlConfig = configuration["mysql"]["local"];
+                sqlConfig = configuration["mysql"]["paul"];
                 Log.Info("Using SQL Configuration: Paul");
             }
             else if (machineName.Equals("PER-ARNE"))
@@ -56,8 +56,6 @@ namespace Gotham.Model.Tools
                 //throw new Exception("There is no configurationfile for this host");
 
             }
-
-
 
             try
             {

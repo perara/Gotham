@@ -68,10 +68,17 @@
     <Compile Include="Model\NodeCableEntity.cs" />
     <Compile Include="Model\NodeEntity.cs" />
     <Compile Include="Model\PersonEntity.cs" />
+    <Compile Include="Model\Repository\Abstract\IReadRepository.cs" />
+    <Compile Include="Model\Repository\Abstract\IReadWriteRepository.cs" />
+    <Compile Include="Model\Repository\Abstract\IUnitOfWork.cs" />
+    <Compile Include="Model\Repository\Abstract\IWriteRepository.cs" />
+    <Compile Include="Model\Repository\Abstract\Repository.cs" />
+    <Compile Include="Model\Repository\Abstract\UnitOfWork.cs" />
+    <Compile Include="Model\Repository\NodeRepository.cs" />
+    <Compile Include="Model\Repository\UserRepository.cs" />
     <Compile Include="Model\TierEntity.cs" />
     <Compile Include="Model\UserEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\Tools\DBTool.cs" />
     <Compile Include="Model\Tools\EntityManager.cs" />
   </ItemGroup>
   <ItemGroup>

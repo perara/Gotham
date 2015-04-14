@@ -9,7 +9,7 @@ using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using Gotham.Model;
 using Gotham.Model.Tools;
-using Gotham.Tools;
+using GOTHAM.Repository.Abstract;
 
 
 // ReSharper disable LocalizableElement
@@ -29,9 +29,6 @@ namespace Gotham.Application.GUI
 
         Brush _tempBrush;
         List<GMapRoute> _tempRoutes;
-
-
-
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -60,9 +57,6 @@ namespace Gotham.Application.GUI
             {
                 _nodes = session.CreateCriteria<NodeEntity>().List<NodeEntity>();
                 _cables = session.CreateCriteria<CableEntity>().List<CableEntity>();
-
-                Console.WriteLine();
-
             }
         }
 
@@ -72,12 +66,12 @@ namespace Gotham.Application.GUI
             {
                 GMarkerGoogleType markerType;
                 var type = node.Tier.Id;
-                
-                if      (type == 1) markerType = GMarkerGoogleType.red_small;
+
+                if (type == 1) markerType = GMarkerGoogleType.red_small;
                 else if (type == 1) markerType = GMarkerGoogleType.green_small;
                 else if (type == 1) markerType = GMarkerGoogleType.yellow_small;
                 else if (type == 1) markerType = GMarkerGoogleType.blue_small;
-                else                markerType = GMarkerGoogleType.orange;
+                else markerType = GMarkerGoogleType.orange;
 
                 var marker = new GMarkerGoogle(new PointLatLng(node.Lat, node.Lng), markerType);
 
@@ -146,7 +140,7 @@ namespace Gotham.Application.GUI
 
             lbl_lat.Text = "";
             lbl_lng.Text = "";
-            tb_name.Text = item.Name;
+            tb_name.Text = cable.Name;
             tb_Distance.Text = cable.Distance.ToString(CultureInfo.InvariantCulture);
             tb_id.Text = cable.Id.ToString();
 
@@ -168,36 +162,28 @@ namespace Gotham.Application.GUI
             }
 
 
-            lbl_NodeList.Text = "";
+            tb_nodes.Text = "";
 
             foreach (var node in cable.Nodes)
             {
-                lbl_NodeList.Text += "\n" + node.Name;
+                tb_nodes.Text += node.Name + "\r\n";
             }
+
         }
 
         private void MainMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
             var node = (NodeEntity)item.Tag;
 
-            lbl_CableList.Text = "";
+            tb_cables.Text = "";
             tb_Distance.Text = "";
+            tb_name.Text = node.Name;
             tb_id.Text = node.Id.ToString();
 
             foreach (var cable in node.Cables.Where(cable => cable.Year <= 2014))
             {
-                lbl_CableList.Text += "\n" + cable.Name;
+                tb_cables.Text += cable.Name + "\r\n";
             }
-        }
-
-        private void MainMap_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

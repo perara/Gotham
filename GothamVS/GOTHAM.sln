@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gotham-Model", "Gotham-Mode
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gotham-Tools", "Gotham-Tools\Gotham-Tools.csproj", "{64C9C2E8-09AF-451C-94E7-7D2B22160508}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gotham-Tests", "GOTHAM-TESTS\Gotham-Tests.csproj", "{30EE06A6-3A8D-47BB-A108-CF0602F9E31B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{64C9C2E8-09AF-451C-94E7-7D2B22160508}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64C9C2E8-09AF-451C-94E7-7D2B22160508}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64C9C2E8-09AF-451C-94E7-7D2B22160508}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30EE06A6-3A8D-47BB-A108-CF0602F9E31B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30EE06A6-3A8D-47BB-A108-CF0602F9E31B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30EE06A6-3A8D-47BB-A108-CF0602F9E31B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30EE06A6-3A8D-47BB-A108-CF0602F9E31B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
