@@ -24,6 +24,8 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
       # Clear node container (Else risking memory leak)
       that.View.clearNodeContainer()
 
+      console.log nodes
+
       # Insert the nodes into the "node" table
       db_node = GothamGame.Database.table("node")
       db_node().remove()
@@ -36,14 +38,14 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
       console.log "Process Nodes: " + (new Date().getTime() - start) + "ms"
 
 
-    """GothamGame.network.Socket.on "GetCables" , (json) ->
+    GothamGame.network.Socket.on "GetCables" , (json) ->
       cables = JSON.parse json
 
       console.log cables
 
-      # Insert cables into the "cables" table
+      # Insert cables into -the "cables" table
       db_cable = GothamGame.Database.table("cable")
-      db_cable.remove()
+      db_cable().remove()
       db_cable.insert cables
 
       # Iterate Through the Cable Table
@@ -51,7 +53,7 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
       db_cable().each (row) ->
         that.View.addCable row
       console.log "Process Cables: " + (new Date().getTime() - start) + "ms"
-    """
+
 
 
 

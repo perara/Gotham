@@ -3,8 +3,6 @@ GothamGame = require './GothamGame.coffee'
 require './dependencies/jquery-ui.min'
 
 
-
-
 setup =
   started: false
 
@@ -40,19 +38,17 @@ setup =
 
     #Terminal
     Gotham.Preload.image("/assets/img/terminal_background.png", "terminal_background", "image")
+
   startGame: ->
 
     # Create Scenes
     scene_World = new GothamGame.scenes.World 0x333333, true
     scene_Menu  = new GothamGame.scenes.Menu 0x000000, true
 
-
     # Add Scenes to renderer
     GothamGame.renderer.addScene("World", scene_World)
     GothamGame.renderer.addScene("Menu", scene_Menu)
 
-    # Set Start Scene
-    GothamGame.renderer.setScene("World")
   startNetwork: ->
     GothamGame.network = new Gotham.Network "//localhost", 8081
     GothamGame.network.connect()
@@ -69,8 +65,6 @@ setup =
 
 
 
-
-
 # Setup Database
 setup.database()
 
@@ -78,7 +72,17 @@ setup.database()
 setup.preload()
 
 
+
+scene_Loading  = new GothamGame.scenes.Loading 0x3490CF, true
+
+GothamGame.renderer.addScene("Loading", scene_Loading)
+
+# Set Start Scene
+GothamGame.renderer.setScene("Loading")
+
+
 Gotham.Preload.onLoad (source, name, percent) ->
+  scene_Loading.tick name
   console.log("Preload: " + percent + "%")
 
 Gotham.Preload.onComplete () ->
@@ -86,28 +90,3 @@ Gotham.Preload.onComplete () ->
 
   # Start networking when preloading is done
   setup.startNetwork()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

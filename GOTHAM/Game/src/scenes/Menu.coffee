@@ -69,7 +69,7 @@ class Menu extends Gotham.Graphics.Scene
       rotation: -0.1
     tween = new Gotham.Tween gameTitle
     #tween2.startDelay 500
-    tween.repeat(Infinity)
+    tween.repeat(1) # TODO
     tween.easing Gotham.Tween.Easing.Circular.InOut
     tween.to tweenTo, 1500
     tween.to tweenBack, 1500

@@ -11,6 +11,7 @@ class Room
     @_database = @Database = null
     @define()
 
+
   define: ->
     throw new Error "This function should be overrided"
 

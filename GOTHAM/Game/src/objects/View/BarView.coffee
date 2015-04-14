@@ -10,6 +10,7 @@ class BarView extends Gotham.Pattern.MVC.View
     Bottom: undefined
 
   constructor: ->
+
     super
 
 
@@ -22,6 +23,8 @@ class BarView extends Gotham.Pattern.MVC.View
   create_TopBar: ->
     texture_topBar = Gotham.Preload.fetch("topBar", "image")
     @Bar.Top = topBar = new Gotham.Graphics.Sprite texture_topBar
+    @Bar.Top._left = []
+    @Bar.Top._right = []
     topBar.position.x = 0
     topBar.position.y = 0
     topBar.width = 1920
@@ -31,6 +34,8 @@ class BarView extends Gotham.Pattern.MVC.View
   create_BottomBar: ->
     texture_bottomBar = Gotham.Preload.fetch("bottomBar", "image")
     @Bar.Bottom = bottomBar = new Gotham.Graphics.Sprite texture_bottomBar
+    @Bar.Bottom._left = []
+    @Bar.Bottom._right = []
     bottomBar.width = 1920
     bottomBar.height = 70
     bottomBar.position.x = 0
@@ -74,22 +79,30 @@ class BarView extends Gotham.Pattern.MVC.View
   # @param [Bar] location - Which bar to append to
   # @param [callback] callback - A callback which MUST RETURN the item to add to the menu
   #
-  addItem: (bar, callback) ->
+  addItem: (bar, align, callback) ->
 
-    # Get last element added to the bar
-    lastElement = bar.children.last()
+    if align == "LEFT"
+
+      childArray = bar._left
+      lastElement = childArray.last()
+      child = callback()
+      x = if lastElement then lastElement.x + lastElement.width + 5 else 0
 
 
-    # Calculate X position of the button
-    x = if not lastElement then 0 else lastElement.x + lastElement.width
-    margin = if not lastElement then 0 else (if lastElement.margin then lastElement.margin else 0)
+    else if align == "RIGHT"
+      childArray = bar._right
+      lastElement = childArray.last()
+      child = callback()
+      x = if lastElement then lastElement.x - lastElement.width - 5 else (bar.width / bar.scale.x) - child.width
 
-    child = bar.addChild callback()
+    else
+      throw new Error "No Valid Alignment set in addItem"
+
+    bar.addChild child
+    childArray.push child
 
     child.y = 0
-    child.x = x + 5 + margin
-
-
+    child.x = x
 
 
 
