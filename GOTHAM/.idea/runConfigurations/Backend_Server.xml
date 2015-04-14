@@ -1,5 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Backend Server" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="src/Main.coffee" working-dir="$PROJECT_DIR$/Backend" coffeescript-path="I:\Dropbox\Programmering\Projects\_Unimportant\_GOTHAM\Gotham\Backend\node_modules\coffee-script\bin\coffee" coffeescript-run="true">
-    <method />
-  </configuration>
-</component>

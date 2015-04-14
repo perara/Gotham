@@ -20,25 +20,6 @@ server.onConnect = (_client) ->
 server.onDisconnect = (_client) ->
   log.info "[SERVER] Client Disconnected #{_client.id}"
 
-#############################
-# Testing of pathfinder
-
-
-
-
-
-
-
-
-#############################
-
-
-
-database.Model.Cable.all(
-  {
-    include: [database.Model.CablePart]
-  }
-).then (parts) ->
 
 """
 server = new SocketServer 4443, true
