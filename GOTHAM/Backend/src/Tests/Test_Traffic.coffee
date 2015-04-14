@@ -19,11 +19,57 @@ suite 'Networking Tests', ->
 
 
   test 'Pathfinding OK', (done)->
-    @model.Node.all().then (nodes)->
-      _solution = Traffic.Pathfinder.tryRandom(nodes[5], nodes[200])
-      log.info(_solution)
+    this.timeout = 20000
 
-    done()
+
+    @model.Node.all(
+      include: [
+        {
+          model: @model.Cable
+          include: [@model.Node]
+        }
+      ]
+    ).then (node)->
+
+      @node.siblings = []
+
+      for cable in node.Cables
+        node.siblings.push cable.Nodes
+
+
+      """console.log "Name: #{node.name}"
+      for cable in node.Cables
+        console.log "\tCable: #{cable.name}"
+        for cNode in cable.Nodes
+          console.log "\t\tNode: #{cNode.name}"""
+
+
+    @model.Node.find(
+      where: id: 15446
+      include: [
+        {
+        model: @model.Cable
+        as: 'Cables'
+        include: [
+          {model: @model.Node, as: 'Nodes'}
+        ]
+        }
+      ]
+    ).then (nodes)->
+
+      for node in nodes
+        console.log node.id
+
+
+
+      done()
+
+
+
+      #_solution = Traffic.Pathfinder.tryRandom(nodes[5], nodes[200])
+      #log.info(_solution)
+
+
 
 
 

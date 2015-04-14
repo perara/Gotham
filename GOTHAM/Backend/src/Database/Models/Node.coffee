@@ -1,5 +1,4 @@
 
-
 module.exports = (sequelize, DataTypes) ->
   return sequelize.define 'Node', {
       id:
