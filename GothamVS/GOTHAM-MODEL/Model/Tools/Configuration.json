@@ -14,8 +14,6 @@
             "database": "gotham",
             "username": "root",
             "password": "%123zombies",
-			"usage": "read-write"
-
         },
 
 		"local": {

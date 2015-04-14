@@ -22,10 +22,7 @@ namespace Gotham.Model
         [JsonIgnore] //TODO - Why is it bugged in JSONconvert?
         public virtual CableTypeEntity Type { get; set; }
 
-        [JsonIgnore]
         public virtual IList<NodeEntity> Nodes { get; set; }
-
-        public virtual IList<int> NodeIds { get; set; }
 
         public virtual IList<CablePartEntity> CableParts { get; set; }
 
@@ -70,15 +67,12 @@ namespace Gotham.Model
 
             References(x => x.Type, "id");
 
-            HasManyToMany(x => x.NodeIds)
+            HasManyToMany(x => x.Nodes)
                 .Cascade.All()
-                .Inverse()
                 .Table("node_cable")
                 .ParentKeyColumn("cable")
                 .ChildKeyColumn("node")
-                .Element("node")
-                .AsBag()
-                .LazyLoad();
+                .Not.LazyLoad();
 
             Cache.NonStrictReadWrite().IncludeNonLazy().Region("LongTerm");
         }

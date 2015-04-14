@@ -142,7 +142,7 @@ namespace Gotham.Model
             References(x => x.Tier)
                 .Not.Nullable()
                 .Column("tier")
-                .LazyLoad();
+                .Not.LazyLoad();
 
             HasManyToMany(x => x.Cables)
                 .Cascade.All()
@@ -150,15 +150,6 @@ namespace Gotham.Model
                 .ParentKeyColumn("node")
                 .ChildKeyColumn("cable")
                 .Not.LazyLoad();
-
-            HasManyToMany(x => x.CableIds)
-                .Cascade.All()
-                .Table("node_cable")
-                .ParentKeyColumn("node")
-                .ChildKeyColumn("cable")
-                .Element("cable")
-                .LazyLoad();
-
 
             Cache.NonStrictReadWrite().IncludeAll().Region("LongTerm");
         }

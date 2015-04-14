@@ -14,16 +14,26 @@ class Loading extends Gotham.Graphics.Scene
     text.anchor =
       x: 0.5
       y: 0.5
-
     tween = new Gotham.Tween text
-    tween.startDelay 500
     tween.repeat(Infinity)
     tween.easing Gotham.Tween.Easing.Linear.None
     tween.to {alpha: 0}, 1500
+    tween.delay 2000
     tween.to {alpha: 1}, 1500
     tween.onStart ->
       console.log @ + " started!"
-    #tween.start()
+    tween.start()
+
+
+    setTimeout(->
+      tween.pause()
+
+    , 2000)
+
+    setTimeout(->
+      tween.unpause()
+
+    , 4000)
 
     @addChild text
 
@@ -43,7 +53,7 @@ class Loading extends Gotham.Graphics.Scene
       console.log "[STARTED] #{name}"
     tween.onComplete ->
       console.log "[DONE] #{name}"
-    tween.start()
+    #tween.start()
 
 
     @addChild document
