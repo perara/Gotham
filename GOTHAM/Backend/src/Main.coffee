@@ -34,16 +34,12 @@ server.onDisconnect = (_client) ->
 
 
 
-"""
-database.Model.Cable.find(
+database.Model.Cable.all(
   {
-    where:
-      id: 4706
     include: [database.Model.CablePart]
   }
 ).then (parts) ->
-  console.log parts
-"""
+
 """
 server = new SocketServer 4443, true
 server.RegisterRoom new (require './Networking/Rooms/UserRoom.coffee')()

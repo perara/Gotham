@@ -340,28 +340,26 @@
     # Add to the node container
     @nodeContainer.addChild gNode
 
-    # Add an array definition which should contain cables for this node @see addCable(cable)
-    node.cables = gNode.cables = []
-
-
-
     # Add a sprite property to the node
     node.sprite = gNode
 
+    # Whenever a node is hovered or exited (mouseover and mouseout)
+    nodeHover = (node, tint, visible) ->
+      node.sprite.tint = tint
+
+      for _cable in node.Cables
+
+        cable = GothamGame.Database.table("cable")({id: _cable.id}).first()
+        if not cable then return
+
+        for part in cable.CableParts
+          part.visible = visible
 
     gNode.mouseover = ->
-      @tint = 0xffff00
-      for cableId in node.CableIds
-        cable = GothamGame.Database.table("cable")({Id: cableId}).first()
-        for part in cable.CableParts
-          part.visible = true
-
+      nodeHover node, 0xffff00, true
     gNode.mouseout = ->
-      @tint = 0xffffff
-      for cableId in node.CableIds
-        cable = GothamGame.Database.table("cable")({Id: cableId}).first()
-        for part in cable.CableParts
-          part.visible = false
+      nodeHover node, 0xffffff, false
+
 
 
   # Creates a animated line between two nodes
@@ -378,31 +376,19 @@
   # @param cable {Object} The cable Data
   addCable: (cable) ->
 
-    # Add Cable to each of the node id's
-    """for NodeId in cable.NodeIds
-
-      # Fetch the node
-      node = GothamGame.Database.table("node")({Id: NodeId}).first()
-
-      # Push cable to the node
-      node.cables.push cable"""
-
-
 
     # Create a new graphics element
     graphics = new Gotham.Graphics.Graphics();
     graphics.visible = false
     graphics.lineStyle(1, 0xffd900, 1);
 
-    isStart = true
-
     cablePartsGraphics = []
 
 
     for partData in cable.CableParts
-      currentLocation = @CoordinateToPixel(partData.Lat, partData.Lng)
+      currentLocation = @CoordinateToPixel(partData.lat, partData.lng)
 
-      if  partData.Number is 0
+      if  partData.number is 0
         cablePartsGraphics.push graphics
         graphics.moveTo(currentLocation.x, currentLocation.y)
       else

@@ -16,7 +16,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
     @coordText = null
     @countryText = null
 
-    @View.addItem @View.Bar.Top, ->
+    @View.addItem @View.Bar.Top, "LEFT", ->
       that.coordText = text = new Gotham.Graphics.Text("Lat: 0\nLng: 0", {font: "bold 20px Arial", fill: "#ffffff", align: "left"});
       text.width = 200
       text.anchor =
@@ -25,7 +25,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
       text.margin = 50
       return text
 
-    @View.addItem @View.Bar.Top, ->
+    @View.addItem @View.Bar.Top, "LEFT", ->
       that.countryText = text = new Gotham.Graphics.Text("Country: None", {font: "bold 20px Arial", fill: "#ffffff", align: "left"});
       text.width = 200
       text.anchor =
@@ -42,7 +42,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
     that = @
 
     # Create Terminal Button
-    @View.addItem @View.Bar.Bottom, ->
+    @View.addItem @View.Bar.Bottom, "LEFT", ->
 
       button_terminal = new Gotham.Controls.Button "Terminal" , 100, 70
 
@@ -57,21 +57,21 @@ class BarController extends Gotham.Pattern.MVC.Controller
 
 
     # Create Missions Button
-    @View.addItem @View.Bar.Bottom, ->
+    @View.addItem @View.Bar.Bottom,"LEFT", ->
       button_mission = new Gotham.Controls.Button "Missions" , 100, 70
       button_mission.toggleOn = (e) ->
       button_mission.toggleOff = (e) ->
       return button_mission
 
       # Create Missions Button
-    @View.addItem @View.Bar.Bottom, ->
+    @View.addItem @View.Bar.Bottom,"LEFT", ->
       button_inventory = new Gotham.Controls.Button "Inventory" , 100, 70
       button_inventory.toggleOn = (e) ->
       button_inventory.toggleOff = (e) ->
       return button_inventory
 
     # Create Missions Button
-    @View.addItem @View.Bar.Bottom, ->
+    @View.addItem @View.Bar.Bottom, "LEFT", ->
       button_node = new Gotham.Controls.Button "Nodes" , 100, 70
       button_node.toggleOn = (e) ->
         that.scene.getObject("NodeList").Show()
@@ -79,6 +79,20 @@ class BarController extends Gotham.Pattern.MVC.Controller
       button_node.toggleOff = (e) ->
         that.scene.getObject("NodeList").Hide()
       return button_node
+
+
+    # Create Menu Button
+    @View.addItem @View.Bar.Bottom, "RIGHT" , ->
+      button_node = new Gotham.Controls.Button "Menu" , 100, 70
+      return button_node
+
+    # Create Menu Button
+    @View.addItem @View.Bar.Bottom, "RIGHT" , ->
+      button_node = new Gotham.Controls.Button "Settings" , 100, 70
+      return button_node
+
+
+
 
   updateCoordinates: (lat, long) ->
     @coordText.setText("Lat: #{lat}\nLng: #{long}")

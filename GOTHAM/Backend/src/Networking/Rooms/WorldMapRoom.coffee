@@ -12,32 +12,43 @@ class WorldMapRoom extends Room
       client = @
       that.log.info "[WMRoom] GetNodes called" + data
 
-      that.Database.Model.Node.all().then (nodes)->
+      that.Database.Model.Node.all(
+        {
+          include: [
+            {
+              model: that.Database.Model.Cable
+              attributes: ['id']
+            }
+          ]
+        }
+      ).then (nodes)->
         client.emit 'GetNodes', JSON.stringify(nodes)
 
     @AddEvent "GetCables", (data) ->
       client = @
       that.log.info "[WMRoom] GetCables called" + data
 
+
+      # Nodes, CableType
       that.Database.Model.Cable.all(
-        include:
-          [
-            """{
-              model: that.Database.Model.Node
-              attributes: ['id'] # Strip rest of node data only fetching id
-              as: 'Nodes'
-            }
-            {
-              model: that.Database.Model.CableType
-              as: 'CableType'
-            }"""
+        {
+          include: [
             {
               model: that.Database.Model.CablePart
             }
+            {
+              model: that.Database.Model.CableType
+            }
+            {
+              model: that.Database.Model.Node
+              attributes: ['id']
+            }
           ]
-
-      ).then (cables)->
+        }
+      ).then (cables) ->
         client.emit 'GetCables', JSON.stringify(cables)
+
+
 
 
 module.exports = WorldMapRoom
