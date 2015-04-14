@@ -1,4 +1,4 @@
-Datastore = require 'nedb'
+Taffy = require 'taffydb'
 
 class LocalDatabase
   @_tables = {}
@@ -6,7 +6,7 @@ class LocalDatabase
 
   @table: (name) ->
     if not @_tables.name
-      @_tables.name = new Datastore()
+      @_tables.name = new Taffy.taffy()
 
     return @_tables.name
 

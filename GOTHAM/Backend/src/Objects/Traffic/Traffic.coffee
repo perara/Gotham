@@ -18,10 +18,10 @@ class Traffic
     # Layer 7
     Layer7: require './Protocols/Layer7.coffee'
 
-  @Connection: require './Connection.coffee'
-  @LayerStructure: require './LayerStructure.coffee'
-  @Packet: require './Packet.coffee'
-  @Pathfinder: require './Pathfinder.coffee'
-  @Session: require './Session.coffee'
+  @Connection = require './Connection.coffee'
+  @LayerStructure = require './LayerStructure.coffee'
+  @Packet = require './Packet.coffee'
+  @Pathfinder = require './Pathfinder.coffee'
+  @Session = require './Session.coffee'
 
 module.exports = Traffic
