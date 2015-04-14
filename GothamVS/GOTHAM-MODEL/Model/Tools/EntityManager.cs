@@ -33,7 +33,7 @@ namespace Gotham.Model.Tools
         private void InitializeSessionFactory()
         {
 
-            JObject configuration = JObject.Parse(File.ReadAllText("./Model/Tools/Configuration.json"));
+            var configuration = JObject.Parse(File.ReadAllText("./Model/Tools/Configuration.json"));
             JToken sqlConfig;
 
             // Determine which Configuration file to use
@@ -87,15 +87,15 @@ namespace Gotham.Model.Tools
 
 
                 //hibernateConfig.Cache(c => c.UseQueryCache().UseSecondLevelCache().ProviderClass<SysCacheProvider>());
- 
 
 
-              
+
+
 
                 // Generate Session Factory
                 SessionFactory = hibernateConfig.BuildSessionFactory();
 
-               
+
             }
             catch (Exception)
             {

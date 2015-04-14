@@ -204,7 +204,7 @@ namespace Gotham.Application.Generators
 
             work = new UnitOfWork();
             var cableRepository = work.GetRepository<NodeEntity>();
-            cableRepository.Add(newSeaNodes);
+            cableRepository.Update(newSeaNodes);
             work.Dispose();
 
             Log.Info("Fixed " + newSeaNodes.Count + " sea nodes");
