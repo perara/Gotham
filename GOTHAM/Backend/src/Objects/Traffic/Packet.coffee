@@ -1,3 +1,5 @@
+Traffic = require './Traffic.coffee'
+
 class Packet
 
   constructor: (path) ->

@@ -1,3 +1,5 @@
+BaseLayer = require './BaseLayer.coffee'
+
 class Layer2 extends BaseLayer
 
   constructor: (source, dest) ->

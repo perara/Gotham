@@ -1,12 +1,13 @@
-Node = require '../../Database/Models/Node.coffee'
+Database = require '../../Database/Database.coffee'
+Traffic = require './Traffic.coffee'
 
 class Pathfinder
 
-  @tryRandom: (start, goal, tryPaths) ->
+  @tryRandom: (start, goal, tryPaths = 100000) ->
 
     # Type Checks
-    if start not instanceof Node then throw new Error("start not instance of Node")
-    if goal not instanceof Node then throw new Error("goal not instance of Node")
+    if start not instanceof Traffic.Node then throw new Error("start not instance of Node")
+    if goal not instanceof Traffic.Node then throw new Error("goal not instance of Node")
     if NUMBER.isInteger(tryPaths) then throw new Error("tryPaths is not a integer")
 
     _solution = []
@@ -48,5 +49,12 @@ class Pathfinder
     pairs = {}
     pairs[node.id] = node for node in solution
     return pairs
+
+  @printSolution: (solution) ->
+
+    log.info("Path of nodes:")
+
+    for node in solution
+      log.info(node.name)
 
 module.exports = Pathfinder

@@ -1,3 +1,5 @@
+BaseLayer = require './BaseLayer.coffee'
+
 class Layer3 extends BaseLayer
 
   constructor: (sourceIP, targetIP) ->

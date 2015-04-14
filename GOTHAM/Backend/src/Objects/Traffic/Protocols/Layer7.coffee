@@ -1,3 +1,5 @@
+BaseLayer = require './BaseLayer.coffee'
+
 class Layer7 extends BaseLayer
 
 class HTTP extends Layer7

@@ -1,6 +1,6 @@
-LayerStructure = require './LayerStructure.coffee'
-Host = require '../../Database/Models/Host.coffee'
-log = require('log4js').getLogger("SocketIO")
+Database = require '../../Database/Database.coffee'
+Traffic = require './Traffic.coffee'
+
 
 # Session object containing source, target ,traffic path and packets exchanged
 class Session
@@ -8,7 +8,7 @@ class Session
   constructor: (sourceHost, targetHost, layers) ->
 
     # Type checks
-    if layers not instanceof LayerStructure then throw new Error("layers not instance of LayerStructure")
+    if layers not instanceof Traffic.LayerStructure then throw new Error("layers not instance of LayerStructure")
     if sourceHost not instanceof Host then throw new Error("sourceHost not instance of Host")
     if targetHost not instanceof Host then throw new Error("targetHost not instance of Host")
 
