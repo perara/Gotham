@@ -13,14 +13,20 @@ suite 'Networking Tests', ->
   suiteSetup ->
 
     @model = new Database().Model
-    @pathfinder = new Traffic.Pathfinder
 
   suiteTeardown ->
+
+  test 'LayerStructure OK', (done)->
+
+    ls = new Traffic.LayerStructure()
+    ls.ethernet()
+    ls.integrityCheck()
+
+    done()
 
 
   test 'Pathfinding OK', (done)->
     this.timeout = 20000
-
 
     @model.Node.all(
       include: [
@@ -29,37 +35,10 @@ suite 'Networking Tests', ->
           include: [@model.Node]
         }
       ]
-    ).then (node)->
-
-      @node.siblings = []
-
-      for cable in node.Cables
-        node.siblings.push cable.Nodes
-
-
-      """console.log "Name: #{node.name}"
-      for cable in node.Cables
-        console.log "\tCable: #{cable.name}"
-        for cNode in cable.Nodes
-          console.log "\t\tNode: #{cNode.name}"""
-
-
-    @model.Node.find(
-      where: id: 15446
-      include: [
-        {
-        model: @model.Cable
-        as: 'Cables'
-        include: [
-          {model: @model.Node, as: 'Nodes'}
-        ]
-        }
-      ]
     ).then (nodes)->
 
-      for node in nodes
-        console.log node.id
-
+      solution = Traffic.Pathfinder.tryRandom(nodes[5], nodes[200])
+      Traffic.Pathfinder.printSolution(solution)
 
 
       done()

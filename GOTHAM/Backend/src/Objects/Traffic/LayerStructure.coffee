@@ -10,7 +10,7 @@ class LayerStructure
       L6: layer6
       L7: layer7
 
-  IntegrityCheck: ->
+  integrityCheck: ->
 
     layerEnd = false;
 
@@ -25,8 +25,8 @@ class LayerStructure
     return true;
 
   # Set layer 2 functions
-  Ethernet: -> @layers.L2 = Traffic.Protocols.Layer2.Ethernet
-  Wifi: -> @layers.L2 = Traffic.Protocols.Layer2.Wifi
+  ethernet: -> @layers.L2 = Traffic.Protocols.Layer2.Ethernet
+  wifi: -> @layers.L2 = Traffic.Protocols.Layer2.Wifi
 
   # Set layer 3 functions
   ICMP: -> @layers.L2 = Traffic.Protocols.Layer3.ICMP
@@ -37,7 +37,7 @@ class LayerStructure
   UDP: -> @layers.L2 = Traffic.Protocols.Layer4.UDP
 
   # Set layer 6 functions
-  NoEncryption: -> @layers.L2 = Traffic.Protocols.Layer6.NoEncryption
+  noEncryption: -> @layers.L2 = Traffic.Protocols.Layer6.noEncryption
   SSL: -> @layers.L2 = Traffic.Protocols.Layer6.SSL
   TLS: -> @layers.L2 = Traffic.Protocols.Layer6.TLS
   DTLS: -> @layers.L2 = Traffic.Protocols.Layer6.DTLS
@@ -50,21 +50,20 @@ class LayerStructure
   SFTP: -> @layers.L2 = Traffic.Protocols.Layer7.SFTP
   SSH: -> @layers.L2 = Traffic.Protocols.Layer7.SSH
 
-
   # Predefined structures
-  MakeICMP: ->
-    @layers.L2 = Traffic.Protocols.Layer2.Ethernet
+  makeICMP: ->
+    @layers.L2 = Traffic.Protocols.Layer2.ethernet
     @layers.L3 = Traffic.Protocols.Layer2.ICMP
 
-  MakeHTTP: ->
-    @layers.L2 = Traffic.Protocols.Layer2.Ethernet
+  makeHTTP: ->
+    @layers.L2 = Traffic.Protocols.Layer2.ethernet
     @layers.L3 = Traffic.Protocols.Layer3.IP
     @layers.L4 = Traffic.Protocols.Layer4.TCP
-    @layers.L6 = Traffic.Protocols.Layer6.NoEncryption
+    @layers.L6 = Traffic.Protocols.Layer6.noEncryption
     @layers.L7 = Traffic.Protocols.Layer7.HTTP
 
-  MakeHTTPS: ->
-    @layers.L2 = Traffic.Protocols.Layer2.Ethernet
+  makeHTTPS: ->
+    @layers.L2 = Traffic.Protocols.Layer2.ethernet
     @layers.L3 = Traffic.Protocols.Layer3.IP
     @layers.L4 = Traffic.Protocols.Layer4.TCP
     @layers.L6 = Traffic.Protocols.Layer6.TLS

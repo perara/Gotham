@@ -1,6 +1,8 @@
 cfg     =     require './config.json'
 SocketServer = require './Networking/SocketServer.coffee'
 Database = require './Database/Database.coffee'
+Traffic = require './Objects/Traffic/Traffic.coffee'
+LocalDatabase = require './Database/LocalDatabase.coffee'
 log = require('log4js').getLogger("Main")
 
 
@@ -17,7 +19,38 @@ server.onConnect = (_client) ->
 server.onDisconnect = (_client) ->
   log.info "[SERVER] Client Disconnected #{_client.id}"
 
+database.Model.Node.all(
+  include: [
+    {
+      model: database.Model.Cable
+      include: [database.Model.Node]
+    }
+  ]
+).then (nodes)->
 
+  table = LocalDatabase.table("nodes")
+  for node in nodes
+    table.insert node
+
+    table({})
+  start = table({dataValues: id: 14710}).first()
+  end = table({dataValues: id: 14905}).first()
+
+  #console.log table.last()
+
+  solution = Traffic.Pathfinder.tryRandom(start, end)
+  #console.log solution
+  #Traffic.Pathfinder.printSolution(solution)
+
+
+"""
+  start = new Date().getTime()
+  console.log new Date().getTime() - start
+
+
+  start = new Date().getTime()
+  console.log new Date().getTime() - start
+"""
 """
 server = new SocketServer 4443, true
 server.RegisterRoom new (require './Networking/Rooms/UserRoom.coffee')()
