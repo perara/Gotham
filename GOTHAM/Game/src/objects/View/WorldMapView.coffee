@@ -314,7 +314,7 @@
   # Adds a nopde to the node container
   #
   # @param node {Object} The Node Data
-  addNode: (node) ->
+  addNode: (node, interact) ->
     # Convert Lat, Lng to Pixel's X and Y
     coordinates = @CoordinateToPixel(node.lat, node.lng)
 
@@ -334,14 +334,19 @@
       x: 0.5
       y: 0.5
 
-    # The Node should be interactive
-    gNode.setInteractive true
+    # Add a sprite property to the node
+    node.sprite = gNode
 
     # Add to the node container
     @nodeContainer.addChild gNode
 
-    # Add a sprite property to the node
-    node.sprite = gNode
+    if interact
+      @addNodeInteract node
+
+
+  addNodeInteract: (node) ->
+    # The Node should be interactive
+    node.sprite.setInteractive true
 
     # Whenever a node is hovered or exited (mouseover and mouseout)
     nodeHover = (node, tint, visible) ->
@@ -349,15 +354,15 @@
 
       for _cable in node.Cables
 
-        cable = GothamGame.Database.table("cable")({id: _cable.id}).first()
+        cable = Gotham.Database.table("cable")({id: _cable.id}).first()
         if not cable then return
 
         for part in cable.CableParts
           part.visible = visible
 
-    gNode.mouseover = ->
+    node.sprite.mouseover = ->
       nodeHover node, 0xffff00, true
-    gNode.mouseout = ->
+    node.sprite.mouseout = ->
       nodeHover node, 0xffffff, false
 
 
@@ -375,7 +380,6 @@
   #
   # @param cable {Object} The cable Data
   addCable: (cable) ->
-
 
     # Create a new graphics element
     graphics = new Gotham.Graphics.Graphics();
@@ -398,6 +402,73 @@
     cable.CableParts = cablePartsGraphics
 
     @nodeContainer.addChild graphics
+
+
+  # Adds a host to the worldMap
+  #
+  # @param host [Host] Host object
+  # @param isPlayer [Boolean] If its the player
+  addHost: (host, isPlayer) ->
+
+    node =
+      lat: host.person.lat
+      lng: host.person.lng
+      sprite: null
+
+    # Add node to map, and customize size and color
+    @addNode node, false
+    node.sprite.width = 32
+    node.sprite.height = 32
+    node.sprite.tint = 0x00ff00
+
+
+    # Create cable from HOST --> NODE
+    cableStart = @CoordinateToPixel(node.lat, node.lng)
+    cableEnd = @CoordinateToPixel(host.node.lat, host.node.lng)
+
+    cableGraphics = new Gotham.Graphics.Graphics();
+    cableGraphics.visible = true
+    cableGraphics.lineStyle(5, 0xff0000, 1);
+    cableGraphics.moveTo(cableStart.x, cableStart.y)
+    cableGraphics.lineTo(cableEnd.x, cableEnd.y)
+    @nodeContainer.addChild cableGraphics
+
+
+    animationGraphics = new Gotham.Graphics.Graphics();
+    animationGraphics.visible = true
+    animationGraphics.blendMode = PIXI.blendModes.ADD;
+    @nodeContainer.addChild animationGraphics
+
+    tween = new Gotham.Tween()
+    tween.repeat Infinity
+    tween.to {}, 1500
+    tween.onUpdate (chainItem)->
+      elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
+
+      points =
+        start:
+          x : cableStart.x + (cableEnd.x - cableStart.x) * elapsed
+          y : cableStart.y + (cableEnd.y - cableStart.y) * elapsed
+        end:
+          x : cableStart.x + (cableEnd.x - cableStart.x) * Math.min(elapsed + 0.2, 1)
+          y : cableStart.y + (cableEnd.y - cableStart.y) * Math.min(elapsed + 0.2, 1)
+      animationGraphics.clear()
+      animationGraphics.lineStyle(2, 0x00ff00, 1);
+      animationGraphics.moveTo(points.start.x, points.start.y)
+      animationGraphics.lineTo(points.end.x, points.end.y)
+
+
+    tween.start()
+
+
+
+
+
+
+
+
+
+
 
 
 

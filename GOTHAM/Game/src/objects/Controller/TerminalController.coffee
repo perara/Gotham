@@ -41,17 +41,17 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
   Networking: () ->
     that = @
 
-    GothamGame.network.Socket.emit 'GetHost'
-    GothamGame.network.Socket.on "GetHost", (json)->
+    db_host = Gotham.Database.table('host')
+    host = db_host().first()
 
-      json = JSON.parse(json)
+    console.log host
 
-      that._data = json
-      that._fs = new Filesystem(json.Filesystem)
-      that._fs.onError = (errMsg) ->
-        that.console.add errMsg
+    that._data = host
+    that._fs = new Filesystem(host.filesystem)
+    that._fs.onError = (errMsg) ->
+      that.console.add errMsg
 
-      that.Boot()
+    that.Boot()
 
 
 
@@ -147,7 +147,7 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
 
     command = new Command @, input
 
-    @console.add "#{@_data.Person.givenname}@#{@_data.machine_name}:~# #{command.getText()}"
+    @console.add "#{@_data.person.givenname}@#{@_data.machineName}:~# #{command.getText()}"
     @console.addHistory command
 
     if command.isCommand()
@@ -212,8 +212,6 @@ class Command
 class Filesystem
 
   constructor: (json) ->
-
-
     @_fs = @Parse(json.data)
     @_root = @Parse(json.data)
     @onError = ->

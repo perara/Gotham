@@ -46,6 +46,12 @@ class WorldMapRoom extends Room
           ]
         }
       ).then (cables) ->
+
+        cables.map (cable) ->
+          cable.CableParts.map (part) ->
+            return 
+
+
         client.emit 'GetCables', JSON.stringify(cables)
 
 

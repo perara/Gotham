@@ -10,10 +10,6 @@ class GothamGame
     resolution:1
   }, true
 
-  
-  # Database
-  @Database = new Gotham.Database()
-
   # Mission Engine
   @MissionEngine = new (require './engine/MissionEngine.coffee')()
 

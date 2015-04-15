@@ -7,9 +7,10 @@ class RelationMapping
     @Model = Model
     @Mapping_CablePart()
     @Mapping_Cable()
-    @Mapping_Host()
+
     @Mapping_NodeCable()
     @Mapping_Node()
+    @Mapping_Host()
 
 
 
@@ -45,15 +46,21 @@ class RelationMapping
 
 
   Mapping_Host: ->
+    @Model.Host.belongsTo @Model.Person,
+      {
+        foreignKey: 'person'
+        foreignKeyConstraint: true
+      }
+
     @Model.Host.belongsTo @Model.Filesystem,
       {
         foreignKey: 'filesystem'
         foreignKeyConstraint:true
       }
 
-    @Model.Host.belongsTo @Model.Person,
+    @Model.Host.belongsTo @Model.Node,
       {
-        foreignKey: 'owner'
+        foreignKey: 'node'
         foreignKeyConstraint:true
       }
 

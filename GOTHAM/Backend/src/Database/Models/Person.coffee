@@ -9,6 +9,12 @@ module.exports = (sequelize, DataTypes) ->
       givenname:
         type: DataTypes.STRING
         allowNull: false
+      lat:
+        type: DataTypes.DECIMAL
+        allowNull: false
+      lng:
+        type: DataTypes.DECIMAL
+        allowNull: false
     },
     {
       tableName: 'person'

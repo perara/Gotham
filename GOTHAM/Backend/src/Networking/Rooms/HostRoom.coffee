@@ -5,8 +5,6 @@ Room = require './Room.coffee'
 
 class HostRoom extends Room
 
-  userid = 1 #TODO remove later on
-
 
   define: ->
     that = @
@@ -18,15 +16,27 @@ class HostRoom extends Room
       that.log.info "[HostRoom] GetHost called" + data
 
       that.Database.Model.Host.find(
-        where:
-          owner: userid #client.user.id
-        include: [that.Database.Model.Filesystem, that.Database.Model.Person]
+        where: id: 2
+        include: [
+          that.Database.Model.Person,
+          that.Database.Model.Filesystem,
+          that.Database.Model.Node
+        ]
       )
       .then((host) ->
-
         host.Filesystem.data = JSON.parse(host.Filesystem.data)
+        ret =
+          id: host.id
+          node: host.Node
+          person: host.Person
+          filesystem: host.Filesystem
+          ip: host.ip
+          map: host.mac
+          machineName: host.machine_name
+          online: host.online
 
-        client.Socket.emit 'GetHost', JSON.stringify(host)
+
+        client.Socket.emit 'GetHost', JSON.stringify(ret)
 
       )
 

@@ -6,8 +6,10 @@ class Loading extends Gotham.Graphics.Scene
 
   create: ->
 
-    # Add Game name to middle of the scene
-    text = new Gotham.Graphics.Text("Loading, Please Wait", {font: "bold 90px calibri", fill: "#ffffff", align: "left"});
+    ###############
+    ## Game Title##
+    ###############
+    @text = text = new Gotham.Graphics.Text("Loading, Please Wait\n0%", {font: "bold 90px calibri", fill: "#ffffff", align: "center"});
     text.position =
       x: 1920 / 2
       y: 1080 / 2
@@ -18,42 +20,79 @@ class Loading extends Gotham.Graphics.Scene
     tween.repeat(Infinity)
     tween.easing Gotham.Tween.Easing.Linear.None
     tween.to {alpha: 0}, 1500
-    tween.delay 2000
+    #tween.delay 5000
     tween.to {alpha: 1}, 1500
     tween.onStart ->
       console.log @ + " started!"
     tween.start()
-
-
-    setTimeout(->
-      tween.pause()
-
-    , 2000)
-
-    setTimeout(->
-      tween.unpause()
-
-    , 4000)
-
     @addChild text
+    #################
+    ## Loading Bar ##
+    #################
 
 
-  tick: (name) ->
+
+  addNetworkItem: ->
+
+
+  addAsset: (name, type, percent) ->
+    @_c = if not @_c then 0
+
+    @text.setText "Loading, Please Wait\n#{percent}%"
+
+
+    random = (min, max) ->
+      return Math.floor(Math.random() * (max - min)) + min;
 
     document = Gotham.Graphics.Sprite.fromImage './assets/img/file.png'
     document.x = -64
-    document.y = Math.floor(Math.random() * 900) + 100
+    document.y =  random(500, 800)
     document.width = 64 / document.scale.x
     document.height = 64 / document.scale.y
 
+    title = new Gotham.Graphics.Text(type, {font: "bold 40px calibri", fill: "#000000", align: "center"});
+    title.width = document.width / document.scale.x
+    title.height = document.height / document.scale.y
+    title.x = 15 / document.scale.x
+    title.y = 5 / document.scale.y
+    document.addChild title
+
+
     tween = new Gotham.Tween document
     tween.easing Gotham.Tween.Easing.Linear.None
+    tween.delay random(0, 10000)
     tween.to {position: x: 1960}, 10000
     tween.onStart ->
-      console.log "[STARTED] #{name}"
+      #console.log "[STARTED] #{name}"
     tween.onComplete ->
-      console.log "[DONE] #{name}"
-    #tween.start()
+      #console.log "[DONE] #{name}"
+    tween.onUpdate (chain) ->
+
+      # Sine curve
+      amplitude = 1.5
+      wavelenght = 0.01
+      document.position.y = (document.position.y) + (Math.sin(document.position.x * wavelenght) * amplitude)
+
+
+
+
+
+
+
+
+
+      y = Math.sin()
+
+
+
+
+
+
+
+
+
+
+    tween.start()
 
 
     @addChild document

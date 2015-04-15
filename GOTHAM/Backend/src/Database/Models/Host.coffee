@@ -11,14 +11,14 @@ module.exports = (sequelize, DataTypes) ->
         type: DataTypes.STRING
         allowNull: false
       online:
-        type: "BIT"
+        type: DataTypes.BOOLEAN
         allowNull: true
         references: 'filesystem'
         referencesKey: 'id'
-      owner:
+      person:
         type: DataTypes.INTEGER
         allowNull: false
-        references: 'user'
+        references: 'person'
         referencesKey: 'id'
       ip:
         type: DataTypes.STRING

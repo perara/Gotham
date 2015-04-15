@@ -4,9 +4,6 @@ Database = require './Database/Database.coffee'
 log = require('log4js').getLogger("Main")
 
 
-
-
-
 database = new Database()
 server = new SocketServer 8081
 server.SetDatabase database

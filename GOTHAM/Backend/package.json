@@ -20,7 +20,8 @@
     "should": "~5.2.0",
     "mocha": "~2.2.4",
     "chai": "~2.2.0",
-    "chai-as-promised": "~4.3.0"
+    "chai-as-promised": "~4.3.0",
+	"taffydb": "~2.7.2"
   },
   "devDependencies": {
     "nodeunit": "^0.9.1",

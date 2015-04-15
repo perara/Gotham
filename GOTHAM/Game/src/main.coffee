@@ -8,13 +8,16 @@ setup =
 
   database: ->
     # Create Node Table
-    db_nodes = GothamGame.Database.createTable "node"
+    db_nodes = Gotham.Database.createTable "node"
 
     # Create Cable Table
-    db_cables = GothamGame.Database.createTable "cable"
+    db_cables = Gotham.Database.createTable "cable"
+
+    # Create Host Table
+    db_host = Gotham.Database.createTable "host"
 
     # Create Temp Table
-    db_cables = GothamGame.Database.createTable "temp"
+    db_temp = Gotham.Database.createTable "temp"
   preload: ->
     # World Map
     Gotham.Preload.image("/assets/img/map_marker.png", "map_marker", "image")
@@ -39,6 +42,13 @@ setup =
     #Terminal
     Gotham.Preload.image("/assets/img/terminal_background.png", "terminal_background", "image")
 
+  networkPreload: ->
+    socket = GothamGame.network
+
+    Gotham.Preload.network("GetNodes", Gotham.Database.table("node"), socket)
+    Gotham.Preload.network("GetCables", Gotham.Database.table("cable"), socket)
+    Gotham.Preload.network("GetHost", Gotham.Database.table("host"), socket)
+
   startGame: ->
 
     # Create Scenes
@@ -49,15 +59,15 @@ setup =
     GothamGame.renderer.addScene("World", scene_World)
     GothamGame.renderer.addScene("Menu", scene_Menu)
 
-  startNetwork: ->
-    GothamGame.network = new Gotham.Network "//localhost", 8081
-    GothamGame.network.connect()
+    # Set Menu Scene
+    GothamGame.renderer.setScene("World")
 
+  startNetwork: (callback) ->
+    GothamGame.network = new Gotham.Network "128.39.148.43", 8081
+    GothamGame.network.connect()
     GothamGame.network.onConnect = ->
-      # Start game when connected
-      if not setup.started
-        setup.startGame()
-        setup.started = true
+      callback(GothamGame.network)
+
     GothamGame.network.onReconnecting = ->
       console.log "Attempting to reconnect"
     GothamGame.network.onReconnect = ->
@@ -68,9 +78,13 @@ setup =
 # Setup Database
 setup.database()
 
-#Setup Preloading
-setup.preload()
 
+
+# Start networking, Callback to preload when done
+setup.startNetwork ->
+  #Setup Preloading
+  setup.preload()
+  setup.networkPreload()
 
 
 scene_Loading  = new GothamGame.scenes.Loading 0x3490CF, true
@@ -81,12 +95,16 @@ GothamGame.renderer.addScene("Loading", scene_Loading)
 GothamGame.renderer.setScene("Loading")
 
 
-Gotham.Preload.onLoad (source, name, percent) ->
-  scene_Loading.tick name
+Gotham.Preload.onLoad = (source,type, name, percent) ->
+  scene_Loading.addAsset name, type, Math.round(percent)
   console.log("Preload: " + percent + "%")
 
-Gotham.Preload.onComplete () ->
-  console.log "Preload: Complete"
+Gotham.Preload.onComplete = () ->
+  console.log "Preload: Complete.. Starting Game"
+  Gotham.Tween.clear()
+  if not setup.started
+    setup.startGame()
+  setup.started = true
 
-  # Start networking when preloading is done
-  setup.startNetwork()
+
+

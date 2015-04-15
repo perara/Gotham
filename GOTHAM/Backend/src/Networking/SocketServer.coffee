@@ -85,7 +85,7 @@ class SocketServer
 
   _StartServer: ->
     that = @
-    @_server.listen @_port
+    @_server.listen @_port, "0.0.0.0"
     @_socket = io.listen @_server
     @_OverrideEmitter @_socket
 

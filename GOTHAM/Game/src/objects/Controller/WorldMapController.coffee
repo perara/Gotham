@@ -9,50 +9,39 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
 
   create: ->
     @create_nodes()
+    @create_cables()
+    @create_host()
 
 
   create_nodes: ->
     that = @
+    # Clear node container (Else risking memory leak)
+    that.View.clearNodeContainer()
 
-    GothamGame.network.Socket.emit 'GetNodes'
-    GothamGame.network.Socket.emit 'GetCables'
+    # Iterate Through the Node Table
+    start = new Date().getTime()
+    db_node = Gotham.Database.table "node"
+    db_node().each (row) ->
+      that.View.addNode row, true
+    console.log "Process Nodes: " + (new Date().getTime() - start) + "ms"
 
+  create_cables: ->
+    that = @
 
-    GothamGame.network.Socket.on "GetNodes" , (json) ->
-      nodes = JSON.parse json
+    # Insert cables into -the "cables" table
+    db_cable = Gotham.Database.table("cable")
+    # Iterate Through the Cable Table
+    start = new Date().getTime()
+    db_cable().each (row) ->
+      that.View.addCable row
+    console.log "Process Cables: " + (new Date().getTime() - start) + "ms"
 
-      # Clear node container (Else risking memory leak)
-      that.View.clearNodeContainer()
+  create_host: ->
 
-      console.log nodes
+    db_host = Gotham.Database.table('host')
+    host = db_host().first()
 
-      # Insert the nodes into the "node" table
-      db_node = GothamGame.Database.table("node")
-      db_node().remove()
-      db_node.insert nodes
-
-      # Iterate Through the Node Table
-      start = new Date().getTime()
-      db_node().each (row) ->
-        that.View.addNode row
-      console.log "Process Nodes: " + (new Date().getTime() - start) + "ms"
-
-
-    GothamGame.network.Socket.on "GetCables" , (json) ->
-      cables = JSON.parse json
-
-      console.log cables
-
-      # Insert cables into -the "cables" table
-      db_cable = GothamGame.Database.table("cable")
-      db_cable().remove()
-      db_cable.insert cables
-
-      # Iterate Through the Cable Table
-      start = new Date().getTime()
-      db_cable().each (row) ->
-        that.View.addCable row
-      console.log "Process Cables: " + (new Date().getTime() - start) + "ms"
+    @View.addHost(host)
 
 
 
