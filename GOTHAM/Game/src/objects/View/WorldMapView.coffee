@@ -40,14 +40,16 @@
 
 
   create_background: ->
-    @_background = background = new Gotham.Graphics.Graphics
-    background.lineStyle(2, 0x0000FF, 1)
-    background.blendMode = PIXI.blendModes.ADD
-    background.drawRect(0,0,  @__width, @__height)
-    background.hitArea = new Gotham.Graphics.Rectangle 0,0,  @__width, @__height
+
+
+
+    @_background = background = new Gotham.Graphics.Sprite Gotham.Preload.fetch("sea_background", "image")
+    background.width = @__width
+    background.height = @__height + 140
     background._size = @size
     background.y = 70
     @addChild background
+
 
     # Create mask background
     backgroundMask = new Gotham.Graphics.Graphics
@@ -59,14 +61,14 @@
 
 
   create_worldMap: ->
-    that = @
 
-    barController = @parent.getObject "Bar"
+
+    that = @
 
     """
     Create a container for world map
     """
-    mapContainer = new Gotham.Graphics.Sprite
+    mapContainer = new Gotham.Graphics.Container
     mapContainer.interactive = true
     mapContainer.hitArea = new Gotham.Graphics.Rectangle 0,0,  @__width, @__height
     @_background.addChild mapContainer
@@ -104,8 +106,9 @@
       if diff.y > newPosition.y or newPosition.y > 0
         results.y = false
 
-      return results
 
+
+      return results
 
 
     """
@@ -116,28 +119,27 @@
     """
     mapContainer.mousemove =  (e) ->
 
-      interactionManager = new PIXI.InteractionManager()
+      #console.log e.stopPropegation()
 
-      if(interactionManager.hitTest(that._background, e))
-        pos = e.getLocalPosition this
-        @_lastMousePosition = pos
+      pos = e.data.getLocalPosition this
+      @_lastMousePosition = pos
 
-        posX = -(that.__width / 2) + pos.x
-        posY = -(that.__height / 2) + pos.y
+      posX = -(that.__width / 2) + pos.x
+      posY = -(that.__height / 2) + pos.y
 
-        lat = Math.max(Math.min((posY / that.getCoordFactors().latitude).toFixed(4), 90), -90)
-        long = Math.max(Math.min((posX / that.getCoordFactors().longitude).toFixed(4), 180), -180)
+      lat = Math.max(Math.min((posY / that.getCoordFactors().latitude).toFixed(4), 90), -90)
+      long = Math.max(Math.min((posX / that.getCoordFactors().longitude).toFixed(4), 180), -180)
 
-        # Update currentCoordinates in WorldMap object
-        that.currentCoordinates =
-          latitude: lat
-          longitude: long
+      # Update currentCoordinates in WorldMap object
+      that.currentCoordinates =
+        latitude: lat
+        longitude: long
 
-        # Calculate which country it belongs to
-        country = Gotham.Util.Geocoding.getCountry(lat, long)
+      # Calculate which country it belongs to
+      country = Gotham.Util.Geocoding.getCountry(lat, long)
 
-        barController.updateCoordinates lat, long
-        barController.updateCountry country
+      that.parent.getObject("Bar").updateCoordinates lat, long
+      that.parent.getObject("Bar").updateCountry country
 
 
     """
@@ -252,8 +254,9 @@
       Generate country texture, with hover effect
       """
       graphics.clear()
-      graphics.lineStyle(3, 0xFF0000, 1);
-      graphics.blendMode = PIXI.blendModes.ADD
+      graphics.lineStyle(2, 0x000000, 1);
+      graphics.beginFill(0xffffff, 1)
+      graphics.blendMode = PIXI.BLEND_MODES.ADD
       graphics.drawPolygon(graphics.polygon.points)
       hoverTexture = graphics.generateTexture()
 
@@ -291,7 +294,6 @@
       Mouseover callback
       """
       sprite.mouseover =  (e) ->
-        #@bringToFront()
         @texture = @hoverTexture
 
       """
@@ -345,6 +347,8 @@
 
 
   addNodeInteract: (node) ->
+    that = @
+
     # The Node should be interactive
     node.sprite.setInteractive true
 
@@ -360,6 +364,7 @@
         for part in cable.CableParts
           part.visible = visible
 
+
     node.sprite.mouseover = ->
       nodeHover node, 0xffff00, true
     node.sprite.mouseout = ->
@@ -371,72 +376,9 @@
   #
   # @param startNode {Node} starting node
   # @param endNode {Node} End Node
-  animatePath: (startNode, endNode) ->
-
-
-
-
-  # Adds a cable to given node
-  #
-  # @param cable {Object} The cable Data
-  addCable: (cable) ->
-
-    # Create a new graphics element
-    graphics = new Gotham.Graphics.Graphics();
-    graphics.visible = false
-    graphics.lineStyle(1, 0xffd900, 1);
-
-    cablePartsGraphics = []
-
-
-    for partData in cable.CableParts
-      currentLocation = @CoordinateToPixel(partData.lat, partData.lng)
-
-      if  partData.number is 0
-        cablePartsGraphics.push graphics
-        graphics.moveTo(currentLocation.x, currentLocation.y)
-      else
-        graphics.lineTo(currentLocation.x, currentLocation.y);
-
-    # Add graphics cable parts to the cable
-    cable.CableParts = cablePartsGraphics
-
-    @nodeContainer.addChild graphics
-
-
-  # Adds a host to the worldMap
-  #
-  # @param host [Host] Host object
-  # @param isPlayer [Boolean] If its the player
-  addHost: (host, isPlayer) ->
-
-    node =
-      lat: host.person.lat
-      lng: host.person.lng
-      sprite: null
-
-    # Add node to map, and customize size and color
-    @addNode node, false
-    node.sprite.width = 32
-    node.sprite.height = 32
-    node.sprite.tint = 0x00ff00
-
-
-    # Create cable from HOST --> NODE
-    cableStart = @CoordinateToPixel(node.lat, node.lng)
-    cableEnd = @CoordinateToPixel(host.node.lat, host.node.lng)
-
-    cableGraphics = new Gotham.Graphics.Graphics();
-    cableGraphics.visible = true
-    cableGraphics.lineStyle(5, 0xff0000, 1);
-    cableGraphics.moveTo(cableStart.x, cableStart.y)
-    cableGraphics.lineTo(cableEnd.x, cableEnd.y)
-    @nodeContainer.addChild cableGraphics
-
-
+  animatePath: (cableStart, cableEnd) ->
     animationGraphics = new Gotham.Graphics.Graphics();
     animationGraphics.visible = true
-    animationGraphics.blendMode = PIXI.blendModes.ADD;
     @nodeContainer.addChild animationGraphics
 
     tween = new Gotham.Tween()
@@ -452,13 +394,143 @@
         end:
           x : cableStart.x + (cableEnd.x - cableStart.x) * Math.min(elapsed + 0.2, 1)
           y : cableStart.y + (cableEnd.y - cableStart.y) * Math.min(elapsed + 0.2, 1)
+
       animationGraphics.clear()
       animationGraphics.lineStyle(2, 0x00ff00, 1);
       animationGraphics.moveTo(points.start.x, points.start.y)
       animationGraphics.lineTo(points.end.x, points.end.y)
 
+      # If elapsed is above 1
+      if elapsed + 0.2 > 1
+        points =
+          start:
+            x : cableStart.x + (cableEnd.x - cableStart.x) * 0
+            y : cableStart.y + (cableEnd.y - cableStart.y) * 0
+          end:
+            x : cableStart.x + (cableEnd.x - cableStart.x) * ((elapsed + 0.2) - 1)
+            y : cableStart.y + (cableEnd.y - cableStart.y) * ((elapsed + 0.2) - 1)
+
+        animationGraphics.moveTo(points.start.x, points.start.y)
+        animationGraphics.lineTo(points.end.x, points.end.y)
+
+
+
+    return tween
+
+
+
+
+
+
+
+  # Adds a cable to given node
+  #
+  # @param cable {Object} The cable Data
+  addCable: (cable) ->
+
+    # Create a new graphics element
+    graphics = new Gotham.Graphics.Graphics();
+    graphics.visible = false
+    graphics.lineStyle(1, 0xffd900, 1);
+    graphics.coordinates = {start:null, end:null}
+
+    cablePartsGraphics = []
+
+    for partData in cable.CableParts
+      currentLocation = @CoordinateToPixel(partData.lat, partData.lng)
+      if  partData.number is 0
+        graphics.coordinates.start = currentLocation
+        graphics.moveTo(currentLocation.x, currentLocation.y)
+        cablePartsGraphics.push graphics
+      else
+        graphics.coordinates.end = currentLocation
+        graphics.lineTo(currentLocation.x, currentLocation.y);
+
+
+    # Add graphics cable parts to the cable
+    cable.CableParts = cablePartsGraphics
+
+    @nodeContainer.addChild graphics
+
+
+  # Adds a network to the worldMap
+  #
+  # @param host [Host] Host object
+  # @param lat [Double] Latitude position
+  # @param lng [Double Longitude position
+  # @param isPlayer [Boolean] If its the player
+  addNetwork: (network,  isPlayer) ->
+
+    # Create a node formatted object
+    networkNode =
+      lat: network.lat
+      lng: network.lng
+      sprite: null
+
+    # Add the network to the world map as a node representation
+    @addNode networkNode, false
+    networkNode.sprite.width = 32
+    networkNode.sprite.height = 32
+    networkNode.sprite.tint = 0x00ff00
+
+    # Create cable from the network to connected node
+    cable =
+      start: @CoordinateToPixel(network.lat, network.lng)
+      end: @CoordinateToPixel(network.Node.lat, network.Node.lng)
+
+    # Create graphics object for cable
+    gCable = new Gotham.Graphics.Graphics();
+    gCable.visible = true
+    gCable.lineStyle(5, 0xff0000, 1);
+    gCable.moveTo(cable.start.x, cable.start.y)
+    gCable.lineTo(cable.end.x, cable.end.y)
+    @nodeContainer.addChild gCable
+
+    # Create graphics for animated object (Yellow line which moves inside graphics)
+    animationGraphics = new Gotham.Graphics.Graphics();
+    animationGraphics.visible = true
+    animationGraphics.blendMode = PIXI.BLEND_MODES.ADD;
+    gCable.addChild animationGraphics
+
+    tween = new Gotham.Tween()
+    tween.repeat Infinity
+    tween.to {}, 2500
+    tween.onUpdate (chainItem)->
+
+      # Elapsed tween time
+      elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
+
+      points =
+        start:
+          x : cable.start.x + (cable.end.x - cable.start.x) * elapsed
+          y : cable.start.y + (cable.end.y - cable.start.y) * elapsed
+        end:
+          x : cable.start.x + (cable.end.x - cable.start.x) * Math.min(elapsed + 0.2, 1)
+          y : cable.start.y + (cable.end.y - cable.start.y) * Math.min(elapsed + 0.2, 1)
+
+      animationGraphics.clear()
+      animationGraphics.lineStyle(2, 0x00ff00, 1);
+      animationGraphics.moveTo(points.start.x, points.start.y)
+      animationGraphics.lineTo(points.end.x, points.end.y)
+
+      # Start from beginning
+      if elapsed + 0.2 > 1
+        points =
+          start:
+            x : cable.start.x + (cable.end.x - cable.start.x) * 0
+            y : cable.start.y + (cable.end.y - cable.start.y) * 0
+          end:
+            x : cable.start.x + (cable.end.x - cable.start.x) * Math.min(elapsed + 0.2 - 1, 1)
+            y : cable.start.y + (cable.end.y - cable.start.y) * Math.min(elapsed + 0.2 - 1, 1)
+
+        animationGraphics.moveTo(points.start.x, points.start.y)
+        animationGraphics.lineTo(points.end.x, points.end.y)
+
+
+
 
     tween.start()
+
 
 
 

@@ -44,14 +44,14 @@ class BarController extends Gotham.Pattern.MVC.Controller
     # Create Terminal Button
     @View.addItem @View.Bar.Bottom, "LEFT", ->
 
-      button_terminal = new Gotham.Controls.Button "Terminal" , 100, 70
+      button_terminal = new Gotham.Controls.Button "Home" , 100, 70
 
       console.log that.scene
       button_terminal.toggleOn = (e) ->
-        that.scene.getObject("Terminal").Show()
+        that.scene.getObject("User").Show()
 
       button_terminal.toggleOff = (e) ->
-        that.scene.getObject("Terminal").Hide()
+        that.scene.getObject("User").Hide()
 
       return button_terminal
 
@@ -60,7 +60,9 @@ class BarController extends Gotham.Pattern.MVC.Controller
     @View.addItem @View.Bar.Bottom,"LEFT", ->
       button_mission = new Gotham.Controls.Button "Missions" , 100, 70
       button_mission.toggleOn = (e) ->
+        that.scene.getObject("Mission").Show()
       button_mission.toggleOff = (e) ->
+        that.scene.getObject("Mission").Hide()
       return button_mission
 
       # Create Missions Button
@@ -95,11 +97,11 @@ class BarController extends Gotham.Pattern.MVC.Controller
 
 
   updateCoordinates: (lat, long) ->
-    @coordText.setText("Lat: #{lat}\nLng: #{long}")
+    @coordText.text = "Lat: #{lat}\nLng: #{long}"
 
   updateCountry: (country) ->
     c = if country then country.name else "None"
-    @countryText.setText("Country: #{c}")
+    @countryText.text = "Country: #{c}"
 
 
 

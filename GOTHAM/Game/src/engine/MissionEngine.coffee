@@ -5,14 +5,6 @@ class MissionEngine
   constructor: ->
     @_missions = {}
 
-    @_triggerCallbacks =
-      missionCompleted: []
-      missionFailed: []
-      missionProgress: []
-      missionAccepted: []
-
-    @onTrigger = ->
-
 
   # Adds a mission by its object, requires it to have a name
   #
@@ -20,14 +12,12 @@ class MissionEngine
   # @return {Mission} The removed Mission Object
   addMission: (mission) ->
     # Add mission to dict
-    @_missions[mission.name] = mission
+
+    @_missions[mission._title] = mission
 
     # Fetch added mission
-    _m = @_missions[mission.name]
+    _m = @_missions[mission._title]
     _m._engine = @
-
-    # Assign onTrigger to mission
-    _m.onTrigger = @onTrigger
 
     # Return Mission
     return _m
@@ -58,45 +48,15 @@ class MissionEngine
     # Return Mission
     return _m
 
-  # Adds a trigger by name, Currently supported is : missionCompleted, missionFailed, missionAccepted, missionProgress
-  #
-  # @param triggerName {String} The trigger name
-  # @param _c {Callback} The trigger callback
-  #
-  on: (triggerName, _c) ->
-    if triggerName == "missionCompleted" then @onMissionCompleted(_c)
-    else if triggerName == "missionFailed" then @onMissionFailed(_c)
-    else if triggerName == "missionAccepted" then @onMissionAccepted(_c)
-    else if triggerName == "missionProgress" then @onMissionProgress(_c)
-    else throw new Error "Trigger Type does not exist"
+  emit: (name, inVal, _c) ->
+    #console.log "[MISSION-E] Emitting #{name}, Value: #{inVal}"
 
-  # Fires when a mission is completed
-  #
-  # @param _c {Callback} The Trigger callback
-  #
-  onMissionCompleted: (_c) ->
-    @_triggerCallbacks.missionCompleted.push _c
 
-  # Fires when a mission failed
-  #
-  # @param _c {Callback} The Trigger callback
-  #
-  onMissionFailed: (_c) ->
-    @_triggerCallbacks.missionFailed.push _c
+    for key, mission of @_missions
+      mission.emit name, inVal, _c
 
-  # Fires when a mission is accepted
-  #
-  # @param _c {Callback} The Trigger callback
-  #
-  onMissionAccepted: (_c) ->
-    @_triggerCallbacks.missionAccepted.push _c
 
-  # Fires when a mission progressed further
-  #
-  # @param _c {Callback} The Trigger callback
-  #
-  onMissionProgress: (_c) ->
-    @_triggerCallbacks.missionProgress.push _c
+
 
 
 module.exports = MissionEngine

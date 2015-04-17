@@ -17,7 +17,6 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
     super View, name
     that = @
 
-
     @console = undefined
     @_data = undefined
     @_fs = undefined
@@ -31,28 +30,21 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
       clear: (args) ->
         that.console.clear()
 
+  SetHost: (host) ->
+    @host = host
+
+  SetIdentity: (identity) ->
+    @identity = identity
+
+  SetNetwork: (network) ->
+    @network = network
 
   create: ->
     @console = console = @View.setConsole new Console
 
-    @Networking()
-    @HandleInput()
-
-  Networking: () ->
-    that = @
-
-    db_host = Gotham.Database.table('host')
-    host = db_host().first()
-
-    console.log host
-
-    that._data = host
-    that._fs = new Filesystem(host.filesystem)
-    that._fs.onError = (errMsg) ->
-      that.console.add errMsg
-
-    that.Boot()
-
+    @SetupFilesystem()
+    @SetupInput()
+    @Boot()
 
 
   # Output the boot sequence of the virtual machine
@@ -67,7 +59,7 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
       "",
       "  System load:  0.18                Processes:           162",
       "  Usage of /:   16.6% of 157.36GB   Users logged in:     0",
-      "  Memory usage: 48%                 IP address for eth0: #{@._data.ip}",
+      "  Memory usage: 48%                 IP address for eth0: #{@host.ip}",
       "  Swap usage:   0%                  IP address for eth1: 10.131.240.142",
       "",
       "  Graph this data and manage this system at:",
@@ -80,10 +72,18 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
     ]
     @View.Redraw()
 
+  SetupFilesystem: ->
+
+    @._fs = new Filesystem(@host.Filesystem)
+
+    @._fs.onError = (errMsg) ->
+      that.console.add errMsg
+
+
 
   # Handle Input Event (Keydown)
   #
-  HandleInput: ->
+  SetupInput: ->
     that = @
     input = @View._input
 
@@ -147,7 +147,7 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
 
     command = new Command @, input
 
-    @console.add "#{@_data.person.givenname}@#{@_data.machineName}:~# #{command.getText()}"
+    @console.add "#{@identity.first_name}@#{@host.machine_name}:~# #{command.getText()}"
     @console.addHistory command
 
     if command.isCommand()
@@ -158,6 +158,7 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
     @View.Redraw()
 
   Show: () ->
+    $(".terminal_frame").hide()
     @View.terminal_frame.show()
   Hide: () ->
     @View.terminal_frame.hide()
@@ -212,8 +213,12 @@ class Command
 class Filesystem
 
   constructor: (json) ->
-    @_fs = @Parse(json.data)
-    @_root = @Parse(json.data)
+
+    data = JSON.parse(json.data)
+
+    @_fs = @Parse data
+    @_root = @Parse data
+
     @onError = ->
 
 

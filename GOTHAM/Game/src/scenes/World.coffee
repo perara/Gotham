@@ -5,17 +5,22 @@ class World extends Gotham.Graphics.Scene
   create: ->
     that = @
 
-    Bar = new GothamGame.Controllers.Bar "Bar"
-    @addObject Bar
+
 
     WorldMap = new GothamGame.Controllers.WorldMap "WorldMap"
     @addObject WorldMap
 
-    Terminal = new GothamGame.Controllers.Terminal "Terminal"
-    @addObject Terminal
+    Bar = new GothamGame.Controllers.Bar "Bar"
+    @addObject Bar
+
+    UserManagement = new GothamGame.Controllers.User "User"
+    @addObject UserManagement
 
     NodeList = new GothamGame.Controllers.NodeList "NodeList"
     @addObject NodeList
+
+    Mission = new GothamGame.Controllers.Mission "Mission"
+    @addObject Mission
 
 
 

@@ -26,6 +26,8 @@ class GothamGame
     Terminal : require './objects/Controller/TerminalController.coffee'
     NodeList : require './objects/Controller/NodeListController.coffee'
     WorldMap : require './objects/Controller/WorldMapController.coffee'
+    User : require './objects/Controller/UserController.coffee'
+    Mission : require './objects/Controller/MissionController.coffee'
 
     #"WorldMap" : require "./objects/WorldMap.coffee"
     #"TopBar" : require "./objects/View/BarView.coffee"

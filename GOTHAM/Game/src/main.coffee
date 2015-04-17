@@ -2,7 +2,6 @@ Gotham = require '../../GameFramework/src/Gotham.coffee'
 GothamGame = require './GothamGame.coffee'
 require './dependencies/jquery-ui.min'
 
-
 setup =
   started: false
 
@@ -14,14 +13,31 @@ setup =
     db_cables = Gotham.Database.createTable "cable"
 
     # Create Host Table
-    db_host = Gotham.Database.createTable "host"
+    db_host = Gotham.Database.createTable "user"
+
+    # Create Mission Table
+    db_mission = Gotham.Database.createTable "mission"
 
     # Create Temp Table
     db_temp = Gotham.Database.createTable "temp"
+
+
   preload: ->
+    # User Management
+    Gotham.Preload.image("/assets/img/user_management_background.jpg", "user_management_background", "image")
+    Gotham.Preload.image("/assets/img/user_management_frame.png", "user_management_frame", "image")
+    Gotham.Preload.image("/assets/img/user_management_network_item.png","user_management_network_item", "image")
+
+    # Mission
+    Gotham.Preload.image("/assets/img/mission_background.jpg","mission_background", "image")
+    Gotham.Preload.image("/assets/img/mission_spacer.png","mission_spacer", "image")
+    Gotham.Preload.image("/assets/img/mission_item.png","mission_item", "image")
+    Gotham.Preload.image("/assets/img/user_management_frame.png", "mission_frame", "image")
+
     # World Map
     Gotham.Preload.image("/assets/img/map_marker.png", "map_marker", "image")
     Gotham.Preload.json("/assets/json/json.json", "map")
+    Gotham.Preload.image("/assets/img/sea_background.jpg", "sea_background", "image")
 
     # Top Bar
     Gotham.Preload.image("/assets/img/bottomBar.png", "bottomBar", "image")
@@ -45,14 +61,15 @@ setup =
   networkPreload: ->
     socket = GothamGame.network
 
-    Gotham.Preload.network("GetNodes", Gotham.Database.table("node"), socket)
-    Gotham.Preload.network("GetCables", Gotham.Database.table("cable"), socket)
-    Gotham.Preload.network("GetHost", Gotham.Database.table("host"), socket)
+    #Gotham.Preload.network("GetNodes", Gotham.Database.table("node"), socket)
+    #Gotham.Preload.network("GetCables", Gotham.Database.table("cable"), socket)
+    Gotham.Preload.network("GetUser", Gotham.Database.table("user"), socket)
+    Gotham.Preload.network("GetMission", Gotham.Database.table("mission"), socket)
 
   startGame: ->
 
     # Create Scenes
-    scene_World = new GothamGame.scenes.World 0x333333, true
+    scene_World = new GothamGame.scenes.World 0xffffff, true #0x333333, true
     scene_Menu  = new GothamGame.scenes.Menu 0x000000, true
 
     # Add Scenes to renderer
@@ -97,7 +114,7 @@ GothamGame.renderer.setScene("Loading")
 
 Gotham.Preload.onLoad = (source,type, name, percent) ->
   scene_Loading.addAsset name, type, Math.round(percent)
-  console.log("Preload: " + percent + "%")
+  #console.log("Preload: " + percent + "%")
 
 Gotham.Preload.onComplete = () ->
   console.log "Preload: Complete.. Starting Game"
