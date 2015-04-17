@@ -1,22 +1,24 @@
-
 module.exports = (sequelize, DataTypes) ->
-  return sequelize.define 'Person', {
+  return sequelize.define 'Mission',
+    {
       id:
         type: DataTypes.INTEGER
         allowNull: false
         primaryKey: true
         autoIncrement: true
-      givenname:
+      title:
         type: DataTypes.STRING
         allowNull: false
-      lat:
-        type: DataTypes.DECIMAL
+      description:
+        type: DataTypes.STRING
         allowNull: false
-      lng:
-        type: DataTypes.DECIMAL
+      required_xp:
+        type: DataTypes.INTEGER
         allowNull: false
+
     },
     {
-      tableName: 'person'
+
+      tableName: 'mission'
       timestamps: false
     }

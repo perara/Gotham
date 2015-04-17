@@ -1,37 +1,39 @@
 
 
 module.exports = (sequelize, DataTypes) ->
-  return sequelize.define 'Host', {
+  return sequelize.define 'Network', {
       id:
         type: DataTypes.INTEGER
         allowNull: false
         primaryKey: true
         autoIncrement: true
-      machine_name:
+      submask:
         type: DataTypes.STRING
-        allowNull: false
-      online:
-        type: DataTypes.BOOLEAN
         allowNull: false
       ip:
         type: DataTypes.STRING
         allowNull: false
-      mac:
-        type: DataTypes.STRING
-        allowNull: false
-      filesystem:
+      identity:
         type: DataTypes.INTEGER
         allowNull: false
-        references: 'filesystem'
+        references: 'identity'
         referencesKey: 'id'
-      network:
+      node:
         type: DataTypes.INTEGER
         allowNull: false
-        references: 'network'
+        references: 'node'
         referencesKey: 'id'
-
+      isLocal:
+        type: DataTypes.BOOLEAN
+        allowNull: false
+      lat:
+        type: DataTypes.DECIMAL
+        allowNull: false
+      lng:
+        type: DataTypes.DECIMAL
+        allowNull: false
     },
     {
-      tableName: 'host'
+      tableName: 'network'
       timestamps: false
     }

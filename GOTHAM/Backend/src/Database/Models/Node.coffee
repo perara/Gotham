@@ -41,6 +41,12 @@ module.exports = (sequelize, DataTypes) ->
           if this._siblings
             return this._siblings
 
+          if not this.Cables
+            return null
+
+          if not this.Cables.Nodes
+            return null
+
           this._siblings = []
           for cable in this.Cables
             for node in cable.Nodes
