@@ -14,6 +14,7 @@ server.RegisterRoom new (require './Networking/Rooms/UserRoom.coffee')()
 server.RegisterRoom new (require './Networking/Rooms/WorldMapRoom.coffee')()
 server.RegisterRoom new (require './Networking/Rooms/GeneralRoom.coffee')()
 server.RegisterRoom new (require './Networking/Rooms/MissionRoom.coffee')()
+server.RegisterRoom new (require './Networking/Rooms/TerminalRoom.coffee')()
 server.Start()
 server.onConnect = (_client) ->
   log.info "[SERVER] Client Connected #{_client.id}"

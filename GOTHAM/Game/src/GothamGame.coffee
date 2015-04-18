@@ -12,10 +12,14 @@ class GothamGame
 
   # Mission Engine
   @MissionEngine = new (require './engine/MissionEngine.coffee')()
+  @Terminal = require './engine/Terminal/Terminal.coffee'
 
   # Mission Object
   @Mission = require './engine/Mission.coffee'
   @HackMission = require './engine/HackMission.coffee'
+
+  @Tools =
+    HostUtils: require './tools/HostUtils.coffee'
 
   # Networking
   @network = null
