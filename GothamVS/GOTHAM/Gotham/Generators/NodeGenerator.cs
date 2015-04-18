@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Gotham.Model;
 using Gotham.Model.Tools;
@@ -203,8 +204,8 @@ namespace Gotham.Application.Generators
             }
 
             work = new UnitOfWork();
-            var cableRepository = work.GetRepository<NodeEntity>();
-            cableRepository.Update(newSeaNodes);
+            var nodes = work.GetRepository<NodeEntity>();
+            nodes.Update(newSeaNodes);
             work.Dispose();
 
             Log.Info("Fixed " + newSeaNodes.Count + " sea nodes");
@@ -214,11 +215,11 @@ namespace Gotham.Application.Generators
         {
             // Start work
             var work = new UnitOfWork();
+            work.BeginTransaction();
 
             // Fetch repositories
             var nodeRepository = work.GetRepository<NodeEntity>();
-            var countryRepository = work.GetRepository<NodeEntity>();
-
+            var countryRepository = work.GetRepository<CountryEntity>();
 
             var nodes = nodeRepository.All().ToList();
             var countries = countryRepository.All().ToList();
@@ -226,16 +227,21 @@ namespace Gotham.Application.Generators
             foreach (var node in nodes)
             {
                 var exists = countries.FirstOrDefault(x => x.Name == node.CountryCode);
+                if(exists != null)
+                    Debug.WriteLine("");
                 node.CountryCode = (exists != null) ? exists.CountryCode : node.CountryCode.ToUpper();
             }
 
             // Save Nodes
-            countryRepository.Add(nodes);
+            nodeRepository.Update(nodes);
+            work.Commit();
 
             // Dispose
             work.Dispose();
 
             Log.Info("Fixed " + nodes.Count + " nodes");
         }
+
+        
     }
 }

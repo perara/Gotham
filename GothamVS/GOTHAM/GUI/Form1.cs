@@ -11,6 +11,9 @@ using Gotham.Model;
 using Gotham.Model.Tools;
 using GOTHAM.Repository.Abstract;
 using Gotham.Application.Generators;
+using System.Diagnostics;
+using GMap.NET.WindowsForms.ToolTips;
+using Gotham.Tools;
 
 
 // ReSharper disable LocalizableElement
@@ -24,12 +27,15 @@ namespace Gotham.Application.GUI
             InitializeComponent();
         }
 
-        IList<NodeEntity> _nodes;
-        IList<CableEntity> _cables;
+        List<NodeEntity> _nodes;
+        List<CableEntity> _cables;
         GMapOverlay _markersOverlay;
+        GMapOverlay _tempOverlay;
 
         Brush _tempBrush;
         List<GMapRoute> _tempRoutes;
+        Dictionary<NodeEntity, GMarkerGoogle> _tempNodes;
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -41,7 +47,10 @@ namespace Gotham.Application.GUI
             MainMap.DragButton = MouseButtons.Left;
 
             _markersOverlay = new GMapOverlay("markers");
+            _tempOverlay = new GMapOverlay("tempMarkers");
+            _tempNodes = new Dictionary<NodeEntity, GMarkerGoogle>();
             MainMap.Overlays.Add(_markersOverlay);
+            MainMap.Overlays.Add(_tempOverlay);
             MainMap.MaxZoom = 10;
             MainMap.MinZoom = 3;
             MainMap.Zoom = 3;
@@ -49,7 +58,7 @@ namespace Gotham.Application.GUI
 
             LoadEntities();
 
-            CableGenerator.ConnectNodesToCables();
+            //CableGenerator.ConnectNodesToCables(1);
 
             DrawNodes();
             DrawCables();
@@ -57,15 +66,20 @@ namespace Gotham.Application.GUI
 
         public void LoadEntities()
         {
-            //using (var session = EntityManager.GetSessionFactory().OpenSession())
-            //{
+ 
             var work = new UnitOfWork();
             _nodes = work.GetRepository<NodeEntity>().All().ToList();
             _cables = work.GetRepository<CableEntity>().All().ToList();
             work.Dispose();
-                //_nodes = session.CreateCriteria<NodeEntity>().List<NodeEntity>();
-                //_cables = session.CreateCriteria<CableEntity>().List<CableEntity>();
-            //}
+            
+            var node1 = _nodes.FirstOrDefault(x => x.Id == 14927);
+            var node2 = _nodes.FirstOrDefault(x => x.Id == 15294);
+
+            var node1_cord = new Coordinate.LatLng(node1.Lat, node1.Lng);
+            var node2_cord = new Coordinate.LatLng(node2.Lat, node2.Lng);
+
+            var dist = GeoTool.GetDistance(node1_cord, node2_cord);
+            Debug.WriteLine(dist);
         }
 
         public void DrawNodes()
@@ -75,10 +89,10 @@ namespace Gotham.Application.GUI
                 GMarkerGoogleType markerType;
                 var type = node.Tier.Id;
 
-                if (type == 1) markerType = GMarkerGoogleType.red_small;
-                else if (type == 1) markerType = GMarkerGoogleType.green_small;
-                else if (type == 1) markerType = GMarkerGoogleType.yellow_small;
-                else if (type == 1) markerType = GMarkerGoogleType.blue_small;
+                if (type == 1) markerType = GMarkerGoogleType.yellow_dot;
+                else if (type == 2) markerType = GMarkerGoogleType.green_dot;
+                else if (type == 3) markerType = GMarkerGoogleType.red_dot;
+                else if (type == 4) markerType = GMarkerGoogleType.blue_dot;
                 else markerType = GMarkerGoogleType.orange;
 
                 var marker = new GMarkerGoogle(new PointLatLng(node.Lat, node.Lng), markerType);
@@ -135,6 +149,19 @@ namespace Gotham.Application.GUI
         }
 
 
+        private void getCables(NodeEntity node)
+        {
+            tb_cables.Text = "";
+            tb_Distance.Text = "";
+            tb_name.Text = node.Name;
+            tb_id.Text = node.Id.ToString();
+
+            foreach (var cable in node.Cables.Where(cable => cable.Year <= 2014))
+            {
+                tb_cables.Text += cable.Name + "\r\n";
+            }
+        }
+
         private void MainMap_MouseUp(object sender, MouseEventArgs e)
         {
             var point = MousePosition;
@@ -182,16 +209,38 @@ namespace Gotham.Application.GUI
         private void MainMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
             var node = (NodeEntity)item.Tag;
-
-            tb_cables.Text = "";
-            tb_Distance.Text = "";
-            tb_name.Text = node.Name;
-            tb_id.Text = node.Id.ToString();
-
-            foreach (var cable in node.Cables.Where(cable => cable.Year <= 2014))
+            if (_tempNodes.ContainsKey(node))
             {
-                tb_cables.Text += cable.Name + "\r\n";
+                _tempOverlay.Markers.Remove(_tempNodes[node]);
+                _tempNodes.Remove(node);
             }
+            getCables(node);
+        }
+
+        private void tb_id_TextChanged(object sender, EventArgs e)
+        {
+            var id = 0;
+            var isInt = int.TryParse(tb_id.Text, out id);
+            var node = _nodes.FirstOrDefault(x => x.Id == id);
+            if (!isInt || node == null) return;
+
+
+            var markerType = GMarkerGoogleType.red;
+            var mode = MarkerTooltipMode.Always;
+            var marker = new GMarkerGoogle(new PointLatLng(node.Lat, node.Lng), markerType);
+            marker.ToolTip = new GMapBaloonToolTip(marker);
+            marker.ToolTipMode = mode;
+            marker.Tag = node;
+            marker.ToolTipText = node.Name + "\n" + node.CountryCode + "\n" + node.Id;
+
+            _tempOverlay.Markers.Add(marker);
+            _tempNodes.Add(node, marker);
+            getCables(node);
+        }
+
+        private void btn_reset_Click(object sender, EventArgs e)
+        {
+            _tempOverlay.Markers.Clear();
         }
     }
 }

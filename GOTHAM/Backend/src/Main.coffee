@@ -3,8 +3,8 @@ SocketServer = require './Networking/SocketServer.coffee'
 Database = require './Database/Database.coffee'
 Traffic = require './Objects/Traffic/Traffic.coffee'
 LocalDatabase = require './Database/LocalDatabase.coffee'
+ConsistencyFixer = require './RepairTools/ConsistencyFixer.coffee'
 log = require('log4js').getLogger("Main")
-
 
 database = new Database()
 server = new SocketServer 8081
@@ -28,19 +28,23 @@ database.Model.Node.all(
   ]
 ).then (nodes)->
 
-  table = LocalDatabase.table("nodes")
+  ############ Preload nodes and cables to local DB #############
+
+  nodeList = LocalDatabase.table("nodes")
+
   for node in nodes
-    table.insert node
+    nodeList.insert {id: node.id, node: node}
 
-    table({})
-  start = table({dataValues: id: 14710}).first()
-  end = table({dataValues: id: 14905}).first()
+  ############ Consistency check of Sea nodes ###################
 
-  #console.log table.last()
+  #new ConsistencyFixer()
 
-  solution = Traffic.Pathfinder.tryRandom(start, end)
-  #console.log solution
-  #Traffic.Pathfinder.printSolution(solution)
+  ############ Testing of pathfinder ############################
+  start = nodeList.findOne({id: 17418}).node
+  end = nodeList.findOne({id: 17464}).node
+
+  solution = Traffic.Pathfinder.bStar(start, end)
+  Traffic.Pathfinder.printSolution(solution)
 
 
 """

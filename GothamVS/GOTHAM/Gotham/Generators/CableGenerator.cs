@@ -242,7 +242,6 @@ namespace Gotham.Application.Generators
         /// <param name="node"></param>
         public static NodeCableEntity Connect(CableEntity cable, NodeEntity node)
         {
-
             var nodeCable = new NodeCableEntity { Cable = cable, Node = node };
             return nodeCable;
         }
