@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using Gotham.Tools;
 using Gotham.Model;
-using Gotham.Model.Tools;
 using GOTHAM.Repository.Abstract;
 
 namespace Gotham.Application.Parsers
@@ -18,6 +18,14 @@ namespace Gotham.Application.Parsers
     public static class TxtParse
     {
         public static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        public static void setUsaCulture()
+        {
+            var customCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+        }
+
 
         /// <summary>
         /// Writes a list of locations to file
@@ -98,7 +106,7 @@ namespace Gotham.Application.Parsers
             return nodes;
         }
 
-        
+
         /// <summary>
         /// Text parsing for type 3 location format (GoogleMaps Javascript sea nodes)
         /// contrycode(0), name(1), lat(2), lng(3)
@@ -126,6 +134,60 @@ namespace Gotham.Application.Parsers
                 node.Lng = coord.Lng;
                 node.Tier = new TierEntity() { Id = 4 };
                 nodes.Add(node);
+
+            }
+
+            var work = new UnitOfWork();
+            work.GetRepository<NodeEntity>().Add(nodes);
+            work.Dispose();
+        }
+
+        /// <summary>
+        /// Text parsing for greg's node location format (GoogleMaps Javascript sea nodes)
+        /// name(0), country(1), lng(2), lat(3)
+        /// </summary>
+        /// <param name="path"></param>
+        public static void ParseGregNodes(string path)
+        {
+            setUsaCulture();
+
+            // Read files to string-list and make empty locaions list
+            var file = File.ReadAllLines(path, Encoding.Default);
+            var lines = new List<string>(file);
+            var nodes = new List<NodeEntity>();
+
+            foreach (var line in lines)
+            {
+                var tmp = "";
+                var node = new NodeEntity();
+                var segments = line.Split(',');
+                var list = segments.Reverse().ToList();
+                var lat = list[0];
+                var lng = list[1];
+                var countryCode = list[2];
+                list.RemoveRange(0,3);
+                list.Reverse();
+
+                var name = list.ToList().Aggregate("", (current, segment) => current + (segment + ", "));
+
+                var coord = Coordinate.NewLatLng(
+                    double.Parse(lat),
+                    double.Parse(lng));
+
+                node.CountryCode = countryCode;
+                node.Name = name.Substring(0, name.Length -2);
+                node.Lat = coord.Lat;
+                node.Lng = coord.Lng;
+                node.Tier = new TierEntity { Id = 4 };
+                node.Priority = 0;
+                node.Bandwidth = 0;
+
+                if (string.IsNullOrWhiteSpace(node.Name)) node.Name = "Unknown";
+                if (string.IsNullOrWhiteSpace(node.CountryCode)) node.CountryCode = "XX";
+
+                nodes.Add(node);
+
+                Debug.WriteLine("Added sea node");
 
             }
 
@@ -163,7 +225,7 @@ namespace Gotham.Application.Parsers
                         Name = segments[0],
                         Priority = 0,
                         Capacity = Double.Parse(segments[1]),
-                        Type = new CableTypeEntity() {Id = 0},
+                        Type = new CableTypeEntity() { Id = 0 },
                         Distance = Double.Parse(segments[4]),
                         Year = Int32.Parse(segments[7])
                     };
@@ -266,12 +328,12 @@ namespace Gotham.Application.Parsers
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-       /* public static List<NodeJson> JsonToNodes(string path)
-        {
-            var json = File.ReadAllText(path);
-            var nodeList = JsonConvert.DeserializeObject<List<NodeJson>>(json);
-            return nodeList;
-        }*/
+        /* public static List<NodeJson> JsonToNodes(string path)
+         {
+             var json = File.ReadAllText(path);
+             var nodeList = JsonConvert.DeserializeObject<List<NodeJson>>(json);
+             return nodeList;
+         }*/
 
 
         /// <summary>

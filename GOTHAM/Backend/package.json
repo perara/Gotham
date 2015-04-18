@@ -21,7 +21,8 @@
     "mocha": "~2.2.4",
     "chai": "~2.2.0",
     "chai-as-promised": "~4.3.0",
-	"taffydb": "~2.7.2"
+    "taffydb": "~2.7.2",
+    "performance-now": "~0.2.0"
   },
   "devDependencies": {
     "nodeunit": "^0.9.1",

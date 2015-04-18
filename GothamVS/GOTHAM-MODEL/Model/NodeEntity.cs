@@ -136,6 +136,7 @@ namespace Gotham.Model
             Map(x => x.Name).Not.Nullable();
             Map(x => x.CountryCode).Not.Nullable();
             Map(x => x.Bandwidth).Not.Nullable();
+            Map(x => x.Priority).Not.Nullable();
             Map(x => x.Lat).Not.Nullable();
             Map(x => x.Lng).Not.Nullable();
 

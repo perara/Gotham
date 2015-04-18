@@ -13,7 +13,7 @@
             "port": 3306,
             "database": "gotham",
             "username": "root",
-            "password": "",
+            "password": "root",
         },
 
 		"local": {
@@ -21,7 +21,7 @@
             "port": 3306,
             "database": "gotham",
             "username": "root",
-            "password": "",
+            "password": "root",
         },
        
         "production": {

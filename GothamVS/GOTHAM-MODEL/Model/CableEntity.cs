@@ -18,8 +18,6 @@ namespace Gotham.Model
         public virtual double Distance { get; set; }
         public virtual string Name { get; set; }
         public virtual int Year { get; set; }
-
-        [JsonIgnore] //TODO - Why is it bugged in JSONconvert?
         public virtual CableTypeEntity Type { get; set; }
 
         public virtual IList<NodeEntity> Nodes { get; set; }
@@ -65,7 +63,7 @@ namespace Gotham.Model
              .Not.LazyLoad();
 
 
-            References(x => x.Type, "id");
+            References(x => x.Type, "type");
 
             HasManyToMany(x => x.Nodes)
                 .Cascade.All()
