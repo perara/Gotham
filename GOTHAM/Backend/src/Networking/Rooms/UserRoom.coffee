@@ -6,10 +6,45 @@ Room = require './Room.coffee'
 class UserRoom extends Room
 
   define: ->
+    that = @
 
-    @AddEvent "i am god", (data) ->
-      # @ = client object
-      console.log "Yes i am god pls"
+    @AddEvent "GetUser", (data) ->
+      client = that.GetClient(@id)
+
+      that.Database.Model.User.find(
+        where: id: 1
+        include:
+          [
+            {
+              model: that.Database.Model.Identity
+              include:
+                [
+                  {
+                    model: that.Database.Model.Network
+                    include:
+                      [
+                        {
+                          model: that.Database.Model.Node
+                        },
+                        {
+                          model: that.Database.Model.Host
+                          include:
+                            [
+                              model: that.Database.Model.Filesystem
+                            ]
+                        }
+                      ]
+                  }
+                ]
+            }
+          ]
+      ).then (user) ->
+        client.Socket.emit 'GetUser', user
+
+
+
+
+
 
 
 

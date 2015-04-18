@@ -11,6 +11,10 @@ class RelationMapping
     @Mapping_NodeCable()
     @Mapping_Node()
     @Mapping_Host()
+    @Mapping_Identity()
+    @Mapping_User()
+    @Mapping_Network()
+    @Mapping_Mission()
 
 
 
@@ -33,8 +37,57 @@ class RelationMapping
         allowNull: true
       }
 
+  Mapping_Mission: ->
+
+    @Model.Mission.hasMany @Model.MissionRequirement,
+      {
+        foreignKey: 'mission'
+        allowNull: false
+      }
+
+
 
   Mapping_CableType: ->
+
+  Mapping_User: ->
+    @Model.User.hasMany @Model.Identity,
+      {
+        foreignKey: 'fk_user'
+        foreignKeyConstraint:true
+      }
+
+
+  Mapping_Identity: ->
+    @Model.Identity.belongsTo @Model.User,
+      {
+        foreignKey: 'fk_user'
+        allowNull: true
+      }
+
+    @Model.Identity.hasMany @Model.Network,
+      {
+        foreignKey: 'identity'
+        allowNull: false
+      }
+
+  Mapping_Network: ->
+    @Model.Network.belongsTo @Model.Node,
+      {
+        foreignKey: 'node'
+        allowNull: false
+      }
+
+    @Model.Network.hasMany @Model.Host,
+      {
+        foreignKey: 'network'
+        allowNull: false
+      }
+
+
+
+
+
+
 
 
   Mapping_Cable: ->
@@ -46,11 +99,6 @@ class RelationMapping
 
 
   Mapping_Host: ->
-    @Model.Host.belongsTo @Model.Person,
-      {
-        foreignKey: 'person'
-        foreignKeyConstraint: true
-      }
 
     @Model.Host.belongsTo @Model.Filesystem,
       {
@@ -58,11 +106,17 @@ class RelationMapping
         foreignKeyConstraint:true
       }
 
-    @Model.Host.belongsTo @Model.Node,
+    """@Model.Host.belongsTo @Model.Identity,
       {
-        foreignKey: 'node'
-        foreignKeyConstraint:true
+        foreignKey: 'identity'
+        foreignKeyConstraint: true
       }
+
+    @Model.Host.belongsTo @Model.Network,
+      {
+        foreignKey: 'network'
+        foreignKeyConstraint:true
+      }"""
 
   Mapping_NodeCable: ->
     @Model.Cable.belongsToMany @Model.Node,

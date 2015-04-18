@@ -2,23 +2,38 @@
 
 class Mission
 
+
+
   constructor: () ->
-    @_name = null
+    @_title = null
     @_description = null
     @_engine = null
 
 
-    @_requirements = {}
+    @_requirements = []
+
+    @onProgress = ->
+    @onRequirementComplete = ->
+    @onComplete = ->
 
 
   # Create a requirement to a mission
   #
+  # @param requirement {Object} The requirement
+  # @return {Requirement} The Requirement
+  addRequirement: (requirementData)->
+    #console.log "[MISSION] Added Requirement: #{requirementData.requirement}"
+    requirement = new Requirement(@, requirementData)
+    @_requirements.push requirement
+    return requirement
+
+  # Add a list of requirements
+  #
   # @param requirementName {String} The name of the requirement
   # @return {Requirement} The Requirement
-  addRequirement: (requirementName)->
-    requirement = new Requirement(requirementName,@)
-    @_requirements[requirementName] = requirement
-    return requirement
+  addRequirements: (arr)->
+    for i in arr
+      @addRequirement(i)
 
   # Get a requirement by name
   #
@@ -41,13 +56,29 @@ class Mission
     return isComplete
 
   setTitle: (title) ->
-    @_name = title
+    #console.log "[MISSION] Set Title to: #{title}"
+    @_title = title
   setDescription: (description) ->
+    #console.log "[MISSION] Set Title to: #{description}"
     @_description = description
   getTitle: ->
-    return @_name
+    return @_title
   getDescription: ->
     return @_description
+
+
+  emit: (emit_name, emit_value, _c) ->
+
+    for requirement in @_requirements
+      #console.log "[MISSION] Requirement #{requirement._requirement}"
+
+      if requirement._emit == emit_name
+        #console.log "[MISSION] Matched Requirement #{requirement._requirement}"
+        requirement.emit emit_value, _c
+
+
+
+
 
 
 
@@ -59,7 +90,7 @@ class Mission
       requirement: requirement
     return event
 
-  triggerComplete: ->
+  """triggerComplete: ->
     for callback in  @_engine._triggerCallbacks.missionCompleted
       callback(@generateEvent(@_name, @, "complete"))
 
@@ -82,15 +113,16 @@ class Mission
   triggerAccepted: ->
     for callback in  @_engine._triggerCallbacks.missionAccepted
       callback(@generateEvent(@_name, @, "accepted"))
+  """
 
 
   printMission: ->
     console.log "-----------------------------------"
-    console.log "Mission Name: #{@_name}"
+    console.log "Mission Name: #{@_title}"
     console.log "Mission Description: #{@_description}"
     console.log "Requirements:"
     $.each(@_requirements, (key,val) ->
-      console.log "\t#{val.name}: #{val.getCurrentValue()}/#{val.getExpectValue()}"
+      console.log "\t#{val._requirement}: #{val.getCurrentValue()}/#{val.getExpectedValue()}"
     )
 
     console.log "-----------------------------------"
@@ -107,65 +139,79 @@ class Mission
     # Creates an requirement object
     #
     # @param name {String} The Requireement Title
-    constructor: (name, mission) ->
-      @_mission = mission
-      @name = name
+    constructor: (mission, requirementData) ->
+      @_requirementData = requirementData
 
-      @expectValue = null
-      @currentValue = null
-      @completed = false
-      @failValues = []
+      # Database Fields
+      @_id = requirementData.id
+      @_mission = @mission = mission
+      @_requirement = requirementData.requirement
+      @_current = requirementData.default
+      @_expected = requirementData.expected
+      @_emit = requirementData.emit
+      @_emit_value = requirementData.emit_value
+      @_emit_input = requirementData.emit_input
+      @_emit_behaviour = requirementData.emit_behaviour
+
+      # Internal Definition
+      @_complete = false
 
 
-    # Expect value for the requirement, Basicly destination value
-    #
-    # @param expectValue {Object} The expected requirement value
-    # @return {Requirement} The Requirement
-    expect: (expectValue) ->
-      @expectValue = expectValue
-      return @
+    emit: (input, _c) ->
 
-    # What the default value starts at
-    #
-    # @param defaultValue {Object} The default requirement value
-    # @return {Requirement} The Requirement
-    default: (defaultValue) ->
-      @currentValue = defaultValue
-      return @
 
-    # Sets an description of the requirement
-    #
-    # @param description {String} The description
-    # @return {Requirement} The Requirement
-    description: (description) ->
-      @description = description
-      return @
+      if @_complete
+        return
 
-    # Sets default value TO something
-    #
-    # @param value {Object} The value
-    # @return {Requirement} The Requirement
-    valueTo: (value) ->
-      @currentValue = value
+      # Return if the input are not valid
+      if input != @_emit_input
+        throw new Error "Requirement input is invalid! Got #{input}, Expected: #{@_emit_input}"
 
-      # Trigger Progress on mission
-      @_mission.triggerProgress @
+      # Check which behaviour to use
+      if @_emit_behaviour == "increment"
+        @_current += parseInt(@_emit_value)
+      else if @_emit_behaviour == "decrement"
+        @_current -= parseInt(@_emit_value)
+      else if @_emit_behaviour == "set"
+        @_current = @_emit_value
 
-      # Set completed status if its false
-      @completed = if not @completed then @isComplete()
+      if ""+@_current == ""+@_expected
+        @_complete = true
+        @_mission.onRequirementComplete(@)
+        if @_mission.isCompleted()
+          @_mission.onComplete(@_mission)
+      else
+        @_mission.onProgress(@)
 
-      return @
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     # Check if the requirement is complete
     #
     # @return {Boolean} True if complete, False if not
     isComplete: ->
-      return if @getCurrentValue() == @getExpectValue() then true else false
+      return if ""+@getCurrentValue() == ""+@getExpectedValue() then true else false
 
-    getExpectValue: ->
-      return if typeof(@expectValue) == "function" then @expectValue() else @expectValue
+    getExpectedValue: ->
+      return if typeof(@_expected) == "function" then @expectValue() else @_expected
+
     getCurrentValue: ->
-      return if typeof(@currentValue) == "function" then @currentValue() else @currentValue
+      return if typeof(@_current) == "function" then @currentValue() else @_current
 
 
 

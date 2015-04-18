@@ -6,13 +6,20 @@ class Loading extends Gotham.Graphics.Scene
 
   create: ->
 
+    background = Gotham.Graphics.Sprite.fromImage './assets/img/loading_background.jpg'
+    background.x = 0
+    background.y =  0
+    background.width = 1920
+    background.height = 1080
+    @addChild background
+
     ###############
     ## Game Title##
     ###############
-    @text = text = new Gotham.Graphics.Text("Loading, Please Wait\n0%", {font: "bold 90px calibri", fill: "#ffffff", align: "center"});
+    @text = text = new Gotham.Graphics.Text("Loading, Please Wait\n0%", {font: "bold 90px calibri", fill: "#ffffff", stroke: "0x808080",strokeThickness: 6, align: "center"});
     text.position =
       x: 1920 / 2
-      y: 1080 / 2
+      y: 1080 / 3
     text.anchor =
       x: 0.5
       y: 0.5
@@ -38,7 +45,7 @@ class Loading extends Gotham.Graphics.Scene
   addAsset: (name, type, percent) ->
     @_c = if not @_c then 0
 
-    @text.setText "Loading, Please Wait\n#{percent}%"
+    @text.text =  "Loading, Please Wait\n#{percent}%"
 
 
     random = (min, max) ->

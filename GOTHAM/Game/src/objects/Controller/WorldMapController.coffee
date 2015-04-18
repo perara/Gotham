@@ -38,11 +38,12 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
 
   create_host: ->
 
-    db_host = Gotham.Database.table('host')
-    host = db_host().first()
+    db_user = Gotham.Database.table('user')
+    user = db_user().first()
 
-    @View.addHost(host)
-
+    for identity in user.Identities
+      for network in identity.Networks
+          @View.addNetwork(network)
 
 
 

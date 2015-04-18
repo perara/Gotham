@@ -21,7 +21,7 @@ class WorldMapRoom extends Room
             }
           ]
         }
-      ).then (nodes)->
+      ).then (nodes)->\
         client.emit 'GetNodes', JSON.stringify(nodes)
 
     @AddEvent "GetCables", (data) ->

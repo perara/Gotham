@@ -3,8 +3,14 @@
 
 class TerminalView extends Gotham.Pattern.MVC.View
 
+  TerminalView.count = 0
   constructor: ->
     super
+
+    @name = null
+    TerminalView.count += 1
+
+    @id = JSON.parse(JSON.stringify("#{TerminalView.count}"))
 
     @_console = undefined
     @_input = undefined
@@ -25,30 +31,35 @@ class TerminalView extends Gotham.Pattern.MVC.View
   #
   Redraw: ->
     $(@_console_window).html(@_console.all().join("<br/>"))
-    objDiv = document.getElementById("terminal_console_frame_content");
+    objDiv = document.getElementById($(@_console_window).attr("id"));
     objDiv.scrollTop = objDiv.scrollHeight;
 
 
   create_terminal: ->
     selection = '-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;'
 
+
+    terminalCount = $(".terminal_frame").length
+
+
     @terminal_frame = terminal_frame = $('<div\>',
       {
-        id: "terminal_frame"
+        id: "terminal_frame_#{terminalCount}"
+        class: "terminal_frame"
         style: """
           width: 400px;
           height: 350px;
           background-color: red;
           position: fixed;
-          top: 0px;
-          left: 0px;
+          top: 27%;
+          left: 40%;
         """
       })
 
 
     terminal_title_frame = $('<div\>',
       {
-        id: "terminal_title_frame"
+        id: "terminal_title_frame_#{terminalCount}"
         style: """
           width: 100%;
           height: 5%;
@@ -64,7 +75,7 @@ class TerminalView extends Gotham.Pattern.MVC.View
 
     terminal_title_text = $('<div\>',
       {
-        id: "terminal_title_text"
+        id: "terminal_title_text_#{terminalCount}"
         style: """
           text-align: center;
           color: white;
@@ -78,7 +89,7 @@ class TerminalView extends Gotham.Pattern.MVC.View
 
     terminal_console_frame = $('<div\>',
       {
-        id: "terminal_console_frame"
+        id: "terminal_console_frame_#{terminalCount}"
         style: """
           width: 100%;
           height: 85%;
@@ -92,7 +103,7 @@ class TerminalView extends Gotham.Pattern.MVC.View
 
     @_console_window = terminal_console_content = $('<div\>',
       {
-        id: "terminal_console_frame_content"
+        id: "terminal_console_frame_content_#{terminalCount}"
         style: """
           width: 98%;
           height: 99%;
@@ -113,7 +124,7 @@ class TerminalView extends Gotham.Pattern.MVC.View
 
     terminal_input_frame = $('<div\>',
       {
-        id: "terminal_input_frame"
+        id: "terminal_input_frame_#{terminalCount}"
         style: """
           width: 100%;
           height: 10%;
@@ -126,7 +137,7 @@ class TerminalView extends Gotham.Pattern.MVC.View
     @_input = terminal_input_field = $('<input\>',
       {
         type: "text"
-        id: "terminal_input_field"
+        id: "terminal_input_field_#{terminalCount}"
         style: """
           width: 99%;
           height: 100%;
