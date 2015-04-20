@@ -20,31 +20,45 @@ server.onConnect = (_client) ->
 server.onDisconnect = (_client) ->
   log.info "[SERVER] Client Disconnected #{_client.id}"
 
+###############################################################
 ############ Preload nodes and cables to local DB #############
+###############################################################
 start = performance()
 LocalDatabase.updateNodes(database)
 #LocalDatabase.updateCables(database)
 
-################## Check if data is loaded ######################
+
+###############################################################
+################## Check if data is loaded ####################
+###############################################################
+#TODO: Change to promises or something decent
+
 runner = ->
   if LocalDatabase.nodesLoaded #and LocalDatabase.nodesLoaded
 
     log.info "Data loaded in #{((performance() - start) / 1000).toFixed(2)} Seconds"
 
-    ############### Load data ####################################
+
+    ###############################################################
+    ############### Link data ####################################
+    ###############################################################
 
     nodeList = LocalDatabase.table("nodes")
     cableList = LocalDatabase.table("cables")
 
 
+    ###############################################################
     ############ Testing of Traffic Engine #######################
+    ###############################################################
 
     te = new Macro.TrafficEngine(cableList)
     te.updateLoad()
 
 
-
+    ###############################################################
     ############ Testing of pathfinder ############################
+    ###############################################################
+
     """
     start = nodeList.findOne({id: 17418}).node
     end = nodeList.findOne({id: 17464}).node
@@ -57,11 +71,9 @@ runner = ->
 
 
 
-
-
     #console.log (keys = (k for k, v of cableList when typeof v is 'function'))
 
   else
-    setTimeout(runner, 100)
+    setTimeout(runner, 10)
 
 runner()
