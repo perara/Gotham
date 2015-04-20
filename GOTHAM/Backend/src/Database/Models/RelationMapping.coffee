@@ -125,6 +125,13 @@ class RelationMapping
         foreignKey: 'cable'
       }
 
+    @Model.Node.belongsToMany @Model.Cable,
+      {
+        through: 'node_cable'
+        foreignKey: 'node'
+      }
+
+
 
 
 

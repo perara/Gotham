@@ -11,6 +11,8 @@ User = require './Models/User.coffee'
 
 class Database
 
+
+
   constructor: (host, username, password)->
     @_models = {}
     @Model = @_models

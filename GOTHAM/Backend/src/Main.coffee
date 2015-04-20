@@ -1,9 +1,10 @@
 cfg     =     require './config.json'
 SocketServer = require './Networking/SocketServer.coffee'
 Database = require './Database/Database.coffee'
-Traffic = require './Objects/Traffic/Traffic.coffee'
+Micro = require './Objects/Traffic/Micro/Micro.coffee'
+Macro = require './Objects/Traffic/Macro/Macro.coffee'
 LocalDatabase = require './Database/LocalDatabase.coffee'
-ConsistencyFixer = require './RepairTools/ConsistencyFixer.coffee'
+performance = require 'performance-now'
 log = require('log4js').getLogger("Main")
 
 database = new Database()
@@ -19,25 +20,48 @@ server.onConnect = (_client) ->
 server.onDisconnect = (_client) ->
   log.info "[SERVER] Client Disconnected #{_client.id}"
 
-database.Model.Node.all(
-  include: [
-    {
-      model: database.Model.Cable
-      include: [database.Model.Node]
-    }
-  ]
-).then (nodes)->
+############ Preload nodes and cables to local DB #############
+start = performance()
+LocalDatabase.updateNodes(database)
+#LocalDatabase.updateCables(database)
 
-  ############ Preload nodes and cables to local DB #############
+################## Check if data is loaded ######################
+runner = ->
+  if LocalDatabase.nodesLoaded #and LocalDatabase.nodesLoaded
 
-  nodeList = LocalDatabase.table("nodes")
+    log.info "Data loaded in #{((performance() - start) / 1000).toFixed(2)} Seconds"
 
-  for node in nodes
-    nodeList.insert {id: node.id, node: node}
+    ############### Load data ####################################
 
-  ############ Testing of pathfinder ############################
-  start = nodeList.findOne({id: 17418}).node
-  end = nodeList.findOne({id: 17464}).node
+    nodeList = LocalDatabase.table("nodes")
+    cableList = LocalDatabase.table("cables")
 
-  solution = Traffic.Pathfinder.bStar(start, end)
-  Traffic.Pathfinder.printSolution(solution)
+
+    ############ Testing of Traffic Engine #######################
+
+    te = new Macro.TrafficEngine(cableList)
+    te.updateLoad()
+
+
+
+    ############ Testing of pathfinder ############################
+    """
+    start = nodeList.findOne({id: 17418}).node
+    end = nodeList.findOne({id: 17464}).node
+
+    solution = Micro.Pathfinder.bStar(start, end)
+    Micro.Pathfinder.printSolution(solution)
+    """
+
+
+
+
+
+
+
+    #console.log (keys = (k for k, v of cableList when typeof v is 'function'))
+
+  else
+    setTimeout(runner, 100)
+
+runner()

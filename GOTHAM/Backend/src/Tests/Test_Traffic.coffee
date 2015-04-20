@@ -5,7 +5,7 @@ chai.use chaiAsPromised
 expect = chai.expect
 log = require('log4js').getLogger("Test_Traffic")
 
-Traffic = require '../Objects/Traffic/Traffic.coffee'
+Traffic = require '../Objects/Traffic/Micro/Micro.coffee'
 Database = require '../Database/Database.coffee'
 
 

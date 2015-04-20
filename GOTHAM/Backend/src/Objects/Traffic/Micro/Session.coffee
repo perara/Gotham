@@ -1,5 +1,5 @@
-Database = require '../../Database/Database.coffee'
-Traffic = require './Traffic.coffee'
+Database = require '../../../Database/Database.coffee'
+Micro = require './Micro.coffee'
 
 
 # Session object containing source, target ,traffic path and packets exchanged
@@ -8,7 +8,7 @@ class Session
   constructor: (sourceHost, targetHost, layers) ->
 
     # Type checks
-    if layers not instanceof Traffic.LayerStructure then throw new Error("layers not instance of LayerStructure")
+    if layers not instanceof Micro.LayerStructure then throw new Error("layers not instance of LayerStructure")
     if sourceHost not instanceof Host then throw new Error("sourceHost not instance of Host")
     if targetHost not instanceof Host then throw new Error("targetHost not instance of Host")
 
