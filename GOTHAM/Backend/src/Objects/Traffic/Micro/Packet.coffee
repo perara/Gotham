@@ -1,4 +1,4 @@
-Traffic = require './Traffic.coffee'
+Micro = require './Micro.coffee'
 
 class Packet
 

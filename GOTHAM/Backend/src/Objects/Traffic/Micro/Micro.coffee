@@ -1,6 +1,6 @@
-class Traffic
+class Micro
 
-  @log: require('log4js').getLogger("Test_Networking")
+  @log: require('log4js').getLogger("Micro_Traffic")
 
   @Protocols =
   # Layer 2
@@ -24,4 +24,4 @@ class Traffic
   @Pathfinder = require './Pathfinder.coffee'
   @Session = require './Session.coffee'
 
-module.exports = Traffic
+module.exports = Micro

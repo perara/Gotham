@@ -1,7 +1,7 @@
-Database = require '../../Database/Database.coffee'
-LocalDatabase = require '../../Database/LocalDatabase.coffee'
-Traffic = require './Traffic.coffee'
-GeoTool = require '../../Tools/GeoTool.coffee'
+Database = require '../../../Database/Database.coffee'
+LocalDatabase = require '../../../Database/LocalDatabase.coffee'
+Micro = require './Micro.coffee'
+GeoTool = require '../../../Tools/GeoTool.coffee'
 performance = require 'performance-now'
 log = require('log4js').getLogger("Pathfinder")
 
@@ -281,7 +281,7 @@ class Pathfinder
       if result.length < best.length
         best = result
 
-    log.info "Path found in: #{performance() - startBench} ms"
+    log.info "Path found in: #{(performance() - startBench).toFixed(1)} ms"
     return best
 
   @toIdList = (solution) ->
