@@ -2,7 +2,7 @@ performance = require 'performance-now'
 When = require 'when'
 Room = require './../Room.coffee'
 Database = require '../../../Database/Database.coffee'
-Traffic = require '../../../Objects/Traffic/Traffic.coffee'
+Traffic = require '../../../Objects/Traffic/Micro/Micro.coffee'
 
 
 class TracerouteRoom extends Room
@@ -20,6 +20,7 @@ class TracerouteRoom extends Room
 
       # Host object
       sourceNode = null
+      targetNetwork = targetNetwork
       targetNode = null
 
 
@@ -50,6 +51,7 @@ class TracerouteRoom extends Room
           }
         ]
       ).then (network) ->
+        targetNetwork = network
         targetNode = network.Node
 
 
@@ -69,7 +71,7 @@ class TracerouteRoom extends Room
           outputarr.push (node.id + " - " +node.name)
         outputarr.push ("=======================================")
 
-        client.Socket.emit 'Traceroute', Traffic.Pathfinder.toIdList(solution), outputarr
+        client.Socket.emit 'Traceroute', Traffic.Pathfinder.toIdList(solution), outputarr, targetNetwork
 
 
       )

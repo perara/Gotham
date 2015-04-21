@@ -7,12 +7,23 @@ class MissionView extends Gotham.Pattern.MVC.View
     super
 
 
-    @selectedMission = null
-    @missionPages = []
-    @currentMissionPage = 0
-    @missionsPerPage = 5
-    @missions = []
-
+    @missions =
+      ongoing:
+        isOngoing: true
+        pages: []
+        currentPage: 0
+        elements: []
+        elementsPerPage: 6
+        selected: null
+        y: 450
+      available:
+        isOngoing: false
+        pages: []
+        currentPage: 0
+        elements: []
+        elementsPerPage: 6
+        selected: null
+        y: 60
 
   create: ->
     @SetupListView()
@@ -55,35 +66,38 @@ class MissionView extends Gotham.Pattern.MVC.View
 
 
 
+  AddOngoingMission: (mission) ->
+    @AddMission(mission, @missions.ongoing)
 
+  AddAvailableMission: (mission) ->
+    @AddMission(mission, @missions.available)
 
 
   # This view displays a selected mission, the user is able to select to start such mission type
-  AddMission: (mission)->
+  AddMission: (mission, container)->
     that = @
 
-    missionItem = new Gotham.Graphics.Sprite Gotham.Preload.fetch("mission_item", "image")
 
     # Add to page system
-    page = Math.floor(@missions.length / @missionsPerPage)
+    page = Math.floor(container.elements.length / container.elementsPerPage)
 
     # If the page does not exist, create a new index and a button
-    if not @missionPages[page]
-      @missionPages[page] = []
-      pageButton = new Gotham.Controls.Button (page+1), 25,25, 100, true
+    if not container.pages[page]
+      container.pages[page] = []
+      pageButton = new Gotham.Controls.Button (page+1), 25,25, {toggle: false, textSize: 100}
       pageButton.missions = []
       pageButton.x = 35 + (page * 25)
-      pageButton.y = 370
+      pageButton.y = container.y + (50 * container.elementsPerPage + 1) + (5 * container.elementsPerPage + 1)
       pageButton.interactive = true
       pageButton.click = ->
-        that.currentMissionPage = page
-        that.UpdateAvailableQuestList()
+        container.currentPage = page
+        that.UpdateQuestList(container)
       that.window.addChild pageButton
 
-    @missionPages[page].push missionItem
 
-    @missions.push missionItem
-    missionItem.y = 60 * (@missionPages[page].length)
+    # Create mission element
+    missionItem = new Gotham.Graphics.Sprite Gotham.Preload.fetch("mission_item", "image")
+    missionItem.y = container.y + (missionItem.height * container.pages[page].length) + (5 * container.pages[page].length)
     missionItem.x = 35
     missionItem.interactive = true
     missionItem.visible = false
@@ -92,20 +106,21 @@ class MissionView extends Gotham.Pattern.MVC.View
       @_toggle = if not @_toggle then true else !@_toggle
 
       if @_toggle
-        for mission in that.missions
-          if mission != @
-            mission.tint = 0xffffff
-            mission._toggle = false
+
+        for key, container of that.missions
+          for mission in container.elements
+            if mission != @
+              mission.tint = 0xffffff
+              mission._toggle = false
 
         @tint = 0x00ff00
-        that.selectedMission = @
+        container.selected = @
 
       else
         @tint = 0xffffff
-        that.selectedMission = null
+        container.selected = null
 
-      that.UpdateMissionJournal()
-    that.UpdateAvailableQuestList()
+      that.UpdateMissionJournal(container)
 
 
     missionTitle = new Gotham.Graphics.Text(MissionView.replacePlaceholders mission, mission.title, {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
@@ -120,17 +135,22 @@ class MissionView extends Gotham.Pattern.MVC.View
 
     @window.addChild missionItem
 
-  # Update The quest list with pagination
-  UpdateAvailableQuestList: () ->
-    that = @
 
+
+    # Add item to pagination array | Add item to elements array
+    container.pages[page].push missionItem
+    container.elements.push missionItem
+    that.UpdateQuestList(container)
+
+
+  # Update The quest list with pagination
+  UpdateQuestList: (container) ->
     # Hide all visible missions
-    for mission in @missions
+    for mission in container.elements
       mission.visible = false
 
-
     # Make page visible
-    missions = @missionPages[@currentMissionPage]
+    missions = container.pages[container.currentPage]
     for mission in missions
       mission.visible = true
 
@@ -161,33 +181,50 @@ class MissionView extends Gotham.Pattern.MVC.View
     @missionDescription.visible = false
     @window.addChild @missionDescription
 
+    @acceptButton = new Gotham.Controls.Button "Accept", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 50}
+    console.log Gotham.Preload.fetch("iron_button", "image")
+    @acceptButton.y = @missionDescription.y + @missionDescription.height + 20
+    @acceptButton.visible = false
+    @acceptButton.x = 480
+    @acceptButton.click = () ->
+      console.log ":D"
+
+    @window.addChild @acceptButton
+
 
   @replacePlaceholders =(missionData, text) ->
     for requirement in missionData.MissionRequirements
       text = text.replace("{#{requirement.requirement}}",requirement.expected)
     return text
 
-  UpdateMissionJournal: ->
+  UpdateMissionJournal:(container) ->
+    container = if not container then {} else container
 
-
-
-    if @selectedMission
-      @noDisplayedMission.visible = false
-      @missionDescription_title.visible = true
-
-
-      @missionTitle.text = MissionView.replacePlaceholders(@selectedMission.mission, @selectedMission.mission.title).replace("\\n","\n")
-      @missionTitle.visible = true
-
-      @missionDescription.text = MissionView.replacePlaceholders(@selectedMission.mission, @selectedMission.mission.description).replace("\\n","\n")
-      @missionDescription.visible = true
-
-
-    else
+    # Hide if no mission is selected
+    if not container.selected
       @noDisplayedMission.visible = true
       @missionTitle.visible = false
       @missionDescription_title.visible = false
       @missionDescription.visible = false
+      @acceptButton.visible = false
+
+
+
+    ################################
+    # Show Mission logic
+
+
+    @noDisplayedMission.visible = false
+    @missionDescription_title.visible = true
+
+
+    @missionTitle.text = MissionView.replacePlaceholders(container.selected.mission, container.selected.mission.title).replace("\\n","\n")
+    @missionTitle.visible = true
+
+    @missionDescription.text = MissionView.replacePlaceholders(container.selected.mission, container.selected.mission.description).replace("\\n","\n")
+    @missionDescription.visible = true
+
+    @acceptButton.visible = true
 
 
 

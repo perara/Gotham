@@ -18,6 +18,32 @@ class RelationMapping
 
     @Mapping_DNS()
     @Mapping_IPProvider()
+    @Mapping_UserMission()
+
+
+  Mapping_UserMission: ->
+    """@Model.User.belongsToMany @Model.Mission,
+      {
+        through: @Model.UserMission
+        foreignKey: 'user'
+        allowNull: true
+      }
+    @Model.Mission.belongsToMany @Model.User,
+      {
+        through: @Model.UserMission
+        foreignKey: 'mission'
+        allowNull: true
+      }"""
+
+    @Model.UserMission.belongsTo @Model.Mission,
+      {
+        foreignKey: 'mission'
+        foreignKeyConstraint:true
+      }
+
+
+
+
 
 
 

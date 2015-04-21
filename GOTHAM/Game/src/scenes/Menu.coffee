@@ -39,7 +39,7 @@ class Menu extends Gotham.Graphics.Scene
 
 
     @drawButtons()
-    @setupMusic()
+    #@setupMusic()
 
 
 

@@ -30,6 +30,7 @@ setup =
 
     # Mission
     Gotham.Preload.image("/assets/img/mission_background.jpg","mission_background", "image")
+    Gotham.Preload.image("/assets/img/iron_button.jpg","iron_button", "image")
     Gotham.Preload.image("/assets/img/mission_spacer.png","mission_spacer", "image")
     Gotham.Preload.image("/assets/img/mission_item.png","mission_item", "image")
     Gotham.Preload.image("/assets/img/user_management_frame.png", "mission_frame", "image")
@@ -62,7 +63,7 @@ setup =
     socket = GothamGame.network
 
     Gotham.Preload.network("GetNodes", Gotham.Database.table("node"), socket)
-    Gotham.Preload.network("GetCables", Gotham.Database.table("cable"), socket)
+    #Gotham.Preload.network("GetCables", Gotham.Database.table("cable"), socket)
     Gotham.Preload.network("GetUser", Gotham.Database.table("user"), socket)
     Gotham.Preload.network("GetMission", Gotham.Database.table("mission"), socket)
 
@@ -80,7 +81,7 @@ setup =
     scene_Menu.documentContainer.addChild GothamGame.renderer.getScene("Loading").documentContainer
 
     # Set Menu Scene
-    GothamGame.renderer.setScene("Menu")
+    GothamGame.renderer.setScene("World")
 
   startNetwork: (callback) ->
     GothamGame.network = new Gotham.Network "128.39.148.43", 8081

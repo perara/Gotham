@@ -122,7 +122,7 @@ class UserView extends Gotham.Pattern.MVC.View
       modText.y = y
       y += 45
 
-    button = new Gotham.Controls.Button @identityCount, 50, 50, 100, true
+    button = new Gotham.Controls.Button @identityCount, 50, 50, {toggle: false, textSize: 100}
     button.x = 450 + (60 * (@identityCount-1))
     button.y = y
     button.identity = container

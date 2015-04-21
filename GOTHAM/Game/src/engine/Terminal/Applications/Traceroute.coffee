@@ -57,7 +57,7 @@ class Traceroute extends Application
     GothamGame.network.Socket.emit 'Traceroute', @Packet
 
     # Traceroute Callback
-    GothamGame.network.Socket.on 'Traceroute', (path, output) ->
+    GothamGame.network.Socket.on 'Traceroute', (path, output, targetNetwork) ->
       @removeListener('Traceroute')
       db_node = Gotham.Database.table("node")
 
@@ -73,6 +73,11 @@ class Traceroute extends Application
         tween = GothamGame.renderer.getScene("World").getObject("WorldMap").View.animatePath(last, current)
         tween.start()
         last = current
+
+      # Finally add path between last node and network
+      tween = GothamGame.renderer.getScene("World").getObject("WorldMap").View.animatePath(last, targetNetwork)
+      tween.start()
+
 
 
         #traceroute 3.0.0.8

@@ -85,14 +85,14 @@ class BarController extends Gotham.Pattern.MVC.Controller
 
     # Create Menu Button
     @View.addItem @View.Bar.Bottom, "RIGHT" , ->
-      button_menu = new Gotham.Controls.Button "Menu" , 100, 70, 40, true
+      button_menu = new Gotham.Controls.Button "Menu" , 100, 70, {toggle: false , textSize: 40}
       button_menu.click = (e) ->
         GothamGame.renderer.setScene("Menu")
       return button_menu
 
     # Create Menu Button
     @View.addItem @View.Bar.Bottom, "RIGHT" , ->
-      button_settings = new Gotham.Controls.Button "Settings" , 100, 70, 40, false
+      button_settings = new Gotham.Controls.Button "Settings" , 100, 70, {toggle: true, textSize: 40}
       button_settings.toggleOn = (e) ->
         Settings = new GothamGame.Controllers.Settings "Settings"
         that.scene.addObject Settings
