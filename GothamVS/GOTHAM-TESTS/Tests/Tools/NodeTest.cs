@@ -27,6 +27,26 @@ namespace Gotham.Tests.Tools
             }
         }
 
+        [Test]
+        public void TEST_AllNodesHaveNetwork()
+        {
+            var work = new UnitOfWork();
+            var nodes = work.GetRepository<NodeEntity>().All().ToList();
+            work.Dispose();
+
+
+            foreach (var node in nodes)
+            {
+                
+                Assert.NotNull(node.Network);
+
+
+            }
+
+
+
+        }
+
 
         // TODO Complete?
         [Test]

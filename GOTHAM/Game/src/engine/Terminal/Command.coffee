@@ -29,11 +29,10 @@ class Command
     # Determine if the command exists in any application
     for appName, application of GothamGame.Terminal.Applications
 
-      # Command exist, reference it.
-
+      # Command exist, new instance and reference it.
       if @command == application.GetCommand()
         console.log "Found command: #{@command}"
-        @commandReference = application
+        @commandReference = new application(@)
         break
 
 
@@ -48,6 +47,6 @@ class Command
 
   execute: ->
     if not @commandReference then throw new Error "RefCommand is not defined!"
-    @commandReference.execute(@)
+    @commandReference.execute()
 
 module.exports = Command

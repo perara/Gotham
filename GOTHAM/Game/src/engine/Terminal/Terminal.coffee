@@ -18,5 +18,6 @@ class Terminal
     'Ping':require './Applications/Ping.coffee'
     'Slowloris':require './Applications/Slowloris.coffee'
     'ListSegments': require './Applications/ListSegments.coffee'
+    'Traceroute': require './Applications/Traceroute.coffee'
 
 module.exports = Terminal

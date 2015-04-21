@@ -22,7 +22,7 @@ namespace GOTHAM.Repository.Abstract
 
         public bool Add(TEntity entity)
         {
-            _session.Save(entity);
+         _session.Save(entity);
             return true;
         }
 

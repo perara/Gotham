@@ -14,7 +14,9 @@ server.RegisterRoom new (require './Networking/Rooms/UserRoom.coffee')()
 server.RegisterRoom new (require './Networking/Rooms/WorldMapRoom.coffee')()
 server.RegisterRoom new (require './Networking/Rooms/GeneralRoom.coffee')()
 server.RegisterRoom new (require './Networking/Rooms/MissionRoom.coffee')()
-server.RegisterRoom new (require './Networking/Rooms/TerminalRoom.coffee')()
+server.RegisterRoom new (require './Networking/Rooms/Applications/TracerouteRoom.coffee')()
+server.RegisterRoom new (require './Networking/Rooms/Applications/PingRoom.coffee')()
+
 server.Start()
 server.onConnect = (_client) ->
   log.info "[SERVER] Client Connected #{_client.id}"
@@ -30,8 +32,6 @@ server.onDisconnect = (_client) ->
 ## TESTING
 ##
 #############################################
-  
-
 database.Model.Node.all(
   include: [
     {
@@ -42,15 +42,14 @@ database.Model.Node.all(
 ).then (nodes)->
 
   ############ Preload nodes and cables to local DB #############
-
   nodeList = LocalDatabase.table("nodes")
-
   for node in nodes
     nodeList.insert {id: node.id, node: node}
 
   ############ Testing of pathfinder ############################
-  start = nodeList.findOne({id: 17418}).node
+  """start = nodeList.findOne({id: 17418}).node
   end = nodeList.findOne({id: 17464}).node
 
   solution = Traffic.Pathfinder.bStar(start, end)
   Traffic.Pathfinder.printSolution(solution)
+  """

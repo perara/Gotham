@@ -64,12 +64,14 @@
     <Compile Include="Model\CablePartEntity.cs" />
     <Compile Include="Model\CableTypeEntity.cs" />
     <Compile Include="Model\CountryEntity.cs" />
+    <Compile Include="Model\DNSEntity.cs" />
     <Compile Include="Model\FilesystemEntity.cs" />
     <Compile Include="Model\HostEntity.cs" />
     <Compile Include="Model\LocationEntity.cs" />
+    <Compile Include="Model\NetworkEntity.cs" />
     <Compile Include="Model\NodeCableEntity.cs" />
     <Compile Include="Model\NodeEntity.cs" />
-    <Compile Include="Model\PersonEntity.cs" />
+    <Compile Include="Model\IdentityEntity.cs" />
     <Compile Include="Model\Repository\Abstract\IReadRepository.cs" />
     <Compile Include="Model\Repository\Abstract\IReadWriteRepository.cs" />
     <Compile Include="Model\Repository\Abstract\IUnitOfWork.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Model\Repository\UserRepository.cs" />
     <Compile Include="Model\TierEntity.cs" />
     <Compile Include="Model\UserEntity.cs" />
+    <Compile Include="Model\IPProviderEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Tools\EntityManager.cs" />
   </ItemGroup>

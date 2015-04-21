@@ -168,7 +168,10 @@ class TerminalView extends Gotham.Pattern.MVC.View
     $(terminal_frame).resizable();
 
     $("body").append(@terminal_frame);
-    #@terminal_frame.hide();
+
+
+
+    @terminal_frame.hide();
 
 
 

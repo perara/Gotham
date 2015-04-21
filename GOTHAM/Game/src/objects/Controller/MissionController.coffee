@@ -11,14 +11,14 @@ class MissionController extends Gotham.Pattern.MVC.Controller
   create: ->
     @SetupMissions()
 
+    @Hide()
+
 
 
   SetupMissions: ->
 
     db_mission = Gotham.Database.table("mission")
     missions = db_mission().get()
-
-    console.log missions
 
     for mission in missions
       @View.AddMission(mission)

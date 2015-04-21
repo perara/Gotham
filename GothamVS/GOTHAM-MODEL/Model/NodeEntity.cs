@@ -21,15 +21,20 @@ namespace Gotham.Model
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// Country of the Node
-        /// TODO - Should be Entity
+        /// Country String representation of the Node
         /// </summary>
         public virtual string CountryCode { get; set; }
+
+        /// <summary>
+        /// Entity representation of this nodes Country
+        /// </summary>
+        public virtual CountryEntity Country { get; set; }
 
         /// <summary>
         /// Tier Entity of the Node - (Tier 1, Tier 2, Tier 3)
         /// </summary>
         public virtual TierEntity Tier { get; set; }
+
 
         /// <summary>
         /// Host Entity of the Node - 
@@ -144,6 +149,12 @@ namespace Gotham.Model
                 .Not.Nullable()
                 .Column("tier")
                 .Not.LazyLoad();
+
+            References(x => x.Country)
+            .Not.Nullable()
+            .Column("countryCode")
+            .PropertyRef("CountryCode")
+            .Not.LazyLoad();
 
             HasManyToMany(x => x.Cables)
                 .Cascade.All()

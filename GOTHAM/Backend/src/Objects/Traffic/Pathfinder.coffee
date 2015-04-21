@@ -35,7 +35,7 @@ class Pathfinder
 
       loop
 
-        siblings = currentNode.siblings
+        siblings = currentNode.siblings()
 
         nextNodeId = siblings[rnd(0, siblings.length - 1)].id
 
@@ -87,7 +87,7 @@ class Pathfinder
 
       currentId = path[path.length - 1].id
       current = table.findOne({id: currentId}).node
-      nextNode = GeoTool.getClosest(goal, current.siblings, blacklist)
+      nextNode = GeoTool.getClosest(goal, current.siblings(), blacklist)
       wrongWay = 0
 
       log.info "Current node: #{current.id}"
@@ -133,14 +133,14 @@ class Pathfinder
     ##### Returns sibling closest to goal (gets siblings list from input node)
     ###############################################################################################
     getBestSibling = (current) ->
-      bestSibling = GeoTool.getClosest(goal, current.siblings, blacklist)
+      bestSibling = GeoTool.getClosest(goal, current.siblings(), blacklist)
 
-      for sibling in current.siblings
+      for sibling in current.siblings()
 
         if bestSibling.id == sibling.id then continue
         allSiblingIds[sibling.id] = path.length
 
-      return GeoTool.getClosest(goal, current.siblings, blacklist)
+      return GeoTool.getClosest(goal, current.siblings(), blacklist)
 
     ###############################################################################################
     ##### Gets the distance from input note to goal
@@ -157,7 +157,7 @@ class Pathfinder
         removed = path.pop()
         for key, value of allSiblingIds
           if value == pathLength
-            allSiblingIds.delete(key)
+            delete allSiblingIds[key]
         #log.info "Foul Node #{removed.id}"
 
     ###############################################################################################

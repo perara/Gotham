@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) ->
     {
       tableName: 'node'
       timestamps: false
-      getterMethods:
+      instanceMethods:
         siblings: ->
 
           if @_siblings

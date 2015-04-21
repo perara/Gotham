@@ -16,6 +16,9 @@ class RelationMapping
     @Mapping_Network()
     @Mapping_Mission()
 
+    @Mapping_DNS()
+    @Mapping_IPProvider()
+
 
 
   Mapping_Node: ->
@@ -44,6 +47,26 @@ class RelationMapping
         foreignKey: 'mission'
         allowNull: false
       }
+
+
+  Mapping_IPProvider: ->
+    @Model.Country.belongsTo @Model.DNS,
+      {
+        foreignKey: 'country'
+        allowNull: true
+      }
+
+
+
+  Mapping_DNS: ->
+    @Model.DNS.belongsTo @Model.IPProvider,
+      {
+        foreignKey: 'provider'
+        allowNull: true
+      }
+
+
+
 
 
 
@@ -103,6 +126,12 @@ class RelationMapping
     @Model.Host.belongsTo @Model.Filesystem,
       {
         foreignKey: 'filesystem'
+        foreignKeyConstraint:true
+      }
+
+    @Model.Host.belongsTo @Model.Network,
+      {
+        foreignKey: 'network'
         foreignKeyConstraint:true
       }
 

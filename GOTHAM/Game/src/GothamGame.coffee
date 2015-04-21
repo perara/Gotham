@@ -32,6 +32,7 @@ class GothamGame
     WorldMap : require './objects/Controller/WorldMapController.coffee'
     User : require './objects/Controller/UserController.coffee'
     Mission : require './objects/Controller/MissionController.coffee'
+    Settings : require './objects/Controller/SettingsController.coffee'
 
     #"WorldMap" : require "./objects/WorldMap.coffee"
     #"TopBar" : require "./objects/View/BarView.coffee"

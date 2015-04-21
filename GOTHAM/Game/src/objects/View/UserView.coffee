@@ -156,7 +156,7 @@ class UserView extends Gotham.Pattern.MVC.View
     networkSprite.y = @networkY
     networkSprite.interactive = true
 
-    text = new Gotham.Graphics.Text("IP: #{network.ip} Mask: #{network.submask}\nNode: #{network.Node.id}", {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
+    text = new Gotham.Graphics.Text("IP: #{network.external_ip_v4} Mask: #{network.submask}\nNode: #{network.Node.name}", {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
     text.x = 5
     text.y = 5
     networkSprite.addChild text

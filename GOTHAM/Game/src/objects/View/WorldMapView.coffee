@@ -25,6 +25,8 @@
 
 
   create: ->
+
+
     """
     Create the background
     """
@@ -34,7 +36,6 @@
     Create the world map and node container
     """
     @create_worldMap()
-
 
 
 
@@ -371,48 +372,83 @@
       nodeHover node, 0xffffff, false
 
 
+  # Clears animated paths
+  clearAnimatePath: () ->
+    # Remove all pathcontainer children # TODO
+    if not @pathContainer
+      return
+
+    for child in @pathContainer.children
+      child.tween.stop()
+
+
+    @pathContainer.children = []
+
 
   # Creates a animated line between two nodes
   #
   # @param startNode {Node} starting node
   # @param endNode {Node} End Node
-  animatePath: (cableStart, cableEnd) ->
+  animatePath: (startNode, endNode) ->
+    if not @pathContainer
+      @pathContainer = new Gotham.Graphics.Graphics()
+      @nodeContainer.addChild @pathContainer
+
+
+    # Create cable from the network to connected node
+    path =
+      start: @CoordinateToPixel(startNode.lat, startNode.lng)
+      end: @CoordinateToPixel(endNode.lat, endNode.lng)
+
+    # Create graphics object for cable
+    gCable = new Gotham.Graphics.Graphics();
+    gCable.visible = true
+    gCable.lineStyle(3, 0xff00ff, 1);
+    gCable.moveTo(path.start.x, path.start.y)
+    gCable.lineTo(path.end.x, path.end.y)
+    @pathContainer.addChild gCable
+
+    # Create graphics for animated object (Yellow line which moves inside graphics)
     animationGraphics = new Gotham.Graphics.Graphics();
     animationGraphics.visible = true
-    @nodeContainer.addChild animationGraphics
+    animationGraphics.blendMode = PIXI.BLEND_MODES.ADD;
+    gCable.addChild animationGraphics
 
     tween = new Gotham.Tween()
+    gCable.tween = tween
     tween.repeat Infinity
-    tween.to {}, 1500
+    tween.to {}, 2500
     tween.onUpdate (chainItem)->
+
+      # Elapsed tween time
       elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
 
       points =
         start:
-          x : cableStart.x + (cableEnd.x - cableStart.x) * elapsed
-          y : cableStart.y + (cableEnd.y - cableStart.y) * elapsed
+          x : path.start.x + (path.end.x - path.start.x) * elapsed
+          y : path.start.y + (path.end.y - path.start.y) * elapsed
         end:
-          x : cableStart.x + (cableEnd.x - cableStart.x) * Math.min(elapsed + 0.2, 1)
-          y : cableStart.y + (cableEnd.y - cableStart.y) * Math.min(elapsed + 0.2, 1)
+          x : path.start.x + (path.end.x - path.start.x) * Math.min(elapsed + 0.2, 1)
+          y : path.start.y + (path.end.y - path.start.y) * Math.min(elapsed + 0.2, 1)
+
 
       animationGraphics.clear()
-      animationGraphics.lineStyle(2, 0x00ff00, 1);
+      animationGraphics.lineStyle(1, 0x00ff00, 1);
       animationGraphics.moveTo(points.start.x, points.start.y)
       animationGraphics.lineTo(points.end.x, points.end.y)
 
-      # If elapsed is above 1
+      # Start from beginning
       if elapsed + 0.2 > 1
         points =
           start:
-            x : cableStart.x + (cableEnd.x - cableStart.x) * 0
-            y : cableStart.y + (cableEnd.y - cableStart.y) * 0
+            x : path.start.x + (path.end.x - path.start.x) * 0
+            y : path.start.y + (path.end.y - path.start.y) * 0
           end:
-            x : cableStart.x + (cableEnd.x - cableStart.x) * ((elapsed + 0.2) - 1)
-            y : cableStart.y + (cableEnd.y - cableStart.y) * ((elapsed + 0.2) - 1)
+            x : path.start.x + (path.end.x - path.start.x) * Math.min(elapsed + 0.2 - 1, 1)
+            y : path.start.y + (path.end.y - path.start.y) * Math.min(elapsed + 0.2 - 1, 1)
 
         animationGraphics.moveTo(points.start.x, points.start.y)
         animationGraphics.lineTo(points.end.x, points.end.y)
-
 
 
     return tween
@@ -467,11 +503,15 @@
       lng: network.lng
       sprite: null
 
+    console.log networkNode
+
     # Add the network to the world map as a node representation
     @addNode networkNode, false
     networkNode.sprite.width = 32
     networkNode.sprite.height = 32
     networkNode.sprite.tint = 0x00ff00
+
+    return #TODO TODO
 
     # Create cable from the network to connected node
     cable =

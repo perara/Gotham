@@ -10,7 +10,7 @@ namespace Gotham.Model
     [SuppressMessage("ReSharper", "VirtualMemberNeverOverriden.Global")]
     [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    public class PersonEntity : BaseEntity
+    public class IdentityEntity : BaseEntity
     {
         // Personal information
         public virtual string Gender { get; set; }
@@ -22,7 +22,7 @@ namespace Gotham.Model
         public virtual string Email { get; set; }
         public virtual string Username { get; set; }
         public virtual string Password { get; set; }
-        public virtual int Telephone { get; set; }
+        public virtual string Telephone { get; set; }
         public virtual long CcNumber { get; set; }
         public virtual string Occupation { get; set; }
         public virtual string Company { get; set; }
@@ -35,13 +35,13 @@ namespace Gotham.Model
         /// <summary>
         /// Default constructor
         /// </summary>
-        protected PersonEntity() { }
+        protected IdentityEntity() { }
 
         /// <summary>
         /// "Empty" constructor
         /// </summary>
         /// <param name="countryCode"></param>
-        public PersonEntity(string countryCode = "*")
+        public IdentityEntity(string countryCode = "*")
         {
             CountryCode = countryCode;
         }
@@ -50,20 +50,20 @@ namespace Gotham.Model
             return new Coordinate.LatLng(Lat, Lng);
         }
     }
-    public class PersonEntityMap : ClassMap<PersonEntity>
+    public class IdentityEntityMap : ClassMap<IdentityEntity>
     {
 
-        public PersonEntityMap()
+        public IdentityEntityMap()
         {
-            Table("person");
+            Table("identity");
             Id(x => x.Id).GeneratedBy.Identity();
             Map(x => x.Gender, "gender").Not.Nullable();
-            Map(x => x.Givenname, "givenname").Not.Nullable();
-            Map(x => x.Surname, "surname").Not.Nullable();
-            Map(x => x.Address, "streetaddress").Not.Nullable();
+            Map(x => x.Givenname, "first_name").Not.Nullable();
+            Map(x => x.Surname, "last_name").Not.Nullable();
+            Map(x => x.Address, "address").Not.Nullable();
             Map(x => x.City, "city").Not.Nullable();
             Map(x => x.CountryCode, "country").Not.Nullable();
-            Map(x => x.Email, "emailaddress").Not.Nullable();
+            Map(x => x.Email, "email").Not.Nullable();
             Map(x => x.Username, "username").Not.Nullable();
             Map(x => x.Password, "password").Not.Nullable();
             Map(x => x.Telephone, "telephonenumber").Not.Nullable();

@@ -16,7 +16,6 @@ namespace Gotham.Model
         public virtual string Email { get; set; }
         public virtual string Money { get; set; }
         public virtual long Experience { get; set; }
-
         public virtual HostEntity HostEntity { get; set; }
     }
 

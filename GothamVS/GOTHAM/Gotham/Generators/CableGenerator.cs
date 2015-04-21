@@ -219,7 +219,7 @@ namespace Gotham.Application.Generators
         /// <param name="nodes"></param>
         /// <param name="maxDistance"></param>
         /// <returns></returns>
-        public static NodeEntity GetClosestNode(PersonEntity current, List<NodeEntity> nodes, int maxDistance = Int32.MaxValue)
+        public static NodeEntity GetClosestNode(IdentityEntity current, List<NodeEntity> nodes, int maxDistance = Int32.MaxValue)
         {
             var closest = nodes.Last();
             var closestDist = GeoTool.GetDistance(current.GetCoords(), closest.GetCoords());

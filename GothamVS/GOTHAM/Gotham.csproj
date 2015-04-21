@@ -76,6 +76,8 @@
     <Compile Include="Gotham\Generators\CableGenerator.cs" />
     <Compile Include="Gotham\Generators\ConsistencyFixer.cs" />
     <Compile Include="Gotham\Generators\NodeGenerator.cs" />
+    <Compile Include="Gotham\Generators\NodeNetworkGenerator.cs" />
+    <Compile Include="Gotham\Parsers\CountryIPParser.cs" />
     <Compile Include="Gotham\Parsers\TxtParse.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>

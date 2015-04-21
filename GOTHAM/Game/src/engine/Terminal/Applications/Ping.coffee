@@ -1,100 +1,101 @@
 Application = require './Application.coffee'
 
 class Ping  extends Application
-
   @Command = "ping"
-  @Arguments =
-    '-c':
-      description: "count"
-      function: ->
-    '-i':
-      description: "interval"
-      function: ->
-    '-m':
-      description: "mark"
-      function: ->
-    '-M':
-      description: "pmtudisc_option"
-      function: ->
-    '-l':
-      description: "preload"
-      function: ->
-    '-p':
-      description: "pattern"
-      function: ->
-    '-Q':
-      description: "tos"
-      function: ->
-    '-s':
-      description: "packetsize"
-      function: ->
-    '-S':
-      description: "sndbuf"
-      function: ->
-    '-t':
-      description: "ttl"
-      function: ->
-    '-T':
-      description: "timestamp_option"
-      function: ->
-    '-w':
-      description: "deadline"
-      function: ->
-    '-W':
-      description: "timeout"
-      function: ->
-    '-V':
-      description: "version"
-      function: (command) ->
-        command.controller.console.add "#{Command} utility, iputils-GOTHAM-0.00141"
+
+  constructor: (command) ->
+    super command
+
+    @Packet =
+      target: null
 
 
+  switches: ->
+    that = @
+    return [
 
-  @execute: (command) ->
-    args = command.arguments
+      # Help
+      ['-h', '--help', 'Show Help', ->
+        that.Console.addArray @toString().split("\n")
+        that.Packet = {}
+      ]
 
-    # No arguments
-    if args.length < 1
-      @help(command)
-      return
+      # Count
+      ['-c', '--count NUMBER', 'Stop after sending count ECHO_REQUEST packets', (key, val) ->
+        that.Packet.count = val
+      ]
 
-    # Set address variable and validate the adress.
-    # If its not validated return error and stop execution.
-    address = args.last()
-    if not GothamGame.Tools.HostUtils.validIPHost(address)
-      command.controller.console.add "#{@Command}: unknown host: #{address}"
-      return
+      # Interval
+      ['-i', '--interval DOUBLE', 'Ping Interval', (key, val)->
+        that.Packet.interval = val
+      ]
 
-    GothamGame.network.Socket.emit 'Ping', {
-      address: address
-    }
-    GothamGame.network.Socket.on 'Ping', (items) ->
+      # Packet Size
+      ['-s', '--packetsize NUMBER', 'Packetsize', (key, val)->
+        that.Packet.packetsize = val
+      ]
 
-      i = 0
-      id = setInterval(->
-        if items.length == 0
-          clearInterval(id)
-          return
+      # Quiet Mode
+      ['-q', '--quiet', 'Quiet output.', (key, val)->
+        that.Packet.quiet = true
+      ]
 
-        item = items.shift()
-        command.controller.console.add item
+      # Deadline
+      ['-w', '--deadline NUMBER', 'Specify a timeout, in seconds, before ping exits', (key, val)->
+        that.Packet.deadline = val
+      ]
 
-
-      ,1000)
-
-
-
-
-  @help: (command) ->
-    output = "Usage: #{@Command} "
-    for arg, option of @Arguments
-      output += "[#{arg} #{option.description}] "
-    output += "destination"
-
-    command.controller.console.add(output)
+      # Version
+      ['-V', '--version', 'Show version number', (key, val)->
+        that.Console.add "ping utility, iputils-GOTHAM2010002"
+      ]
+    ]
 
 
+  execute: ->
+    that = @
+    parser = @ArgumentParser()
 
+
+    ##############
+    ## IP Argument
+    ## Either last or first. ping [ip]? args [ip]?
+    ##############
+    ipCallback = (ipHost) ->
+      if GothamGame.Tools.HostUtils.validIPHost(ipHost)
+        that.Packet.target = ipHost
+      else
+        that.Console.add "#{that.Command}: unknown host: #{ipHost}"
+
+    parser.on(->that.Console.addArray @toString().split("\n"))
+    parser.on 0, ipCallback
+    parser.on @Arguments.length, ipCallback
+
+
+    # Parse arguments
+    parser.parse(@Arguments)
+
+
+    # Emit to server if target is set
+    if @Packet.target
+      GothamGame.network.Socket.emit 'Ping', @Packet
+
+      # Ping Init (Start of ping)
+      GothamGame.network.Socket.on 'Ping_Init', (output) ->
+        that.Console.add output
+
+      # Actual Ping Callback
+      GothamGame.network.Socket.on 'Ping', (output) ->
+        that.Console.add output
+
+      # Ping Summary
+      GothamGame.network.Socket.on 'Ping_Summary', (output) ->
+        # Ping Event Done, Remove listeners
+        @removeListener('Ping')
+        @removeListener('Ping_Init')
+        @removeListener('Ping_Summary')
+
+        that.Console.addArray output
 
 
 

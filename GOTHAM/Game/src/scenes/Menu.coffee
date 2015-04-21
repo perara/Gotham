@@ -4,19 +4,23 @@ class Menu extends Gotham.Graphics.Scene
   create: ->
     that = @
 
-    @buttons = []
-
+    # Create Background
     @createBackground()
 
+    # Document Container
+    @documentContainer = new Gotham.Graphics.Container()
+    @addChild @documentContainer
+
+    # Singleplayer button
+    @buttons = []
     @addButton "Single Player", ->
-      that.setInteractive false
       GothamGame.renderer.setScene "World"
 
+    # Settings button
     @addButton "Settings", ->
-
-      that.setInteractive false
-
-      object_settings = new GothamGame.objects.Settings
+      Settings = new GothamGame.Controllers.Settings "Settings"
+      that.addObject Settings
+      """object_settings = new GothamGame.objects.Settings
       object_settings.width = 1920
       object_settings.height = 1080
       object_settings.onInteractiveChange = (state) ->
@@ -24,19 +28,18 @@ class Menu extends Gotham.Graphics.Scene
           that.removeObject object_settings
           that.setInteractive true
 
-      that.addObject object_settings
+      that.addObject object_settings"""
 
-
+    # About Button
     @addButton "About", ->
 
-
-
+    # Gotham Button
     @addButton "Exit", ->
       window.location.href = "http://gotham.no";
 
 
     @drawButtons()
-    #@setupMusic()
+    @setupMusic()
 
 
 
@@ -57,24 +60,14 @@ class Menu extends Gotham.Graphics.Scene
       x: 0.5
       y: 0.5
 
-    tweenTo =
-      scale:
-        x: 2
-        y: 2
-      rotation: 0.1
-    tweenBack =
-      scale:
-        x: 1
-        y: 1
-      rotation: -0.1
     tween = new Gotham.Tween gameTitle
-    #tween2.startDelay 500
-    tween.repeat(1) # TODO
-    tween.easing Gotham.Tween.Easing.Circular.InOut
-    tween.to tweenTo, 1500
-    tween.to tweenBack, 1500
+    tween.repeat(Infinity)
+    tween.easing Gotham.Tween.Easing.Linear.None
+    tween.to {rotation: 0.1, rotation: 0.1}, 1500
+    tween.to {rotation: -0.1, rotation: -0.1}, 1500
     tween.onStart ->
       console.log @
+    tween.start()
 
 
     texture = Gotham.Preload.fetch("menu_background", "image")

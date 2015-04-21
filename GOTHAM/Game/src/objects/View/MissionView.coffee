@@ -20,6 +20,7 @@ class MissionView extends Gotham.Pattern.MVC.View
     @UpdateMissionJournal()
 
 
+
   # This view displays a list of available missions, clicking on one of the missions.
   # Interacting with an item in the list opens up another view with mission details
   #

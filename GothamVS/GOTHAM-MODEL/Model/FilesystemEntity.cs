@@ -49,7 +49,7 @@ namespace Gotham.Model
                 .Nullable()
                 .Not.LazyLoad();
 
-            HasMany<FilesystemEntity>(x => x.Children)
+            HasMany(x => x.Children)
                 .KeyColumn("parent")
                 .Not.LazyLoad();
 

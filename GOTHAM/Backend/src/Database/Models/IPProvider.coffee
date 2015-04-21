@@ -1,33 +1,35 @@
 module.exports = (sequelize, DataTypes) ->
-  return sequelize.define 'Country',
+  return sequelize.define 'ipprovider',
     {
       id:
         type: DataTypes.INTEGER
         allowNull: false
         primaryKey: true
         autoIncrement: true
-      name:
+      from_ip:
         type: DataTypes.STRING
         allowNull: false
-      countryCode:
+      to_ip:
         type: DataTypes.STRING
         allowNull: false
-      countryCodeExt:
+      assign_date:
         type: DataTypes.STRING
         allowNull: false
-      size:
-        type: 'DOUBLE'
-        allowNull: false
-      population:
+      country:
         type: DataTypes.INTEGER
         allowNull: false
-      continent:
+        references: 'country'
+        referencesKey: 'countryCode'
+      assign_date:
+        type: DataTypes.DATE
+        allowNull: true
+      owner:
         type: DataTypes.STRING
-        allowNull: false
+        allowNull: true
     }
   ,
     {
 
-      tableName: 'country'
+      tableName: 'country_ip'
       timestamps: false
     }

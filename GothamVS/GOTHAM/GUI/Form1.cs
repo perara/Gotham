@@ -40,28 +40,7 @@ namespace Gotham.Application.GUI
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            // Initialize map:
-            MainMap.MapProvider = GMap.NET.MapProviders.GoogleSatelliteMapProvider.Instance;
-            GMaps.Instance.Mode = AccessMode.ServerOnly;
-            MainMap.Position = new PointLatLng(-25.971684, 32.589759);
-            MainMap.DragButton = MouseButtons.Left;
-
-            _markersOverlay = new GMapOverlay("markers");
-            _tempOverlay = new GMapOverlay("tempMarkers");
-            _tempNodes = new Dictionary<NodeEntity, GMarkerGoogle>();
-            MainMap.Overlays.Add(_markersOverlay);
-            MainMap.Overlays.Add(_tempOverlay);
-            MainMap.MaxZoom = 10;
-            MainMap.MinZoom = 3;
-            MainMap.Zoom = 3;
-            MainMap.Position = new PointLatLng(30, 0);
-
-            LoadEntities();
-
-            //CableGenerator.ConnectNodesToCables(1);
-
-            DrawNodes();
-            DrawCables();
+           
         }
 
         public void LoadEntities()
@@ -241,6 +220,33 @@ namespace Gotham.Application.GUI
         private void btn_reset_Click(object sender, EventArgs e)
         {
             _tempOverlay.Markers.Clear();
+        }
+
+        private void MainMap_Load(object sender, EventArgs e)
+        {
+
+            // Initialize map:
+            MainMap.MapProvider = GMap.NET.MapProviders.GoogleSatelliteMapProvider.Instance;
+            GMaps.Instance.Mode = AccessMode.ServerOnly;
+            MainMap.Position = new PointLatLng(-25.971684, 32.589759);
+            MainMap.DragButton = MouseButtons.Left;
+
+            _markersOverlay = new GMapOverlay("markers");
+            _tempOverlay = new GMapOverlay("tempMarkers");
+            _tempNodes = new Dictionary<NodeEntity, GMarkerGoogle>();
+            MainMap.Overlays.Add(_markersOverlay);
+            MainMap.Overlays.Add(_tempOverlay);
+            MainMap.MaxZoom = 10;
+            MainMap.MinZoom = 3;
+            MainMap.Zoom = 3;
+            MainMap.Position = new PointLatLng(30, 0);
+
+            LoadEntities();
+
+            //CableGenerator.ConnectNodesToCables(1);
+
+            DrawNodes();
+            DrawCables();
         }
     }
 }

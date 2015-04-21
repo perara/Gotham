@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) ->
       submask:
         type: DataTypes.STRING
         allowNull: false
-      ip:
+      internal_ip_v4:
+        type: DataTypes.STRING
+        allowNull: false
+      external_ip_v4:
         type: DataTypes.STRING
         allowNull: false
       identity:

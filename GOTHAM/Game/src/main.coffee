@@ -61,8 +61,8 @@ setup =
   networkPreload: ->
     socket = GothamGame.network
 
-    #Gotham.Preload.network("GetNodes", Gotham.Database.table("node"), socket)
-    #Gotham.Preload.network("GetCables", Gotham.Database.table("cable"), socket)
+    Gotham.Preload.network("GetNodes", Gotham.Database.table("node"), socket)
+    Gotham.Preload.network("GetCables", Gotham.Database.table("cable"), socket)
     Gotham.Preload.network("GetUser", Gotham.Database.table("user"), socket)
     Gotham.Preload.network("GetMission", Gotham.Database.table("mission"), socket)
 
@@ -76,8 +76,11 @@ setup =
     GothamGame.renderer.addScene("World", scene_World)
     GothamGame.renderer.addScene("Menu", scene_Menu)
 
+    # Transfer all flying loading documents from Loading Scene to Menu Scene
+    scene_Menu.documentContainer.addChild GothamGame.renderer.getScene("Loading").documentContainer
+
     # Set Menu Scene
-    GothamGame.renderer.setScene("World")
+    GothamGame.renderer.setScene("Menu")
 
   startNetwork: (callback) ->
     GothamGame.network = new Gotham.Network "128.39.148.43", 8081
@@ -118,7 +121,7 @@ Gotham.Preload.onLoad = (source,type, name, percent) ->
 
 Gotham.Preload.onComplete = () ->
   console.log "Preload: Complete.. Starting Game"
-  Gotham.Tween.clear()
+  #Gotham.Tween.clear()
   if not setup.started
     setup.startGame()
   setup.started = true

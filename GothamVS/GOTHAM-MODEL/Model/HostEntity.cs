@@ -15,7 +15,7 @@ namespace Gotham.Model
 
         public virtual string MachineName { get; set; }
         public virtual bool Online { get; set; }
-        public virtual PersonEntity Owner { get; set; }
+        public virtual IdentityEntity Owner { get; set; }
         public virtual NodeEntity Node { get; set; }
 
         // TODO: Use IP and MAC classes. (Exists in Tools project)
@@ -38,9 +38,9 @@ namespace Gotham.Model
         /// <summary>
         /// HostEntity Constructor 
         /// </summary>
-        /// <param name="owner">The PersonEntity which is the owner</param>
+        /// <param name="owner">The IdentityEntity which is the owner</param>
         /// <param name="node">The NodeEntity which is the connected node</param>
-        public HostEntity(PersonEntity owner, NodeEntity node)
+        public HostEntity(IdentityEntity owner, NodeEntity node)
         {
             Owner = owner;
             Node = node;

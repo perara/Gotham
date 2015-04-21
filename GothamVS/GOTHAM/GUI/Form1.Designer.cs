@@ -78,6 +78,7 @@
             this.MainMap.Zoom = 0D;
             this.MainMap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.MainMap_OnMarkerClick);
             this.MainMap.OnRouteClick += new GMap.NET.WindowsForms.RouteClick(this.MainMap_OnRouteClick);
+            this.MainMap.Load += new System.EventHandler(this.MainMap_Load);
             this.MainMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
             // 
             // lbl_lat

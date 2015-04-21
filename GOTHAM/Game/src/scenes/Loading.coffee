@@ -6,12 +6,18 @@ class Loading extends Gotham.Graphics.Scene
 
   create: ->
 
+
+    # Add Background to the screne
     background = Gotham.Graphics.Sprite.fromImage './assets/img/loading_background.jpg'
     background.x = 0
     background.y =  0
     background.width = 1920
     background.height = 1080
     @addChild background
+
+    # Document Container
+    @documentContainer = new Gotham.Graphics.Container()
+    @addChild @documentContainer
 
     ###############
     ## Game Title##
@@ -36,6 +42,7 @@ class Loading extends Gotham.Graphics.Scene
     #################
     ## Loading Bar ##
     #################
+    #TODO
 
 
 
@@ -79,34 +86,10 @@ class Loading extends Gotham.Graphics.Scene
       amplitude = 1.5
       wavelenght = 0.01
       document.position.y = (document.position.y) + (Math.sin(document.position.x * wavelenght) * amplitude)
-
-
-
-
-
-
-
-
-
-      y = Math.sin()
-
-
-
-
-
-
-
-
-
-
+      #y = Math.sin()
     tween.start()
 
-
-    @addChild document
-
-
-
-
+    @documentContainer.addChild document
 
     return
 
