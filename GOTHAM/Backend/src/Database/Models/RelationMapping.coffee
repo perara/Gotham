@@ -35,6 +35,12 @@ class RelationMapping
         allowNull: true
       }"""
 
+    @Model.UserMission.hasMany @Model.UserMissionRequirement,
+      {
+        foreignKey: 'user_mission'
+        foreignKeyConstraint:true
+      }
+
     @Model.UserMission.belongsTo @Model.Mission,
       {
         foreignKey: 'mission'

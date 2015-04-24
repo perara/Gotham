@@ -10,43 +10,32 @@ class MissionEngine
   #
   # @param mission {Mission} The mission object
   # @return {Mission} The removed Mission Object
-  addMission: (mission) ->
-    # Add mission to dict
+  AddMission: (missiondata) ->
 
-    @_missions[mission._title] = mission
+    console.log missiondata
 
-    # Fetch added mission
-    _m = @_missions[mission._title]
-    _m._engine = @
+    mission = new GothamGame.Mission()
+    mission.SetTitle missiondata.title
+    mission.SetDescription missiondata.description_ext
+    mission.AddRequirements missiondata.MissionRequirements
+
+
+    # Add mission to arr
+    @_missions[mission.id] = mission
 
     # Return Mission
-    return _m
+    return mission
 
   # Removes an mission by object
   #
   # @param mission {Mission} The mission object
   # @return {Mission} The removed Mission Object
-  removeMission: (mission) ->
-    # Fetch mission to delete
-    _m = @_missions[mission.name]
-    _m._engine = null
+  RemoveMission: (mission) ->
 
-    # Delete mission from dict
-    delete @_missions[mission.name]
+    delete @_missions[mission.id]
 
     # Return Mission
-    return _m
-
-  # Fetch a mission by its Name
-  #
-  # @param missionName {String} The mission name
-  # @return {Mission} Mission Object
-  getMission: (missionName) ->
-    # Fetch Mission by key/name
-    _m = @_missions[missionName]
-
-    # Return Mission
-    return _m
+    return mission
 
   emit: (name, inVal, _c) ->
     #console.log "[MISSION-E] Emitting #{name}, Value: #{inVal}"

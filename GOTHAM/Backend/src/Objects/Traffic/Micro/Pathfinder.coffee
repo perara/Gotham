@@ -1,13 +1,13 @@
-Database = require '../../../Database/Database.coffee'
-LocalDatabase = require '../../../Database/LocalDatabase.coffee'
 Micro = require './Micro.coffee'
 GeoTool = require '../../../Tools/GeoTool.coffee'
 performance = require 'performance-now'
 log = require('log4js').getLogger("Pathfinder")
 
+
 class Pathfinder
 
-  table = LocalDatabase.table("nodes")
+
+  table = Gotham.LocalDatabase.table("nodes")
 
   ###############################################################################################
   ##### Tries random paths and returns the shortest that reached the goal

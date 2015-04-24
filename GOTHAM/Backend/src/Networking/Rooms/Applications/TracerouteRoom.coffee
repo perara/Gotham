@@ -62,6 +62,7 @@ class TracerouteRoom extends Room
 
         solution = Traffic.Pathfinder.bStar(sourceNode, targetNode)
 
+
         # TODO LOL
         outputarr = []
         outputarr.push ("=======================================")

@@ -7,14 +7,14 @@ class UserController extends Gotham.Pattern.MVC.Controller
     super View, name
 
   create: ->
-    @setupIdentities()
-    @setupHosts()
+    @SetupIdentities()
+    @SetupHosts()
 
     @View.Hide()
 
 
 
-  setupIdentities: ->
+  SetupIdentities: ->
     db_user = Gotham.Database.table "user"
     identities = db_user().first().Identities
 
@@ -28,19 +28,19 @@ class UserController extends Gotham.Pattern.MVC.Controller
       delete identity.lat
       delete identity.lng
 
-      @View.addIdentity identity
+      @View.AddIdentity identity
 
-  setupHosts: ->
+  SetupHosts: ->
     db_user = Gotham.Database.table "user"
     identities = db_user().first().Identities
 
     for identity in identities
       for network in identity.Networks
-        @View.addNetwork network
+        @View.AddNetwork network
         for host in network.Hosts
 
 
-          sprite = @View.addHost network, host
+          sprite = @View.AddHost network, host
 
 
 

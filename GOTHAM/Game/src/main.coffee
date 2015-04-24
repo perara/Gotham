@@ -103,9 +103,14 @@ setup.database()
 
 # Start networking, Callback to preload when done
 setup.startNetwork ->
-  #Setup Preloading
+  # Start asset loading
   setup.preload()
-  setup.networkPreload()
+
+  GothamGame.network.Socket.emit 'Login', {"username" : "per", "password": "per"}
+  GothamGame.network.Socket.on 'Login', (reply) ->
+    if reply.status == 200
+      # Start Network Preloading
+      setup.networkPreload()
 
 
 scene_Loading  = new GothamGame.scenes.Loading 0x3490CF, true

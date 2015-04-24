@@ -1,18 +1,37 @@
-cfg     =     require './config.json'
-SocketServer = require './Networking/SocketServer.coffee'
-Database = require './Database/Database.coffee'
-Micro = require './Objects/Traffic/Micro/Micro.coffee'
-Macro = require './Objects/Traffic/Macro/Macro.coffee'
-LocalDatabase = require './Database/LocalDatabase.coffee'
+##########################################################
+##
+## Require Stuff
+##
+##########################################################
+## Third Party
 performance = require 'performance-now'
 When = require 'when'
 log = require('log4js').getLogger("Main")
 
-database = new Database()
+# Gotham Party
+SocketServer = require './Networking/SocketServer.coffee'
+Database = require './Database/Database.coffee'
+LocalDatabase = require './Database/LocalDatabase.coffee'
+World = require './Objects/World/World.coffee'
+#########################################################
+##
+## Global Scope
+##
+#########################################################
+global.Gotham =
+  Database: new Database()
+  LocalDatabase: new LocalDatabase()
+  World: new World()
+  SocketServer: new SocketServer 8081
+
+# http://stackoverflow.com/questions/14031763/doing-a-cleanup-action-just-before-node-js-exits
 
 startServer = () ->
-  server = new SocketServer 8081
-  server.SetDatabase database
+
+  # Start world
+  Gotham.World.Start()
+  server = Gotham.SocketServer
+  server.SetDatabase(Gotham.Database)
   server.RegisterRoom new (require './Networking/Rooms/HostRoom.coffee')()
   server.RegisterRoom new (require './Networking/Rooms/UserRoom.coffee')()
   server.RegisterRoom new (require './Networking/Rooms/WorldMapRoom.coffee')()
@@ -20,8 +39,8 @@ startServer = () ->
   server.RegisterRoom new (require './Networking/Rooms/MissionRoom.coffee')()
   server.RegisterRoom new (require './Networking/Rooms/Applications/TracerouteRoom.coffee')()
   server.RegisterRoom new (require './Networking/Rooms/Applications/PingRoom.coffee')()
-
   server.Start()
+
   server.onConnect = (_client) ->
     log.info "[SERVER] Client Connected #{_client.id}"
   server.onDisconnect = (_client) ->
@@ -35,31 +54,55 @@ startServer = () ->
 promises = []
 
 
-nodeList = LocalDatabase.table("nodes")
-cableList = LocalDatabase.table("cables")
+nodeList = Gotham.LocalDatabase.table("nodes")
+cableList = Gotham.LocalDatabase.table("cables")
+missionList = Gotham.LocalDatabase.table("missions")
 
-
-promises.push database.Model.Node.all(
+#######################
+##
+## Preloading Node
+##
+#######################
+promises.push Gotham.Database.Model.Node.all(
   include: [
     {
-      model: database.Model.Cable
-      include: [database.Model.Node]
+      model: Gotham.Database.Model.Cable
+      include: [Gotham.Database.Model.Node]
     }
   ]
 ).then (nodes)->
   for node in nodes
     nodeList.insert {id: node.id, node: node}
 
-
-promises.push database. Model.Cable.all(
+#######################
+##
+## Preloading Cables
+##
+#######################
+promises.push Gotham.Database.Model.Cable.all(
   include: [
     {
-      model: database.Model.Node
+      model: Gotham.Database.Model.Node
     }
     ]
 ).then (cables)->
   for cable in cables
     cableList.insert {id: cable.id, cable: cable}
+
+#######################
+##
+## Preloading Missions
+##
+#######################
+promises.push Gotham.Database.Model.Mission.all(
+  include: [
+    {
+      model: Gotham.Database.Model.MissionRequirement
+    }
+  ]
+).then (missions)->
+  for mission in missions
+    missionList.insert {id: mission.id, mission: mission}
 
 
 start = performance()

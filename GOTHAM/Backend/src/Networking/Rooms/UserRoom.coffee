@@ -12,7 +12,7 @@ class UserRoom extends Room
       client = that.GetClient(@id)
 
       that.Database.Model.User.find(
-        where: id: 1
+        where: client.GetUser().id
         include:
           [
             {

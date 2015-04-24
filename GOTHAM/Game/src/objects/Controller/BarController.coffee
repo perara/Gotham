@@ -17,21 +17,22 @@ class BarController extends Gotham.Pattern.MVC.Controller
     @countryText = null
 
     @View.addItem @View.Bar.Top, "LEFT", ->
-      that.coordText = text = new Gotham.Graphics.Text("Lat: 0\nLng: 0", {font: "bold 20px Arial", fill: "#ffffff", align: "left"});
-      text.width = 200
-      text.anchor =
-        x: 0
-        y: 0
-      text.margin = 50
-      return text
+      that.coordText = new Gotham.Controls.Button "Lat: 0\nLng: 0" , 100, 70
+      return that.coordText
 
     @View.addItem @View.Bar.Top, "LEFT", ->
-      that.countryText = text = new Gotham.Graphics.Text("Country: None", {font: "bold 20px Arial", fill: "#ffffff", align: "left"});
-      text.width = 200
-      text.anchor =
-        x: 0
-        y: 0
-      return text
+      that.countryText = new Gotham.Controls.Button "Country: None" , 100, 70, {margin: 50}
+      return that.countryText
+
+    world_clock = @View.addItem @View.Bar.Top, "RIGHT", ->
+      that.clockText = new Gotham.Controls.Button "[WORLD_CLOCK]" , 100, 70, {offset: -10}
+      return that.clockText
+
+
+    # Emit for World_Clock
+    GothamGame.network.Socket.on 'World_Clock', (time) ->
+      world_clock.label.text = time
+
 
 
 
@@ -106,12 +107,12 @@ class BarController extends Gotham.Pattern.MVC.Controller
 
 
 
-  updateCoordinates: (lat, long) ->
-    @coordText.text = "Lat: #{lat}\nLng: #{long}"
+  UpdateCoordinates: (lat, long) ->
+    @coordText.label.text = "Lat: #{lat}\nLng: #{long}"
 
-  updateCountry: (country) ->
+  UpdateCountry: (country) ->
     c = if country then country.name else "None"
-    @countryText.text = "Country: #{c}"
+    @countryText.label.text = "Country: #{c}"
 
 
 

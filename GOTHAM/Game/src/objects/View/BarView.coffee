@@ -89,6 +89,7 @@ class BarView extends Gotham.Pattern.MVC.View
       x = if lastElement then lastElement.x + lastElement.width + 5 else 0
 
 
+
     else if align == "RIGHT"
       childArray = bar._right
       lastElement = childArray.last()
@@ -102,7 +103,9 @@ class BarView extends Gotham.Pattern.MVC.View
     childArray.push child
 
     child.y = 0
-    child.x = x
+    child.x = x + child.margin
+
+    return child
 
 
 

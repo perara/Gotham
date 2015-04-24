@@ -11,7 +11,7 @@
       width: 7200
       height: 3600
 
-  getCoordFactors: ->
+  GetCoordFactors: ->
       return {
       latitude: ((@__height / 2) / 90) * -1
       longitude: ((@__width / 2) / 180)
@@ -19,8 +19,8 @@
 
   CoordinateToPixel: (lat, lng) ->
     return {
-      x: (lng * @getCoordFactors().longitude) + (@__width / 2)
-      y: (lat * @getCoordFactors().latitude)  + (@__height / 2)
+      x: (lng * @GetCoordFactors().longitude) + (@__width / 2)
+      y: (lat * @GetCoordFactors().latitude)  + (@__height / 2)
     }
 
 
@@ -30,17 +30,17 @@
     """
     Create the background
     """
-    @create_background()
+    @Create_Background()
 
     """
     Create the world map and node container
     """
-    @create_worldMap()
+    @Create_WorldMap()
 
 
 
 
-  create_background: ->
+  Create_Background: ->
 
 
 
@@ -61,7 +61,7 @@
     background.mask = backgroundMask
 
 
-  create_worldMap: ->
+  Create_WorldMap: ->
 
 
     that = @
@@ -84,30 +84,21 @@
     """
     mapContainer.setPanning (newPosition) ->
 
+      @offset = newPosition
+
       results =
         x: true
         y: true
 
-      # Determine the window size
-      origSize =
-        x: that.__width
-        y: that.__height
-
-      size =
-        x: mapContainer.width * that.__width
-        y: mapContainer.height * that.__height
-
       diff =
-        x: origSize.x - size.x
-        y: origSize.y - size.y
+        x: mapContainer.width - that.__width
+        y: mapContainer.height - that.__height
 
-      if diff.x > newPosition.x or newPosition.x > 0
+      if diff.x < (newPosition.x * -1) or newPosition.x > 0
         results.x = false
 
-      if diff.y > newPosition.y or newPosition.y > 0
+      if diff.y < (newPosition.y * -1) or newPosition.y > 0
         results.y = false
-
-
 
       return results
 
@@ -128,8 +119,8 @@
       posX = -(that.__width / 2) + pos.x
       posY = -(that.__height / 2) + pos.y
 
-      lat = Math.max(Math.min((posY / that.getCoordFactors().latitude).toFixed(4), 90), -90)
-      long = Math.max(Math.min((posX / that.getCoordFactors().longitude).toFixed(4), 180), -180)
+      lat = Math.max(Math.min((posY / that.GetCoordFactors().latitude).toFixed(4), 90), -90)
+      long = Math.max(Math.min((posX / that.GetCoordFactors().longitude).toFixed(4), 180), -180)
 
       # Update currentCoordinates in WorldMap object
       that.currentCoordinates =
@@ -139,8 +130,8 @@
       # Calculate which country it belongs to
       country = Gotham.Util.Geocoding.getCountry(lat, long)
 
-      that.parent.getObject("Bar").updateCoordinates lat, long
-      that.parent.getObject("Bar").updateCountry country
+      that.parent.getObject("Bar").UpdateCoordinates lat, long
+      that.parent.getObject("Bar").UpdateCountry country
 
 
     """
@@ -148,8 +139,10 @@
     """
     mapContainer.mouseover = () ->
       @canScroll = true
+
     mapContainer.mouseout = () ->
       @canScroll = false
+
     mapContainer.onWheelScroll = (e) ->
       if not @canScroll then return
       direction = e.wheelDeltaY / Math.abs(e.wheelDeltaY)
@@ -159,6 +152,10 @@
 
       # Scale Factor per scroll
       factor = 1.1
+
+      prevScale =
+        x: @scale.x
+        y: @scale.y
 
       # Calculate what next scaling should be
       nextScale =
@@ -179,9 +176,8 @@
           y: 10
         return
       else
-        @offset.x = if zoomOut then @offset.x /= factor else @offset.x *= factor
-        @offset.y = if zoomOut then @offset.y /= factor else @offset.y *= factor
-
+        @offset.x = if zoomOut then @diff.x / factor else @diff.x * factor
+        @offset.y  = if zoomOut then @diff.y / factor else @diff.y * factor
 
       # Calculate the size offset, we do this to move
       prevSize =
@@ -196,19 +192,16 @@
         width: prevSize.width - nextSize.width
         height: prevSize.height - nextSize.height
 
-      # Set position in center # TODO
-      @position.x = (diffSize.width / 2)  + @offset.x
-      @position.y = (diffSize.height / 2) + @offset.y
+      @position.x = (diffSize.width / 2)
+      @position.y = (diffSize.height / 2)
 
-      # Update the scaling
       @scale = nextScale
-
 
 
     """
     Create World Map
     """
-    worldMap = @_createMap()
+    worldMap = @_CreateMap()
     mapContainer.addChildArray worldMap
 
 
@@ -229,7 +222,7 @@
     mapContainer.addChild middle
     return mapContainer
 
-  _createMap: ->
+  _CreateMap: ->
     # Fetch JSON
     mapJson = Gotham.Preload.fetch("map", "json")
 
@@ -306,7 +299,7 @@
       worldMap.push sprite
     return worldMap
 
-  clearNodeContainer: ->
+  ClearNodeContainer: ->
     for i in @nodeContainer.children
       if i
         i.texture.destroy false
@@ -317,7 +310,7 @@
   # Adds a nopde to the node container
   #
   # @param node {Object} The Node Data
-  addNode: (node, interact) ->
+  AddNode: (node, interact) ->
     # Convert Lat, Lng to Pixel's X and Y
     coordinates = @CoordinateToPixel(node.lat, node.lng)
 
@@ -344,10 +337,10 @@
     @nodeContainer.addChild gNode
 
     if interact
-      @addNodeInteract node
+      @AddNodeInteraction node
 
 
-  addNodeInteract: (node) ->
+  AddNodeInteraction: (node) ->
     that = @
 
     # The Node should be interactive
@@ -373,7 +366,7 @@
 
 
   # Clears animated paths
-  clearAnimatePath: () ->
+  ClearAnimatePath: () ->
     # Remove all pathcontainer children # TODO
     if not @pathContainer
       return
@@ -384,16 +377,88 @@
 
     @pathContainer.children = []
 
+  # Create a animated attack sequence between two coordinates
+  # Parameters are as folloiwng
+  # @example Input format
+  #     source =
+  #         latitude: ""
+  #         longitude: ""
+  #         country: ""
+  #         company: ""
+  #     target =
+  #         latitude: ""
+  #         longitude: ""
+  #         country: ""
+  #         city: ""
+  #         company: ""
+  AnimateAttack: (source, target) ->
+
+    # Ignore 0,0 attacks
+    if target.country == "O1"
+      return
+
+    that = @
+    sourcePixel = @CoordinateToPixel source.latitude, source.longitude
+    targetPixel = @CoordinateToPixel target.latitude, target.longitude
+
+    #x : path.start.x + (path.end.x - path.start.x) * Math.min(elapsed + 0.2, 1)
+    #y : path.start.y + (path.end.y - path.start.y) * Math.min(elapsed + 0.2, 1)
+
+
+
+    # Create Lazer
+    lazer = new Gotham.Graphics.Graphics();
+    lazer.visible = true
+    lazer.lineStyle(3, 0xff00ff, 1);
+    @nodeContainer.addChild lazer
+
+    #console.log "%s,%s --> %s,%s", sourcePixel.x,sourcePixel.y, targetPixel.x,targetPixel.y
+
+    # Tween lazer
+    tween = new Gotham.Tween lazer
+    tween.to {}, 3000
+    tween.onUpdate (chainItem)->
+
+      # Elapsed tween time
+      elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
+
+      diff =
+        x: (targetPixel.x - sourcePixel.x)
+        y: (targetPixel.y - sourcePixel.y)
+
+      distance = Math.sqrt((diff.x**2) + (diff.y**2)) # Distance of the travel a --> b
+      length = 20.0 # Line length in pixels
+
+      endModifier = length / distance
+
+      points =
+        start:
+          x : sourcePixel.x +  diff.x * elapsed
+          y : sourcePixel.y +  diff.y * elapsed
+        end:
+          x : sourcePixel.x + diff.x * Math.min(elapsed + endModifier, 1)
+          y : sourcePixel.y + diff.y * Math.min(elapsed + endModifier, 1)
+
+
+      lazer.clear()
+      lazer.lineStyle(3, 0xff00ff, 1);
+      lazer.moveTo(points.start.x, points.start.y)
+      lazer.lineTo(points.end.x, points.end.y)
+
+
+    tween.onComplete () ->
+      that.nodeContainer.removeChild lazer
+    tween.start()
+
 
   # Creates a animated line between two nodes
   #
   # @param startNode {Node} starting node
   # @param endNode {Node} End Node
-  animatePath: (startNode, endNode) ->
+  AnimatePath: (startNode, endNode) ->
     if not @pathContainer
       @pathContainer = new Gotham.Graphics.Graphics()
       @nodeContainer.addChild @pathContainer
-
 
     # Create cable from the network to connected node
     path =
@@ -462,7 +527,7 @@
   # Adds a cable to given node
   #
   # @param cable {Object} The cable Data
-  addCable: (cable) ->
+  AddCable: (cable) ->
 
     # Create a new graphics element
     graphics = new Gotham.Graphics.Graphics();
@@ -495,7 +560,7 @@
   # @param lat [Double] Latitude position
   # @param lng [Double Longitude position
   # @param isPlayer [Boolean] If its the player
-  addNetwork: (network,  isPlayer) ->
+  AddNetwork: (network,  isPlayer) ->
 
     # Create a node formatted object
     networkNode =
@@ -503,10 +568,8 @@
       lng: network.lng
       sprite: null
 
-    console.log networkNode
-
     # Add the network to the world map as a node representation
-    @addNode networkNode, false
+    @AddNode networkNode, false
     networkNode.sprite.width = 32
     networkNode.sprite.height = 32
     networkNode.sprite.tint = 0x00ff00

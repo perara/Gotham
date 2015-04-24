@@ -59,28 +59,30 @@ class Traceroute extends Application
     # Traceroute Callback
     GothamGame.network.Socket.on 'Traceroute', (path, output, targetNetwork) ->
       @removeListener('Traceroute')
+
+      GothamGame.MissionEngine.emit 'traceroute', targetNetwork.external_ip_v4, ->
+        console.log "Traceroute emit registererd. setting to completed!"
+
+
       db_node = Gotham.Database.table("node")
 
       that.Console.addArray output
 
       # Clear old paths
-      GothamGame.renderer.getScene("World").getObject("WorldMap").View.clearAnimatePath()
+      GothamGame.renderer.getScene("World").getObject("WorldMap").View.ClearAnimatePath()
 
       last = that._commandObject.controller.network # Basicly the host location
       for nodeID in path
         current = db_node({id: nodeID}).first()
 
-        tween = GothamGame.renderer.getScene("World").getObject("WorldMap").View.animatePath(last, current)
+        tween = GothamGame.renderer.getScene("World").getObject("WorldMap").View.AnimatePath(last, current)
         tween.start()
         last = current
 
       # Finally add path between last node and network
-      tween = GothamGame.renderer.getScene("World").getObject("WorldMap").View.animatePath(last, targetNetwork)
+      tween = GothamGame.renderer.getScene("World").getObject("WorldMap").View.AnimatePath(last, targetNetwork)
       tween.start()
 
-
-
-        #traceroute 3.0.0.8
 
 
 

@@ -10,7 +10,7 @@ describe 'Mission Tests', ->
     missionEngine = GothamGame.MissionEngine
     newMission = new GothamGame.Mission()
     newMission.setTitle missionName
-    missionEngine.addMission newMission
+    missionEngine.AddMission newMission
 
     assert.equal(newMission._engine, missionEngine)
     assert.equal(newMission._name, missionName)
@@ -54,7 +54,7 @@ describe 'Mission Tests', ->
 
     # Create mission
     newMission = new GothamGame.Mission "KillMission"
-    missionEngine.addMission newMission
+    missionEngine.AddMission newMission
 
     # Add a requirement with expected value 10 where default is 0
     newMission.addRequirement("Killing").expect(10).default(0)
@@ -88,7 +88,7 @@ describe 'Mission Tests', ->
     hackMission.printMission()
 
 
-    missionEngine.addMission hackMission
+    missionEngine.AddMission hackMission
 
 
 

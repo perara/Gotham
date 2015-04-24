@@ -30,6 +30,8 @@ class NodeListView extends Gotham.Pattern.MVC.View
     frame.height = 600 * frame.scale.y
     @addChild frame
 
+    @movable()
+
 
 
     # Create Object Title text
@@ -53,9 +55,7 @@ class NodeListView extends Gotham.Pattern.MVC.View
   create_frame: ->
     
 
-  create_item: (data) ->
-
-
+  create_item: () ->
 
     # Create Node Entries in the bg window
     drawNodeItems = () ->

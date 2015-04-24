@@ -8,6 +8,7 @@ class Mission
     @_title = null
     @_description = null
     @_engine = null
+    @_data = null
 
 
     @_requirements = []
@@ -21,7 +22,7 @@ class Mission
   #
   # @param requirement {Object} The requirement
   # @return {Requirement} The Requirement
-  addRequirement: (requirementData)->
+  AddRequirement: (requirementData)->
     #console.log "[MISSION] Added Requirement: #{requirementData.requirement}"
     requirement = new Requirement(@, requirementData)
     @_requirements.push requirement
@@ -31,15 +32,15 @@ class Mission
   #
   # @param requirementName {String} The name of the requirement
   # @return {Requirement} The Requirement
-  addRequirements: (arr)->
+  AddRequirements: (arr)->
     for i in arr
-      @addRequirement(i)
+      @AddRequirement(i)
 
   # Get a requirement by name
   #
   # @param requirementName {String} The requirement name
   # @return {Requirement}
-  getRequirement: (requirementName) ->
+  GetRequirement: (requirementName) ->
     return @_requirements[requirementName]
 
 
@@ -47,7 +48,7 @@ class Mission
   # Checks via all of the requirementrs
   #
   # @return {Boolean} True if completed, False if not
-  isCompleted: ->
+  IsCompleted: ->
     isComplete = true
     for req in @_requirements
       if not req.isComplete()
@@ -55,15 +56,15 @@ class Mission
         break
     return isComplete
 
-  setTitle: (title) ->
+  SetTitle: (title) ->
     #console.log "[MISSION] Set Title to: #{title}"
     @_title = title
-  setDescription: (description) ->
+  SetDescription: (description) ->
     #console.log "[MISSION] Set Title to: #{description}"
     @_description = description
-  getTitle: ->
+  GetTitle: ->
     return @_title
-  getDescription: ->
+  GetDescription: ->
     return @_description
 
 

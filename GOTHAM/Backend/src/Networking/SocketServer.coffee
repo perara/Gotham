@@ -59,6 +59,9 @@ class SocketServer
   GetClient: (clientID) ->
     return @clients[clientID]
 
+  GetClients: ->
+    return @clients
+
 
 
   _CreateServer: ->

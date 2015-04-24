@@ -71,7 +71,6 @@ class Ping  extends Application
     parser.on 0, ipCallback
     parser.on @Arguments.length, ipCallback
 
-
     # Parse arguments
     parser.parse(@Arguments)
 

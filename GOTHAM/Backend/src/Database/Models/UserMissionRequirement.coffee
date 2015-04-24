@@ -1,27 +1,23 @@
 module.exports = (sequelize, DataTypes) ->
-  return sequelize.define 'Mission',
-    {
+  return sequelize.define 'UserMissionRequirement', {
       id:
         type: DataTypes.INTEGER
         allowNull: false
         primaryKey: true
         autoIncrement: true
-      title:
-        type: DataTypes.STRING
-        allowNull: false
-      description:
-        type: DataTypes.STRING
-        allowNull: false
-      description_ext:
-        type: DataTypes.STRING
-        allowNull: false
-      required_xp:
+      user_mission:
         type: DataTypes.INTEGER
         allowNull: false
-
+        references: 'user_mission'
+        referencesKey: 'id'
+      current:
+        type: DataTypes.STRING
+        allowNull: false
+      emit_input:
+        type: DataTypes.STRING
+        allowNull: false
     },
     {
-
-      tableName: 'mission'
+      tableName: 'user_mission_requirement'
       timestamps: false
     }
