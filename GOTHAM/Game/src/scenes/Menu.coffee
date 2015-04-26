@@ -14,7 +14,7 @@ class Menu extends Gotham.Graphics.Scene
     # Singleplayer button
     @buttons = []
     @addButton "Single Player", ->
-      GothamGame.renderer.setScene "World"
+      GothamGame.Renderer.setScene "World"
 
     # Settings button
     @addButton "Settings", ->
@@ -65,8 +65,6 @@ class Menu extends Gotham.Graphics.Scene
     tween.easing Gotham.Tween.Easing.Linear.None
     tween.to {rotation: 0.1, rotation: 0.1}, 1500
     tween.to {rotation: -0.1, rotation: -0.1}, 1500
-    tween.onStart ->
-      console.log @
     tween.start()
 
 

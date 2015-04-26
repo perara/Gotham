@@ -50,7 +50,7 @@ class NodeListView extends Gotham.Pattern.MVC.View
     background.height = 530
     background.setInteractive true
     @addChild background
-    GothamGame.renderer.pixi.addWheelScrollObject(background)
+    GothamGame.Renderer.pixi.addWheelScrollObject(background)
 
   create_frame: ->
     

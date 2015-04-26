@@ -36,6 +36,7 @@ setup =
     Gotham.Preload.image("/assets/img/user_management_frame.png", "mission_frame", "image")
 
     # World Map
+    Gotham.Preload.image("/assets/img/home.png", "home", "image")
     Gotham.Preload.image("/assets/img/map_marker.png", "map_marker", "image")
     Gotham.Preload.json("/assets/json/json.json", "map")
     Gotham.Preload.image("/assets/img/sea_background.jpg", "sea_background", "image")
@@ -60,7 +61,7 @@ setup =
     Gotham.Preload.image("/assets/img/terminal_background.png", "terminal_background", "image")
 
   networkPreload: ->
-    socket = GothamGame.network
+    socket = GothamGame.Network
 
     Gotham.Preload.network("GetNodes", Gotham.Database.table("node"), socket)
     #Gotham.Preload.network("GetCables", Gotham.Database.table("cable"), socket)
@@ -70,28 +71,28 @@ setup =
   startGame: ->
 
     # Create Scenes
-    scene_World = new GothamGame.scenes.World 0xffffff, true #0x333333, true
-    scene_Menu  = new GothamGame.scenes.Menu 0x000000, true
+    scene_World = new GothamGame.Scenes.World 0xffffff, true #0x333333, true
+    scene_Menu  = new GothamGame.Scenes.Menu 0x000000, true
 
     # Add Scenes to renderer
-    GothamGame.renderer.addScene("World", scene_World)
-    GothamGame.renderer.addScene("Menu", scene_Menu)
+    GothamGame.Renderer.addScene("World", scene_World)
+    GothamGame.Renderer.addScene("Menu", scene_Menu)
 
     # Transfer all flying loading documents from Loading Scene to Menu Scene
-    scene_Menu.documentContainer.addChild GothamGame.renderer.getScene("Loading").documentContainer
+    scene_Menu.documentContainer.addChild GothamGame.Renderer.getScene("Loading").documentContainer
 
     # Set Menu Scene
-    GothamGame.renderer.setScene("World")
+    GothamGame.Renderer.setScene("World")
 
   startNetwork: (callback) ->
-    GothamGame.network = new Gotham.Network "128.39.148.43", 8081
-    GothamGame.network.connect()
-    GothamGame.network.onConnect = ->
-      callback(GothamGame.network)
+    GothamGame.Network = new Gotham.Network "128.39.148.43", 8081
+    GothamGame.Network.connect()
+    GothamGame.Network.onConnect = ->
+      callback(GothamGame.Network)
 
-    GothamGame.network.onReconnecting = ->
+    GothamGame.Network.onReconnecting = ->
       console.log "Attempting to reconnect"
-    GothamGame.network.onReconnect = ->
+    GothamGame.Network.onReconnect = ->
       console.log "Reconnected!"
 
 
@@ -106,19 +107,19 @@ setup.startNetwork ->
   # Start asset loading
   setup.preload()
 
-  GothamGame.network.Socket.emit 'Login', {"username" : "per", "password": "per"}
-  GothamGame.network.Socket.on 'Login', (reply) ->
+  GothamGame.Network.Socket.emit 'Login', {"username" : "per", "password": "per"}
+  GothamGame.Network.Socket.on 'Login', (reply) ->
     if reply.status == 200
       # Start Network Preloading
       setup.networkPreload()
 
 
-scene_Loading  = new GothamGame.scenes.Loading 0x3490CF, true
+scene_Loading  = new GothamGame.Scenes.Loading 0x3490CF, true
 
-GothamGame.renderer.addScene("Loading", scene_Loading)
+GothamGame.Renderer.addScene("Loading", scene_Loading)
 
 # Set Start Scene
-GothamGame.renderer.setScene("Loading")
+GothamGame.Renderer.setScene("Loading")
 
 
 Gotham.Preload.onLoad = (source,type, name, percent) ->

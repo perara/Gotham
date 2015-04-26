@@ -12,7 +12,7 @@ class Console
     @_history = []
     @_historyPointer = 0
 
-  Redraw: () ->
+  redraw: () ->
 
   getAt: (index) ->
     return @_console[index]
@@ -28,7 +28,7 @@ class Console
 
   add: (text) ->
     @_console.push text
-    @Redraw()
+    @redraw()
 
 
   addArray: (arr) ->

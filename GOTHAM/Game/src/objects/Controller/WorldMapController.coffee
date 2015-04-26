@@ -8,24 +8,24 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
     super View, name
 
   create: ->
-    @Create_Nodes()
-    @Create_Cables()
-    @Create_Host()
-    @Setup_IPViking()
+    @createNodes()
+    @createCables()
+    @createHost()
+    @setupIPViking()
 
-  Create_Nodes: ->
+  createNodes: ->
     that = @
     # Clear node container (Else risking memory leak)
-    that.View.ClearNodeContainer()
+    that.View.clearNodeContainer()
 
     # Iterate Through the Node Table
     start = new Date().getTime()
     db_node = Gotham.Database.table "node"
     db_node().each (row) ->
-      that.View.AddNode row, true
+      that.View.addNode row, true
     console.log "Process Nodes: " + (new Date().getTime() - start) + "ms"
 
-  Create_Cables: ->
+  createCables: ->
     that = @
 
     # Insert cables into -the "cables" table
@@ -33,24 +33,26 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
     # Iterate Through the Cable Table
     start = new Date().getTime()
     db_cable().each (row) ->
-      that.View.AddCable row
+      that.View.addCable row
     console.log "Process Cables: " + (new Date().getTime() - start) + "ms"
 
-  Create_Host: ->
+  createHost: ->
 
     db_user = Gotham.Database.table('user')
-    user = db_user().first()
+    user = db_user().get()[0]
 
     for identity in user.Identities
       for network in identity.Networks
-          @View.AddNetwork(network)
+          @View.addNetwork(network)
+
+    return
 
   # Create a emit listener for the IPViking stream
   # This stream is relayed from main server
   # Emiiter: IPViking_Attack
-  Setup_IPViking: ->
+  setupIPViking: ->
     that = @
-    GothamGame.network.Socket.on 'IPViking_Attack', (json) ->
+    GothamGame.Network.Socket.on 'IPViking_Attack', (json) ->
 
       attack = JSON.parse(json)
 
@@ -66,7 +68,7 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
         country: attack.countrycode2
         city2: attack.city2
 
-      that.View.AnimateAttack source, target
+      that.View.animateAttack source, target
 
 
 

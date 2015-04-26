@@ -37,7 +37,7 @@ class Loading extends Gotham.Graphics.Scene
     tween.to {alpha: 1}, 1500
 
     tween.onStart ->
-      console.log @ + " started!"
+      #console.log @ + " started!"
     tween.start()
     @addChild text
     #################
