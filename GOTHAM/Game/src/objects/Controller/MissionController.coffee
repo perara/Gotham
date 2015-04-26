@@ -9,59 +9,47 @@ class MissionController extends Gotham.Pattern.MVC.Controller
 
 
   create: ->
-    @SetupMissions()
-    @SetupMissionEmitter()
+    @setupMissions()
+    @setupMissionEmitter()
 
     #@Hide()
 
 
 
-  SetupMissionEmitter: () ->
+  setupMissionEmitter: () ->
     that = @
 
     # Whenever a mission has been accepted (OK from Server)
-    GothamGame.network.Socket.on 'AcceptMission', (mission) ->
-      GothamGame.MissionEngine.AddMission mission
-      that.View.RemoveAvailableMission mission
-      that.View.AddOngoingMission mission
+    GothamGame.Network.Socket.on 'AcceptMission', (mission) ->
+      GothamGame.MissionEngine.addMission mission
+      that.View.removeAvailableMission mission
+      that.View.addOngoingMission mission
 
-    GothamGame.network.Socket.on 'AbandonMission', (mission) ->
-      GothamGame.MissionEngine.RemoveMission mission
-      that.View.AddAvailableMission mission
-      that.View.RemoveOngoingMission mission
+    GothamGame.Network.Socket.on 'AbandonMission', (mission) ->
+      GothamGame.MissionEngine.removeMission mission
+      that.View.addAvailableMission mission
+      that.View.removeOngoingMission mission
 
 
-  SetupMissions: ->
+  setupMissions: ->
 
     db_mission = Gotham.Database.table("mission")
-    missions = db_mission().first()
+    missions = db_mission().get()
+
+    for mission in missions
+      _m = GothamGame.MissionEngine.createMission mission
+
+      if mission.ongoing
+        GothamGame.MissionEngine.addMission _m
+        @View.addOngoingMission _m
+      else
+        @View.addAvailableMission _m
 
 
-    # Add ongoing missions
-    for mission in missions.ongoing
-      GothamGame.MissionEngine.AddMission mission
-      @View.AddOngoingMission mission
-
-    # Filter away Ongoing missions from Available Missions
-    filter = missions.available.filter (mission)->
-      for key, _m of missions.ongoing
-        if _m.id == mission.id
-          return 0
-      return 1
-
-    # Add Available Missions
-    for mission in filter
-      @View.AddAvailableMission(mission)
-
-
-
-
-
-
-  Show: ->
+  show: ->
     @View.visible = true
 
-  Hide: ->
+  hide: ->
     @View.visible = false
 
 

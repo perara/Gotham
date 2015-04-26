@@ -5,7 +5,12 @@ class ListSegments extends Application
 
   @Command = "ls"
 
-  @execute = (command) ->
+  constructor: (command) ->
+    super command
+
+
+  @execute: ->
+    command = @command
 
     output = ""
 

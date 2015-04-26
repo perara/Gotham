@@ -9,14 +9,14 @@ class Command
     @command = undefined
     @arguments = []
 
-    @Parse()
+    @parse()
 
   # Determine weither this is a valid command,
   # @returns {Boolean} is its valid or not
   isCommand: ->
     return !!@commandReference
 
-  Parse: ->
+  parse: ->
     # Split command string
     commandArray = @input.split(" ")
 

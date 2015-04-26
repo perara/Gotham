@@ -19,18 +19,18 @@ class UserView extends Gotham.Pattern.MVC.View
 
 
   create: ->
-    window = @Create_Frame()
-    @Create_Terminal(window)
-    @Create_User_Info(window)
+    window = @createFrame()
+    @createTerminal(window)
+    @createUserInfo(window)
 
 
-  Show: ->
+  show: ->
     @window.visible = true
 
-  Hide: ->
+  hide: ->
     @window.visible = false
 
-  Create_Frame: ->
+  createFrame: ->
 
     # Create Window
     window = @window = new Gotham.Graphics.Sprite Gotham.Preload.fetch "user_management_background", "image"
@@ -57,7 +57,7 @@ class UserView extends Gotham.Pattern.MVC.View
 
     return @addChild window
 
-  Create_Terminal: (window) ->
+  createTerminal: (window) ->
 
     title = new Gotham.Graphics.Text("Available Hosts", {font: "bold 50px calibri", fill: "#ffffff", align: "center"});
     title.x = 40
@@ -77,7 +77,7 @@ class UserView extends Gotham.Pattern.MVC.View
 
     window.addChild(networkContainer)
 
-  Create_User_Info: (window) ->
+  createUserInfo: (window) ->
     title = new Gotham.Graphics.Text("Identities", {font: "bold 50px calibri", fill: "#ffffff", align: "center"});
     title.x = 450
     title.y = 30
@@ -87,7 +87,7 @@ class UserView extends Gotham.Pattern.MVC.View
 
 
 
-  AddIdentity: (identity) ->
+  addIdentity: (identity) ->
     that = @
     @identityCount += 1
 
@@ -150,7 +150,7 @@ class UserView extends Gotham.Pattern.MVC.View
 
 
 
-  AddNetwork: (network) ->
+  addNetwork: (network) ->
 
     networkSprite = new Gotham.Graphics.Sprite Gotham.Preload.fetch("user_management_network_item", "image")
     networkSprite.y = @networkY
@@ -169,7 +169,7 @@ class UserView extends Gotham.Pattern.MVC.View
     @networkCount++
 
 
-  AddHost: (network, host) ->
+  addHost: (network, host) ->
 
     hostSprite = new Gotham.Graphics.Sprite Gotham.Preload.fetch("user_management_network_item", "image")
     hostSprite.x = 5

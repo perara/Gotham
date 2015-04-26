@@ -23,15 +23,15 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
 
     @host = undefined
     @identity = undefined
-    @network = undefined
+    @Network = undefined
 
   create: ->
     that = @
 
     # Console Initialize
     @console = new GothamGame.Terminal.Console()
-    @console.Redraw = ->
-      that.View.Redraw()
+    @console.redraw = ->
+      that.View.redraw()
     @View.setConsole @console
 
 
@@ -41,15 +41,15 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
       console.add error
 
 
-    @SetupInput()
+    @setupInput()
 
-    @Boot()
+    @boot()
 
 
 
   # Handle Input Event (Keydown)
   #
-  SetupInput: ->
+  setupInput: ->
     that = @
     input = @View._input
 
@@ -98,7 +98,7 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
         $(inputField).val "#{command.command} #{files[0].fullname}"
       else if files.length > 1
         that.console.add output
-        that.console.Redraw()
+        that.console.redraw()
 
 
 
@@ -108,13 +108,12 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
       val = $(obj).val();
       $(obj).val("")
 
-      that.ParseInput val
+      that.parseInput val
 
     # Action when Arrows up/down is hit
     arrow = (e, obj) ->
       isUp = e.which is TerminalController.KEYCODE.ARROW_UP
 
-      console.log isUp
 
       historyPointer = if isUp then that.console.incrementHistoryPointer(-1) else that.console.incrementHistoryPointer(1)
       historyItem = that.console.getHistoryAt historyPointer
@@ -131,7 +130,7 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
       if keycode is TerminalController.KEYCODE.TAB then tab(e, @) else that.__tabCount = 0
       if keycode is TerminalController.KEYCODE.ARROW_UP or keycode is TerminalController.KEYCODE.ARROW_DOWN then arrow(e, @)
 
-  ParseInput: (input) ->
+  parseInput: (input) ->
 
     # Create a command object
     command = new GothamGame.Terminal.Command @, input
@@ -149,25 +148,25 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
       # Execute Command
       command.execute()
 
-  Show: () ->
+  show: () ->
     $(".terminal_frame").hide()
     @View.terminal_frame.show()
-  Hide: () ->
+  hide: () ->
     @View.terminal_frame.hide()
 
 
-  SetHost: (host) ->
+  setHost: (host) ->
     @host = host
 
-  SetIdentity: (identity) ->
+  setIdentity: (identity) ->
     @identity = identity
 
-  SetNetwork: (network) ->
+  setNetwork: (network) ->
     @network = network
 
   # Output the boot sequence of the virtual machine
   #
-  Boot: ->
+  boot: ->
     @console.addArray [
       "Welcome to Ubuntu 14.10 (GNU/Linux 3.16.0-23-generic x86_64)",
       ""
@@ -188,7 +187,7 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
       "",
       "Last login: Fri Mar 20 17:09:49 2015 from grm-studby-128-39-148-43.studby.uia.no"
     ]
-    @console.Redraw()
+    @console.redraw()
 
 
 

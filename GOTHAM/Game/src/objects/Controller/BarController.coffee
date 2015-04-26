@@ -30,7 +30,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
 
 
     # Emit for World_Clock
-    GothamGame.network.Socket.on 'World_Clock', (time) ->
+    GothamGame.Network.Socket.on 'World_Clock', (time) ->
       world_clock.label.text = time
 
 
@@ -47,12 +47,11 @@ class BarController extends Gotham.Pattern.MVC.Controller
 
       button_terminal = new Gotham.Controls.Button "Home" , 100, 70
 
-      console.log that.scene
       button_terminal.toggleOn = (e) ->
-        that.scene.getObject("User").Show()
+        that.scene.getObject("User").show()
 
       button_terminal.toggleOff = (e) ->
-        that.scene.getObject("User").Hide()
+        that.scene.getObject("User").hide()
 
       return button_terminal
 
@@ -61,9 +60,9 @@ class BarController extends Gotham.Pattern.MVC.Controller
     @View.addItem @View.Bar.Bottom,"LEFT", ->
       button_mission = new Gotham.Controls.Button "Missions" , 100, 70
       button_mission.toggleOn = (e) ->
-        that.scene.getObject("Mission").Show()
+        that.scene.getObject("Mission").show()
       button_mission.toggleOff = (e) ->
-        that.scene.getObject("Mission").Hide()
+        that.scene.getObject("Mission").hide()
       return button_mission
 
       # Create Missions Button
@@ -77,10 +76,10 @@ class BarController extends Gotham.Pattern.MVC.Controller
     @View.addItem @View.Bar.Bottom, "LEFT", ->
       button_node = new Gotham.Controls.Button "Nodes" , 100, 70
       button_node.toggleOn = (e) ->
-        that.scene.getObject("NodeList").Show()
+        that.scene.getObject("NodeList").show()
 
       button_node.toggleOff = (e) ->
-        that.scene.getObject("NodeList").Hide()
+        that.scene.getObject("NodeList").hide()
       return button_node
 
 
@@ -88,7 +87,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
     @View.addItem @View.Bar.Bottom, "RIGHT" , ->
       button_menu = new Gotham.Controls.Button "Menu" , 100, 70, {toggle: false , textSize: 40}
       button_menu.click = (e) ->
-        GothamGame.renderer.setScene("Menu")
+        GothamGame.Renderer.setScene("Menu")
       return button_menu
 
     # Create Menu Button
@@ -107,27 +106,12 @@ class BarController extends Gotham.Pattern.MVC.Controller
 
 
 
-  UpdateCoordinates: (lat, long) ->
+  updateCoordinates: (lat, long) ->
     @coordText.label.text = "Lat: #{lat}\nLng: #{long}"
 
-  UpdateCountry: (country) ->
+  updateCountry: (country) ->
     c = if country then country.name else "None"
     @countryText.label.text = "Country: #{c}"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

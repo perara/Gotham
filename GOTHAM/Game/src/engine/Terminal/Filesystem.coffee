@@ -7,19 +7,19 @@ class Filesystem
 
     data = JSON.parse(json.data)
 
-    @_fs = @Parse data
-    @_root = @Parse data
+    @_fs = @parse data
+    @_root = @parse data
 
     @onError = ->
 
 
-  ToRoot: ->
+  toRoot: ->
     root = @_fs
     while @_fs.parent
       root = @_fs.parent
     return root
 
-  Parse: (root) ->
+  parse: (root) ->
     # Function for creating parent node on "node"
     createParentNode = (node, parent) ->
       node.parent = parent
@@ -127,10 +127,10 @@ class Filesystem
     else
       @onError "-bash: cd: #{path}: No such file or directory"
 
-  GetPointer: ->
+  getPointer: ->
     return @_fs
 
-  Print: () ->
+  print: () ->
     console.log @_fs
 
 

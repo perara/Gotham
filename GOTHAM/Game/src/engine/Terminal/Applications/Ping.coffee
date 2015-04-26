@@ -77,18 +77,25 @@ class Ping  extends Application
 
     # Emit to server if target is set
     if @Packet.target
-      GothamGame.network.Socket.emit 'Ping', @Packet
+
+      # Send emit to Frontend Mission Engine, Callback are received on Completion
+      GothamGame.MissionEngine.emit "Ping", @Packet.target, (req) ->
+        GothamGame.Announce.message "#{req._mission._title}\n#{req._requirement} --> #{req._current}/#{req._expected}", "MISSION", 50
+
+
+      # Send Emit to Backend server for an generated response
+      GothamGame.Network.Socket.emit 'Ping', @Packet
 
       # Ping Init (Start of ping)
-      GothamGame.network.Socket.on 'Ping_Init', (output) ->
+      GothamGame.Network.Socket.on 'Ping_Init', (output) ->
         that.Console.add output
 
       # Actual Ping Callback
-      GothamGame.network.Socket.on 'Ping', (output) ->
+      GothamGame.Network.Socket.on 'Ping', (output) ->
         that.Console.add output
 
       # Ping Summary
-      GothamGame.network.Socket.on 'Ping_Summary', (output) ->
+      GothamGame.Network.Socket.on 'Ping_Summary', (output) ->
         # Ping Event Done, Remove listeners
         @removeListener('Ping')
         @removeListener('Ping_Init')

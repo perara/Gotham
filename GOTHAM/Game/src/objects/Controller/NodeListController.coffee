@@ -4,15 +4,15 @@ class NodeListController extends Gotham.Pattern.MVC.Controller
 
   constructor: (name) ->
     super View, name
-    @Hide();
+    @hide();
 
 
   create: ->
 
-  Show: ->
+  show: ->
     @View.visible = true
 
-  Hide: ->
+  hide: ->
     @View.visible = false
 
 
