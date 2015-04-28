@@ -22,7 +22,7 @@ class Database
 
   InitSequelize: ->
     log.info "Establishing database connection..."
-    @_sequelize = new Sequelize('gotham', 'root', 'root', { #%123zombies%
+    @_sequelize = new Sequelize('gotham', 'root', 'root', {
       host: 'localhost'
       dialect: 'mysql'
 

@@ -137,7 +137,7 @@ namespace Gotham.Application.GUI
 
             foreach (var cable in node.Cables.Where(cable => cable.Year <= 2014))
             {
-                tb_cables.Text += cable.Name + "\r\n";
+                tb_cables.Text += cable.Id + " - " + cable.Name + "\r\n";
             }
         }
 
