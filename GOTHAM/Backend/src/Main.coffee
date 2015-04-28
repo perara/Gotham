@@ -50,61 +50,33 @@ startServer = () ->
 
 preload = (_c) ->
   promises = []
-  nodeList = Gotham.LocalDatabase.table("nodes")
-  cableList = Gotham.LocalDatabase.table("cables")
-  missionList = Gotham.LocalDatabase.table("missions")
-  hostList = Gotham.LocalDatabase.table("hosts")
 
-  promises.push Gotham.Database.Model.Node.all(
-    include: [
-      {
-        model: Gotham.Database.Model.Cable
-        include: [Gotham.Database.Model.Node]
-      }
-    ]
-  ).then (nodes)->
-    for node in nodes
-      nodeList.insert {id: node.id, node: node}
+  fs = require 'fs'
+  fs.readdirSync("#{__dirname}/Objects/World/Objects/").forEach (file) ->
+    if file != "GothamObject.coffee"
+      fullName = file
+      # Remove Extension
+      file = file.replace(/\.[^/.]+$/, "")
 
-  promises.push Gotham.Database.Model.Cable.all(
-    include: [
-      {
-        model: Gotham.Database.Model.Node
-      }
-      ]
-  ).then (cables)->
-    for cable in cables
-      cableList.insert {id: cable.id, cable: cable}
+      promises.push Gotham.Database.Model[file].all().then (objs) ->
+        # Require object class
+        Object = require "./Objects/World/Objects/#{fullName}"
 
-  promises.push Gotham.Database.Model.Mission.all(
-    include: [
-      {
-        model: Gotham.Database.Model.MissionRequirement
-      }
-    ]
-  ).then (missions)->
-    for mission in missions
-      missionList.insert {id: mission.id, mission: mission}
+        # Create table
+        db_obj = Gotham.LocalDatabase.table(file)
+        db_obj.insert new Object(obj) for obj in objs
+
 
 
   start = performance()
   When.all(promises).then () ->
-    log.info "Data loaded in #{((performance() - start) / 1000).toFixed(2)} Seconds"
+    log.info "Preload done in #{((performance() - start) / 1000).toFixed(2)} Seconds"
     _c()
 
 
-testing: ->
 
-  nodeId1 = hostList.data[0].host.dataValues.Network.dataValues.node
-  nodeId2 = hostList.data[3].host.dataValues.Network.dataValues.node
-  node1 = nodeList.find(id: nodeId1)
-  node2 = nodeList.find(id: nodeId2)
-
-  #ls = new Gotham.Micro.LayerStructure().makeHTTP()
-  #ses = new Gotham.Micro.Session(node1,node2,ls)
-  #print ses
 
 # Preload then start server
 preload ->
-  startServer()
-  testing()
+  #startServer()
+
