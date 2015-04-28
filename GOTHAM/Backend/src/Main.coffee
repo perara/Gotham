@@ -13,6 +13,7 @@ SocketServer = require './Networking/SocketServer.coffee'
 Database = require './Database/Database.coffee'
 LocalDatabase = require './Database/LocalDatabase.coffee'
 World = require './Objects/World/World.coffee'
+
 #########################################################
 ##
 ## Global Scope
@@ -23,6 +24,7 @@ global.Gotham =
   LocalDatabase: new LocalDatabase()
   World: new World()
   SocketServer: new SocketServer 8081
+  Micro: require './Objects/Traffic/Micro/Micro.coffee'
 
 # http://stackoverflow.com/questions/14031763/doing-a-cleanup-action-just-before-node-js-exits
 startServer = () ->
@@ -46,15 +48,12 @@ startServer = () ->
   server.onDisconnect = (_client) ->
     log.info "[SERVER] Client Disconnected #{_client.id}"
 
-
-
-
 preload = (_c) ->
   promises = []
   nodeList = Gotham.LocalDatabase.table("nodes")
   cableList = Gotham.LocalDatabase.table("cables")
   missionList = Gotham.LocalDatabase.table("missions")
-
+  hostList = Gotham.LocalDatabase.table("hosts")
 
   promises.push Gotham.Database.Model.Node.all(
     include: [
@@ -93,6 +92,19 @@ preload = (_c) ->
     log.info "Data loaded in #{((performance() - start) / 1000).toFixed(2)} Seconds"
     _c()
 
+
+testing: ->
+
+  nodeId1 = hostList.data[0].host.dataValues.Network.dataValues.node
+  nodeId2 = hostList.data[3].host.dataValues.Network.dataValues.node
+  node1 = nodeList.find(id: nodeId1)
+  node2 = nodeList.find(id: nodeId2)
+
+  #ls = new Gotham.Micro.LayerStructure().makeHTTP()
+  #ses = new Gotham.Micro.Session(node1,node2,ls)
+  #print ses
+
 # Preload then start server
 preload ->
   startServer()
+  testing()

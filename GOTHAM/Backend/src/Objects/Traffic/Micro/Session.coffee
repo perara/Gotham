@@ -1,28 +1,18 @@
-Database = require '../../../Database/Database.coffee'
-Micro = require './Micro.coffee'
-
 
 # Session object containing source, target ,traffic path and packets exchanged
 class Session
 
   constructor: (sourceHost, targetHost, layers) ->
 
-    # Type checks
-    if layers not instanceof Micro.LayerStructure then throw new Error("layers not instance of LayerStructure")
-    if sourceHost not instanceof Host then throw new Error("sourceHost not instance of Host")
-    if targetHost not instanceof Host then throw new Error("targetHost not instance of Host")
-
-    @path = Pathfinder.TryRandom(sourceHost.Node, targetHost.Node)
+    @path = Gotham.Micro.Pathfinder.TryRandom(sourceHost.Node, targetHost.Node)
     @sourceHost = sourceHost
     @targetHost = targetHost
     @packets = []
     @layers = layers
 
-  toJSON: ->
+  printJSON: ->
     if not @layers.IntegrityCheck() then throw new Error("Inconsistent layers")
-    return JSON.stringify(this)
-
-  printJSON: -> log.Info(toJSON())
+    log.Info(JSON.stringify(this))
 
   printLayers: ->
 

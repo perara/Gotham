@@ -1,4 +1,3 @@
-Micro = require './Micro.coffee'
 GeoTool = require '../../../Tools/GeoTool.coffee'
 performance = require 'performance-now'
 log = require('log4js').getLogger("Pathfinder")
@@ -7,12 +6,12 @@ log = require('log4js').getLogger("Pathfinder")
 class Pathfinder
 
 
-  table = Gotham.LocalDatabase.table("nodes")
-
   ###############################################################################################
   ##### Tries random paths and returns the shortest that reached the goal
   ###############################################################################################
   @tryRandom = (start, goal, tryPaths = 100000) ->
+
+    nodes = Gotham.LocalDatabase.table("nodes")
 
     sum = 0
     minPath = Number.MAX_VALUE
@@ -40,7 +39,7 @@ class Pathfinder
         nextNodeId = siblings[rnd(0, siblings.length - 1)].id
 
         deltaTime = new Date().getTime()
-        nextNode = table.findOne({id: nextNodeId}).node
+        nextNode = nodes.findOne({id: nextNodeId}).node
         sum += (new Date().getTime() - deltaTime)
         queue.push(nextNode)
         currentNode = nextNode
@@ -66,6 +65,8 @@ class Pathfinder
   ###############################################################################################
   @aStar: (start, goal) ->
 
+    nodes = Gotham.LocalDatabase.table("nodes")
+
     maxPathLength = 100
     path = []
     blacklist = []
@@ -86,7 +87,7 @@ class Pathfinder
     loop
 
       currentId = path[path.length - 1].id
-      current = table.findOne({id: currentId}).node
+      current = nodes.findOne({id: currentId}).node
       nextNode = GeoTool.getClosest(goal, current.siblings(), blacklist)
       wrongWay = 0
 
@@ -118,6 +119,8 @@ class Pathfinder
   ##### Improvement of aStar, supports reversing and removal of obsolete nodes
   ###############################################################################################
   @bStar: (start, goal, startBacktrack = 3, escalations = 5) ->
+
+    nodes = Gotham.LocalDatabase.table("nodes")
 
     # Declarations
     path = []
@@ -226,7 +229,7 @@ class Pathfinder
           expand()
 
         currentId = path[path.length - 1].id
-        current = table.findOne({id: currentId}).node
+        current = nodes.findOne({id: currentId}).node
         nextNode = getBestSibling(current)
 
         #log.info "Current node: #{current.id}"

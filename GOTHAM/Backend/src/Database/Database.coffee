@@ -22,8 +22,8 @@ class Database
 
   InitSequelize: ->
     log.info "Establishing database connection..."
-    @_sequelize = new Sequelize('gotham', 'root', 'root', {
-      host: 'localhost'
+    @_sequelize = new Sequelize('gotham', 'root', '%123zombies%', {
+      host: 'hybel.keel.no'
       dialect: 'mysql'
 
       pool:
