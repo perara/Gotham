@@ -7,14 +7,14 @@ class UserController extends Gotham.Pattern.MVC.Controller
     super View, name
 
   create: ->
-    @SetupIdentities()
-    @SetupHosts()
+    @setupIdentities()
+    @setupHosts()
 
-    @View.Hide()
+    @View.hide()
 
 
 
-  SetupIdentities: ->
+  setupIdentities: ->
     db_user = Gotham.Database.table "user"
     identities = db_user().first().Identities
 
@@ -28,37 +28,35 @@ class UserController extends Gotham.Pattern.MVC.Controller
       delete identity.lat
       delete identity.lng
 
-      @View.AddIdentity identity
+      @View.addIdentity identity
 
-  SetupHosts: ->
+  setupHosts: ->
     db_user = Gotham.Database.table "user"
     identities = db_user().first().Identities
 
     for identity in identities
       for network in identity.Networks
-        @View.AddNetwork network
+        @View.addNetwork network
         for host in network.Hosts
-
-
-          sprite = @View.AddHost network, host
+          sprite = @View.addHost network, host
 
 
 
           # Create a terminal
           terminal = new GothamGame.Controllers.Terminal "Terminal_#{host.ip}"
           terminal.View.create()
-          terminal.SetIdentity(identity)
-          terminal.SetHost(host)
-          terminal.SetNetwork(network)
+          terminal.setIdentity(identity)
+          terminal.setHost(host)
+          terminal.setNetwork(network)
           terminal.create()
           sprite.terminal = terminal
           sprite.click = ->
             @__toggled = if not @__toggled then true else false
 
             if @__toggled
-              @terminal.Show()
+              @terminal.show()
             else
-              @terminal.Hide()
+              @terminal.hide()
 
 
           sprite.mouseout = ->
@@ -76,11 +74,11 @@ class UserController extends Gotham.Pattern.MVC.Controller
 
 
 
-  Show: ->
-    @View.Show()
+  show: ->
+    @View.show()
 
-  Hide: ->
-    @View.Hide()
+  hide: ->
+    @View.hide()
 
 
 

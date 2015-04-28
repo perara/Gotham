@@ -29,7 +29,7 @@ class TerminalView extends Gotham.Pattern.MVC.View
 
   # Redraws text in the console
   #
-  Redraw: ->
+  redraw: ->
     $(@_console_window).html(@_console.all().join("<br/>"))
     objDiv = document.getElementById($(@_console_window).attr("id"));
     objDiv.scrollTop = objDiv.scrollHeight;
@@ -106,7 +106,7 @@ class TerminalView extends Gotham.Pattern.MVC.View
         id: "terminal_console_frame_content_#{terminalCount}"
         style: """
           width: 98%;
-          height: 99%;
+          height: 98%;
           background-image: url('./assets/img/terminal_background.png');
           background-size:cover;
           border-bottom: 1px solid gray;

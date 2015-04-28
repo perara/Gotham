@@ -7,11 +7,13 @@ class Mission
   constructor: () ->
     @_title = null
     @_description = null
+    @_description_ext = null
+    @_requiredXP = null
     @_engine = null
     @_data = null
 
 
-    @_requirements = []
+    @_requirements = {}
 
     @onProgress = ->
     @onRequirementComplete = ->
@@ -22,33 +24,52 @@ class Mission
   #
   # @param requirement {Object} The requirement
   # @return {Requirement} The Requirement
-  AddRequirement: (requirementData)->
+  addRequirement: (requirementData) ->
     #console.log "[MISSION] Added Requirement: #{requirementData.requirement}"
     requirement = new Requirement(@, requirementData)
-    @_requirements.push requirement
+    @_requirements[requirementData.id] =  requirement
     return requirement
+
+  addUserMissionRequirement: (userMissionRequirementData) ->
+
+    # Retrieve the requirement
+    requirement = @_requirements[userMissionRequirementData.mission_requirement]
+    requirement._current = userMissionRequirementData.current
+    requirement._expected = userMissionRequirementData.expected
+    requirement._emit_input = userMissionRequirementData.emit_input
+    requirement._emit_value = userMissionRequirementData.emit_value
+
+
+
 
   # Add a list of requirements
   #
   # @param requirementName {String} The name of the requirement
   # @return {Requirement} The Requirement
-  AddRequirements: (arr)->
+  addRequirements: (arr)->
     for i in arr
-      @AddRequirement(i)
+      @addRequirement i
+
+  addUserMissionRequirements: (arr)->
+    for i in arr
+      @addUserMissionRequirement i
 
   # Get a requirement by name
   #
   # @param requirementName {String} The requirement name
   # @return {Requirement}
-  GetRequirement: (requirementName) ->
+  getRequirement: (requirementName) ->
     return @_requirements[requirementName]
+
+  getRequirements: () ->
+    return @_requirements
 
 
   # Check if the mission is completed
   # Checks via all of the requirementrs
   #
   # @return {Boolean} True if completed, False if not
-  IsCompleted: ->
+  isCompleted: ->
     isComplete = true
     for req in @_requirements
       if not req.isComplete()
@@ -56,25 +77,36 @@ class Mission
         break
     return isComplete
 
-  SetTitle: (title) ->
+  setTitle: (title) ->
     #console.log "[MISSION] Set Title to: #{title}"
     @_title = title
-  SetDescription: (description) ->
+  setDescription: (description) ->
     #console.log "[MISSION] Set Title to: #{description}"
     @_description = description
-  GetTitle: ->
-    return @_title
-  GetDescription: ->
-    return @_description
+  setExtendedDescription: (description_ext) ->
+    @_description_ext = description_ext
+  setRequiredXP: (xp) ->
+    @_requiredXP = xp
 
+  getTitle: ->
+    return @_title
+  getDescription: ->
+    return @_description
+  getExtendedDescription: () ->
+    return @_description_ext
+
+  getRequiredXP: () ->
+    return @_requiredXP
 
   emit: (emit_name, emit_value, _c) ->
 
-    for requirement in @_requirements
+    for key, requirement of @_requirements
       #console.log "[MISSION] Requirement #{requirement._requirement}"
 
+      console.log requirement._emit
+      console.log emit_name
       if requirement._emit == emit_name
-        #console.log "[MISSION] Matched Requirement #{requirement._requirement}"
+        console.log "[MISSION] Matched Requirement #{requirement._requirement}"
         requirement.emit emit_value, _c
 
 
@@ -157,30 +189,53 @@ class Mission
       # Internal Definition
       @_complete = false
 
+    getCurrent: ->
+      return @_current
+    getExpected: ->
+      return @_expected
+    getName: ->
+      return @_requirement
+
+    isComplete: ->
+      return @_complete
 
     emit: (input, _c) ->
-
 
       if @_complete
         return
 
-      # Return if the input are not valid
+      # Throw error of input and emit input does not match
       if input != @_emit_input
-        throw new Error "Requirement input is invalid! Got #{input}, Expected: #{@_emit_input}"
+        console.warn "Requirement input is invalid! Got #{input}, Expected: #{@_emit_input}"
+        return
 
-      # Check which behaviour to use
+      # Increment Behaviour - Increments @_emit_value to the @_current value
       if @_emit_behaviour == "increment"
         @_current += parseInt(@_emit_value)
+
+      # Decrement Behaviour - Decrements @_emit_value to the @_current value
       else if @_emit_behaviour == "decrement"
         @_current -= parseInt(@_emit_value)
+
+      # Set Behaviour - Sets @_current equal to @_emit_value
       else if @_emit_behaviour == "set"
         @_current = @_emit_value
 
+      # If Current and Expected value are equal, Fire onComplete and set requirement to complete
       if ""+@_current == ""+@_expected
+        # Requirement is complete
         @_complete = true
+
+        _c(@)
+
+        # Fire Requirement Complete Callback
         @_mission.onRequirementComplete(@)
+
+        # Check if Mission is complete
         if @_mission.isCompleted()
           @_mission.onComplete(@_mission)
+
+      # Send Progress Callback
       else
         @_mission.onProgress(@)
 

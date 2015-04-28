@@ -4,7 +4,7 @@ class GothamGame
 
   window.GothamGame = GothamGame
 
-  @renderer = new Gotham.Graphics.Renderer 1920, 1080, {
+  @Renderer = new Gotham.Graphics.Renderer 1920, 1080, {
     antialiasing:true
     transparent:false
     resolution:1
@@ -16,13 +16,14 @@ class GothamGame
 
   # Mission Object
   @Mission = require './engine/Mission.coffee'
-  @HackMission = require './engine/HackMission.coffee'
+
+  @Announce = new (require './objects/Controller/AnnounceController.coffee')("Announce")
 
   @Tools =
     HostUtils: require './tools/HostUtils.coffee'
 
   # Networking
-  @network = null
+  @Network = null
 
   # Game Objects
   @Controllers =
@@ -34,14 +35,9 @@ class GothamGame
     Mission : require './objects/Controller/MissionController.coffee'
     Settings : require './objects/Controller/SettingsController.coffee'
 
-    #"WorldMap" : require "./objects/WorldMap.coffee"
-    #"TopBar" : require "./objects/View/BarView.coffee"
-    #"Settings" : require "./objects/Settings.coffee"
-    #"NodeList" : require "./objects/NodeList.coffee"
-    #"Terminal" : require "./objects/Terminal.coffee"
 
   # Game Scenes
-  @scenes =
+  @Scenes =
     "Loading" : require "./scenes/Loading.coffee"
     "World"   : require "./scenes/World.coffee"
     "Menu"    : require "./scenes/Menu.coffee"

@@ -66,33 +66,79 @@ class MissionRoom extends Room
       that.log.info "[MissionRoom] GetMission called" + data
       client = that.GetClient(@id)
 
-      missions =
-        ongoing: null
-        available: null
-
-
+      missions = []
+      _ongoing = []
+      _available = []
       promises = []
 
+      # Fetch all available missions
       promises.push that.Database.Model.Mission.all(include: [{ all: true, nested:true}]).then (_missions) ->
-        missions.available = _missions
 
-      #include: [{ all: true, nested:true}]
-      #[{ all: true, nested:true}]
+        # Create a mission object and push to missions array
+        for missionData in _missions
+          _available.push that.CreateMissionObject missionData, null
+
+
+      # Fetch all ongoing missions
       promises.push that.Database.Model.UserMission.all(
         where: user: 1
-        include: [{ all: true, nested:true}]).then (usermissions) ->
+        include: [{ all: true, nested:true}]
+      ).then (userMissions) ->
 
-        console.log usermission
-        ret = []
-        for usermission in usermissions
+        # Create ongoing missions
+        for userMission in userMissions
+          mission = that.CreateMissionObject userMission.Mission, userMission.UserMissionRequirements
 
-          ret.push usermission.Mission
-
-        missions.ongoing = ret
+          # Push the ongoing mission to the array
+          _ongoing.push mission
 
 
       When.all(promises).then () ->
+
+
+        # First add ongoing missions to the missions array
+        for ongoing in _ongoing
+          missions.push ongoing
+
+        # Secondly add all available missions that are not ongoing
+        for available in _available
+
+          # Dont add available t othe mission array if its already ongoing
+          add = true
+          for mission in missions
+            if mission.id == available.id
+              add = false
+
+          # Add available to array
+          if add
+            missions.push available
+
         client.Socket.emit 'GetMission', missions
+
+  # Create a Mission objece
+  # @param missionData {Mission} THe mission data
+  # @param userRequirement {UserMissionRequirement} Requirement for the user on this mission
+  # @returns [MissionObject} a mission object
+  CreateMissionObject: (missionData, userMissionRequirement) ->
+    userMissionRequirement = if not userMissionRequirement then null else userMissionRequirement
+
+    # Create general mission data
+    mission =
+      id: missionData.id
+      title: missionData.title
+      description: missionData.description
+      description_ext: missionData.description_ext
+      required_xp: missionData.required_xp
+      MissionRequirements: missionData.MissionRequirements
+      ongoing: false
+
+    # If userMissionRequirement is set, means its an goingoing mission
+    if userMissionRequirement
+      mission.ongoing = true
+      mission.UserMissionRequirements = userMissionRequirement
+
+    return mission
+
 
 
 

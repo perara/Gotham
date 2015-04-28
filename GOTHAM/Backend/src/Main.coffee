@@ -90,7 +90,7 @@ promises.push Gotham.Database.Model.Node.all(
 ## Preloading Cables
 ##
 #######################
-promises.push Gotham.Database.Model.Cable.all(
+"""promises.push Gotham.Database.Model.Cable.all(
   include: [
     {
       model: Gotham.Database.Model.Node
@@ -99,7 +99,7 @@ promises.push Gotham.Database.Model.Cable.all(
 ).then (cables)->
   for cable in cables
     cableList.insert {id: cable.id, cable: cable}
-
+"""
 #######################
 ##
 ## Preloading Missions

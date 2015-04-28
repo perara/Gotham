@@ -2,9 +2,17 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/Backend/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/Game/htdocs/build" />
+      <excludeFolder url="file://$MODULE_DIR$/Game/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/Game/src/dependencies" />
+      <excludeFolder url="file://$MODULE_DIR$/GameFramework/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/GameFramework/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/GameFramework/src/Dependencies" />
+      <excludeFolder url="file://$MODULE_DIR$/node_modules" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
-
