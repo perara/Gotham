@@ -26,6 +26,9 @@ module.exports = (sequelize, DataTypes) ->
       emit_value:
         type: DataTypes.STRING
         allowNull: false
+      emit_input:
+        type: DataTypes.STRING
+        allowNull: false
       emit_behaviour:
         type: DataTypes.STRING
         allowNull: false
