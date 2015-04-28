@@ -25,7 +25,6 @@ global.Gotham =
   World: new World()
   SocketServer: new SocketServer 8081
   Micro: require './Objects/Traffic/Micro/Micro.coffee'
-  Util: require './Tools/Util.coffee'
 
 # http://stackoverflow.com/questions/14031763/doing-a-cleanup-action-just-before-node-js-exits
 startServer = () ->
@@ -51,63 +50,33 @@ startServer = () ->
 
 preload = (_c) ->
   promises = []
-  nodeList = Gotham.LocalDatabase.table("nodes")
-  cableList = Gotham.LocalDatabase.table("cables")
-  missionList = Gotham.LocalDatabase.table("missions")
-  hostList = Gotham.LocalDatabase.table("hosts")
-  """
-  promises.push Gotham.Database.Model.Node.all(
-    include: [
-      {
-        model: Gotham.Database.Model.Cable
-        include: [Gotham.Database.Model.Node]
-      }
-    ]
-  ).then (nodes)->
-    for node in nodes
-      nodeList.insert {id: node.id, node: node}
 
-  promises.push Gotham.Database.Model.Cable.all(
-    include: [
-      {
-        model: Gotham.Database.Model.Node
-      }
-      ]
-  ).then (cables)->
-    for cable in cables
-      cableList.insert {id: cable.id, cable: cable}
-  """
-  promises.push Gotham.Database.Model.Mission.all(
-    include: [
-      {
-        model: Gotham.Database.Model.MissionRequirement
-      }
-    ]
-  ).then (missions)->
-    for mission in missions
-      missionList.insert {id: mission.id, mission: mission}
+  fs = require 'fs'
+  fs.readdirSync("#{__dirname}/Objects/World/Objects/").forEach (file) ->
+    if file != "GothamObject.coffee"
+      fullName = file
+      # Remove Extension
+      file = file.replace(/\.[^/.]+$/, "")
 
-  promises.push Gotham.Database.Model.Network.all(
-    include: [
-      {
-        model: Gotham.Database.Model.Host
-      }
-    ]
-  ).then (hosts)->
-    for host in hosts
-      hostList.insert {id: host.id, host: host}
+      promises.push Gotham.Database.Model[file].all().then (objs) ->
+        # Require object class
+        Object = require "./Objects/World/Objects/#{fullName}"
+
+        # Create table
+        db_obj = Gotham.LocalDatabase.table(file)
+        db_obj.insert new Object(obj) for obj in objs
+
 
 
   start = performance()
   When.all(promises).then () ->
-    log.info "Data loaded in #{((performance() - start) / 1000).toFixed(2)} Seconds"
+    log.info "Preload done in #{((performance() - start) / 1000).toFixed(2)} Seconds"
     _c()
 
 
-testing = ->
 
 
 # Preload then start server
 preload ->
-  startServer()
-  testing()
+  #startServer()
+

@@ -121,7 +121,7 @@ class MissionRoom extends Room
 
 
       # Fetch all ongoing missions
-      promises.push that.Database.Model.UserMission.all(
+      """promises.push that.Database.Model.UserMission.all(
         where: user: 1
         include: [{ all: true, nested:true}]
       ).then (userMissions) ->
@@ -132,7 +132,7 @@ class MissionRoom extends Room
 
           # Push the ongoing mission to the array
           _ongoing.push mission
-
+      """
 
       When.all(promises).then () ->
 
