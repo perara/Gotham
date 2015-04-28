@@ -127,8 +127,6 @@ class NodeListView extends Gotham.Pattern.MVC.View
 
     # Draw the node items initially
     drawNodeItems()
-
-
     background.mouseover = () ->
       @canScroll = true
     background.mouseout = () ->

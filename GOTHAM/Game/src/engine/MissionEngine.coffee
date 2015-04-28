@@ -16,8 +16,8 @@ class MissionEngine
 
     if missionData.UserMissionRequirements
       mission.addUserMissionRequirements missionData.UserMissionRequirements
-    return mission
 
+    return mission
 
   # Adds a mission by its object, requires it to have a name
   #

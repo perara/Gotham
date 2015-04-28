@@ -6,6 +6,8 @@ class UserView extends Gotham.Pattern.MVC.View
   constructor: ->
     super
 
+    @movable()
+
     # Identity
     @selectedIdentity = null
     @identityCount = 0

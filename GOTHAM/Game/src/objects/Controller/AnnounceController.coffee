@@ -10,6 +10,12 @@ class AnnounceController extends Gotham.Pattern.MVC.Controller
 
   create: ->
     @queue()
+    @networkMessages()
+
+  networkMessages: ->
+    that = @
+    GothamGame.Network.Socket.on 'ERROR', (data) ->
+      that.message(data.message, "ERROR", 40)
 
 
   message: (message, type, size) ->

@@ -20,6 +20,12 @@ class Mission
     @onComplete = ->
 
 
+
+  # Update state of a mission, Eventually triggers onComplete if it is complete.
+  updateState: ->
+    if @isCompleted()
+      @onComplete(@)
+
   # Create a requirement to a mission
   #
   # @param requirement {Object} The requirement
@@ -34,10 +40,11 @@ class Mission
 
     # Retrieve the requirement
     requirement = @_requirements[userMissionRequirementData.mission_requirement]
-    requirement._current = userMissionRequirementData.current
-    requirement._expected = userMissionRequirementData.expected
-    requirement._emit_input = userMissionRequirementData.emit_input
-    requirement._emit_value = userMissionRequirementData.emit_value
+    requirement.setCurrent userMissionRequirementData.current
+    requirement.setExpected userMissionRequirementData.expected
+    requirement.setEmitInput userMissionRequirementData.emit_input
+    requirement.setEmitValue userMissionRequirementData.emit_value
+    requirement.userMissionRequirementData = userMissionRequirementData
 
 
 
@@ -71,7 +78,7 @@ class Mission
   # @return {Boolean} True if completed, False if not
   isCompleted: ->
     isComplete = true
-    for req in @_requirements
+    for idx, req of @_requirements
       if not req.isComplete()
         isComplete = false
         break
@@ -80,11 +87,14 @@ class Mission
   setTitle: (title) ->
     #console.log "[MISSION] Set Title to: #{title}"
     @_title = title
+
   setDescription: (description) ->
     #console.log "[MISSION] Set Title to: #{description}"
     @_description = description
+
   setExtendedDescription: (description_ext) ->
     @_description_ext = description_ext
+
   setRequiredXP: (xp) ->
     @_requiredXP = xp
 
@@ -103,8 +113,6 @@ class Mission
     for key, requirement of @_requirements
       #console.log "[MISSION] Requirement #{requirement._requirement}"
 
-      console.log requirement._emit
-      console.log emit_name
       if requirement._emit == emit_name
         console.log "[MISSION] Matched Requirement #{requirement._requirement}"
         requirement.emit emit_value, _c
@@ -196,7 +204,23 @@ class Mission
     getName: ->
       return @_requirement
 
+    setCurrent: (current) ->
+      @_current = current
+      @isComplete()
+
+    setExpected: (expected) ->
+      @_expected = expected
+      @isComplete()
+
+    setEmitValue: (emitValue) ->
+      @_emit_value = emitValue
+
+    setEmitInput: (emitInput) ->
+      @_emit_input = emitInput
+
     isComplete: ->
+      if ""+@_current == ""+@_expected
+        @_complete = true
       return @_complete
 
     emit: (input, _c) ->
@@ -211,10 +235,12 @@ class Mission
 
       # Increment Behaviour - Increments @_emit_value to the @_current value
       if @_emit_behaviour == "increment"
+        @_current = parseInt(@_current)
         @_current += parseInt(@_emit_value)
 
       # Decrement Behaviour - Decrements @_emit_value to the @_current value
       else if @_emit_behaviour == "decrement"
+        @_current = parseInt(@_current)
         @_current -= parseInt(@_emit_value)
 
       # Set Behaviour - Sets @_current equal to @_emit_value

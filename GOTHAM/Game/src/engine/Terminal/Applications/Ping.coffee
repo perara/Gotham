@@ -82,6 +82,13 @@ class Ping  extends Application
       GothamGame.MissionEngine.emit "Ping", @Packet.target, (req) ->
         GothamGame.Announce.message "#{req._mission._title}\n#{req._requirement} --> #{req._current}/#{req._expected}", "MISSION", 50
 
+      # Emit Ping Missions time requirement
+      target = @Packet.target
+      intervalID = setInterval (() ->
+        GothamGame.MissionEngine.emit "Time", target, (req) ->
+          console.log req
+      ),1000
+
 
       # Send Emit to Backend server for an generated response
       GothamGame.Network.Socket.emit 'Ping', @Packet
@@ -96,6 +103,10 @@ class Ping  extends Application
 
       # Ping Summary
       GothamGame.Network.Socket.on 'Ping_Summary', (output) ->
+
+        # Stop the Mission Time interval counter
+        clearInterval intervalID
+
         # Ping Event Done, Remove listeners
         @removeListener('Ping')
         @removeListener('Ping_Init')

@@ -35,15 +35,24 @@ setup =
     Gotham.Preload.image("/assets/img/mission_item.png","mission_item", "image")
     Gotham.Preload.image("/assets/img/user_management_frame.png", "mission_frame", "image")
 
-    # World Map
-    Gotham.Preload.image("/assets/img/home.png", "home", "image")
+
     Gotham.Preload.image("/assets/img/map_marker.png", "map_marker", "image")
     Gotham.Preload.json("/assets/json/json.json", "map")
-    Gotham.Preload.image("/assets/img/sea_background.jpg", "sea_background", "image")
+    Gotham.Preload.image("/assets/img/sea_background.png", "sea_background", "image")
 
-    # Top Bar
+    # Bar
     Gotham.Preload.image("/assets/img/bottomBar.png", "bottomBar", "image")
+    Gotham.Preload.image("/assets/img/sidebar.png", "sidebar", "image")
     Gotham.Preload.image("/assets/img/topbar.png", "topBar", "image")
+
+    # Bar icons
+    Gotham.Preload.image("/assets/img/home.png", "home", "image")
+    Gotham.Preload.image("/assets/img/mission.png", "mission", "image")
+    Gotham.Preload.image("/assets/img/menu.png", "menu", "image")
+    Gotham.Preload.image("/assets/img/inventory.png", "inventory", "image")
+    Gotham.Preload.image("/assets/img/settings.png", "settings", "image")
+    Gotham.Preload.image("/assets/img/help.png", "help", "image")
+
 
     # Menu
     Gotham.Preload.image("/assets/img/menu_button_texture.png", "menu_button", "image")

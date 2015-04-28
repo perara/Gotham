@@ -8,7 +8,8 @@ class BarController extends Gotham.Pattern.MVC.Controller
 
   create: ->
     @topBar()
-    @bottomBar()
+    #@bottomBar()
+    @sideBar()
 
 
   topBar: ->
@@ -33,6 +34,148 @@ class BarController extends Gotham.Pattern.MVC.Controller
     GothamGame.Network.Socket.on 'World_Clock', (time) ->
       world_clock.label.text = time
 
+  sideBar: ->
+    that = @
+
+    @View.addSidebarItem  15, ->
+      home = new Gotham.Graphics.Sprite Gotham.Preload.fetch("home", "image")
+      home.tint = 0x4169E1
+      home.alpha = 0.4
+      home.interactive = true
+      home.mouseover = -> home.alpha = 1
+      home.mouseout = -> home.alpha = 0.6
+      home.click = ->
+        @toggle = if not @toggle then true else !@toggle
+
+        if @toggle
+          that.scene.getObject("User").show()
+          home.tint = 0xFF0000
+        else
+          that.scene.getObject("User").hide()
+          home.tint = 0x4169E1
+      return home
+
+    @View.addSidebarItem 15, ->
+      mission = new Gotham.Graphics.Sprite Gotham.Preload.fetch("mission", "image")
+      mission.tint = 0x4169E1
+      mission.alpha = 0.4
+      mission.interactive = true
+      mission.mouseover = -> @alpha = 1
+      mission.mouseout = -> @alpha = 0.6
+      mission.click = ->
+        @toggle = if not @toggle then true else !@toggle
+
+        if @toggle
+          that.scene.getObject("Mission").show()
+          @tint = 0xFF0000
+        else
+          that.scene.getObject("Mission").hide()
+          @tint = 0x4169E1
+      return mission
+
+    @View.addSidebarItem 15, ->
+      inventory = new Gotham.Graphics.Sprite Gotham.Preload.fetch("inventory", "image")
+      inventory.tint = 0x4169E1
+      inventory.alpha = 0.4
+      inventory.interactive = true
+      inventory.mouseover = -> @alpha = 1
+      inventory.mouseout = -> @alpha = 0.6
+      inventory.click = ->
+        @toggle = if not @toggle then true else !@toggle
+
+        if @toggle
+          # TODO
+          @tint = 0xFF0000
+        else
+          # TODO
+          @tint = 0x4169E1
+      return inventory
+
+    @View.addSidebarItem 500 ,->
+      help = new Gotham.Graphics.Sprite Gotham.Preload.fetch("help", "image")
+      help.tint = 0x4169E1
+      help.alpha = 0.4
+      help.interactive = true
+      help.mouseover = -> @alpha = 1
+      help.mouseout = -> @alpha = 0.6
+      help.click = ->
+        @toggle = if not @toggle then true else !@toggle
+
+        if @toggle
+          # TODO
+          @tint = 0xFF0000
+        else
+          # TODO
+          @tint = 0x4169E1
+      return help
+
+
+    @View.addSidebarItem 15 ,->
+      settings = new Gotham.Graphics.Sprite Gotham.Preload.fetch("settings", "image")
+      settings.tint = 0x4169E1
+      settings.alpha = 0.4
+      settings.interactive = true
+      settings.mouseover = -> @alpha = 1
+      settings.mouseout = -> @alpha = 0.6
+      settings.click = ->
+        @toggle = if not @toggle then true else !@toggle
+
+        if @toggle
+          Settings = new GothamGame.Controllers.Settings "Settings"
+          that.scene.addObject Settings
+          @_settings = Settings
+          @tint = 0xFF0000
+        else
+          that.scene.removeObject @_settings
+          @tint = 0x4169E1
+      return settings
+
+    @View.addSidebarItem 15, ->
+      menu = new Gotham.Graphics.Sprite Gotham.Preload.fetch("menu", "image")
+      menu.tint = 0x4169E1
+      menu.alpha = 0.4
+      menu.interactive = true
+      menu.mouseover = -> @alpha = 1
+      menu.mouseout = -> @alpha = 0.6
+      menu.click = ->
+        GothamGame.Renderer.setScene("Menu")
+
+      return menu
+
+
+
+    #@_background.addChild home
+    """ready = true
+    home.tint = 0x4169E1
+    home.click = ->
+      if ready
+        ready = false
+        mapContainer.interactive = false
+        home.tint = 0xFF0000
+
+        prevSize =
+          width : that.__width
+          height : that.__height
+
+        nextSize =
+          width : mapContainer.width
+          height : mapContainer.height
+
+        diffSize =
+          width: prevSize.width - nextSize.width
+          height: prevSize.height - nextSize.height
+
+        tween = new Gotham.Tween mapContainer
+        tween.easing Gotham.Tween.Easing.Exponential.Out
+        tween.to {position: {x: (diffSize.width / 2), y: (diffSize.height / 2)}}, 500
+        tween.start()
+        tween.onComplete () ->
+          home.tint = 0x4169E1
+          mapContainer.interactive = true
+          mapContainer.offset.x = 0
+          mapContainer.offset.y = 0
+          ready = true
+      """
 
 
 
@@ -43,7 +186,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
     that = @
 
     # Create Terminal Button
-    @View.addItem @View.Bar.Bottom, "LEFT", ->
+    """@View.addItem @View.Bar.Bottom, "LEFT", ->
 
       button_terminal = new Gotham.Controls.Button "Home" , 100, 70
 
@@ -101,7 +244,9 @@ class BarController extends Gotham.Pattern.MVC.Controller
         that.scene.removeObject @_settings
 
 
-      return button_settings
+      return button_settings"""
+
+
 
 
 

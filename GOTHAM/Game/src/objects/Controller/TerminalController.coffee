@@ -168,19 +168,17 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
   #
   boot: ->
     @console.addArray [
-      "Welcome to Ubuntu 14.10 (GNU/Linux 3.16.0-23-generic x86_64)",
+      "Welcome to GothOS 1.0 (GNU/Linux 3.16.0-23-generic x86_64)",
       ""
-      " * Documentation:  https://help.ubuntu.com/",
+      " * Documentation:  https://help.gotham.no/",
       "",
-      "  System information as of Sat Mar 21 14:55:04 CET 2015",
+      "  System information as of #{new Date()}",
       "",
       "  System load:  0.18                Processes:           162",
       "  Usage of /:   16.6% of 157.36GB   Users logged in:     0",
       "  Memory usage: 48%                 IP address for eth0: #{@host.ip}",
       "  Swap usage:   0%                  IP address for eth1: 10.131.240.142",
       "",
-      "  Graph this data and manage this system at:",
-      "    https://landscape.canonical.com/",
       "",
       "23 packages can be updated.",
       "19 updates are security updates.",

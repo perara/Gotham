@@ -25,11 +25,11 @@ global.Gotham =
   SocketServer: new SocketServer 8081
 
 # http://stackoverflow.com/questions/14031763/doing-a-cleanup-action-just-before-node-js-exits
-
 startServer = () ->
 
   # Start world
   Gotham.World.Start()
+
   server = Gotham.SocketServer
   server.SetDatabase(Gotham.Database)
   server.RegisterRoom new (require './Networking/Rooms/HostRoom.coffee')()
@@ -48,108 +48,51 @@ startServer = () ->
 
 
 
-###############################################################
-############ Preload to LocalDB #############
-###############################################################
-promises = []
+
+preload = (_c) ->
+  promises = []
+  nodeList = Gotham.LocalDatabase.table("nodes")
+  cableList = Gotham.LocalDatabase.table("cables")
+  missionList = Gotham.LocalDatabase.table("missions")
 
 
-nodeList = Gotham.LocalDatabase.table("nodes")
-cableList = Gotham.LocalDatabase.table("cables")
-missionList = Gotham.LocalDatabase.table("missions")
-
-#######################
-##
-## Preloading Node
-##
-#######################
-promises.push Gotham.Database.Model.Node.all(
-  include: [
-    {
-      model: Gotham.Database.Model.Cable
-      include: [Gotham.Database.Model.Node]
-    }
-  ]
-).then (nodes)->
-  for node in nodes
-    nodeList.insert {id: node.id, node: node}
-
-#######################
-##
-## Preloading Cables
-##
-#######################
-"""promises.push Gotham.Database.Model.Cable.all(
-  include: [
-    {
-      model: Gotham.Database.Model.Node
-    }
+  promises.push Gotham.Database.Model.Node.all(
+    include: [
+      {
+        model: Gotham.Database.Model.Cable
+        include: [Gotham.Database.Model.Node]
+      }
     ]
-).then (cables)->
-  for cable in cables
-    cableList.insert {id: cable.id, cable: cable}
-"""
-#######################
-##
-## Preloading Missions
-##
-#######################
-promises.push Gotham.Database.Model.Mission.all(
-  include: [
-    {
-      model: Gotham.Database.Model.MissionRequirement
-    }
-  ]
-).then (missions)->
-  for mission in missions
-    missionList.insert {id: mission.id, mission: mission}
+  ).then (nodes)->
+    for node in nodes
+      nodeList.insert {id: node.id, node: node}
+
+  promises.push Gotham.Database.Model.Cable.all(
+    include: [
+      {
+        model: Gotham.Database.Model.Node
+      }
+      ]
+  ).then (cables)->
+    for cable in cables
+      cableList.insert {id: cable.id, cable: cable}
+
+  promises.push Gotham.Database.Model.Mission.all(
+    include: [
+      {
+        model: Gotham.Database.Model.MissionRequirement
+      }
+    ]
+  ).then (missions)->
+    for mission in missions
+      missionList.insert {id: mission.id, mission: mission}
 
 
-start = performance()
-When.all(promises).then () ->
-  log.info "Data loaded in #{((performance() - start) / 1000).toFixed(2)} Seconds"
-  startServer()
-
-"""
-runner = ->
-  ############ Testing of pathfinder ############################
-  start = nodeList.findOne({id: 17418}).node
-  end = nodeList.findOne({id: 17464}).node
-
-  solution = Traffic.Pathfinder.bStar(start, end)
-  Traffic.Pathfinder.printSolution(solution)
-
+  start = performance()
+  When.all(promises).then () ->
     log.info "Data loaded in #{((performance() - start) / 1000).toFixed(2)} Seconds"
+    _c()
 
-
-    ###############################################################
-    ############### Link data ####################################
-    ###############################################################
-
-    nodeList = LocalDatabase.table("nodes")
-    cableList = LocalDatabase.table("cables")
-
-
-    ###############################################################
-    ############ Testing of Traffic Engine #######################
-    ###############################################################
-
-    te = new Macro.TrafficEngine(cableList)
-    te.updateLoad()
-
-
-    ###############################################################
-    ############ Testing of pathfinder ############################
-    ###############################################################
-
-
-    start = nodeList.findOne({id: 17418}).node
-    end = nodeList.findOne({id: 17464}).node
-
-    solution = Micro.Pathfinder.bStar(start, end)
-    Micro.Pathfinder.printSolution(solution)
-
-
-  else
-    setTimeout(runner, 10)
-  """
+# Preload then start server
+preload ->
+  startServer()

@@ -68,6 +68,10 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
         country: attack.countrycode2
         city2: attack.city2
 
+      # Pass animation if Gotham Engine is unactive
+      if not Gotham.Running
+        return
+
       that.View.animateAttack source, target
 
 

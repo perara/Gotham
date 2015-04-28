@@ -6,6 +6,7 @@ class MissionView extends Gotham.Pattern.MVC.View
   constructor: ->
     super
 
+    @movable()
     @selected = null
     @missions =
       ongoing:
@@ -14,7 +15,6 @@ class MissionView extends Gotham.Pattern.MVC.View
         currentPage: 0
         elements: []
         elementsPerPage: 6
-        selected: null
         y: 450
       available:
         isOngoing: false
@@ -22,7 +22,6 @@ class MissionView extends Gotham.Pattern.MVC.View
         currentPage: 0
         elements: []
         elementsPerPage: 6
-        selected: null
         y: 60
 
   create: ->
@@ -80,8 +79,6 @@ class MissionView extends Gotham.Pattern.MVC.View
 
   removeMission: (mission, container) ->
 
-
-
     # Remove From elements
     for sprite in container.elements
       if sprite.mission.id == mission.id
@@ -96,7 +93,6 @@ class MissionView extends Gotham.Pattern.MVC.View
           @window.removeChild sprite
           break
 
-    container.selected = null
     @updateMissionJournal container
 
 
@@ -145,14 +141,15 @@ class MissionView extends Gotham.Pattern.MVC.View
               mission._toggle = false
 
         @tint = 0x00ff00
-        @container.selected = @
+        that.selected = @
       else
         @tint = 0xffffff
-        @container.selected = null
+        that.selected = null
       that.updateMissionJournal(@container)
 
 
-    missionTitle = new Gotham.Graphics.Text(mission.getTitle(), {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
+    title = if mission.isCompleted() then mission.getTitle() + " (Complete)" else mission.getTitle()
+    missionTitle = new Gotham.Graphics.Text(title, {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
     missionTitle.x = 10
     missionTitle.y = 15
     missionItem.addChild missionTitle
@@ -235,6 +232,14 @@ class MissionView extends Gotham.Pattern.MVC.View
       GothamGame.Network.Socket.emit 'AbandonMission', that.selected.mission
 
 
+    @completeMissionButton = new Gotham.Controls.Button "Complete Mission", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 35}
+    @completeMissionButton.y = @abandonButton.y + @completeMissionButton.height + 50
+    @completeMissionButton.visible = false
+    @completeMissionButton.x = 480
+    @window.addChild @completeMissionButton
+    @completeMissionButton.click = () ->
+      GothamGame.Network.Socket.emit 'CompleteMission', that.selected.mission
+
 
 
   updateMissionJournal:(container) ->
@@ -244,7 +249,7 @@ class MissionView extends Gotham.Pattern.MVC.View
 
 
     # Hide if no mission is selected
-    if not container.selected
+    if not @selected
       @noDisplayedMission.visible = true
       @missionTitle.visible = false
       @missionDescription_title.visible = false
@@ -252,6 +257,7 @@ class MissionView extends Gotham.Pattern.MVC.View
       @acceptButton.visible = false
       @abandonButton.visible = false
       @missionRequirements.visible = false
+      @completeMissionButton.visible = false
       return
 
     ################################
@@ -261,33 +267,34 @@ class MissionView extends Gotham.Pattern.MVC.View
       @acceptButton.visible = true
       @abandonButton.visible = false
       @missionRequirements.visible = false
-      missionDescription = container.selected.mission.getDescription()
+      missionDescription = @selected.mission.getDescription()
     else
       @acceptButton.visible = false
-      @abandonButton.visible = true
       @missionRequirements.visible = true
+
+      if @selected.mission.isCompleted()
+        @completeMissionButton.visible = true
+      else
+        @abandonButton.visible = true
+
+
 
       # Set Text of mission Requirements
       reqStr = ""
-      for id, req of container.selected.mission.getRequirements()
+      for id, req of @selected.mission.getRequirements()
         reqStr += "#{req.getName()}: #{req.getCurrent()} / #{req.getExpected()}\n"
       @missionRequirements.text = reqStr
 
 
       # Move abandon button to bottom
       @abandonButton.y = @missionRequirements.y + @abandonButton.height + 20
-      missionDescription = container.selected.mission.getExtendedDescription()
-
-
-
-
-
+      missionDescription = @selected.mission.getExtendedDescription()
 
 
     @noDisplayedMission.visible = false
     @missionDescription_title.visible = true
     #MissionView.replacePlaceholders(container.selected.mission, container.selected.mission._title).replace("\\n","\n")
-    @missionTitle.text = container.selected.mission.getTitle()
+    @missionTitle.text = @selected.mission.getTitle()
     @missionTitle.visible = true
 
     #MissionView.replacePlaceholders(container.selected.mission, missionDescription).replace("\\n","\n")

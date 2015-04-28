@@ -3,8 +3,6 @@
 class World extends Gotham.Graphics.Scene
 
   create: ->
-    that = @
-
 
 
     WorldMap = new GothamGame.Controllers.WorldMap "WorldMap"

@@ -9,6 +9,41 @@ class MissionRoom extends Room
   define: ->
     that = @
 
+
+
+    # Whenever a requirement has progressed
+    # Data structure is the following:
+    # {
+    #   userMissionRequirement: id
+    #   current: currentVal
+    # }
+    #
+    @AddEvent "ProgressMission", (data) ->
+      that.log.info "[MissionRoom] AcceptMission called"
+      client = that.GetClient(@id)
+
+      that.Database.Model.UserMissionRequirement.findOne(
+        where:
+          id: data.userMissionRequirement
+      ).then (record) ->
+
+        # If the record does not exists ("Should" never happen, unless hacking occured)
+        if not record
+          client.Socket.emit 'ERROR', {
+            type: "ERROR_MISSION_USER_REQUIREMENT_NOT_FOUND"
+            message: "The mission requirement you attempted to update does not exist"
+          } # TODO Multilangual
+          return
+
+        # Uppdate the current
+        record.updateAttributes({
+          current: data.current
+        })
+
+
+
+
+
     @AddEvent "AcceptMission", (mission) ->
       that.log.info "[MissionRoom] AcceptMission called"
       client = that.GetClient(@id)
@@ -21,7 +56,10 @@ class MissionRoom extends Room
 
         # Return with error if record exists. Means user has already started Mission
         if record
-          client.Socket.emit 'ERROR', "ERROR_MISSION_ONGOING", "You cannot start the same mission twice!" # TODO Multilangual
+          client.Socket.emit 'ERROR', {
+            type: "ERROR_MISSION_ONGOING"
+            message: "You cannot start the same mission twice!"
+          } # TODO Multilangual
           return
 
         # Start the Mission for the User
@@ -49,7 +87,10 @@ class MissionRoom extends Room
       ).then (record) ->
 
         if not record
-          client.Socket.emit 'ERROR', "ERROR_MISSION_NOT_ONGOING", "You cannot abandon a mission not currently ongoing!" # TODO Multilangual
+          client.Socket.emit 'ERROR', {
+            type: "ERROR_MISSION_NOT_ONGOING"
+            message: "You cannot abandon a mission not currently ongoing!"
+          } # TODO Multilangual
           return
 
         record.destroy().on 'success', (u) ->

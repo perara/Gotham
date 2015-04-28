@@ -8,6 +8,8 @@ class BarView extends Gotham.Pattern.MVC.View
   Bar:
     Top: undefined
     Bottom: undefined
+    Side:
+      Left: undefined
 
   constructor: ->
 
@@ -15,12 +17,22 @@ class BarView extends Gotham.Pattern.MVC.View
 
 
   create: ->
-    @create_TopBar()
-    @create_BottomBar()
+    @create_topBar()
+    @create_sideBar()
+    #@create_bottomBar()
 
 
+  create_sideBar: ->
+    texture_side_left = Gotham.Preload.fetch("sidebar", "image")
+    @Bar.Side.Left = new Gotham.Graphics.Sprite texture_side_left
+    @Bar.Side.Left.y = 80
+    @Bar.Side.Left.x = 10
+    @Bar.Side.Left.width = 70
+    @Bar.Side.Left.height = 1080
+    @addChild @Bar.Side.Left
 
-  create_TopBar: ->
+
+  create_topBar: ->
     texture_topBar = Gotham.Preload.fetch("topBar", "image")
     @Bar.Top = topBar = new Gotham.Graphics.Sprite texture_topBar
     @Bar.Top._left = []
@@ -31,7 +43,7 @@ class BarView extends Gotham.Pattern.MVC.View
     topBar.height = 70
     @addChild topBar
 
-  create_BottomBar: ->
+  createBottomBar: ->
     texture_bottomBar = Gotham.Preload.fetch("bottomBar", "image")
     @Bar.Bottom = bottomBar = new Gotham.Graphics.Sprite texture_bottomBar
     @Bar.Bottom._left = []
@@ -42,37 +54,33 @@ class BarView extends Gotham.Pattern.MVC.View
     bottomBar.position.y = 1080 - bottomBar.height
     @addChild bottomBar
 
-    """
-    # Create LAT long text
-    @coordinateText = new Gotham.Graphics.Text("Lat: 0\nLng: 0", {font: "bold 20px Arial", fill: "#ffffff", align: "left"});
-    @coordinateText.position.x = topBar.width/2
-    @coordinateText.position.y = 0
-    @coordinateText.anchor =
-      x: 0
-      y: 0
-    @addChild(@coordinateText)
 
-    # Create LAT long text
-    @countryText = new Gotham.Graphics.Text("Country: None", {font: "bold 20px Arial", fill: "#ffffff", align: "left"});
-    @countryText.position.x = topBar.width/2 + 150
-    @countryText.position.y = 15
-    @countryText.anchor =
-      x: 0
-      y: 0
-    @addChild(@countryText)
+  addSidebarItem: (margin, callback) ->
+
+    newItem = callback()
+
+    # Find largest Y value with the "valign"
+    lastElement = null
+    for _ch in  @Bar.Side.Left.children
+      if not lastElement
+        lastElement = _ch
+        continue
+
+      if _ch.y > lastElement.y
+          lastElement = _ch
 
 
+    # If no lastElement (Empty)
+    if not lastElement
+      newItem.y = 10
+      @Bar.Side.Left.addChild newItem
+      return
 
-    button_terminal = new Gotham.Controls.Button "Terminal" , 50, 75
-    button_terminal.toggleOn = (e) ->
-      that.parent.getObject("Terminal").Show()
-    button_terminal.toggleOff = (e) ->
-      that.parent.getObject("Terminal").Hide()
+    newItem.y = lastElement.y + lastElement.height + margin
+    @Bar.Side.Left.addChild newItem
 
 
 
-    bottomBar.addChild button_terminal
-    """
 
 
   # Adds a item to the specified bar

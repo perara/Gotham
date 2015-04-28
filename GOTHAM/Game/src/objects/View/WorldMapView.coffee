@@ -4,7 +4,7 @@
     super
 
     @__width = 1920
-    @__height = 1080 - 70 - 70 # Subtract bar heights
+    @__height = 1080 - 70 # Subtract bar heights
 
     @__mapSize =
       width: 7200
@@ -59,6 +59,23 @@
     @addChild backgroundMask
     background.mask = backgroundMask
 
+  scaleNodes: (zoomOut) ->
+    # Determine weither its zoom in or zoom out
+    inorout = if zoomOut then 1 else -1
+
+    # Fetch node table
+    db_node = Gotham.Database.table "node"
+
+    # Scale each of the nodes
+    db_node().each (row) ->
+      node = row.sprite
+      if zoomOut
+        node.scale.x = (node.scale.x * 1.08)
+        node.scale.y = (node.scale.y * 1.08)
+      else
+        node.scale.x = (node.scale.x / 1.08)
+        node.scale.y = (node.scale.y / 1.08)
+
 
   createWorldMap: ->
     that = @
@@ -68,49 +85,14 @@
     """
     mapContainer = new Gotham.Graphics.Container
     mapContainer.interactive = true
+    mapContainer.scale =
+      x: 0.8
+      y: 0.8
+    mapContainer.x = (@__width - (@__width * mapContainer.scale.x)) / 2
+
+
     mapContainer.hitArea = new Gotham.Graphics.Rectangle 0,0,  @__width, @__height
     @_background.addChild mapContainer
-
-    """
-    Home Button - Return to 0,0 on world map
-    """
-
-    home = new Gotham.Graphics.Sprite Gotham.Preload.fetch("home", "image")
-    home.x = 10
-    home.y = 10
-    home.interactive = true
-    @_background.addChild home
-    ready = true
-    home.tint = 0x4169E1
-    home.click = ->
-      if ready
-        ready = false
-        mapContainer.interactive = false
-        home.tint = 0xFF0000
-
-        prevSize =
-          width : that.__width
-          height : that.__height
-
-        nextSize =
-          width : mapContainer.width
-          height : mapContainer.height
-
-        diffSize =
-          width: prevSize.width - nextSize.width
-          height: prevSize.height - nextSize.height
-
-        tween = new Gotham.Tween mapContainer
-        tween.easing Gotham.Tween.Easing.Exponential.Out
-        tween.to {position: {x: (diffSize.width / 2), y: (diffSize.height / 2)}}, 500
-        tween.start()
-        tween.onComplete () ->
-          home.tint = 0x4169E1
-          mapContainer.interactive = true
-          mapContainer.offset.x = 0
-          mapContainer.offset.y = 0
-          ready = true
-
 
     """
     Activate WheelScrolling on the mapContainer
@@ -181,6 +163,8 @@
     mapContainer.onWheelScroll = (e) ->
       if not @canScroll then return
 
+
+
       direction = e.wheelDeltaY / Math.abs(e.wheelDeltaY)
 
       # -1 = Wheel out, 1 = Wheen In
@@ -201,19 +185,17 @@
 
       # IF: Determine weither we should ignore the scaling
       # ELSE: Scaling should happen, update offsets
-      if nextScale.x < 1 or nextScale.y < 1
-        @scale =
-          x: 1
-          y: 1
+      if nextScale.x < 0.6 or nextScale.y < 0.6
         return
       else if nextScale.x > 10 or nextScale.y > 10
-        @scale =
-          x: 10
-          y: 10
         return
       else
-        @offset.x = if zoomOut then  @offset.x / factor else @offset.x * factor
-        @offset.y  = if zoomOut then @offset.y / factor else @offset.y * factor
+        @scale = nextScale
+        # Scale Nodes
+        that.scaleNodes(zoomOut)
+
+      @offset.x = if zoomOut then  @offset.x / factor else @offset.x * factor
+      @offset.y  = if zoomOut then @offset.y / factor else @offset.y * factor
 
       # Calculate the size offset, we do this to move
       prevSize =
@@ -232,7 +214,8 @@
       @position.x = (diffSize.width / 2) + @offset.x
       @position.y = (diffSize.height / 2) + @offset.y
 
-      @scale = nextScale
+
+
 
     """
     Create World Map
@@ -265,8 +248,8 @@
     mapJson = Gotham.Preload.fetch("map", "json")
 
     # Create PolygonList
-    polygonList = Gotham.Graphics.Tools.polygonFromJSON(mapJson, 10, {x: @__mapSize.width / @__width, y: @__mapSize.height / @__height})
-    #polygonList2 = Gotham.Graphics.PolygonFromJSON(mapJson, 10)
+    polygonList = Gotham.Graphics.Tools.polygonFromJSON mapJson, 1 , {x: @__mapSize.width / @__width, y: @__mapSize.height / @__height}
+    #polygonList = Gotham.Graphics.Tools.polygonFromJSON(mapJson, 1)
 
 
     # Convert to Graphics objects
@@ -287,7 +270,7 @@
       """
       graphics.clear()
       graphics.lineStyle(2, 0x000000, 1);
-      graphics.beginFill(0xffffff, 1)
+      graphics.beginFill(0xffffff, 0.8)
       graphics.blendMode = PIXI.BLEND_MODES.ADD
       graphics.drawPolygon(graphics.polygon.points)
       hoverTexture = graphics.generateTexture()
@@ -360,7 +343,10 @@
     coordinates = @coordinateToPixel(node.lat, node.lng)
 
     # Create a node sprite
+
+
     gNode = new Gotham.Graphics.Sprite Gotham.Preload.fetch("map_marker", "image")
+    gNode.tint = 0xF8E23B
 
     # Set position according to the Lat,Lng conversion
     gNode.position =
@@ -405,9 +391,9 @@
 
 
     node.sprite.mouseover = ->
-      nodeHover node, 0xffff00, true
+      nodeHover node, 0xFF0000, true
     node.sprite.mouseout = ->
-      nodeHover node, 0xffffff, false
+      nodeHover node, 0xF8E23B, false
 
 
   # Clears animated paths
@@ -503,10 +489,15 @@
   #
   # @param startNode {Node} starting node
   # @param endNode {Node} End Node
+  # Creates a animated line between two nodes
+  #
+  # @param startNode {Node} starting node
+  # @param endNode {Node} End Node
   animatePath: (startNode, endNode) ->
     if not @pathContainer
       @pathContainer = new Gotham.Graphics.Graphics()
       @nodeContainer.addChild @pathContainer
+
 
     # Create cable from the network to connected node
     path =
@@ -527,6 +518,10 @@
     animationGraphics.blendMode = PIXI.BLEND_MODES.ADD;
     gCable.addChild animationGraphics
 
+    diff =
+      x: (path.end.x - path.start.x)
+      y: (path.end.y - path.start.y)
+
     tween = new Gotham.Tween()
     gCable.tween = tween
     tween.repeat Infinity
@@ -535,33 +530,28 @@
 
       # Elapsed tween time
       elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
-
-      points =
-        start:
-          x : path.start.x + (path.end.x - path.start.x) * elapsed
-          y : path.start.y + (path.end.y - path.start.y) * elapsed
-        end:
-          x : path.start.x + (path.end.x - path.start.x) * Math.min(elapsed + 0.2, 1)
-          y : path.start.y + (path.end.y - path.start.y) * Math.min(elapsed + 0.2, 1)
-
+      # Start from beginning
+      if elapsed + 0.2 > 1
+        points =
+          start:
+            x : path.start.x + diff.x * 0
+            y : path.start.y + diff.y * 0
+          end:
+            x : path.start.x + diff.x * Math.min(elapsed + 0.2 - 1, 1)
+            y : path.start.y + diff.y * Math.min(elapsed + 0.2 - 1, 1)
+      else
+        points =
+          start:
+            x : path.start.x + diff.x * elapsed
+            y : path.start.y + diff.y * elapsed
+          end:
+            x : path.start.x + diff.x * Math.min(elapsed + 0.2, 1)
+            y : path.start.y + diff.y * Math.min(elapsed + 0.2, 1)
 
       animationGraphics.clear()
       animationGraphics.lineStyle(1, 0x00ff00, 1);
       animationGraphics.moveTo(points.start.x, points.start.y)
       animationGraphics.lineTo(points.end.x, points.end.y)
-
-      # Start from beginning
-      if elapsed + 0.2 > 1
-        points =
-          start:
-            x : path.start.x + (path.end.x - path.start.x) * 0
-            y : path.start.y + (path.end.y - path.start.y) * 0
-          end:
-            x : path.start.x + (path.end.x - path.start.x) * Math.min(elapsed + 0.2 - 1, 1)
-            y : path.start.y + (path.end.y - path.start.y) * Math.min(elapsed + 0.2 - 1, 1)
-
-        animationGraphics.moveTo(points.start.x, points.start.y)
-        animationGraphics.lineTo(points.end.x, points.end.y)
 
 
     return tween
@@ -572,7 +562,8 @@
 
 
 
-  # Adds a cable to given node
+
+# Adds a cable to given node
   #
   # @param cable {Object} The cable Data
   addCable: (cable) ->
