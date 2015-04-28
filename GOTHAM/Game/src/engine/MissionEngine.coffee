@@ -8,6 +8,7 @@ class MissionEngine
   # Create a mission object
   createMission: (missionData) ->
     mission = new GothamGame.Mission()
+    mission.setID missionData.id
     mission.setTitle missionData.title
     mission.setExtendedDescription missionData.description_ext
     mission.setDescription missionData.description

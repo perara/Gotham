@@ -5,6 +5,7 @@ class Mission
 
 
   constructor: () ->
+    @id = null
     @_title = null
     @_description = null
     @_description_ext = null
@@ -97,6 +98,12 @@ class Mission
 
   setRequiredXP: (xp) ->
     @_requiredXP = xp
+  setID: (id) ->
+    @id = id
+
+  getID: ->
+    return @id
+
 
   getTitle: ->
     return @_title

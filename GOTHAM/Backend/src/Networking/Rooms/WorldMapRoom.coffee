@@ -12,47 +12,27 @@ class WorldMapRoom extends Room
       client = @
       that.log.info "[WMRoom] GetNodes called" + data
 
-      that.Database.Model.Node.all(
-        {
-          include: [
-            {
-              model: that.Database.Model.Cable
-              attributes: ['id']
-            }
-          ]
-        }
-      ).then (nodes)->
-        client.emit 'GetNodes', nodes
+
+      db_node = Gotham.LocalDatabase.table("Node")
+
+      # Fetch all cables, then eager load cables
+      nodes = db_node.find().map (item) ->
+        item.getCables()
+        return item
+      client.emit 'GetNodes', nodes
 
     @AddEvent "GetCables", (data) ->
-      client = @
       that.log.info "[WMRoom] GetCables called" + data
 
+      db_cable = Gotham.LocalDatabase.table("Cable")
 
-      # Nodes, CableType
-      that.Database.Model.Cable.all(
-        {
-          include: [
-            {
-              model: that.Database.Model.CablePart
-            }
-            {
-              model: that.Database.Model.CableType
-            }
-            {
-              model: that.Database.Model.Node
-              attributes: ['id']
-            }
-          ]
-        }
-      ).then (cables) ->
+      cables = db_cable.find().map (cable) ->
+        cable.getCablePart()
+        cable.getCableType()
+        cable.getNodes()
+        return cable
 
-        cables.map (cable) ->
-          cable.CableParts.map (part) ->
-            return 
-
-
-        client.emit 'GetCables', JSON.stringify(cables)
+      client.emit 'GetCables', cables
 
 
 

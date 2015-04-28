@@ -48,32 +48,36 @@ class MissionRoom extends Room
       that.log.info "[MissionRoom] AcceptMission called"
       client = that.GetClient(@id)
 
-      that.Database.Model.UserMission.findOne(
-        where:
-          mission: mission.id
-          user: client.GetUser().id
-      ).then (record) ->
+      db_userMission = Gotham.LocalDatabase.table("UserMission")
 
-        # Return with error if record exists. Means user has already started Mission
-        if record
-          client.Socket.emit 'ERROR', {
-            type: "ERROR_MISSION_ONGOING"
-            message: "You cannot start the same mission twice!"
-          } # TODO Multilangual
-          return
+      # Look for existsing user mission entry
+      userMission = db_userMission.findOne({
+        mission: mission.id
+        user: client.GetUser().id
+      })
 
-        # Start the Mission for the User
-        # Create a UserMission entity
-        that.Database.Model.UserMission.create(
-          user: client.GetUser().id
-          mission: mission.id
-        ).then (userMission) ->
+      # If a result was found, return with error
+      if userMission
+        client.Socket.emit 'ERROR', {
+          type: "ERROR_MISSION_ONGOING"
+          message: "You cannot start the same mission twice!"
+        } # TODO Multilangual
+        return
 
-          # Find Mission Entity from local db
-          mission = Gotham.LocalDatabase.table("missions").find({id : userMission.mission})[0].mission
 
-          # Mission entry is now created
-          client.Socket.emit 'AcceptMission', mission
+      # Start the Mission for the User
+      # Create a UserMission entity
+      Gotham.LocalDatabase.Model.UserMission.create {
+        user: client.GetUser().id
+        mission: mission.id
+      }, (mission) ->
+
+        # Mission entry is now created
+        client.Socket.emit 'AcceptMission', mission
+
+
+
+
 
 
     @AddEvent "AbandonMission", (mission) ->
@@ -107,54 +111,28 @@ class MissionRoom extends Room
       that.log.info "[MissionRoom] GetMission called" + data
       client = that.GetClient(@id)
 
-      missions = []
-      _ongoing = []
-      _available = []
-      promises = []
-
-      # Fetch all available missions
-      promises.push that.Database.Model.Mission.all(include: [{ all: true, nested:true}]).then (_missions) ->
-
-        # Create a mission object and push to missions array
-        for missionData in _missions
-          _available.push that.CreateMissionObject missionData, null
+      missions =
+        ongoing: []
+        available: []
 
 
-      # Fetch all ongoing missions
-      """promises.push that.Database.Model.UserMission.all(
-        where: user: 1
-        include: [{ all: true, nested:true}]
-      ).then (userMissions) ->
+      db_mission = Gotham.LocalDatabase.table("Mission")
+      db_userMission = Gotham.LocalDatabase.table("UserMission")
 
-        # Create ongoing missions
-        for userMission in userMissions
-          mission = that.CreateMissionObject userMission.Mission, userMission.UserMissionRequirements
+      # Fetch Available Missions
+      missions.available = db_mission.find()
+      for _m in missions.available
+        _m.getMissionRequirements()
 
-          # Push the ongoing mission to the array
-          _ongoing.push mission
-      """
+      # Fetch Ongoing Missions
+      missions.ongoing = db_userMission.find({
+        user: client.GetUser().id
+      })
+      for _m in missions.ongoing
+        _m.getMission()
+        _m.getUserMissionRequirements()
 
-      When.all(promises).then () ->
-
-
-        # First add ongoing missions to the missions array
-        for ongoing in _ongoing
-          missions.push ongoing
-
-        # Secondly add all available missions that are not ongoing
-        for available in _available
-
-          # Dont add available t othe mission array if its already ongoing
-          add = true
-          for mission in missions
-            if mission.id == available.id
-              add = false
-
-          # Add available to array
-          if add
-            missions.push available
-
-        client.Socket.emit 'GetMission', missions
+      client.Socket.emit 'GetMission', missions
 
   # Create a Mission objece
   # @param missionData {Mission} THe mission data

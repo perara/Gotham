@@ -220,7 +220,10 @@ class MissionView extends Gotham.Pattern.MVC.View
     @acceptButton.x = 480
     @window.addChild @acceptButton
     @acceptButton.click = () ->
-      GothamGame.Network.Socket.emit 'AcceptMission', that.selected.mission
+      console.log that.selected.mission
+      GothamGame.Network.Socket.emit 'AcceptMission', {
+        id: that.selected.mission.getID()
+      }
 
     @abandonButton = new Gotham.Controls.Button "Abandon", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 50}
     @abandonButton.y = @missionDescription.y + @missionDescription.height + 20

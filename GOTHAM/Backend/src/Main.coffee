@@ -5,7 +5,6 @@
 ##########################################################
 ## Third Party
 performance = require 'performance-now'
-When = require 'when'
 log = require('log4js').getLogger("Main")
 
 # Gotham Party
@@ -49,34 +48,17 @@ startServer = () ->
     log.info "[SERVER] Client Disconnected #{_client.id}"
 
 preload = (_c) ->
-  promises = []
-
-  fs = require 'fs'
-  fs.readdirSync("#{__dirname}/Objects/World/Objects/").forEach (file) ->
-    if file != "GothamObject.coffee"
-      fullName = file
-      # Remove Extension
-      file = file.replace(/\.[^/.]+$/, "")
-
-      promises.push Gotham.Database.Model[file].all().then (objs) ->
-        # Require object class
-        Object = require "./Objects/World/Objects/#{fullName}"
-
-        # Create table
-        db_obj = Gotham.LocalDatabase.table(file)
-        db_obj.insert new Object(obj) for obj in objs
-
-
 
   start = performance()
-  When.all(promises).then () ->
+  Gotham.LocalDatabase.preload ->
     log.info "Preload done in #{((performance() - start) / 1000).toFixed(2)} Seconds"
     _c()
 
 
 
 
+
 # Preload then start server
 preload ->
-  #startServer()
+  startServer()
 

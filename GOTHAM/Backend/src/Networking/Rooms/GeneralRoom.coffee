@@ -12,38 +12,32 @@ class GeneralRoom extends Room
     @AddEvent "Login", (login) ->
       client = that.GetClient @id
 
-
-
       that.log.info "[GeneralRoom] Login called: " + login
       that.log.info "---- Attempting to login with #{login.username}:#{login.password}"
 
-      that.Database.Model.User.find(
-        where:
-          username: login.username
-          password: login.password
-        attributes: ['id', 'username', 'email', 'money', 'experience']
+      db_user = Gotham.LocalDatabase.table("User")
 
-      ).then (user) ->
+      # Check if credential is correct
+      user = db_user.findOne({
+        username: login.username
+        password: login.password
+      })
 
-        if user
-          client.SetUser user
-          client.Authenticate true
-          client.Socket.emit 'Login', {"status": 200}
-        else
-          client.Socket.emit 'Login', {"status": 500}
-          client.Socket.disconnect()
-
-
+      # Send OK to frontend if ok else 500
+      if user
+        client.SetUser user
+        client.Authenticate true
+        client.Socket.emit 'Login', {"status": 200}
+      else
+        client.Socket.emit 'Login', {"status": 500}
+        client.Socket.disconnect()
 
 
     @AddEvent "Logout", (data) ->
       that.log.info "[GeneralRoom] Logout called" + data
       client = that.GetClient @id
       that.RemoveClient client
-
       client.Socket.emit 'Logout', "OK"
-
-
 
 
     @AddEvent "Terminate", (data) ->

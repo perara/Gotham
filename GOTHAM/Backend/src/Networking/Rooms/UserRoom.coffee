@@ -1,8 +1,6 @@
 Room = require './Room.coffee'
 
 
-
-
 class UserRoom extends Room
 
   define: ->
@@ -11,35 +9,16 @@ class UserRoom extends Room
     @AddEvent "GetUser", (data) ->
       client = that.GetClient(@id)
 
-      that.Database.Model.User.find(
-        where: client.GetUser().id
-        include:
-          [
-            {
-              model: that.Database.Model.Identity
-              include:
-                [
-                  {
-                    model: that.Database.Model.Network
-                    include:
-                      [
-                        {
-                          model: that.Database.Model.Node
-                        },
-                        {
-                          model: that.Database.Model.Host
-                          include:
-                            [
-                              model: that.Database.Model.Filesystem
-                            ]
-                        }
-                      ]
-                  }
-                ]
-            }
-          ]
-      ).then (user) ->
-        client.Socket.emit 'GetUser', user
+      db_user = Gotham.LocalDatabase.table("User")
+      user = db_user.findOne({id: client.GetUser().id})
+      # Eager Load stuff
+      for identity in user.getIdentities()
+        for network in identity.getNetworks()
+          network.getNode()
+          for host in network.getHosts()
+            host.getFilesystem()
+
+      client.Socket.emit 'GetUser', user
 
 
 
