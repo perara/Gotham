@@ -1,11 +1,9 @@
-Micro = require './Micro.coffee'
-
 class Packet
 
   constructor: (path) ->
 
     @consistent = false
-    @pathId = Pathfinder.toIdList(path)
+    @pathId = Gotham.Micro.Pathfinder.toIdList(path)
     @path = path
     @id
 

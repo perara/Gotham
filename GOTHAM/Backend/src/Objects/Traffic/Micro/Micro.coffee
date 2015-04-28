@@ -1,9 +1,8 @@
 class Micro
 
-  @log: require('log4js').getLogger("Micro_Traffic")
 
   @Protocols =
-  # Layer 2
+    # Layer 2
     Layer2: require './Protocols/Layer2.coffee'
 
     # Layer 3
@@ -19,9 +18,13 @@ class Micro
     Layer7: require './Protocols/Layer7.coffee'
 
   @Connection = require './Connection.coffee'
+
   @LayerStructure = require './LayerStructure.coffee'
+
   @Packet = require './Packet.coffee'
+
   @Pathfinder = require './Pathfinder.coffee'
+
   @Session = require './Session.coffee'
 
 module.exports = Micro

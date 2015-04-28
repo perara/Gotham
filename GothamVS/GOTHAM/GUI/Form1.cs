@@ -226,7 +226,7 @@ namespace Gotham.Application.GUI
         {
 
             // Initialize map:
-            MainMap.MapProvider = GMap.NET.MapProviders.GoogleSatelliteMapProvider.Instance;
+            MainMap.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
             GMaps.Instance.Mode = AccessMode.ServerOnly;
             MainMap.Position = new PointLatLng(-25.971684, 32.589759);
             MainMap.DragButton = MouseButtons.Left;

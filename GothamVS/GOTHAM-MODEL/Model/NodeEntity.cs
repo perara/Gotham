@@ -149,13 +149,13 @@ namespace Gotham.Model
                 .Not.Nullable()
                 .Column("tier")
                 .Not.LazyLoad();
-
-            References(x => x.Country)
+/*
+            References(x => x.CountryCode)
             .Not.Nullable()
             .Column("countryCode")
             .PropertyRef("CountryCode")
             .Not.LazyLoad();
-
+*/
             HasManyToMany(x => x.Cables)
                 .Cascade.All()
                 .Table("node_cable")
