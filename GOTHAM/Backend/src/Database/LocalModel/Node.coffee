@@ -26,7 +26,7 @@ class Node extends GothamObject
 
       # Convert Siblings map to array
       t = []
-      for k, v of @_siblings
+      for k, v of @Siblings
         t.push v
       @Siblings = t
 

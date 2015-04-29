@@ -158,15 +158,16 @@ class MissionRoom extends Room
 
     return mission
 
-  MakeMission = (missionID, userID) ->
+  makeMission = (missionID, userID) ->
 
     getRandomNetwork = ->
-      hosts = Gotham.LocalDatabase.table("hosts").data
+      hosts = Gotham.LocalDatabase.table("Host").data
       return hosts[Math.floor(Math.random() * hosts.length)].host.dataValues
 
     # Load missions and requirements
-    missions = Gotham.LocalDatabase.table("missions")
+    missions = Gotham.LocalDatabase.table("MissionRequirement")
     mission =  missions.find(id: missionID)[0]
+    console.log mission
     requirements = mission.mission.dataValues.MissionRequirements
 
     # Generate user_mission object

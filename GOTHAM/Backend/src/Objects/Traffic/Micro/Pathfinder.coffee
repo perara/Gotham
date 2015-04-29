@@ -11,7 +11,7 @@ class Pathfinder
   ###############################################################################################
   @tryRandom = (start, goal, tryPaths = 100000) ->
 
-    nodes = Gotham.LocalDatabase.table("nodes")
+    nodes = Gotham.LocalDatabase.table("Node")
 
     sum = 0
     minPath = Number.MAX_VALUE
@@ -34,12 +34,12 @@ class Pathfinder
 
       loop
 
-        siblings = currentNode.siblings()
+        siblings = currentNode.getSiblings()
 
         nextNodeId = siblings[rnd(0, siblings.length - 1)].id
 
         deltaTime = new Date().getTime()
-        nextNode = nodes.findOne({id: nextNodeId}).node
+        nextNode = nodes.findOne(id: nextNodeId)
         sum += (new Date().getTime() - deltaTime)
         queue.push(nextNode)
         currentNode = nextNode
@@ -65,30 +65,30 @@ class Pathfinder
   ###############################################################################################
   @aStar: (start, goal) ->
 
-    nodes = Gotham.LocalDatabase.table("nodes")
+    nodes = Gotham.LocalDatabase.table("Node")
 
     maxPathLength = 100
     path = []
     blacklist = []
     path.push(start)
-    blacklist.push(start.id)
+    blacklist.push(start)
 
     reverse = (node) ->
-      blacklist.push(node.id)
+      blacklist.push(node)
       path.pop()
       log.info "Foul Node #{node.id}"
 
     addNode = (node) ->
       path.push(node)
-      blacklist.push(node.id)
+      blacklist.push(node)
       log.info "Fine Node #{node.id}"
 
     start = performance()
     loop
 
       currentId = path[path.length - 1].id
-      current = nodes.findOne({id: currentId}).node
-      nextNode = GeoTool.getClosest(goal, current.siblings(), blacklist)
+      current = nodes.findOne(id: currentId)
+      nextNode = GeoTool.getClosest(goal, current.getSiblings(), blacklist)
       wrongWay = 0
 
       log.info "Current node: #{current.id}"
@@ -118,16 +118,16 @@ class Pathfinder
   ###############################################################################################
   ##### Improvement of aStar, supports reversing and removal of obsolete nodes
   ###############################################################################################
-  @bStar: (start, goal, startBacktrack = 3, escalations = 5) ->
+  @bStar: (start, goal, startBacktrack = 3, escalations = 1) ->
 
-    nodes = Gotham.LocalDatabase.table("nodes")
+    nodes = Gotham.LocalDatabase.table("Node")
 
     # Declarations
     path = []
     blacklist = []
-    allSiblingIds = {}
+    allSiblings = {}
     path.push(start)
-    blacklist.push(start.id)
+    blacklist.push(start)
     wrongWay = 0
     best = null
     maxBacktrack = startBacktrack
@@ -136,14 +136,14 @@ class Pathfinder
     ##### Returns sibling closest to goal (gets siblings list from input node)
     ###############################################################################################
     getBestSibling = (current) ->
-      bestSibling = GeoTool.getClosest(goal, current.siblings(), blacklist)
+      bestSibling = GeoTool.getClosest(goal, current.getSiblings(), blacklist)
 
-      for sibling in current.siblings()
+      for sibling in current.getSiblings()
 
         if bestSibling.id == sibling.id then continue
-        allSiblingIds[sibling.id] = path.length
+        allSiblings[sibling.id] = path.length
 
-      return GeoTool.getClosest(goal, current.siblings(), blacklist)
+      return GeoTool.getClosest(goal, current.getSiblings(), blacklist)
 
     ###############################################################################################
     ##### Gets the distance from input note to goal
@@ -158,9 +158,9 @@ class Pathfinder
       for [0...reverses]
         pathLength = path.length
         removed = path.pop()
-        for key, value of allSiblingIds
+        for key, value of allSiblings
           if value == pathLength
-            delete allSiblingIds[key]
+            delete allSiblings[key]
         #log.info "Foul Node #{removed.id}"
 
     ###############################################################################################
@@ -168,7 +168,7 @@ class Pathfinder
     ###############################################################################################
     addNode = (node) ->
       path.push(node)
-      blacklist.push(node.id)
+      blacklist.push(node)
       #log.info "Fine Node #{node.id}"
 
     ###############################################################################################
@@ -177,7 +177,7 @@ class Pathfinder
     ###############################################################################################
     cutCheck = (node) ->
 
-      for key, value of allSiblingIds    # {pathIndex: }
+      for key, value of allSiblings    # {pathIndex: }
 
         if blacklist.indexOf(key) > -1 then continue
         if ""+node.id == ""+key
@@ -196,9 +196,9 @@ class Pathfinder
     expand = ->
       path = []
       blacklist = []
-      allSiblingIds = {}
+      allSiblings = {}
       path.push(start)
-      blacklist.push(start.id)
+      blacklist.push(start)
       wrongWay = 0
       maxBacktrack += 1
 
@@ -228,8 +228,8 @@ class Pathfinder
           log.info "No node added, maxWrongWays too small?"
           expand()
 
-        currentId = path[path.length - 1].id
-        current = nodes.findOne({id: currentId}).node
+        current = path[path.length - 1]
+
         nextNode = getBestSibling(current)
 
         #log.info "Current node: #{current.id}"
@@ -253,7 +253,7 @@ class Pathfinder
           continue
 
         # If next node is sibling of previous node
-        #allSiblingIds = allSiblingIds.filter (id) -> id isnt current.id
+        #allSiblings = allSiblings.filter (id) -> id isnt current.id
         cutCheck(nextNode)
 
         # If next node is further away than current, register it wrong way.
@@ -267,7 +267,7 @@ class Pathfinder
         else
           expand(start)
 
-        break if path[path.length - 1].id == goal.id
+        break if path[path.length - 1] == goal
       return path
     )
 
@@ -275,11 +275,13 @@ class Pathfinder
     startBench = performance()
     preCheck()
 
+
+
     # Runs specified number of escalations and returns the shortest path
     for [-1...escalations]
       result = run()
       expand()
-      if best == null
+      if not best
         best = result
       if result.length < best.length
         best = result
@@ -309,21 +311,3 @@ class Pathfinder
     log.info("=======================================")
 
 module.exports = Pathfinder
-
-
-
-"""
-# Check siblings sibling (belongs to bStar)
-        for sibling in current.siblings
-
-          sib = table.findOne({id: sibling.id}).node
-          bestSibling = current
-          tmpBest = getBestSibling(sib)
-
-          if tmpBest == null then continue
-
-          if(getGoalDist(tmpBest) < getGoalDist(bestSibling))
-            bestSibling = tmpBest
-            nextNode = sibling
-        addNode(nextNode)
-"""

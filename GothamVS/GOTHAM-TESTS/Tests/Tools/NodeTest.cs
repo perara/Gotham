@@ -38,7 +38,7 @@ namespace Gotham.Tests.Tools
             foreach (var node in nodes)
             {
                 
-                Assert.NotNull(node.Network);
+                Assert.Greater(node.Networks.Count, 0, "Node with ID " + node.Id + " does not have any networks");
 
 
             }

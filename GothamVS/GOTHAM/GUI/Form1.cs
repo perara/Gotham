@@ -37,12 +37,6 @@ namespace Gotham.Application.GUI
         Dictionary<NodeEntity, GMarkerGoogle> _tempNodes;
 
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-           
-        }
-
         public void LoadEntities()
         {
  
@@ -59,6 +53,9 @@ namespace Gotham.Application.GUI
 
             var dist = GeoTool.GetDistance(node1_cord, node2_cord);
             Debug.WriteLine(dist);
+
+            //CableGenerator.ConnectNodesToCables();
+
         }
 
         public void DrawNodes()

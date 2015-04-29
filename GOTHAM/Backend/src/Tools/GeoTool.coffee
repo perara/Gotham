@@ -26,14 +26,14 @@ class GeoTool
     return d;
 
   # Returns the closest place to "goal" from "nodeList"
-  @getClosest: (goal, places, blacklistIds = []) ->
+  @getClosest: (goal, places, blacklist = []) ->
 
     closestDist = Number.MAX_VALUE
     closest = null
 
     for place in places
 
-      if place.id in blacklistIds
+      if place in blacklist
         #log.info "#{place.id} in blacklist, ignoring"
         continue
 
@@ -42,7 +42,6 @@ class GeoTool
       if dist < closestDist
         closest = place
         closestDist = dist
-
     return closest
 
 module.exports = GeoTool

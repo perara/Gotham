@@ -149,7 +149,7 @@ namespace Gotham.Application.Generators
         /// Connects cable and nodes within the defined distance (ex. 5 KM, Connects cables within 5 KM of each node) and writes cables to DB
         /// </summary>
         /// <param name="maxDistance"></param>
-        public static void ConnectNodesToCables(int maxDistance = 50)
+        public static void ConnectNodesToCables(int maxDistance = 3)
         {
             Log.Info("Connecting cables to nodes closer than " + maxDistance + " Kilometers");
             var work = new UnitOfWork();

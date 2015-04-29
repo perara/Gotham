@@ -54,6 +54,7 @@ namespace Gotham.Model
                 .Nullable()
                 .Not.LazyLoad();
 
+
             References(x => x.Node)
                 .Column("node")
                 .Not.Nullable()

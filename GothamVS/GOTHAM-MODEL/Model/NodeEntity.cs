@@ -63,6 +63,12 @@ namespace Gotham.Model
         public virtual double Lng { get; set; }
 
         /// <summary>
+        /// List of networks connected to this node
+        /// </summary>
+        [JsonIgnore]
+        public virtual IList<NetworkEntity> Networks { get; set; }
+
+        /// <summary>
         /// List of cables connected to this node
         /// </summary>
         [JsonIgnore]
@@ -149,13 +155,13 @@ namespace Gotham.Model
                 .Not.Nullable()
                 .Column("tier")
                 .Not.LazyLoad();
-/*
-            References(x => x.CountryCode)
-            .Not.Nullable()
-            .Column("countryCode")
-            .PropertyRef("CountryCode")
-            .Not.LazyLoad();
-*/
+
+            HasMany(x => x.Networks)
+             .Cascade.All()
+             .Inverse()
+             .KeyColumn("node")
+             .Not.LazyLoad();
+
             HasManyToMany(x => x.Cables)
                 .Cascade.All()
                 .Table("node_cable")

@@ -24,6 +24,7 @@ global.Gotham =
   World: new World()
   SocketServer: new SocketServer 8081
   Micro: require './Objects/Traffic/Micro/Micro.coffee'
+  Util: require './Tools/Util.coffee'
 
 # http://stackoverflow.com/questions/14031763/doing-a-cleanup-action-just-before-node-js-exits
 startServer = () ->
@@ -61,4 +62,84 @@ preload = (_c) ->
 # Preload then start server
 preload ->
   startServer()
+
+  db_node = Gotham.LocalDatabase.table("Node")
+  node1 = db_node.findOne(id: 16799)
+  node2 = db_node.findOne(id: 17036)
+
+  solution = Gotham.Micro.Pathfinder.bStar(node1, node2)
+  Gotham.Micro.Pathfinder.printSolution(solution)
+
+
+
+
+
+
+
+  MakeMission = (missionID, userID) ->
+
+    getRandomNetwork = ->
+      hosts = Gotham.LocalDatabase.table("Host").data
+      return hosts[Math.floor(Math.random() * hosts.length)].host
+
+    # Load missions and requirements
+    missions = Gotham.LocalDatabase.table("MissionRequirement")
+    requirements =  missions.find(mission: missionID)
+
+    # Generate user_mission object
+    userMission = {}
+    userMission.id = 0
+    userMission.mission = missionID
+    userMission.user = userID
+
+    commands = {}
+
+    # Get data from requirements and generate base for missions
+    for req in requirements
+
+      expected = JSON.parse(req.expected)
+      key = expected["key"]
+      command = expected["command"]
+      propDef = expected["prop"]
+      prop = null
+
+      # Connection table in database hopefully remove this
+      missionReq = {}
+      missionReq.user_mission = userMission
+      missionReq.mission_requirement = req.id
+
+      # Check if shit command exists
+      if not commands[command] then commands[command] = {}
+
+      # Check if shit key exists in shit command
+      if not commands[command][key]
+
+        switch command
+
+        #### If command is network #####
+          when "network"
+            commands[command][key] = getRandomNetwork()
+
+            if propDef
+              prop = Gotham.Util.StringTools.Resolve(commands[command][key], propDef)
+
+        #### If command is none ####
+          when "none"
+            commands[command][key] = {}
+
+            if propDef
+              commands[command][key] = propDef
+
+
+    console.log commands
+
+
+    # Get all requirements
+    for req in requirements
+
+      emit_value = JSON.parse(req.emit_value)
+      emit_input = JSON.parse(req.emit_input)
+      expected = JSON.parse(req.expected)
+
+
 
