@@ -1,10 +1,25 @@
 GothamObject = require './GothamObject.coffee'
 
+###*
+# Node Model of the Local Database
+# @class Node
+# @constructor
+# @param {Sequelize.Model} model
+# @required
+# @extends GothamObject
+# @submodule Backend.LocalDatabase
+###
 class Node extends GothamObject
 
   constructor: (model) ->
     super(model)
 
+
+  ###*
+  # Get All cables associated with this Node
+  # @method getCables
+  # @return {Cable[]}
+  ###
   getCables: ->
     if not @Cables
 
@@ -16,6 +31,12 @@ class Node extends GothamObject
 
     return @Cables
 
+
+  ###*
+  # Get All siblings nodes to this Node
+  # @method getSiblings
+  # @return {Node[]}
+  ###
   getSiblings: ->
     if not @Siblings
       @Siblings = {}
@@ -32,12 +53,22 @@ class Node extends GothamObject
 
     return @Siblings
 
+  ###*
+  # Get tier of this Node
+  # @method getTier
+  # @return {Tier}
+  ###
   getTier: ->
     if not @Tier
       db_tier = Gotham.LocalDatabase.table("Tier")
       @Tier = db_tier.findOne({id: @tier})
     return @Tier
 
+  ###*
+  # Get Country for this Node
+  # @method getCountry
+  # @return {Country}
+  ###
   getCountry: ->
     if not @Country
       db_country = Gotham.LocalDatabase.table("Country")
@@ -46,6 +77,38 @@ class Node extends GothamObject
 
 
 
+###*
+# The id of the node
+# @property {Integer} id
+###
+###*
+# The name of the node
+# @property {String} name
+###
+###*
+# The countryCode of the node
+# @property {String} countryCode
+###
+###*
+# The tier of the node
+# @property {Integer} tier
+###
+###*
+# The priority of the node
+# @property {Integer} priority
+###
+###*
+# The bandwidth of the node
+# @property {Double} bandwidth
+###
+###*
+# The lat of the node
+# @property {Double} lat
+###
+###*
+# The lng of the node
+# @property {Double} lng
+###
 
 
 

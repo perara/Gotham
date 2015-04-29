@@ -27,7 +27,6 @@ module.exports = (sequelize, DataTypes) ->
     }
   ,
     {
-
       tableName: 'country'
       timestamps: false
     }

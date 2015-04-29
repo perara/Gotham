@@ -29,18 +29,18 @@ global.Gotham =
 startServer = () ->
 
   # Start world
-  Gotham.World.Start()
+  Gotham.World.start()
 
   server = Gotham.SocketServer
-  server.SetDatabase(Gotham.Database)
-  server.RegisterRoom new (require './Networking/Rooms/HostRoom.coffee')()
-  server.RegisterRoom new (require './Networking/Rooms/UserRoom.coffee')()
-  server.RegisterRoom new (require './Networking/Rooms/WorldMapRoom.coffee')()
-  server.RegisterRoom new (require './Networking/Rooms/GeneralRoom.coffee')()
-  server.RegisterRoom new (require './Networking/Rooms/MissionRoom.coffee')()
-  server.RegisterRoom new (require './Networking/Rooms/Applications/TracerouteRoom.coffee')()
-  server.RegisterRoom new (require './Networking/Rooms/Applications/PingRoom.coffee')()
-  server.Start()
+  server.setDatabase(Gotham.Database)
+  server.registerRoom new (require './Networking/Rooms/HostRoom.coffee')()
+  server.registerRoom new (require './Networking/Rooms/UserRoom.coffee')()
+  server.registerRoom new (require './Networking/Rooms/WorldMapRoom.coffee')()
+  server.registerRoom new (require './Networking/Rooms/GeneralRoom.coffee')()
+  server.registerRoom new (require './Networking/Rooms/MissionRoom.coffee')()
+  server.registerRoom new (require './Networking/Rooms/Applications/TracerouteRoom.coffee')()
+  server.registerRoom new (require './Networking/Rooms/Applications/PingRoom.coffee')()
+  server.start()
 
   server.onConnect = (_client) ->
     log.info "[SERVER] Client Connected #{_client.id}"

@@ -1,15 +1,26 @@
 performance = require 'performance-now'
 Room = require './../Room.coffee'
 
-
+###*
+# PingRoom contains emitters for Ping Events
+# @class PingRoom
+# @module Backend
+# @submodule Backend.Networking
+# @extends Room
+###
 class PingRoom extends Room
 
 
   define: ->
     that = @
 
-    @AddEvent "Ping", (packet) ->
-      client = that.GetClient(@id)
+    ###*
+    # Emitter for Ping (Defined as class, but is in reality a method inside PingRoom)
+    # @class Emitter_Ping
+    # @submodule Backend.Emitters
+    ###
+    @addEvent "Ping", (packet) ->
+      client = that.getClient(@id)
       that.log.info "[TerminalRoom] Ping called: " + packet
 
       # Resolve Values

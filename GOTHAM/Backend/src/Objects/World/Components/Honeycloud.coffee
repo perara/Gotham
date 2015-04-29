@@ -1,9 +1,19 @@
 WebSocket = require('ws');
 
+
+###*
+# HoneyCloud attack map is a stream of attack data , From -- > To source with IP
+# @class HoneyCloud
+# @module Backend
+# @submodule Backend.World
+###
 class HoneyCloud
 
-
-  Connect: ->
+  ###*
+  # connect to the stream
+  # @method connect
+  ###
+  connect: ->
 
     ws = new WebSocket('ws://map.honeynet.org/data/685/8m26_vt4/websocket', {
       protocolVersion: 8,
