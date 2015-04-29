@@ -138,6 +138,9 @@ class Pathfinder
     getBestSibling = (current) ->
       bestSibling = GeoTool.getClosest(goal, current.getSiblings(), blacklist)
 
+      if not bestSibling
+        return null
+
       for sibling in current.getSiblings()
 
         if bestSibling.id == sibling.id then continue
@@ -157,7 +160,7 @@ class Pathfinder
     reverse = (reverses = 1) ->
       for [0...reverses]
         pathLength = path.length
-        removed = path.pop()
+        path.pop()
         for key, value of allSiblings
           if value == pathLength
             delete allSiblings[key]
@@ -231,6 +234,11 @@ class Pathfinder
         current = path[path.length - 1]
 
         nextNode = getBestSibling(current)
+
+        # If there is no siblings (Reached end)
+        if not nextNode
+          reverse()
+          continue
 
         #log.info "Current node: #{current.id}"
         #log.info "Nodes in path: #{path.length}"

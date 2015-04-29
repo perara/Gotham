@@ -64,8 +64,13 @@ preload ->
   startServer()
 
   db_node = Gotham.LocalDatabase.table("Node")
-  node1 = db_node.findOne(id: 16799)
-  node2 = db_node.findOne(id: 17036)
+  node1 = db_node.findOne(id: 14752)
+  node2 = db_node.findOne(id: 16250)
+
+
+  console.log node1.getSiblings().length
+  console.log node2.getSiblings().length
+
 
   solution = Gotham.Micro.Pathfinder.bStar(node1, node2)
   Gotham.Micro.Pathfinder.printSolution(solution)
