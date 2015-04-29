@@ -4,15 +4,26 @@ Room = require './../Room.coffee'
 Database = require '../../../Database/Database.coffee'
 Traffic = require '../../../Objects/Traffic/Micro/Micro.coffee'
 
-
+###*
+# TracerouteRoom contains emitters for any traceroute events
+# @class TracerouteRoom
+# @module Backend
+# @submodule Backend.Networking
+# @extends Room
+###
 class TracerouteRoom extends Room
 
 
   define: ->
     that = @
 
-    @AddEvent "Traceroute", (packet) ->
-      client = that.GetClient(@id)
+    ###*
+    # Emitter for Traceroute (Defined as class, but is in reality a method inside TracerouteRoom)
+    # @class Emitter_Traceroute
+    # @submodule Backend.Emitters
+    ###
+    @addEvent "Traceroute", (packet) ->
+      client = that.getClient(@id)
       database = new Database()
 
 

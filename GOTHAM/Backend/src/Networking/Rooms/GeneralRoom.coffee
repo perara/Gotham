@@ -2,15 +2,27 @@ Room = require './Room.coffee'
 
 
 
-
+###*
+# GeneralRoom, Emitters which does not fit in any category but General
+# @class GeneralRoom
+# @module Backend
+# @submodule Backend.Networking
+# @extends Room
+###
 class GeneralRoom extends Room
 
 
   define: ->
     that = @
 
-    @AddEvent "Login", (login) ->
-      client = that.GetClient @id
+
+    ###*
+    # Emitter for Login (Defined as class, but is in reality a method inside GeneralRoom)
+    # @class Emitter_Login
+    # @submodule Backend.Emitters
+    ###
+    @addEvent "Login", (login) ->
+      client = that.getClient @id
 
       that.log.info "[GeneralRoom] Login called: " + login
       that.log.info "---- Attempting to login with #{login.username}:#{login.password}"
@@ -25,22 +37,30 @@ class GeneralRoom extends Room
 
       # Send OK to frontend if ok else 500
       if user
-        client.SetUser user
-        client.Authenticate true
+        client.setUser user
+        client.authenticate true
         client.Socket.emit 'Login', {"status": 200}
       else
         client.Socket.emit 'Login', {"status": 500}
         client.Socket.disconnect()
 
-
-    @AddEvent "Logout", (data) ->
+    ###*
+    # Emitter for Logout (Defined as class, but is in reality a method inside GeneralRoom)
+    # @class Emitter_Logout
+    # @submodule Backend.Emitters
+    ###
+    @addEvent "Logout", (data) ->
       that.log.info "[GeneralRoom] Logout called" + data
-      client = that.GetClient @id
-      that.RemoveClient client
+      client = that.getClient @id
+      that.removeClient client
       client.Socket.emit 'Logout', "OK"
 
-
-    @AddEvent "Terminate", (data) ->
+    ###*
+    # Emitter for Terminate (Defined as class, but is in reality a method inside GeneralRoom)
+    # @class Emitter_Terminate
+    # @submodule Backend.Emitters
+    ###
+    @addEvent "Terminate", (data) ->
       that.log.info "[GeneralRoom] Terminate called" + data
       @emit 'Terminate', "OK"
       @disconnect()

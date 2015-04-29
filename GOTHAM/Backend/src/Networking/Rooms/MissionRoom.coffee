@@ -2,7 +2,13 @@ Room = require './Room.coffee'
 When = require 'when'
 
 
-
+###*
+# MissionRoom, Mission emitters for Mission events
+# @class MissionRoom
+# @module Backend
+# @submodule Backend.Networking
+# @extends Room
+###
 class MissionRoom extends Room
 
 
@@ -10,17 +16,14 @@ class MissionRoom extends Room
     that = @
 
 
-
-    # Whenever a requirement has progressed
-    # Data structure is the following:
-    # {
-    #   userMissionRequirement: id
-    #   current: currentVal
-    # }
-    #
-    @AddEvent "ProgressMission", (data) ->
+    ###*
+    # Emitter for mission Progression (Defined as class, but is in reality a method inside MissionRoom)
+    # @class Emitter_ProgressMission
+    # @submodule Backend.Emitters
+    ###
+    @addEvent "ProgressMission", (data) ->
       that.log.info "[MissionRoom] AcceptMission called"
-      client = that.GetClient(@id)
+      client = that.getClient(@id)
 
       that.Database.Model.UserMissionRequirement.findOne(
         where:
@@ -43,10 +46,14 @@ class MissionRoom extends Room
 
 
 
-
-    @AddEvent "AcceptMission", (mission) ->
+    ###*
+    # Emitter for AcceptMission (Defined as class, but is in reality a method inside MissionRoom)
+    # @class Emitter_AcceptMission
+    # @submodule Backend.Emitters
+    ###
+    @addEvent "AcceptMission", (mission) ->
       that.log.info "[MissionRoom] AcceptMission called"
-      client = that.GetClient(@id)
+      client = that.getClient(@id)
 
       db_userMission = Gotham.LocalDatabase.table("UserMission")
 
@@ -79,10 +86,14 @@ class MissionRoom extends Room
 
 
 
-
-    @AddEvent "AbandonMission", (mission) ->
+    ###*
+    # Emitter for AbandonMission (Defined as class, but is in reality a method inside MissionRoom)
+    # @class Emitter_AbandonMission
+    # @submodule Backend.Emitters
+    ###
+    @addEvent "AbandonMission", (mission) ->
       that.log.info "[MissionRoom] AbandonMission called"
-      client = that.GetClient(@id)
+      client = that.getClient(@id)
 
       that.Database.Model.UserMission.findOne(
         where:
@@ -106,10 +117,14 @@ class MissionRoom extends Room
             client.Socket.emit 'AbandonMission', mission
 
 
-
-    @AddEvent "GetMission", (data) ->
+    ###*
+    # Emitter for GetMission (Defined as class, but is in reality a method inside MissionRoom)
+    # @class Emitter_GetMission
+    # @submodule Backend.Emitters
+    ###
+    @addEvent "GetMission", (data) ->
       that.log.info "[MissionRoom] GetMission called" + data
-      client = that.GetClient(@id)
+      client = that.getClient(@id)
 
       missions =
         ongoing: []
@@ -124,9 +139,10 @@ class MissionRoom extends Room
       for _m in missions.available
         _m.getMissionRequirements()
 
+
       # Fetch Ongoing Missions
       missions.ongoing = db_userMission.find({
-        user: client.GetUser().id
+        user: client.getUser().id
       })
       for _m in missions.ongoing
         _m.getMission()
@@ -207,7 +223,7 @@ class MissionRoom extends Room
             if propDef
               prop = Gotham.Util.StringTools.Resolve(commands[command][key], propDef)
 
-        #### If command is none ####
+          ## If command is none ####
           when "none"
             console.log key
             commands[command][key] = {}
@@ -215,8 +231,6 @@ class MissionRoom extends Room
             if propDef
               commands[command][key] = propDef
 
-
-    console.log commands
     # Get all requirements
     for req in requirements
       req = req.dataValues

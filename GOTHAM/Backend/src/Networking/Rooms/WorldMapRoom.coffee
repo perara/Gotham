@@ -2,13 +2,25 @@ Room = require './Room.coffee'
 
 
 
-
+###*
+# WorldMapRoom, Hosts emitters for WorldMap events
+# @class WorldMapRoom
+# @module Backend
+# @submodule Backend.Networking
+# @extends Room
+###
 class WorldMapRoom extends Room
 
 
   define: ->
     that = @
-    @AddEvent "GetNodes", (data) ->
+
+    ###*
+    # Emitter for getting nodes (Defined as class, but is in reality a method inside WorldMapRoom)
+    # @class Emitter_GetNodes
+    # @submodule Backend.Emitters
+    ###
+    @addEvent "GetNodes", (data) ->
       client = @
       that.log.info "[WMRoom] GetNodes called" + data
 
@@ -21,7 +33,13 @@ class WorldMapRoom extends Room
         return item
       client.emit 'GetNodes', nodes
 
-    @AddEvent "GetCables", (data) ->
+
+    ###*
+    # Emitter for getting cables (Defined as class, but is in reality a method inside WorldMapRoom)
+    # @class Emitter_GetCables
+    # @submodule Backend.Emitters
+    ###
+    @addEvent "GetCables", (data) ->
       that.log.info "[WMRoom] GetCables called" + data
 
       db_cable = Gotham.LocalDatabase.table("Cable")

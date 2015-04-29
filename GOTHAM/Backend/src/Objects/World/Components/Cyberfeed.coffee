@@ -1,9 +1,18 @@
 EventSource = require('eventsource');
 
+###*
+# Cyberfeed attack map. Is a stream of infected hosts statistics.
+# @class Cyberfeed
+# @module Backend
+# @submodule Backend.World
+###
 class Cyberfeed
 
-
-  Connect: ->
+  ###*
+  # connect to the stream
+  # @method connect
+  ###
+  connect: ->
     #http://globe.cyberfeed.net/events
     es = new EventSource('http://globe.cyberfeed.net/events');
     es.onmessage = (e) ->
