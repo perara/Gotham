@@ -348,6 +348,9 @@
     gNode = new Gotham.Graphics.Sprite Gotham.Preload.fetch("map_marker", "image")
     gNode.tint = 0xF8E23B
 
+    gNode.infoFrame = @nodeInfoFrame()
+    gNode.addChild gNode.infoFrame
+
     # Set position according to the Lat,Lng conversion
     gNode.position =
       x: coordinates.x
@@ -389,11 +392,33 @@
         for part in cable.CableParts
           part.visible = visible
 
+    node.sprite.click = ->
+      @_toggle = if not @_toggle then true else !@_toggle
+
+      if @_toggle
+        @infoFrame.visible = true
+        @bringToFront()
+      else
+        @infoFrame.visible = false
+
 
     node.sprite.mouseover = ->
       nodeHover node, 0xFF0000, true
+
+
     node.sprite.mouseout = ->
       nodeHover node, 0xF8E23B, false
+
+
+
+  nodeInfoFrame: ->
+    infoFrame = new Gotham.Graphics.Sprite Gotham.Preload.fetch("mission_background", "image")
+    infoFrame.visible = false
+
+    return infoFrame
+
+
+
 
 
   # Clears animated paths

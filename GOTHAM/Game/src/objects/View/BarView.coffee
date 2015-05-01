@@ -22,6 +22,8 @@ class BarView extends Gotham.Pattern.MVC.View
     #@create_bottomBar()
 
 
+
+
   create_sideBar: ->
     texture_side_left = Gotham.Preload.fetch("sidebar", "image")
     @Bar.Side.Left = new Gotham.Graphics.Sprite texture_side_left

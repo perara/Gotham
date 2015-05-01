@@ -1,0 +1,772 @@
+---------cable---------
+
+###*
+# The id of the cable
+# @param {Integer} id
+###
+###*
+# The priority of the cable
+# @param {Integer} priority
+###
+###*
+# The capacity of the cable
+# @param {Double} capacity
+###
+###*
+# The type of the cable
+# @param {Integer} type
+###
+###*
+# The distance of the cable
+# @param {Double} distance
+###
+###*
+# The name of the cable
+# @param {String} name
+###
+###*
+# The year of the cable
+# @param {Integer} year
+###
+
+
+---------cable_part---------
+
+###*
+# The id of the cable_part
+# @param {Integer} id
+###
+###*
+# The cable of the cable_part
+# @param {Integer} cable
+###
+###*
+# The number of the cable_part
+# @param {Integer} number
+###
+###*
+# The lat of the cable_part
+# @param {Double} lat
+###
+###*
+# The lng of the cable_part
+# @param {Double} lng
+###
+
+
+---------cable_type---------
+
+###*
+# The id of the cable_type
+# @param {Integer} id
+###
+###*
+# The name of the cable_type
+# @param {String} name
+###
+
+
+---------country---------
+
+###*
+# The id of the country
+# @param {Integer} id
+###
+###*
+# The name of the country
+# @param {String} name
+###
+###*
+# The countryCode of the country
+# @param {String} countryCode
+###
+###*
+# The countryCodeExt of the country
+# @param {String} countryCodeExt
+###
+###*
+# The size of the country
+# @param {Double} size
+###
+###*
+# The population of the country
+# @param {Integer} population
+###
+###*
+# The continent of the country
+# @param {String} continent
+###
+
+
+---------country_ip---------
+
+###*
+# The id of the country_ip
+# @param {Integer} id
+###
+###*
+# The from_ip of the country_ip
+# @param {String} from_ip
+###
+###*
+# The to_ip of the country_ip
+# @param {String} to_ip
+###
+###*
+# The assign_date of the country_ip
+# @param {Date} assign_date
+###
+###*
+# The country of the country_ip
+# @param {String} country
+###
+###*
+# The owner of the country_ip
+# @param {String} owner
+###
+
+
+---------dns---------
+
+###*
+# The id of the dns
+# @param {Integer} id
+###
+###*
+# The ipv4 of the dns
+# @param {String} ipv4
+###
+###*
+# The ipv6 of the dns
+# @param {String} ipv6
+###
+###*
+# The address of the dns
+# @param {String} address
+###
+###*
+# The provider of the dns
+# @param {Integer} provider
+###
+
+
+---------fakenames---------
+
+###*
+# The id of the fakenames
+# @param {Integer} id
+###
+###*
+# The gender of the fakenames
+# @param {String} gender
+###
+###*
+# The nameset of the fakenames
+# @param {String} nameset
+###
+###*
+# The title of the fakenames
+# @param {String} title
+###
+###*
+# The first_name of the fakenames
+# @param {String} first_name
+###
+###*
+# The middleinitial of the fakenames
+# @param {String} middleinitial
+###
+###*
+# The last_name of the fakenames
+# @param {String} last_name
+###
+###*
+# The address of the fakenames
+# @param {String} address
+###
+###*
+# The city of the fakenames
+# @param {String} city
+###
+###*
+# The state of the fakenames
+# @param {String} state
+###
+###*
+# The zipcode of the fakenames
+# @param {String} zipcode
+###
+###*
+# The country of the fakenames
+# @param {String} country
+###
+###*
+# The countryfull of the fakenames
+# @param {String} countryfull
+###
+###*
+# The email of the fakenames
+# @param {String} email
+###
+###*
+# The username of the fakenames
+# @param {String} username
+###
+###*
+# The password of the fakenames
+# @param {String} password
+###
+###*
+# The telephonenumber of the fakenames
+# @param {String} telephonenumber
+###
+###*
+# The maidenname of the fakenames
+# @param {String} maidenname
+###
+###*
+# The birthday of the fakenames
+# @param {String} birthday
+###
+###*
+# The cctype of the fakenames
+# @param {String} cctype
+###
+###*
+# The ccnumber of the fakenames
+# @param {String} ccnumber
+###
+###*
+# The CVV2 of the fakenames
+# @param {String} CVV2
+###
+###*
+# The ccexpires of the fakenames
+# @param {String} ccexpires
+###
+###*
+# The nationalid of the fakenames
+# @param {String} nationalid
+###
+###*
+# The color of the fakenames
+# @param {String} color
+###
+###*
+# The occupation of the fakenames
+# @param {String} occupation
+###
+###*
+# The company of the fakenames
+# @param {String} company
+###
+###*
+# The vehicle of the fakenames
+# @param {String} vehicle
+###
+###*
+# The domain of the fakenames
+# @param {String} domain
+###
+###*
+# The bloodtype of the fakenames
+# @param {String} bloodtype
+###
+###*
+# The kilograms of the fakenames
+# @param {String} kilograms
+###
+###*
+# The centimeters of the fakenames
+# @param {String} centimeters
+###
+###*
+# The lat of the fakenames
+# @param {Double} lat
+###
+###*
+# The lng of the fakenames
+# @param {Double} lng
+###
+
+
+---------filesystem---------
+
+###*
+# The id of the filesystem
+# @param {Integer} id
+###
+###*
+# The data of the filesystem
+# @param {String} data
+###
+
+
+---------host---------
+
+###*
+# The id of the host
+# @param {Integer} id
+###
+###*
+# The machine_name of the host
+# @param {String} machine_name
+###
+###*
+# The online of the host
+# @param {Boolean} online
+###
+###*
+# The ip of the host
+# @param {String} ip
+###
+###*
+# The mac of the host
+# @param {String} mac
+###
+###*
+# The filesystem of the host
+# @param {Integer} filesystem
+###
+###*
+# The network of the host
+# @param {Integer} network
+###
+
+
+---------identity---------
+
+###*
+# The id of the identity
+# @param {Integer} id
+###
+###*
+# The fk_user of the identity
+# @param {Integer} fk_user
+###
+###*
+# The active of the identity
+# @param {Boolean} active
+###
+###*
+# The gender of the identity
+# @param {String} gender
+###
+###*
+# The nameset of the identity
+# @param {String} nameset
+###
+###*
+# The title of the identity
+# @param {String} title
+###
+###*
+# The first_name of the identity
+# @param {String} first_name
+###
+###*
+# The middleinitial of the identity
+# @param {String} middleinitial
+###
+###*
+# The last_name of the identity
+# @param {String} last_name
+###
+###*
+# The address of the identity
+# @param {String} address
+###
+###*
+# The city of the identity
+# @param {String} city
+###
+###*
+# The state of the identity
+# @param {String} state
+###
+###*
+# The zipcode of the identity
+# @param {String} zipcode
+###
+###*
+# The country of the identity
+# @param {String} country
+###
+###*
+# The countryfull of the identity
+# @param {String} countryfull
+###
+###*
+# The email of the identity
+# @param {String} email
+###
+###*
+# The username of the identity
+# @param {String} username
+###
+###*
+# The password of the identity
+# @param {String} password
+###
+###*
+# The telephonenumber of the identity
+# @param {String} telephonenumber
+###
+###*
+# The maidenname of the identity
+# @param {String} maidenname
+###
+###*
+# The birthday of the identity
+# @param {String} birthday
+###
+###*
+# The cctype of the identity
+# @param {String} cctype
+###
+###*
+# The ccnumber of the identity
+# @param {String} ccnumber
+###
+###*
+# The CVV2 of the identity
+# @param {String} CVV2
+###
+###*
+# The ccexpires of the identity
+# @param {String} ccexpires
+###
+###*
+# The nationalid of the identity
+# @param {String} nationalid
+###
+###*
+# The color of the identity
+# @param {String} color
+###
+###*
+# The occupation of the identity
+# @param {String} occupation
+###
+###*
+# The company of the identity
+# @param {String} company
+###
+###*
+# The vehicle of the identity
+# @param {String} vehicle
+###
+###*
+# The domain of the identity
+# @param {String} domain
+###
+###*
+# The bloodtype of the identity
+# @param {String} bloodtype
+###
+###*
+# The kilograms of the identity
+# @param {String} kilograms
+###
+###*
+# The centimeters of the identity
+# @param {String} centimeters
+###
+###*
+# The lat of the identity
+# @param {Double} lat
+###
+###*
+# The lng of the identity
+# @param {Double} lng
+###
+
+
+---------location---------
+
+###*
+# The id of the location
+# @param {Integer} id
+###
+###*
+# The countryCode of the location
+# @param {String} countryCode
+###
+###*
+# The name of the location
+# @param {String} name
+###
+###*
+# The lat of the location
+# @param {Double} lat
+###
+###*
+# The lng of the location
+# @param {Double} lng
+###
+
+
+---------mission---------
+
+###*
+# The id of the mission
+# @param {Integer} id
+###
+###*
+# The title of the mission
+# @param {String} title
+###
+###*
+# The description of the mission
+# @param {String} description
+###
+###*
+# The description_ext of the mission
+# @param {String} description_ext
+###
+###*
+# The required_xp of the mission
+# @param {Integer} required_xp
+###
+
+
+---------mission_item---------
+
+###*
+# The id of the mission_item
+# @param {Integer} id
+###
+###*
+# The mission of the mission_item
+# @param {String} mission
+###
+###*
+# The item of the mission_item
+# @param {String} item
+###
+
+
+---------mission_requirement---------
+
+###*
+# The id of the mission_requirement
+# @param {Integer} id
+###
+###*
+# The mission of the mission_requirement
+# @param {Integer} mission
+###
+###*
+# The requirement of the mission_requirement
+# @param {String} requirement
+###
+###*
+# The default of the mission_requirement
+# @param {String} default
+###
+###*
+# The expected of the mission_requirement
+# @param {String} expected
+###
+###*
+# The emit of the mission_requirement
+# @param {String} emit
+###
+###*
+# The emit_value of the mission_requirement
+# @param {String} emit_value
+###
+###*
+# The emit_input of the mission_requirement
+# @param {String} emit_input
+###
+###*
+# The emit_behaviour of the mission_requirement
+# @param {String} emit_behaviour
+###
+
+
+---------network---------
+
+###*
+# The id of the network
+# @param {Integer} id
+###
+###*
+# The submask of the network
+# @param {String} submask
+###
+###*
+# The internal_ip_v4 of the network
+# @param {String} internal_ip_v4
+###
+###*
+# The external_ip_v4 of the network
+# @param {String} external_ip_v4
+###
+###*
+# The dns of the network
+# @param {String} dns
+###
+###*
+# The identity of the network
+# @param {Integer} identity
+###
+###*
+# The node of the network
+# @param {Integer} node
+###
+###*
+# The isLocal of the network
+# @param {Boolean} isLocal
+###
+###*
+# The lat of the network
+# @param {Double} lat
+###
+###*
+# The lng of the network
+# @param {Double} lng
+###
+
+
+---------node---------
+
+###*
+# The id of the node
+# @param {Integer} id
+###
+###*
+# The name of the node
+# @param {String} name
+###
+###*
+# The countryCode of the node
+# @param {String} countryCode
+###
+###*
+# The tier of the node
+# @param {Integer} tier
+###
+###*
+# The priority of the node
+# @param {Integer} priority
+###
+###*
+# The bandwidth of the node
+# @param {Double} bandwidth
+###
+###*
+# The lat of the node
+# @param {Double} lat
+###
+###*
+# The lng of the node
+# @param {Double} lng
+###
+
+
+---------node_cable---------
+
+###*
+# The id of the node_cable
+# @param {Integer} id
+###
+###*
+# The node of the node_cable
+# @param {Integer} node
+###
+###*
+# The cable of the node_cable
+# @param {Integer} cable
+###
+
+
+---------tier---------
+
+###*
+# The id of the tier
+# @param {Integer} id
+###
+###*
+# The name of the tier
+# @param {String} name
+###
+
+
+---------user---------
+
+###*
+# The id of the user
+# @param {Integer} id
+###
+###*
+# The username of the user
+# @param {String} username
+###
+###*
+# The password of the user
+# @param {String} password
+###
+###*
+# The email of the user
+# @param {String} email
+###
+###*
+# The money of the user
+# @param {Integer} money
+###
+###*
+# The experience of the user
+# @param {Integer} experience
+###
+
+
+---------user_mission---------
+
+###*
+# The id of the user_mission
+# @param {Integer} id
+###
+###*
+# The user of the user_mission
+# @param {Integer} user
+###
+###*
+# The mission of the user_mission
+# @param {Integer} mission
+###
+
+
+---------user_mission_requirement---------
+
+###*
+# The id of the user_mission_requirement
+# @param {Integer} id
+###
+###*
+# The user_mission of the user_mission_requirement
+# @param {Integer} user_mission
+###
+###*
+# The mission_requirement of the user_mission_requirement
+# @param {Integer} mission_requirement
+###
+###*
+# The emit_value of the user_mission_requirement
+# @param {String} emit_value
+###
+###*
+# The emit_input of the user_mission_requirement
+# @param {String} emit_input
+###
+###*
+# The current of the user_mission_requirement
+# @param {String} current
+###
+###*
+# The expected of the user_mission_requirement
+# @param {String} expected
+###
+
+

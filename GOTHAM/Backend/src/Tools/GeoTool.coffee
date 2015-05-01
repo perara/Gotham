@@ -25,8 +25,15 @@ class GeoTool
 
     return d;
 
-  # Returns the closest place to "goal" from "nodeList"
-  @getClosest: (goal, places, blacklist = []) ->
+  ###*
+  # Evaluate the closest element from a list given a element
+  # @method getClosest
+  # @param {Object} element
+  # @param {Object[]} places
+  # @param {Object[]] blacklist
+  # @static
+  ###
+  @getClosest: (element, places, blacklist = []) ->
 
     closestDist = Number.MAX_VALUE
     closest = null
@@ -34,10 +41,9 @@ class GeoTool
     for place in places
 
       if place in blacklist
-        #log.info "#{place.id} in blacklist, ignoring"
         continue
 
-      dist = GeoTool.getDistance(place, goal)
+      dist = GeoTool.getDistance(place, element)
 
       if dist < closestDist
         closest = place

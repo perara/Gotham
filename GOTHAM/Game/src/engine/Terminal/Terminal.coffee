@@ -3,9 +3,6 @@
 class Terminal
 
   constructor: ->
-
-    console.log ":D"
-
   @Command = require './Command.coffee'
   @Filesystem = require './Filesystem.coffee'
   @Console = require './Console.coffee'

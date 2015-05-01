@@ -14,7 +14,7 @@ class Clock
     # The moment time object
     # @param {Moment.js} _time
     ###
-    @_time = moment() # Set to 'now'
+    @_time = moment().utcOffset('+0000') # Set to 'now'
 
 
   ###*
@@ -47,6 +47,13 @@ class Clock
   ###
   getTime: ->
     return @_time.calendar()
+
+  ###*
+  # Get current time as minutes
+  # @method getMinutes
+  ###
+  getMinutes: ->
+    return (@_time.hour()*60) + @_time.minute();
 
 
 

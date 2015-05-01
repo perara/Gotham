@@ -15,6 +15,21 @@ class Network extends GothamObject
     super(model)
 
   ###*
+  # Generates a new network with random properties
+  # @method generate
+  # @return {Network} The new network instance
+  # @static
+  ###
+  @generate: ->
+    # TODO
+    db_network = Gotham.LocalDatabase.table("Network")
+    length = db_network.data.length
+    rnd = Math.floor(Math.random() * length) + 1
+
+    return db_network.data[rnd]
+
+
+  ###*
   # Identity of the Network
   # @method getIdentity
   # @return {Identity}

@@ -56,17 +56,20 @@ class Traceroute extends Application
     # Send Traceroute request
     GothamGame.Network.Socket.emit 'Traceroute', @Packet
 
+    # Emit to MissionEngine
+    GothamGame.MissionEngine.emit "Traceroute", @Packet.target, (req) ->
+      GothamGame.Announce.message "#{req._mission._title}\n#{req._requirement} --> #{req._current}/#{req._expected}", "MISSION", 50
+
     # Traceroute Callback
     GothamGame.Network.Socket.on 'Traceroute', (path, output, targetNetwork) ->
       @removeListener('Traceroute')
+      targetNetwork = JSON.parse(targetNetwork)
 
       GothamGame.MissionEngine.emit 'traceroute', targetNetwork.external_ip_v4, ->
         console.log "Traceroute emit registererd. setting to completed!"
 
 
       db_node = Gotham.Database.table("node")
-
-      that.Console.addArray output
 
       # Clear old paths
       GothamGame.Renderer.getScene("World").getObject("WorldMap").View.clearAnimatePath()

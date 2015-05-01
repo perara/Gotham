@@ -12,6 +12,7 @@ class Mission
     @_requiredXP = null
     @_engine = null
     @_data = null
+    @ongoing = false
 
 
     @_requirements = {}
@@ -100,6 +101,12 @@ class Mission
     @_requiredXP = xp
   setID: (id) ->
     @id = id
+
+  setOngoing: (ongoing) ->
+    @ongoing = ongoing
+
+  getOngoing: ->
+    return @ongoing
 
   getID: ->
     return @id

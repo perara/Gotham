@@ -3,6 +3,8 @@
 class MissionEngine
 
   constructor: ->
+
+
     @_missions = {}
 
   # Create a mission object
@@ -45,10 +47,11 @@ class MissionEngine
 
   emit: (emit, emit_value, _c) ->
     #console.log "[MISSION-E] Emitting #{name}, Value: #{emit_value}"
-
-
     for key, mission of @_missions
       mission.emit emit, emit_value, _c
+
+    # Update view
+    GothamGame.Renderer.getScene("World").getObject("Mission").updateView()
 
 
 
