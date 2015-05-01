@@ -8,7 +8,7 @@ GothamObject = require './GothamObject.coffee'
 # @param {Sequelize.Model} model
 # @required
 # @extends GothamObject
-# @submodule Backend.LocalDatabase
+
 ###
 class UserMissionRequirement extends GothamObject
 

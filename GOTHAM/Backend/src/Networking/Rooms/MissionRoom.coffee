@@ -25,26 +25,21 @@ class MissionRoom extends Room
       that.log.info "[MissionRoom] AcceptMission called"
       client = that.getClient(@id)
 
-      that.Database.Model.UserMissionRequirement.findOne(
-        where:
-          id: data.userMissionRequirement
-      ).then (record) ->
+      db_userMissionRequirement = Gotham.LocalDatabase.table("UserMissionRequirement")
 
-        # If the record does not exists ("Should" never happen, unless hacking occured)
-        if not record
-          client.Socket.emit 'ERROR', {
-            type: "ERROR_MISSION_USER_REQUIREMENT_NOT_FOUND"
-            message: "The mission requirement you attempted to update does not exist"
-          } # TODO Multilangual
-          return
+      userMissionRequirement = db_userMissionRequirement.findOne(id: data.userMissionRequirement)
 
-        # Uppdate the current
-        record.updateAttributes({
-          current: data.current
-        })
+      # If the record does not exists ("Should" never happen, unless hacking occured)
+      if not userMissionRequirement
+        client.Socket.emit 'ERROR', {
+          type: "ERROR_MISSION_USER_REQUIREMENT_NOT_FOUND"
+          message: "The mission requirement you attempted to update does not exist"
+        } # TODO Multilangual
+        return
 
-
-
+      userMissionRequirement.update({
+        current: data.current
+      })
 
     ###*
     # Emitter for AcceptMission (Defined as class, but is in reality a method inside MissionRoom)
@@ -60,7 +55,7 @@ class MissionRoom extends Room
       # Look for existsing user mission entry
       userMission = db_userMission.findOne({
         mission: mission.id
-        user: client.GetUser().id
+        user: client.getUser().id
       })
 
       # If a result was found, return with error
@@ -72,18 +67,13 @@ class MissionRoom extends Room
         return
 
 
-      # Start the Mission for the User
-      # Create a UserMission entity
-      Gotham.LocalDatabase.Model.UserMission.create {
-        user: client.GetUser().id
-        mission: mission.id
-      }, (mission) ->
-
-        # Mission entry is now created
-        client.Socket.emit 'AcceptMission', mission
-
-
-
+      # Create Mission
+      that.generateUserMission(client.getUser().id, mission.id, (userMission) ->
+        userMission.getUserMissionRequirements()
+        userMission.getMissionRequirements()
+        userMission.getMission()
+        client.Socket.emit 'AcceptMission', userMission
+      )
 
 
     ###*
@@ -95,26 +85,32 @@ class MissionRoom extends Room
       that.log.info "[MissionRoom] AbandonMission called"
       client = that.getClient(@id)
 
-      that.Database.Model.UserMission.findOne(
-        where:
-          mission: mission.id
-          user: client.GetUser().id
-      ).then (record) ->
+      db_userMission = Gotham.LocalDatabase.table 'UserMission'
+      db_mission = Gotham.LocalDatabase.table 'Mission'
 
-        if not record
-          client.Socket.emit 'ERROR', {
-            type: "ERROR_MISSION_NOT_ONGOING"
-            message: "You cannot abandon a mission not currently ongoing!"
-          } # TODO Multilangual
-          return
+      # Fetch the user mission
+      userMission = db_userMission.findOne({
+        user: client.getUser().id
+        mission: mission.id
+      })
 
-        record.destroy().on 'success', (u) ->
-          if u
+      # Fetch the user mission requirements
+      userMissionRequirements = userMission.getUserMissionRequirements()
 
-            # Find Mission Entity from local db
-            mission = Gotham.LocalDatabase.table("missions").find({id : record.mission})[0].mission
 
-            client.Socket.emit 'AbandonMission', mission
+      # Delete all userMission requirements, Deletes userMission when this is done
+      deleteCount = 0
+      for userMissionRequirement in userMissionRequirements
+        userMissionRequirement.delete ->
+          deleteCount++
+          if deleteCount >= userMissionRequirements.length
+            userMission.delete(->)
+
+            # Emit back empty mission
+            _m = db_mission.findOne(id: mission.id)
+            _m.getMissionRequirements()
+            client.Socket.emit 'AbandonMission', _m
+
 
 
     ###*
@@ -144,17 +140,28 @@ class MissionRoom extends Room
       missions.ongoing = db_userMission.find({
         user: client.getUser().id
       })
+
       for _m in missions.ongoing
         _m.getMission()
         _m.getUserMissionRequirements()
 
+
+      # Strip away mission in available list that are currently ongoing
+      missions.available = missions.available.filter (item) ->
+        for _m in missions.ongoing
+          if item.id == _m.Mission.id
+            return 0
+        return 1
+
+
       client.Socket.emit 'GetMission', missions
 
-  # Create a Mission objece
+  # Create a Mission object
+  # @method createMissionObject
   # @param missionData {Mission} THe mission data
   # @param userRequirement {UserMissionRequirement} Requirement for the user on this mission
   # @returns [MissionObject} a mission object
-  CreateMissionObject: (missionData, userMissionRequirement) ->
+  createMissionObject: (missionData, userMissionRequirement) ->
     userMissionRequirement = if not userMissionRequirement then null else userMissionRequirement
 
     # Create general mission data
@@ -174,71 +181,142 @@ class MissionRoom extends Room
 
     return mission
 
-  makeMission = (missionID, userID) ->
+  ###*
+  # generrates a user mission (Specific) for a user
+  # @method generateUserMission
+  # @param {Integer} userId
+  # @param {Integer} missionId
+  # @return
+  ###
+  generateUserMission: (userId, missionId, _c) ->
+    _c = if _c then _c else ->
 
-    getRandomNetwork = ->
-      hosts = Gotham.LocalDatabase.table("Host").data
-      return hosts[Math.floor(Math.random() * hosts.length)].host.dataValues
+    # Fetch required tables
+    db_user = Gotham.LocalDatabase.table 'User'
+    db_mission = Gotham.LocalDatabase.table 'Mission'
 
-    # Load missions and requirements
-    missions = Gotham.LocalDatabase.table("MissionRequirement")
-    mission =  missions.find(id: missionID)[0]
-    console.log mission
-    requirements = mission.mission.dataValues.MissionRequirements
+    mission = db_mission.findOne(id: missionId)
 
-    # Generate user_mission object
-    userMission = {}
-    userMission.id = 0
-    userMission.mission = missionID
-    userMission.user = userID
+    if not mission
+    # TODO Err - Mission does not exist
+      return
 
-    commands = {}
+    user = db_user.findOne(id: userId)
 
-    # Get data from requirements and generate base for missions
-    for req in requirements
+    if not user
+    # TODO Err - User does not exist
+      return
 
-      expected = JSON.parse(req.dataValues.expected)
-      key = expected["key"]
-      command = expected["command"]
-      propDef = expected["prop"]
-      prop = null
+    parser = (v) ->
+      v = v.replace("[", "").replace("]", "")
+      split = v.split(",")
+      index = split[1]
+      split = split[0].split("|")
+      type = split[0]
+      value = split[1]
+      return {
+        index: index
+        type: type
+        property: value
+      }
 
-      # Connection table in database hopefully remove this
-      missionReq = {}
-      missionReq.user_mission = userMission
-      missionReq.mission_requirement = req.id
+    # Create a initial data structure
+    data = {}
 
-      # Check if shit command exists
-      if not commands[command] then commands[command] = {}
+    # Iterate through mission requirements
+    # First iteration:
+    # Generates data map with data to populate the mission requirements with
+    for requirement in mission.getMissionRequirements()
 
-      # Check if shit key exists in shit command
-      if not commands[command][key]
+      #Get all
+      values =
+        expected: requirement.expected
+        emit_value: requirement.emit_value
+        emit_input: requirement.emit_input
 
-        switch command
+      for key, value of values
+        parsedValue = parser(value)
 
-        #### If command is network #####
-          when "network"
-            commands[command][key] = getRandomNetwork()
+        # Ignore processing of Constant values
+        if parsedValue.type == "Constant"
+          continue
 
-            if propDef
-              prop = Gotham.Util.StringTools.Resolve(commands[command][key], propDef)
+        # Ensure that type exists in datamap
+        if not data[parsedValue.type]
+          data[parsedValue.type] = {}
 
-          ## If command is none ####
-          when "none"
-            console.log key
-            commands[command][key] = {}
-
-            if propDef
-              commands[command][key] = propDef
-
-    # Get all requirements
-    for req in requirements
-      req = req.dataValues
+        # Ensure that the index exists, if not create it and generate the data
+        if not data[parsedValue.type][parsedValue.index]
+          # Generate data
+          data[parsedValue.type][parsedValue.index] = Gotham.LocalDatabase.Model[parsedValue.type].generate()
 
 
-      emit_value = JSON.parse(req.emit_value)
-      emit_input = JSON.parse(req.emit_input)
-      expected = JSON.parse(req.expected)
+    # Iterate through mission requirements
+    # Second iteration:
+    # Generates mission-
+    userMissionRequirements = []
+    for requirement in mission.getMissionRequirements()
 
+      # Create Template
+      userMissionRequirement =
+        user_mission: null
+        mission_requirement: requirement.id
+        emit_value: null
+        emit_input: null
+        current: requirement.default
+        expected: null
+      userMissionRequirements.push userMissionRequirement
+
+      # Parse all parsable values
+      req =
+        expected: parser(requirement.expected)
+        emit_value:  parser(requirement.emit_value)
+        emit_input:  parser(requirement.emit_input)
+
+      # Iterate through all parsed requirements
+      for key, value of req
+
+        # Parse Constant properties
+        if value.type == "Constant"
+          userMissionRequirement[key] = value.property
+
+        # Parse Entity properties
+        else
+          object = data[value.type][value.index]
+          userMissionRequirement[key] = Gotham.Util.StringTools.Resolve object, value.property
+
+    # Done generation, Create Entities
+    Gotham.LocalDatabase.Model.UserMission.create({user: userId, mission: missionId}, (userMission) ->
+
+      if userMission == null
+        # TODO error out, most likely unique error
+        return
+
+      # Create all user mission requirements
+      count = 0 # Counter to keep track of number of saved elements
+      for userMissionRequirement in userMissionRequirements
+
+
+        Gotham.LocalDatabase.Model.UserMissionRequirement.create({
+            user_mission: userMission.id
+            mission_requirement: userMissionRequirement.mission_requirement
+            emit_value: userMissionRequirement.emit_value
+            emit_input: userMissionRequirement.emit_input
+            current: userMissionRequirement.current
+            expected: userMissionRequirement.expected
+          }, (entry) ->
+
+          # Increment counter
+          count++
+          #  When last element is saved
+          if count >= userMissionRequirements.length
+            _c(userMission)
+
+          if not entry
+            # TODO error out. Some wrong shit happened (Unique?)
+            return
+        )
+
+    )
 
 module.exports = MissionRoom

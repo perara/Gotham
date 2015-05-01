@@ -29,8 +29,26 @@ class WorldMapRoom extends Room
 
       # Fetch all cables, then eager load cables
       nodes = db_node.find().map (item) ->
-        item.getCables()
-        return item
+        return {
+          bandwidth: item.bandwidth
+          countryCode: item.countryCode
+          id: item.id
+          lat: item.lat
+          lng: item.lng
+          name: item.name
+          priority: item.priority
+          tier: item.tier
+          Cables: item.getCables().map (i) ->
+            return {
+              capacity: i.capacity
+              distance: i.distance
+              id: i.id
+              name: i.name
+              priority: i.priority
+              type: i.type
+            }
+        }
+
       client.emit 'GetNodes', nodes
 
 

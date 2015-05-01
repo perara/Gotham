@@ -21,14 +21,25 @@ class MissionController extends Gotham.Pattern.MVC.Controller
 
     # Whenever a mission has been accepted (OK from Server)
     GothamGame.Network.Socket.on 'AcceptMission', (mission) ->
-      GothamGame.MissionEngine.addMission mission
-      that.View.removeAvailableMission mission
-      that.View.addOngoingMission mission
+      _mission = mission.Mission
+      _mission.UserMissionRequirements = mission.UserMissionRequirements
+
+      # Create a mission object
+      _m = GothamGame.MissionEngine.createMission _mission
+      _m.setOngoing true
+
+      GothamGame.MissionEngine.addMission _m
+      that.View.removeAvailableMission _m
+      that.View.addOngoingMission _m
 
     GothamGame.Network.Socket.on 'AbandonMission', (mission) ->
-      GothamGame.MissionEngine.removeMission mission
-      that.View.addAvailableMission mission
-      that.View.removeOngoingMission mission
+
+      # Create a mission object
+      _m = GothamGame.MissionEngine.createMission mission
+
+      GothamGame.MissionEngine.removeMission _m
+      that.View.addAvailableMission _m
+      that.View.removeOngoingMission _m
 
 
   setupMissions: ->
@@ -55,10 +66,11 @@ class MissionController extends Gotham.Pattern.MVC.Controller
 
       # Create a mission object
       _m = GothamGame.MissionEngine.createMission mission
+      _m.setOngoing mission.ongoing
 
       # Set complete callback, emitting back to server when its done.
       _m.onComplete = (mission) ->
-        console.log "#{mission._title} is complete!"
+        #console.log "#{mission._title} is complete!"
 
 
       # Whenever the mission has progress
@@ -87,6 +99,8 @@ class MissionController extends Gotham.Pattern.MVC.Controller
   hide: ->
     @View.visible = false
 
+  updateView: ->
+    @View.updateStats()
 
 
 

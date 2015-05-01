@@ -3,9 +3,13 @@ IPViking = require './Components/IPViking.coffee'
 Cyberfeed = require './Components/Cyberfeed.coffee'
 HoneyCloud = require './Components/HoneyCloud.coffee'
 
+http = require 'http'
+
+
 
 ###*
 # World, is the world loop of the backend. Simulating traffic etc.
+# Litterature: http://howtonode.org/understanding-process-next-tick
 # @class World
 # @module Backend
 # @submodule Backend.World
@@ -13,6 +17,20 @@ HoneyCloud = require './Components/HoneyCloud.coffee'
 class World
 
   constructor: ->
+
+    ###*
+    # Data to output to the API
+    # @property {Object} apiData
+    ###
+    @apiData =
+      nodes: {}
+
+    ###*
+    # Sleep between each update loop
+    # @property {FREQUENCY} Frequency
+    # @private
+    ###
+    FREQUENCY = 1000
 
     ###*
     # The world clock
@@ -39,15 +57,58 @@ class World
     @HoneyCloud = new HoneyCloud()
 
 
+    ###*
+    # Updates the world state
+    # @method update
+    # @private
+    ###
+    that = @
+    update = ->
+      that.updateNodeLoad()
+
+    setInterval(update, FREQUENCY)
+
+
+  updateNodeLoad: ->
+    db_node = Gotham.LocalDatabase.table "Node"
+
+    for node in db_node.find()
+      node.updateLoad()
+
+      # Update API
+      @apiData["nodes"][node.id] =
+        load: node.load
+        minutes: ((node.lng + 180) / 0.25)  + Gotham.World.Clock.getMinutes()
+        lng: node.lng
+        name: node.name
+
+
+
   ###*
   # Starts the world loop
   # @method start
   ###
   start: ->
-   @Clock.start()
-   @IPViking.connect() # http://map.ipviking.com/ | Contains attack data |
-   #@HoneyCloud.connect() # http://map.honeynet.org/ | Contain Attack Live stream (Src --> Target) | IP Included
-   #@Cyberfeed.connect() # http://globe.cyberfeed.net/ | Contains Virus Infection feed (Much Data) (No Source)
+
+    @Clock.start()
+    @IPViking.connect() # http://map.ipviking.com/ | Contains attack data |
+    #@HoneyCloud.connect() # http://map.honeynet.org/ | Contain Attack Live stream (Src --> Target) | IP Included
+    #@Cyberfeed.connect() # http://globe.cyberfeed.net/ | Contains Virus Infection feed (Much Data) (No Source)
+    @createAPI()
+
+  ###*
+  # Creates a World Statistics API
+  # @method createAPI
+  ###
+  createAPI: ->
+    that = @
+    http.createServer((req, res) ->
+      res.writeHead(200, {
+        'Content-Type': 'application/json'
+        'Access-Control-Allow-Origin': '*'
+      })
+      res.end(JSON.stringify(that.apiData))
+    ).listen(9615);
 
 
 

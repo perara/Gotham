@@ -49,6 +49,20 @@ class UserMission extends GothamObject
         @UserMissionRequirements.push userMissionRequirement
     return @UserMissionRequirements
 
+  ###*
+  # Get all associated Requirements for this UserMission
+  # @method getMissionRequirements
+  # @return {MissionRequirement[]} Mission Requirements
+  ###
+  getMissionRequirements: ->
+    if not @MissionRequirements
+      db_missionRequirement = Gotham.LocalDatabase.table("MissionRequirement")
+      @MissionRequirements = []
+      for missionRequirement in db_missionRequirement.find({mission: @mission})
+        @MissionRequirements.push missionRequirement
+    return @MissionRequirements
+
+
 
 ###*
 # The id of the user_mission

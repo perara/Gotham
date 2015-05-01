@@ -48,7 +48,47 @@ class GothamObject
     ###
     @_model = model
 
-    for key, val of model.dataValues
+    if @_model
+      @generateProperties()
+
+  ###*
+  # Deletes the Local and Remote entity
+  # @method delete
+  # @param {Callback} callback
+  # @return {Callback} A complete callback
+  ###
+  delete: (c) ->
+    Gotham.LocalDatabase.table(@constructor.name).remove(@)
+    @_model.destroy().then () ->
+      c()
+
+  ###*
+  # Updates the Local and Remote Model
+  # @method update
+  # @param {Properties} properties
+  # @param {Callback} callback
+  # @return {Callback} A complete callback
+  ###
+  update: (properties, c) ->
+    c =  if c then c else ->
+
+    # Update Local Database
+    for key, val of properties
+      @[key] = val
+
+    # Update Remote Database
+    @_model.updateAttributes(properties).then () ->
+      c()
+
+
+
+  ###*
+  # Populates the LocalDatabase entity with RemoteDatabase data
+  # @method generateProperties
+  # @private
+  ###
+  generateProperties: ->
+    for key, val of @_model.dataValues
       @[key] = val
 
 

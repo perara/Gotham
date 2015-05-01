@@ -8,6 +8,9 @@ class UserView extends Gotham.Pattern.MVC.View
 
     @movable()
 
+    @click = ->
+      @bringToFront()
+
     # Identity
     @selectedIdentity = null
     @identityCount = 0
@@ -154,11 +157,15 @@ class UserView extends Gotham.Pattern.MVC.View
 
   addNetwork: (network) ->
 
+    db_node = Gotham.Database.table("node")
+
+
+
     networkSprite = new Gotham.Graphics.Sprite Gotham.Preload.fetch("user_management_network_item", "image")
     networkSprite.y = @networkY
     networkSprite.interactive = true
 
-    text = new Gotham.Graphics.Text("IP: #{network.external_ip_v4} Mask: #{network.submask}\nNode: #{network.Node.name}", {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
+    text = new Gotham.Graphics.Text("IP: #{network.external_ip_v4} Mask: #{network.submask}\nNode: #{db_node({id: network.Node}).first().name}", {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
     text.x = 5
     text.y = 5
     networkSprite.addChild text

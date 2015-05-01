@@ -52,6 +52,39 @@ class Cable extends GothamObject
     return @_nodes
 
 
+
+  updateLoad: ->
+    VARIATION = 5
+
+    cableParts = @getCableParts()
+
+    # Find Middle point between cableParts
+    startPart = cableParts[0]
+    endPart = cableParts[cableParts.length - 1]
+
+    # Calculate the mid point
+    midPoint =
+      lat: (startPart.lat + endPart.lat) / 2
+      lng: (startPart.lng + endPart.lng) / 2
+
+    # Find closest part to the mid point
+    closestPart = Gotham.Util.GeoTool.getClosest(midPoint, cableParts)
+
+    # Calculating what time it is on the current latitude (in total minutes)
+    minutes = ((closestPart.lng + 180) / 0.25)  + Gotham.World.Clock.getMinutes()
+
+    # Static variable for converting degrees to minutes with 12 hour offset
+    deltaMinute = ((2 * Math.PI) / 1440)
+
+    # Calculates the load from a sinus curve peaking at 18:00
+    loadValue = Math.sin(deltaMinute * minutes)
+
+    # Uses variation and multiplication to make a fictional amount of bandwidth
+    @load = ((loadValue) + VARIATION) / 10
+    return @load
+
+
+
   ###*
   # The Identifier of this Cable
   # @property {Integer} id

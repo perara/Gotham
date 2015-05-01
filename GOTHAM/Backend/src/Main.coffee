@@ -7,6 +7,9 @@
 performance = require 'performance-now'
 log = require('log4js').getLogger("Main")
 
+# Extensions
+require './Tools/JSON.coffee'
+
 # Gotham Party
 SocketServer = require './Networking/SocketServer.coffee'
 Database = require './Database/Database.coffee'
@@ -63,6 +66,10 @@ preload = (_c) ->
 preload ->
   startServer()
 
+  testSession()
+
+
+testSession = ->
 
   db_node = Gotham.LocalDatabase.table("Node")
   db_host = Gotham.LocalDatabase.table("Host")
@@ -70,92 +77,80 @@ preload ->
   host1 = db_host.findOne(id: 2)
   host2 = db_host.findOne(id: 4)
 
-  # Make layers
-  #ls = new Gotham.Micro.LayerStructure().makeHTTP()
+# Make layers
+#ls = new Gotham.Micro.LayerStructure().makeHTTP()
 
-  #Gotham.Micro.LayerStructure.HTTP()
+#Gotham.Micro.LayerStructure.HTTP()
 
-  #packets = ["Data of packet 1", "Packet 2 this is"]
-  #sess = new Gotham.Micro.Session(host1, host2, "ICMP", packets)
-  #sess.L7.setData("Test")
+#packets = ["Data of packet 1", "Packet 2 this is"]
+#sess = new Gotham.Micro.Session(host1, host2, "ICMP", packets)
+#sess.L7.setData("Test")
 
-  #console.log sess.nodeHeaders
-
-
+#console.log sess.nodeHeaders
 
 
+MakeMission = (missionID, userID) ->
+
+  getRandomNetwork = ->
+    hosts = Gotham.LocalDatabase.table("Host").data
+    return hosts[Math.floor(Math.random() * hosts.length)].host
+
+  # Load missions and requirements
+  missions = Gotham.LocalDatabase.table("MissionRequirement")
+  requirements =  missions.find(mission: missionID)
+
+  # Generate user_mission object
+  userMission = {}
+  userMission.id = 0
+  userMission.mission = missionID
+  userMission.user = userID
+
+  commands = {}
+
+  # Get data from requirements and generate base for missions
+  for req in requirements
+
+    expected = JSON.parse(req.expected)
+    key = expected["key"]
+    command = expected["command"]
+    propDef = expected["prop"]
+    prop = null
+
+    # Connection table in database hopefully remove this
+    missionReq = {}
+    missionReq.user_mission = userMission
+    missionReq.mission_requirement = req.id
+
+    # Check if shit command exists
+    if not commands[command] then commands[command] = {}
+
+    # Check if shit key exists in shit command
+    if not commands[command][key]
+
+      switch command
+
+      #### If command is network #####
+        when "network"
+          commands[command][key] = getRandomNetwork()
+
+          if propDef
+            prop = Gotham.Util.StringTools.Resolve(commands[command][key], propDef)
+
+      #### If command is none ####
+        when "none"
+          commands[command][key] = {}
+
+          if propDef
+            commands[command][key] = propDef
 
 
+  console.log commands
 
 
+  # Get all requirements
+  for req in requirements
 
-
-
-
-  MakeMission = (missionID, userID) ->
-
-    getRandomNetwork = ->
-      hosts = Gotham.LocalDatabase.table("Host").data
-      return hosts[Math.floor(Math.random() * hosts.length)].host
-
-    # Load missions and requirements
-    missions = Gotham.LocalDatabase.table("MissionRequirement")
-    requirements =  missions.find(mission: missionID)
-
-    # Generate user_mission object
-    userMission = {}
-    userMission.id = 0
-    userMission.mission = missionID
-    userMission.user = userID
-
-    commands = {}
-
-    # Get data from requirements and generate base for missions
-    for req in requirements
-
-      expected = JSON.parse(req.expected)
-      key = expected["key"]
-      command = expected["command"]
-      propDef = expected["prop"]
-      prop = null
-
-      # Connection table in database hopefully remove this
-      missionReq = {}
-      missionReq.user_mission = userMission
-      missionReq.mission_requirement = req.id
-
-      # Check if shit command exists
-      if not commands[command] then commands[command] = {}
-
-      # Check if shit key exists in shit command
-      if not commands[command][key]
-
-        switch command
-
-        #### If command is network #####
-          when "network"
-            commands[command][key] = getRandomNetwork()
-
-            if propDef
-              prop = Gotham.Util.StringTools.Resolve(commands[command][key], propDef)
-
-        #### If command is none ####
-          when "none"
-            commands[command][key] = {}
-
-            if propDef
-              commands[command][key] = propDef
-
-
-    console.log commands
-
-
-    # Get all requirements
-    for req in requirements
-
-      emit_value = JSON.parse(req.emit_value)
-      emit_input = JSON.parse(req.emit_input)
-      expected = JSON.parse(req.expected)
-
-
+    emit_value = JSON.parse(req.emit_value)
+    emit_input = JSON.parse(req.emit_input)
+    expected = JSON.parse(req.expected)
 

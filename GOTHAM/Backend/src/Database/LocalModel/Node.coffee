@@ -76,6 +76,22 @@ class Node extends GothamObject
     return @Country
 
 
+  ###*
+  # Updates load on node based of time
+  # @method
+  #
+  ###
+  updateLoad: ->
+    sumCableLoad = 0
+    cables = @getCables()
+
+    for cable in cables
+      sumCableLoad += cable.updateLoad()
+
+    @load = sumCableLoad / cables.length
+
+
+
 
 ###*
 # The id of the node

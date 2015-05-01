@@ -24,72 +24,44 @@ class TracerouteRoom extends Room
     ###
     @addEvent "Traceroute", (packet) ->
       client = that.getClient(@id)
-      database = new Database()
 
+      # Get tables
+      db_host = Gotham.LocalDatabase.table("Host")
+      db_network = Gotham.LocalDatabase.table("Network")
 
-      promises = []
+      # Fetch source host
+      sourceHost  = db_host.findOne(id: packet.sourceHost)
 
-      # Host object
-      sourceNode = null
-      targetNetwork = targetNetwork
-      targetNode = null
+      # Fetch target host
+      targetNetwork = db_network.findOne(external_ip_v4: packet.target)
 
+      # SourceHost does not exist
+      if not sourceHost
+        client.Socket.emit 'TracerouteRoom_Error', "ERROR_NO_SOURCE_HOST" #TODO
+        return
 
-      # Fetch source Node
-      promises.push database.Model.Host.findOne(
-        where: id: packet.sourceHost
-        include: [
-          {
-            model: database.Model.Network
-            include: [
-              {
-                model : database.Model.Node
-                include: [ database.Model.Cable]
-              }
-            ]
-          }
-        ]
-      ).then (_host) ->
-        sourceNode = _host.Network.Node
+      # TargetNetwork does not exist
+      if not targetNetwork
+        client.Socket.emit 'TracerouteRoom_Error', "ERROR_NO_TARGET_HOST" #TODO
+        return
 
-      # Fetch Target Node
-      promises.push database.Model.Network.findOne(
-        where: external_ip_v4: packet.target
-        include: [
-          {
-            model : database.Model.Node
-            include: [ database.Model.Cable]
-          }
-        ]
-      ).then (network) ->
-        targetNetwork = network
-        targetNode = network.Node
+      # Get nodes for source and target
+      sourceNode = sourceHost.getNetwork().getNode()
+      targetNode = targetNetwork.getNode()
 
+      # Calculate solution
+      solution = Traffic.Pathfinder.bStar(sourceNode, targetNode)
 
+      # TODO LOL - Output path
+      outputarr = []
+      outputarr.push ("=======================================")
+      outputarr.push ("Path of nodes (#{solution.length}):")
+      outputarr.push ("---------------------------------------")
+      for node in solution
+        outputarr.push (node.id + " - " +node.name)
+      outputarr.push ("=======================================")
 
-
-      # When all database lookup is done
-      When.all(promises).then(->
-
-
-        session = new Gotham.Micro.Session(host1, host2, "ICMP")
-        session.L3.ICMP.code = 8
-        solution = Traffic.Pathfinder.bStar(sourceNode, targetNode)
-
-
-        # TODO LOL
-        outputarr = []
-        outputarr.push ("=======================================")
-        outputarr.push ("Path of nodes (#{solution.length}):")
-        outputarr.push ("---------------------------------------")
-        for node in solution
-          outputarr.push (node.id + " - " +node.name)
-        outputarr.push ("=======================================")
-
-        client.Socket.emit 'Traceroute', Traffic.Pathfinder.toIdList(solution), outputarr, targetNetwork
-
-
-      )
+      client.Socket.emit 'Traceroute', Traffic.Pathfinder.toIdList(solution), outputarr, JSON.prune(targetNetwork)
 
 
 

@@ -7,27 +7,29 @@ class MissionView extends Gotham.Pattern.MVC.View
     super
 
     @movable()
+    @click = ->
+      @bringToFront()
+
     @selected = null
+
     @missions =
       ongoing:
         isOngoing: true
-        pages: []
-        currentPage: 0
         elements: []
-        elementsPerPage: 6
+        index: 0
+        elementsPerPage: 5
+        numPages: 0
         y: 450
       available:
         isOngoing: false
-        pages: []
-        currentPage: 0
         elements: []
-        elementsPerPage: 6
+        index: 0
+        elementsPerPage: 5
+        numPages: 0
         y: 60
 
   create: ->
     @setupListView()
-    @initMissionJournal()
-    @updateMissionJournal()
 
 
 
@@ -54,6 +56,12 @@ class MissionView extends Gotham.Pattern.MVC.View
     ongoingMissions.y = 420
     window.addChild ongoingMissions
 
+    @noDisplayedMission = new Gotham.Graphics.Text("No Mission Selected", {font: "bold 45px calibri", fill: "#ffffff", align: "left"});
+    @noDisplayedMission.x = 480
+    @noDisplayedMission.y = 300
+    @noDisplayedMission.visible = true
+    @window.addChild @noDisplayedMission
+
     frame = new Gotham.Graphics.Sprite Gotham.Preload.fetch("mission_frame", "image")
     window.addChild frame
 
@@ -79,76 +87,177 @@ class MissionView extends Gotham.Pattern.MVC.View
 
   removeMission: (mission, container) ->
 
-    # Remove From elements
-    for sprite in container.elements
-      if sprite.mission.id == mission.id
-        container.elements.remove sprite
+    for element in container.elements
+      if element.mission.id == mission.id
+        container.elements.remove element
+        @window.removeChild element
         break
 
-    # Remove from page system # TODO , bad logic
-    for page in container.pages
-      for sprite in page
-        if sprite.mission.id == mission.id
-          page.remove sprite
-          @window.removeChild sprite
-          break
 
-    @updateMissionJournal container
+  updateVisibility: ->
+
+    for key, container of @missions
+      start = container.index * container.elementsPerPage
+      end = (container.index * container.elementsPerPage) + container.elementsPerPage
+
+      for element in container.elements
+        element.visible = false
+
+      count = 0
+      for i in [start...end]
+        if container.elements[i]
+          container.elements[i].visible = true
+          container.elements[i].y = container.y + (count * container.elements[i].height) + (5 * count)
+          count++
 
 
 
-  # This view displays a selected mission, the user is able to select to start such mission type
+
+  generateMissionJournalItem: (mission, missionItem) ->
+    that = @
+
+
+    journalContainer = new Gotham.Graphics.Container
+    journalContainer.visible = false
+    @window.addChild journalContainer
+
+
+    missionTitle = new Gotham.Graphics.Text(mission.getTitle(), {font: "bold 45px calibri", fill: "#ffffff", align: "left"});
+    missionTitle.x = 480
+    missionTitle.y = 60
+    journalContainer.addChild missionTitle
+
+    missionDescription_title = new Gotham.Graphics.Text("Description", {font: "bold 30px calibri", fill: "#ffffff", align: "left"});
+    missionDescription_title.x = 480
+    missionDescription_title.y = 120
+    journalContainer.addChild missionDescription_title
+
+    descText = if mission.getOngoing() then mission.getExtendedDescription() else mission.getDescription()
+    missionDescription = new Gotham.Graphics.Text(descText , {wordWrap: true, wordWrapWidth: 400, font: "bold 20px calibri", fill: "#000000", align: "left"});
+    missionDescription.x = 480
+    missionDescription.y = 180
+    journalContainer.addChild missionDescription
+
+    # Create accept button if not ongoing
+    if !mission.getOngoing()
+      acceptButton = new Gotham.Controls.Button "Accept", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 50}
+      acceptButton.y = missionDescription.y + missionDescription.height + 20
+      acceptButton.x = 480
+      acceptButton.click = () ->
+        that.selected.journalItem.visible = false
+        that.selected = null
+        GothamGame.Network.Socket.emit 'AcceptMission', { id: mission.getID() }
+      journalContainer.addChild acceptButton
+    else
+
+      startY = missionDescription.y + missionDescription.height + 60
+      for key, requirement of mission.getRequirements()
+        current = if not requirement.getCurrent() then "None" else requirement.getCurrent()
+        requirmentGraphics = new Gotham.Graphics.Text("#{requirement.getName()}: #{current}/#{requirement.getExpected()}", {font: "bold 20px calibri", fill: "#000000", align: "left"});
+        requirmentGraphics.y = startY
+        requirmentGraphics.x = 480
+        missionItem.requirements.push requirmentGraphics
+        journalContainer.addChild requirmentGraphics
+        startY += requirmentGraphics.height + 5
+
+      startY += 40
+      if !mission.isCompleted()
+
+        abandonButton = new Gotham.Controls.Button "Abandon", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 50}
+        abandonButton.y = startY
+        abandonButton.x = 480
+        abandonButton.interactive = true
+        journalContainer.addChild abandonButton
+        abandonButton.click = () ->
+          that.selected.journalItem.visible = false
+          that.selected = null
+
+          GothamGame.Network.Socket.emit 'AbandonMission', {id: mission.getID() }
+      else
+        completeMissionButton = new Gotham.Controls.Button "Complete Mission", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 35}
+        completeMissionButton.y = startY
+        completeMissionButton.x = 480
+        journalContainer.addChild completeMissionButton
+        completeMissionButton.click = () ->
+          #that.selected = null
+          GothamGame.Network.Socket.emit 'CompleteMission', {id: mission.getID() }
+
+
+
+
+    return journalContainer
+
+  updateStats: () ->
+    for key, type of @missions
+      for element in type.elements
+        mission = element.mission
+        requirements = mission.getRequirements()
+        keys = Object.keys(requirements)
+        for i in [0...element.requirements.length]
+          current = if not requirements[keys[i]].getCurrent() then "None" else requirements[keys[i]].getCurrent()
+          element.requirements[i].text = "#{requirements[keys[i]].getName()}: #{current}/#{requirements[keys[i]].getExpected()}"
+
+
+
+# This view displays a selected mission, the user is able to select to start such mission type
   addMission: (mission, container)->
     that = @
 
-    # Add to page system
-    page = Math.floor(container.elements.length / container.elementsPerPage)
-
-    # If the page does not exist, create a new index and a button
-    if not container.pages[page]
-      container.pages[page] = []
-      pageButton = new Gotham.Controls.Button (page+1), 25,25, {toggle: false, textSize: 100}
-      pageButton.missions = []
-      pageButton.x = 35 + (page * 25)
-      pageButton.y = container.y + (50 * container.elementsPerPage + 1) + (5 * container.elementsPerPage + 1)
-      pageButton.interactive = true
-      pageButton.click = ->
-        container.currentPage = page
-        that.updateQuestList(container)
-      that.window.addChild pageButton
-
-
-    # Create mission element
+    # Create the initial mission graphics
     missionItem = new Gotham.Graphics.Sprite Gotham.Preload.fetch("mission_item", "image")
-    missionItem.y = container.y + (missionItem.height * container.pages[page].length) + (5 * container.pages[page].length)
+    missionItem.y = container.y + (container.elements.length * missionItem.height) + (5 * container.elements.length)
     missionItem.x = 35
-    missionItem.interactive = true
-    missionItem.visible = false
     missionItem.mission = mission
-    missionItem.container = container
+    missionItem.requirements = []
+    missionItem.interactive = true
+    missionItem.visible = true
+    missionItem.journalItem = @generateMissionJournalItem(mission, missionItem)
+
+    # Add to the container list
+    container.elements.push missionItem
+
+
+    pageNum = Math.ceil (container.elements.length / container.elementsPerPage)
+
+    if container.numPages < pageNum
+      container.numPages = pageNum
+      pageButton = new Gotham.Controls.Button (pageNum), 25,25, {toggle: false, textSize: 100}
+      pageButton.visible = true
+      pageButton.x = (pageNum * 35)
+      pageButton.y = container.y + (50 * container.elementsPerPage + 1) + (5 * container.elementsPerPage)
+      pageButton.click = ->
+        container.index = pageNum - 1
+        that.updateVisibility()
+
+      @window.addChild pageButton
+
+
+    # Whenever a mission item is clicked
     missionItem.click = ->
       @_toggle = if not @_toggle then true else !@_toggle
 
-      # Set Selected Mission Item
+      # Remove toggle from already selected item
+      if that.selected
+        that.selected.tint = 0xffffff
+        that.selected.journalItem.visible = false
+        that.selected._toggle = false
+        that.noDisplayedMission.visible = true
+
       that.selected = missionItem
 
       if @_toggle
-
-        for key, container of that.missions
-          for mission in container.elements
-            if mission != @
-              mission.tint = 0xffffff
-              mission._toggle = false
-
         @tint = 0x00ff00
+        @journalItem.visible = true
+        that.noDisplayedMission.visible = false
         that.selected = @
       else
         @tint = 0xffffff
+        @journalItem.visible = false
+        that.noDisplayedMission.visible = true
         that.selected = null
-      that.updateMissionJournal(@container)
 
 
-    title = if mission.isCompleted() then mission.getTitle() + " (Complete)" else mission.getTitle()
+    title = if mission.isCompleted() and mission.getOngoing() then "#{mission.getTitle()} (Complete)" else mission.getTitle()
     missionTitle = new Gotham.Graphics.Text(title, {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
     missionTitle.x = 10
     missionTitle.y = 15
@@ -161,10 +270,7 @@ class MissionView extends Gotham.Pattern.MVC.View
 
     @window.addChild missionItem
 
-    # Add item to pagination array | Add item to elements array
-    container.pages[page].push missionItem
-    container.elements.push missionItem
-    that.updateQuestList(container)
+    @updateVisibility()
 
 
   # Update The quest list with pagination
@@ -178,146 +284,6 @@ class MissionView extends Gotham.Pattern.MVC.View
     missions = container.pages[container.currentPage]
     for mission in missions
       mission.visible = true
-
-
-  initMissionJournal: ->
-    that = @
-
-    @noDisplayedMission = new Gotham.Graphics.Text("No Mission Selected", {font: "bold 45px calibri", fill: "#ffffff", align: "left"});
-    @noDisplayedMission.x = 480
-    @noDisplayedMission.y = 300
-    @window.addChild @noDisplayedMission
-
-
-    @missionTitle = new Gotham.Graphics.Text("IP Hacking", {font: "bold 45px calibri", fill: "#ffffff", align: "left"});
-    @missionTitle.x = 480
-    @missionTitle.y = 60
-    @missionTitle.visible = false
-    @window.addChild @missionTitle
-
-    @missionDescription_title = new Gotham.Graphics.Text("Description", {font: "bold 30px calibri", fill: "#ffffff", align: "left"});
-    @missionDescription_title.x = 480
-    @missionDescription_title.y = 120
-    @missionDescription_title.visible = false
-    @window.addChild @missionDescription_title
-
-
-    @missionDescription = new Gotham.Graphics.Text("[NO DESCRIPTION}", {wordWrap: true, wordWrapWidth: 400, font: "bold 20px calibri", fill: "#000000", align: "left"});
-    @missionDescription.x = 480
-    @missionDescription.y = 180
-    @missionDescription.visible = false
-    @window.addChild @missionDescription
-
-    @missionRequirements = new Gotham.Graphics.Text("[NO REQUIREMENTS}", {wordWrap: true, wordWrapWidth: 400, font: "bold 20px calibri", fill: "#000000", align: "left"});
-    @missionRequirements.x = 480
-    @missionRequirements.y = 250
-    @missionRequirements.visible = false
-    @window.addChild @missionRequirements
-
-    @acceptButton = new Gotham.Controls.Button "Accept", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 50}
-    @acceptButton.y = @missionDescription.y + @missionDescription.height + 20
-    @acceptButton.visible = false
-    @acceptButton.x = 480
-    @window.addChild @acceptButton
-    @acceptButton.click = () ->
-      console.log that.selected.mission
-      GothamGame.Network.Socket.emit 'AcceptMission', {
-        id: that.selected.mission.getID()
-      }
-
-    @abandonButton = new Gotham.Controls.Button "Abandon", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 50}
-    @abandonButton.y = @missionDescription.y + @missionDescription.height + 20
-    @abandonButton.visible = false
-    @abandonButton.x = 480
-    @window.addChild @abandonButton
-    @abandonButton.click = () ->
-      console.log that.selected.mission
-      GothamGame.Network.Socket.emit 'AbandonMission', that.selected.mission
-
-
-    @completeMissionButton = new Gotham.Controls.Button "Complete Mission", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 35}
-    @completeMissionButton.y = @abandonButton.y + @completeMissionButton.height + 50
-    @completeMissionButton.visible = false
-    @completeMissionButton.x = 480
-    @window.addChild @completeMissionButton
-    @completeMissionButton.click = () ->
-      GothamGame.Network.Socket.emit 'CompleteMission', that.selected.mission
-
-
-
-  updateMissionJournal:(container) ->
-    container = if not container then {} else container
-
-
-
-
-    # Hide if no mission is selected
-    if not @selected
-      @noDisplayedMission.visible = true
-      @missionTitle.visible = false
-      @missionDescription_title.visible = false
-      @missionDescription.visible = false
-      @acceptButton.visible = false
-      @abandonButton.visible = false
-      @missionRequirements.visible = false
-      @completeMissionButton.visible = false
-      return
-
-    ################################
-    # Show Mission logic
-    # Only show accept button on available mission
-    if not container.isOngoing
-      @acceptButton.visible = true
-      @abandonButton.visible = false
-      @missionRequirements.visible = false
-      missionDescription = @selected.mission.getDescription()
-    else
-      @acceptButton.visible = false
-      @missionRequirements.visible = true
-
-      if @selected.mission.isCompleted()
-        @completeMissionButton.visible = true
-      else
-        @abandonButton.visible = true
-
-
-
-      # Set Text of mission Requirements
-      reqStr = ""
-      for id, req of @selected.mission.getRequirements()
-        reqStr += "#{req.getName()}: #{req.getCurrent()} / #{req.getExpected()}\n"
-      @missionRequirements.text = reqStr
-
-
-      # Move abandon button to bottom
-      @abandonButton.y = @missionRequirements.y + @abandonButton.height + 20
-      missionDescription = @selected.mission.getExtendedDescription()
-
-
-    @noDisplayedMission.visible = false
-    @missionDescription_title.visible = true
-    #MissionView.replacePlaceholders(container.selected.mission, container.selected.mission._title).replace("\\n","\n")
-    @missionTitle.text = @selected.mission.getTitle()
-    @missionTitle.visible = true
-
-    #MissionView.replacePlaceholders(container.selected.mission, missionDescription).replace("\\n","\n")
-    @missionDescription.text = missionDescription
-    @missionDescription.visible = true
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
