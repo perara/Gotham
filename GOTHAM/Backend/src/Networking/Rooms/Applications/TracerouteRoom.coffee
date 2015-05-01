@@ -52,6 +52,10 @@ class TracerouteRoom extends Room
       # Calculate solution
       solution = Traffic.Pathfinder.bStar(sourceNode, targetNode)
 
+      # Make session for this traceroute
+      session = new Traffic.Session(sourceHost, targetNetwork)
+      console.log session
+
       # TODO LOL - Output path
       outputarr = []
       outputarr.push ("=======================================")

@@ -2,16 +2,21 @@
 # Session object containing source, target ,traffic path and packets exchanged
 class Session
 
-  constructor: (sourceHost, targetHost, type, packets) ->
+  constructor: (sourceHost, target, type, packets) ->
     type = if not type then "None" else type
 
-    sourceNode = sourceHost.getNetwork().getNode()
-    targetNode = targetHost.getNetwork().getNode()
+    # Checks if target is a network or a host
+    if not target.network
+      @targetNode = target.getNode()
+    else
+      @targetNode = target.getNetwork().getNode()
+
+    @sourceNode = sourceHost.getNetwork().getNode()
 
     @sourceHost = sourceHost
-    @targetHost = targetHost
+    @targetHost = target
 
-    @path = Gotham.Micro.Pathfinder.bStar(sourceNode, targetNode)
+    @path = Gotham.Micro.Pathfinder.bStar(@sourceNode, @targetNode)
     @layers = Gotham.Micro.LayerStructure.Packet[type]()
     @nodeHeaders = {}
     @packets = @getPacketsInfo(packets)
