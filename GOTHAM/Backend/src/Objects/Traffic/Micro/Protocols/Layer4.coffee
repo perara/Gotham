@@ -2,17 +2,25 @@ BaseLayer = require './BaseLayer.coffee'
 
 class Layer4 extends BaseLayer
 
-  constructor: (source, dest) ->
-    @sourceMAC = source
-    @destMAC = dest
+  constructor: (type) ->
+    @type = type
+    @sourcePort = null
+    @targetPort = null
+    @ttl = null
+    @length = null
 
-class TCP extends Layer4
-  setType: ->
-    return "TCP"
+  @TCP = ->
+    l4 = new Layer4("TCP")
+    l4.seqNumber = null
+    l4.ackNumber = null
+    l4.segLength = null
 
-class UDP extends Layer4
-  setType: ->
-    return "UDP"
+    return l4
 
-module.exports = TCP
-module.exports = UDP
+  @UDP = ->
+    l4 = new Layer4("UDP")
+
+    return l4
+
+
+module.exports = Layer4

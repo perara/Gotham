@@ -63,17 +63,28 @@ preload = (_c) ->
 preload ->
   startServer()
 
+
   db_node = Gotham.LocalDatabase.table("Node")
-  node1 = db_node.findOne(id: 14752)
-  node2 = db_node.findOne(id: 16250)
+  db_host = Gotham.LocalDatabase.table("Host")
+
+  host1 = db_host.findOne(id: 2)
+  host2 = db_host.findOne(id: 4)
+
+  # Make layers
+  #ls = new Gotham.Micro.LayerStructure().makeHTTP()
+
+  #Gotham.Micro.LayerStructure.HTTP()
+
+  #packets = ["Data of packet 1", "Packet 2 this is"]
+  #sess = new Gotham.Micro.Session(host1, host2, "ICMP", packets)
+  #sess.L7.setData("Test")
+
+  #console.log sess.nodeHeaders
 
 
-  console.log node1.getSiblings().length
-  console.log node2.getSiblings().length
 
 
-  solution = Gotham.Micro.Pathfinder.bStar(node1, node2)
-  Gotham.Micro.Pathfinder.printSolution(solution)
+
 
 
 

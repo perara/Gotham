@@ -42,13 +42,14 @@ module.exports = (sequelize, DataTypes) ->
 
       instanceMethods:
         updateLoad: (timeOffset, variation) ->
-
           if not @CableParts then throw new ReferenceError("CableParts not loaded")
 
           # Gets the cable parts
           parts = @CableParts
+
           # Gets the longitude and time offset
-          avgLng = parts[0].lng
+          avgLng = parts[parts.length / 2].lng
+
           # Calculating what time it is on the current latitude (in total minutes)
           minutes = ((avgLng + 180) / 0.25)  + timeOffset
 

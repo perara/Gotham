@@ -1,27 +1,30 @@
 BaseLayer = require './BaseLayer.coffee'
 
 class Layer6 extends BaseLayer
-  constructor: (hash, version) ->
-    @hash = hash
-    @version = version
 
-class NoEncryption extends Layer6
-  setType: ->
-    return "NoEncryption"
+  constructor: (type) ->
+    @type = type
+    @hash = null
+    @version = null
 
-class SSL extends Layer6
-  setType: ->
-    return "SSL"
+  @None: ->
+    l6 = new Layer6("None")
 
-class TLS extends Layer6
-  setType: ->
-    return "TLS"
+    return l6
 
-class DTLS extends Layer6
-  setType: ->
-    return "DTLS"
+  @SSL: ->
+    l6 = new Layer6("SSL")
 
-module.exports = NoEncryption
-module.exports = SSL
-module.exports = TLS
-module.exports = DTLS
+    return l6
+
+  @TLS: ->
+    l6 = new Layer6("TLS")
+
+    return l6
+
+  @DTLS: ->
+    l6 = new Layer6("DTLS")
+
+    return l6
+
+module.exports = Layer6

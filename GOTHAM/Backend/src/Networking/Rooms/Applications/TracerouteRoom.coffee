@@ -71,6 +71,9 @@ class TracerouteRoom extends Room
       # When all database lookup is done
       When.all(promises).then(->
 
+
+        session = new Gotham.Micro.Session(host1, host2, "ICMP")
+        session.L3.ICMP.code = 8
         solution = Traffic.Pathfinder.bStar(sourceNode, targetNode)
 
 

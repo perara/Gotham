@@ -120,7 +120,6 @@ class Pathfinder
   ###############################################################################################
   @bStar: (start, goal, startBacktrack = 3, escalations = 1) ->
 
-    nodes = Gotham.LocalDatabase.table("Node")
 
     # Declarations
     path = []
@@ -206,9 +205,14 @@ class Pathfinder
       maxBacktrack += 1
 
     ###############################################################################################
-    ##### Checks for illegal input #####
+    ##### Checks for illegal input, returns false if path contains illegal input #####
     ###############################################################################################
     preCheck = ->
+
+      # Check if start and goal is the same
+      if start == goal
+        log.info("Start and goal is on the same node, no need for pathfinding")
+        return false
 
       # Checking for bad maxBacktrack input
       if maxBacktrack < 1
@@ -220,11 +224,17 @@ class Pathfinder
         escalations = 0
         log.info("Escalations cant be 0, setting to 1")
 
+      return true
+
     ###############################################################################################
     ##### Runs the pathfinding loop #####
     ###############################################################################################
     run = ( ->
       loop
+
+        if performance() > 5000
+          log.info("Pathfinder timed out. Check if path is valid")
+          return
 
         # Checking for pathfinding suicide. If found, reset and expanding maxBacktrack with one
         if path.length == 0
@@ -281,7 +291,7 @@ class Pathfinder
 
 
     startBench = performance()
-    preCheck()
+    if not preCheck()then return
 
 
 

@@ -2,33 +2,42 @@ BaseLayer = require './BaseLayer.coffee'
 
 class Layer7 extends BaseLayer
 
-class HTTP extends Layer7
-  setType: ->
-    return "HTTP"
+  constructor: (type) ->
+    @type = type
+    @data = null
+    @version = null
 
-class FTP extends Layer7
-  setType: ->
-    return "FTP"
+  @HTTP = ->
+    l7 = new Layer7("HTTP")
 
-class DNS extends Layer7
-  setType: ->
-    return "DNS"
+    return l7
 
-class HTTPS extends Layer7
-  setType: ->
-    return "HTTPS"
+  @FTP = ->
+    l7 = new Layer7("FTP")
 
-class SFTP extends Layer7
-  setType: ->
-    return "SFTP"
+    return l7
 
-class SSH extends Layer7
-  setType: ->
-    return "SSH"
+  @DNS = ->
+    l7 = new Layer7("DNS")
 
-module.exports = HTTP
-module.exports = FTP
-module.exports = DNS
-module.exports = HTTPS
-module.exports = SFTP
-module.exports = SSH
+    return l7
+
+  @HTTPS = ->
+    l7 = new Layer7("HTTPS")
+
+    return l7
+
+  @SFTP = ->
+    l7 = new Layer7("SFTP")
+
+    return l7
+
+  @SSH = ->
+    l7 = new Layer7("SSH")
+
+    return l7
+
+
+
+
+module.exports = Layer7

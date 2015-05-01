@@ -23,31 +23,43 @@ namespace Gotham.Gotham.Generators
         public static void Generate()
         {
 
+            var resultDNS = new List<DNSEntity>();
+            var resultNetwork = new List<NetworkEntity>();
+
+
             var work = new UnitOfWork();
-            
+
             // Create repositories
             var nodeRepo = work.GetRepository<NodeEntity>();
             var countryIPRepo = work.GetRepository<IPProviderEntity>();
             var networkRepo = work.GetRepository<NetworkEntity>();
+
+            // Fetch DNS records with this provider
+            var dnsRepo = work.GetRepository<DNSEntity>();
+
+              
+
+
             // Fetch nodes with no network
             var nodes = nodeRepo.All().ToList();
             var networks = networkRepo.All().ToList();
+            var dnsRecords = dnsRepo.All().ToList();
 
             // Fetch all countryIP records
             var countryIP = countryIPRepo.All().ToList();
             work.Dispose();
 
-            
+
             // Foreach of the nodes
             foreach (var node in nodes)
             {
-                if(networks.Exists(x=>x.Node == node))
+                if (networks.Exists(x => x.Node == node))
                     continue;
 
 
                 // List of compatible IP Ranges for this host 
                 var countryIPList = countryIP.Where(x => x.Country.CountryCode == node.CountryCode).ToList();
-                
+
                 // Ensure that countryIPlist is not empty, if it is. select closest country that has IPs available
                 if (countryIPList.Count < 1)
                 {
@@ -59,46 +71,48 @@ namespace Gotham.Gotham.Generators
                     foreach (var _node in nodes)
                     {
 
-                        var countryipitem = countryIP.Where(x => x.Country == _node.Country).FirstOrNull();
-                        if (countryipitem != null)
-                        {
+                        var countryipitem = countryIP.Where(x => x.Country.CountryCode == _node.CountryCode).FirstOrNull();
+                        if (countryipitem == null) continue;
 
-                            var distTest = GeoTool.GetDistance(new Coordinate.LatLng(_node.Lat, _node.Lng),
-                                new Coordinate.LatLng(node.Lat, node.Lng));
 
-                            if (distTest < distance)
-                            {
-                                distance = distTest;
-                                shortestCountryIP = (IPProviderEntity) countryipitem;
-                            }
+                        var distTest = GeoTool.GetDistance(new Coordinate.LatLng(_node.Lat, _node.Lng),
+                            new Coordinate.LatLng(node.Lat, node.Lng));
 
-                        }
-                        
+                        if (distTest > distance) continue;
+
+                        distance = distTest;
+                        shortestCountryIP = (IPProviderEntity)countryipitem;
+
+
                     }
 
                     // Add to countryIP list
-                    countryIPList = new List<IPProviderEntity>();
-                    countryIPList.Add(shortestCountryIP);
-                                   
+                    countryIPList = new List<IPProviderEntity> {shortestCountryIP};
+
                 }
 
 
-            
+
                 // Fetch a random IP Provider
                 int r = rnd.Next(countryIPList.Count);
                 var randomIPProvider = countryIPList[r];
+                
 
-                // Fetch DNS records with this provider
-                work = new UnitOfWork();
-                var dnsRecords =
-                    work.GetRepository<DNSEntity>()
-                        .FilterBy(x => x.Provider == randomIPProvider)
-                        .ToList();
-                   
-                work.Dispose();
+                // Get list of already distributed ips from this prodvider
+                var freeDNSRange = dnsRecords
+                    .Where(x => x.Provider == randomIPProvider)
+                    .ToList();
+
+                freeDNSRange.AddRange(resultDNS
+                    .Where(x => x.Provider == randomIPProvider)
+                    .ToList());
+
+               
+
+                
 
                 // Get first free ip in the range
-                var externalIP = firstAvailableIP(randomIPProvider, dnsRecords);
+                var externalIP = firstAvailableIP(randomIPProvider, freeDNSRange);
                 var internalIP = randomInternalIP();
 
                 // Create new network record
@@ -120,17 +134,18 @@ namespace Gotham.Gotham.Generators
                 dnsEntry.Address = null;
                 dnsEntry.Provider = randomIPProvider;
 
-                work = new UnitOfWork();
-                var dnsRepo = work.GetRepository<DNSEntity>().Add(dnsEntry);
-                var networkRepos = work.GetRepository<NetworkEntity>().Add(network);
-                work.Dispose();
-
+                // ADD TO RESULT list
+                resultDNS.Add(dnsEntry);
+                resultNetwork.Add(network);
                 Debug.WriteLine(externalIP);
-
-        
-
-
             }
+
+            // Save to db
+            work = new UnitOfWork();
+            work.GetRepository<DNSEntity>().Add(resultDNS);
+            work.GetRepository<NetworkEntity>().Add(resultNetwork);
+            work.Dispose();
+
 
         }
 
@@ -145,7 +160,7 @@ namespace Gotham.Gotham.Generators
             };
 
             // Select random of internal spaces
-            var selectedIPRange = internalSpaces[rnd.Next(internalSpaces.Count-1)];
+            var selectedIPRange = internalSpaces[rnd.Next(internalSpaces.Count - 1)];
 
             // Set Start and Stop and split into an array
             var from = selectedIPRange.Split('-')[0].Split('.');
@@ -156,7 +171,7 @@ namespace Gotham.Gotham.Generators
                 rnd.Next(int.Parse(from[1]), int.Parse(to[1])),
                 rnd.Next(int.Parse(from[2]), int.Parse(to[1])),
                 1);
-           
+
 
             return internalIP;
         }
@@ -185,10 +200,10 @@ namespace Gotham.Gotham.Generators
                     {
                         for (int d = int.Parse(beginIP[3]); d <= int.Parse(endIP[3]); d++)
                         {
-                            if(d == 0) continue;
-                            
+                            if (d == 0) continue;
 
-                            freeIP = new IPAddress(new byte[] {(byte) a, (byte) b, (byte) c, (byte) d}).ToString();
+
+                            freeIP = new IPAddress(new byte[] { (byte)a, (byte)b, (byte)c, (byte)d }).ToString();
 
                             if (dnsEntries.Where(x => x.Ipv4 == freeIP).FirstOrNull() == null)
                             {

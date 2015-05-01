@@ -63,6 +63,11 @@ namespace Gotham.Model
         public virtual double Lng { get; set; }
 
         /// <summary>
+        /// MAC
+        /// </summary>
+        public virtual string MAC { get; set; }
+
+        /// <summary>
         /// List of networks connected to this node
         /// </summary>
         [JsonIgnore]
@@ -150,10 +155,16 @@ namespace Gotham.Model
             Map(x => x.Priority).Not.Nullable();
             Map(x => x.Lat).Not.Nullable();
             Map(x => x.Lng).Not.Nullable();
+            Map(x => x.MAC).Not.Nullable();
 
             References(x => x.Tier)
                 .Not.Nullable()
                 .Column("tier")
+                .Not.LazyLoad();
+
+            HasOne(x => x.Country)
+                .PropertyRef(x => x.CountryCode)
+                .ForeignKey("countryCode")
                 .Not.LazyLoad();
 
             HasMany(x => x.Networks)
