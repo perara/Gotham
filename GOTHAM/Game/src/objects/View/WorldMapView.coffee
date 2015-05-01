@@ -83,7 +83,7 @@
     """
     Create a container for world map
     """
-    mapContainer = new Gotham.Graphics.Container
+    @mapContainer = mapContainer = new Gotham.Graphics.Container
     mapContainer.interactive = true
     mapContainer.scale =
       x: 0.8
@@ -343,13 +343,8 @@
     coordinates = @coordinateToPixel(node.lat, node.lng)
 
     # Create a node sprite
-
-
     gNode = new Gotham.Graphics.Sprite Gotham.Preload.fetch("map_marker", "image")
     gNode.tint = 0xF8E23B
-
-    gNode.infoFrame = @nodeInfoFrame()
-    gNode.addChild gNode.infoFrame
 
     # Set position according to the Lat,Lng conversion
     gNode.position =
@@ -392,15 +387,12 @@
         for part in cable.CableParts
           part.visible = visible
 
-    node.sprite.click = ->
+    node.sprite.click = (e) ->
       @_toggle = if not @_toggle then true else !@_toggle
 
       if @_toggle
-        @infoFrame.visible = true
-        @bringToFront()
-      else
-        @infoFrame.visible = false
 
+      else
 
     node.sprite.mouseover = ->
       nodeHover node, 0xFF0000, true
@@ -408,15 +400,6 @@
 
     node.sprite.mouseout = ->
       nodeHover node, 0xF8E23B, false
-
-
-
-  nodeInfoFrame: ->
-    infoFrame = new Gotham.Graphics.Sprite Gotham.Preload.fetch("mission_background", "image")
-    infoFrame.visible = false
-
-    return infoFrame
-
 
 
 
