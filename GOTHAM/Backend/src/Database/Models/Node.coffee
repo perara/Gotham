@@ -31,6 +31,9 @@ module.exports = (sequelize, DataTypes) ->
       lng:
         type: DataTypes.DECIMAL
         allowNull: false
+      mac:
+        type: DataTypes.STRING
+        allowNull: false
     },
     {
       tableName: 'node'

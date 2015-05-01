@@ -2,13 +2,57 @@
 # Session object containing source, target ,traffic path and packets exchanged
 class Session
 
-  constructor: (sourceHost, targetHost, layers) ->
+  constructor: (sourceHost, targetHost, type, packets) ->
+    type = if not type then "None" else type
 
-    @path = Gotham.Micro.Pathfinder.TryRandom(sourceHost.Node, targetHost.Node)
+    sourceNode = sourceHost.getNetwork().getNode()
+    targetNode = targetHost.getNetwork().getNode()
+
     @sourceHost = sourceHost
     @targetHost = targetHost
-    @packets = []
-    @layers = layers
+
+    @path = Gotham.Micro.Pathfinder.bStar(sourceNode, targetNode)
+    @layers = Gotham.Micro.LayerStructure.Packet[type]()
+    @nodeHeaders = {}
+    @packets = @getPacketsInfo(packets)
+
+    console.log @packets
+    # For each node, get header info for each packets
+    for node in @path
+      @nodeHeaders[node.id] = @getNodeHeaders(node)
+
+  getNodeHeaders: (node) ->
+    nodeHeaders = []
+
+    # Make header info for this node on each packet
+    for packet in @packets
+      deltaHeader = {}
+
+      # Set source and target MAC depending on current node
+      current = @path.indexOf(node)
+      deltaHeader.sourceMAC = @path[current].mac
+      deltaHeader.destMAC = if (current != @path.length - 1) then @path[current + 1].mac else @path[0].mac
+
+      nodeHeaders.push(deltaHeader)
+    return nodeHeaders
+
+  getPacketsInfo: (packets) ->
+    result = []
+    seqNumber = 0
+
+    for packet in packets
+      deltaPacket = {}
+      deltaPacket.seqNumber = seqNumber += packet.length
+      deltaPacket.data = packet
+      result.push(deltaPacket)
+
+    return result
+
+  setData: (data) ->
+    @layers["L7"].data = data
+
+  setLayer: (layer, name) ->
+    @layers[layer] = Gotham.Micro.LayerStructure.Layers[layer][name]()
 
   printJSON: ->
     if not @layers.IntegrityCheck() then throw new Error("Inconsistent layers")

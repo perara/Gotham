@@ -2,40 +2,36 @@ BaseLayer = require './BaseLayer.coffee'
 
 class Layer3 extends BaseLayer
 
-  constructor: (sourceIP, targetIP) ->
-    @sourceIP = sourceIP
-    @targetIP = targetIP
+  constructor: (type) ->
+    @type = type
+    @sourceIP = null
+    @destIP = null
+
+  @ICMP = ->
+    l3 = new Layer3("ICMP")
+
+    l3.messages =
+      EchoReply: 0
+      Unreachable: 3
+      Echo: 8
+      Timeout: 11
+      Tracert: 30
+
+    l3.returnCodes =
+      NetUnreachable: 0
+      HostUnreachable: 1
+      ProtocolUnreachable: 2
+      PortUnreachable: 3
+    return l3
 
 
-class ICMP extends Layer3
-  IcmpTypes =
-    EchoReply: 0
-    Unreachable: 3
-    Echo: 8
-    Timeout: 11
-    Tracert: 30
+  @IP = ->
+    l3 = new Layer3("IP")
 
-  IcmpCodes =
-    NetUnreachable: 0
-    HostUnreachable: 1
-    ProtocolUnreachable: 2
-    PortUnreachable: 3
+    l3.IpVersion = 4
 
-  constructor: (type, code, message) ->
-    @IcmpType = type
-    @IcmpCode = code
-    @Message = message
+    return l3
 
-  type = "ICMP"
-  setType: ->
-    return "ICMP"
 
-class IP extends Layer3
 
-  @IpVersion = null
-
-  setType: ->
-    return "IP"
-
-module.exports = ICMP
-module.exports = IP
+module.exports = Layer3

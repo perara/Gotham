@@ -242,6 +242,24 @@ namespace Gotham.Application.Generators
             Log.Info("Fixed " + nodes.Count + " nodes");
         }
 
+        public static void generateMACs(List<NodeEntity> nodes)
+        {
+            var random = new Random();
+
+            foreach (var node in nodes)
+            {
+                node.MAC = GetRandomMacAddress(random);
+            }
+
+        }
+
+        public static string GetRandomMacAddress(Random random)
+        {
+            var buffer = new byte[6];
+            random.NextBytes(buffer);
+            var result = string.Concat(buffer.Select(x => string.Format("{0}:", x.ToString("X2"))).ToArray());
+            return result.TrimEnd(':');
+        }
         
     }
 }

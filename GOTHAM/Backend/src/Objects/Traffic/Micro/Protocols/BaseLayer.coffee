@@ -1,8 +1,5 @@
 class BaseLayer
   constructor: ->
-    @type = @setType()
-
-  setType: ->
-    throw new Error "Must be overrided"
+    @type = null
 
 module.exports = BaseLayer

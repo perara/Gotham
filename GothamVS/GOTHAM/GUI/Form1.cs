@@ -13,6 +13,7 @@ using GOTHAM.Repository.Abstract;
 using Gotham.Application.Generators;
 using System.Diagnostics;
 using GMap.NET.WindowsForms.ToolTips;
+using Gotham.Gotham.Generators;
 using Gotham.Tools;
 
 
@@ -41,20 +42,15 @@ namespace Gotham.Application.GUI
         {
  
             var work = new UnitOfWork();
-            _nodes = work.GetRepository<NodeEntity>().All().ToList();
-            _cables = work.GetRepository<CableEntity>().All().ToList();
-            work.Dispose();
-            
-            var node1 = _nodes.FirstOrDefault(x => x.Id == 14927);
-            var node2 = _nodes.FirstOrDefault(x => x.Id == 15294);
+            var nodeRepo = work.GetRepository<NodeEntity>();
+            var cableRepo = work.GetRepository<CableEntity>();
 
-            var node1_cord = new Coordinate.LatLng(node1.Lat, node1.Lng);
-            var node2_cord = new Coordinate.LatLng(node2.Lat, node2.Lng);
+            _nodes = nodeRepo.All().ToList();
+            _cables = cableRepo.All().ToList();
 
-            var dist = GeoTool.GetDistance(node1_cord, node2_cord);
-            Debug.WriteLine(dist);
-
+            //NodeNetworkGenerator.Generate();
             //CableGenerator.ConnectNodesToCables();
+
 
         }
 

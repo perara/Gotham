@@ -1,4 +1,6 @@
 log = require('log4js').getLogger("LayerStructure")
+Protocols = require './Protocols/Protocols.coffee'
+
 
 class LayerStructure
 
@@ -27,53 +29,53 @@ class LayerStructure
 
     return true;
 
+  @Layers =
+    L2:
+      WIFI: Protocols.Layer2.WIFI
+      Ethernet: Protocols.Layer2.Ethernet
+    L3:
+      ICMP: Protocols.Layer3.ICMP
+      IP: Protocols.Layer3.IP
+    L4:
+      TCP: Protocols.Layer4.TCP
+      UDP: Protocols.Layer4.UDP
+    L6:
+      None: Protocols.Layer6.None
+      SSL: Protocols.Layer6.SSL
+      TLS: Protocols.Layer6.TLS
+      DTLS: Protocols.Layer6.DTLS
+    L7:
+      HTTP: Protocols.Layer7.HTTP
+      FTP: Protocols.Layer7.FTP
+      DNS: Protocols.Layer7.DNS
+      HTTPS: Protocols.Layer7.HTTPS
+      SFTP: Protocols.Layer7.SFTP
+      SSH: Protocols.Layer7.SSH
 
-  # Set layer 2 functions
-  ethernet: -> @layers.L2 = Gotham.Micro.Protocols.Layer2.Ethernet
-  wifi: -> @layers.L2 = Gotham.Micro.Protocols.Layer2.Wifi
 
-  # Set layer 3 functions
-  ICMP: -> @layers.L2 = Gotham.Micro.Protocols.Layer3.ICMP
-  IP: -> @layers.L2 = Gotham.Micro.Protocols.Layer3.IP
+  @Packet =
+    ICMP: ->
+      return {
+        L2: LayerStructure.Layers.L2.Ethernet()
+        L3: LayerStructure.Layers.L3.ICMP()
+        }
 
-  # Set layer 4 functions
-  TCP: -> @layers.L2 = Gotham.Micro.Protocols.Layer4.TCP
-  UDP: -> @layers.L2 = Gotham.Micro.Protocols.Layer4.UDP
+    HTTP: ->
+      return {
+        L2: LayerStructure.Layers.L2.Ethernet()
+        L3: LayerStructure.Layers.L3.IP()
+        L4: LayerStructure.Layers.L4.TCP()
+        L6: LayerStructure.Layers.L6.None()
+        L7: LayerStructure.Layers.L7.HTTP()
+      }
 
-  # Set layer 6 functions
-  noEncryption: -> @layers.L2 = Gotham.Micro.Protocols.Layer6.noEncryption
-  SSL: -> @layers.L2 = Gotham.Micro.Protocols.Layer6.SSL
-  TLS: -> @layers.L2 = Gotham.Micro.Protocols.Layer6.TLS
-  DTLS: -> @layers.L2 = Gotham.Micro.Protocols.Layer6.DTLS
-
-  # Set layer 7 functions
-  HTTP: -> @layers.L2 = Gotham.Micro.Protocols.Layer7.HTTP
-  FTP: -> @layers.L2 = Gotham.Micro.Protocols.Layer7.FTP
-  DNS: -> @layers.L2 = Gotham.Micro.Protocols.Layer7.DNS
-  HTTPS: -> @layers.L2 = Gotham.Micro.Protocols.Layer7.HTTPS
-  SFTP: -> @layers.L2 = Gotham.Micro.Protocols.Layer7.SFTP
-  SSH: -> @layers.L2 = Gotham.Micro.Protocols.Layer7.SSH
-
-  # Predefined structures
-  makeICMP: ->
-    @layers.L2 = Gotham.Micro.Protocols.Layer2.ethernet
-    @layers.L3 = Gotham.Micro.Protocols.Layer2.ICMP
-    return this
-
-  makeHTTP: ->
-    @layers.L2 = Gotham.Micro.Protocols.Layer2.ethernet
-    @layers.L3 = Gotham.Micro.Protocols.Layer3.IP
-    @layers.L4 = Gotham.Micro.Protocols.Layer4.TCP
-    @layers.L6 = Gotham.Micro.Protocols.Layer6.noEncryption
-    @layers.L7 = Gotham.Micro.Protocols.Layer7.HTTP
-    return this
-
-  makeHTTPS: ->
-    @layers.L2 = Gotham.Micro.Protocols.Layer2.ethernet
-    @layers.L3 = Gotham.Micro.Protocols.Layer3.IP
-    @layers.L4 = Gotham.Micro.Protocols.Layer4.TCP
-    @layers.L6 = Gotham.Micro.Protocols.Layer6.TLS
-    @layers.L7 = Gotham.Micro.Protocols.Layer7.HTTPS
-    return this
+    HTTPS: ->
+      return {
+        L2: LayerStructure.Layers.L2.Ethernet()
+        L3: LayerStructure.Layers.L3.IP()
+        L4: LayerStructure.Layers.L4.TCP()
+        L6: LayerStructure.Layers.L6.TLS()
+        L7: LayerStructure.Layers.L7.HTTPS()
+      }
 
 module.exports = LayerStructure

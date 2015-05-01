@@ -2,17 +2,22 @@ BaseLayer = require './BaseLayer.coffee'
 
 class Layer2 extends BaseLayer
 
-  constructor: (source, dest) ->
-    @sourceMAC = source
-    @destMAC = dest
+  constructor: (type) ->
+    @type = type
+    @sourceMAC = null
+    @destMAC = null
 
-class Ethernet extends Layer2
-  setType: ->
-    return "Ethernet"
+  @Ethernet = ->
+    l2 = new Layer2("Ethernet")
 
-class Wifi extends Layer2
-  setType: ->
-    return "Wifi"
+    return l2
 
-module.exports = Ethernet
-module.exports = Wifi
+  @WIFI = ->
+    l2 = new Layer2("WIFI")
+
+    return l2
+
+
+
+
+module.exports = Layer2
