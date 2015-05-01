@@ -11,15 +11,15 @@
       height: 3600
 
   getCoordFactors: ->
-      return {
-      latitude: ((@__height / 2) / 90) * -1
-      longitude: ((@__width / 2) / 180)
-      }
+    return {
+    latitude: ((@__height / 2) / 90) * -1
+    longitude: ((@__width / 2) / 180)
+    }
 
   coordinateToPixel: (lat, lng) ->
     return {
-      x: (lng * @getCoordFactors().longitude) + (@__width / 2)
-      y: (lat * @getCoordFactors().latitude)  + (@__height / 2)
+    x: (lng * @getCoordFactors().longitude) + (@__width / 2)
+    y: (lat * @getCoordFactors().latitude)  + (@__height / 2)
     }
 
 
@@ -60,7 +60,7 @@
     background.mask = backgroundMask
 
   scaleNodes: (zoomOut) ->
-    # Determine weither its zoom in or zoom out
+# Determine weither its zoom in or zoom out
     inorout = if zoomOut then 1 else -1
 
     # Fetch node table
@@ -132,7 +132,7 @@
     """
     mapContainer.onMouseMove =  (e) ->
 
-      #console.log e.stopPropegation()
+#console.log e.stopPropegation()
 
       pos = e.data.getLocalPosition this
       @_lastMousePosition = pos
@@ -309,7 +309,7 @@
       Mouseover callback
       """
       sprite.mouseover =  (e) ->
-        # Calculate which country it belongs to
+# Calculate which country it belongs to
         setTimeout((->
           country = Gotham.Util.Geocoding.getCountry(that.currentCoordinates.latitude, that.currentCoordinates.longitude)
           that.parent.getObject("Bar").updateCountry country
@@ -335,11 +335,11 @@
         sprite = null
 
 
-  # Adds a nopde to the node container
-  #
-  # @param node {Object} The Node Data
+# Adds a nopde to the node container
+#
+# @param node {Object} The Node Data
   addNode: (node, interact) ->
-    # Convert Lat, Lng to Pixel's X and Y
+# Convert Lat, Lng to Pixel's X and Y
     coordinates = @coordinateToPixel(node.lat, node.lng)
 
     # Create a node sprite
@@ -421,9 +421,9 @@
 
 
 
-  # Clears animated paths
+# Clears animated paths
   clearAnimatePath: () ->
-    # Remove all pathcontainer children # TODO
+# Remove all pathcontainer children # TODO
     if not @pathContainer
       return
 
@@ -433,23 +433,23 @@
 
     @pathContainer.children = []
 
-  # Create a animated attack sequence between two coordinates
-  # Parameters are as folloiwng
-  # @example Input format
-  #     source =
-  #         latitude: ""
-  #         longitude: ""
-  #         country: ""
-  #         company: ""
-  #     target =
-  #         latitude: ""
-  #         longitude: ""
-  #         country: ""
-  #         city: ""
-  #         company: ""
+# Create a animated attack sequence between two coordinates
+# Parameters are as folloiwng
+# @example Input format
+#     source =
+#         latitude: ""
+#         longitude: ""
+#         country: ""
+#         company: ""
+#     target =
+#         latitude: ""
+#         longitude: ""
+#         country: ""
+#         city: ""
+#         company: ""
   animateAttack: (source, target) ->
 
-    # Ignore 0,0 attacks
+# Ignore 0,0 attacks
     if target.country == "O1"
       return
 
@@ -484,7 +484,7 @@
     tween = new Gotham.Tween lazer
     tween.to {}, t
     tween.onUpdate (chainItem)->
-      # Elapsed tween time
+# Elapsed tween time
       elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
 
       points =
@@ -510,14 +510,14 @@
     tween.start()
 
 
-  # Creates a animated line between two nodes
-  #
-  # @param startNode {Node} starting node
-  # @param endNode {Node} End Node
-  # Creates a animated line between two nodes
-  #
-  # @param startNode {Node} starting node
-  # @param endNode {Node} End Node
+# Creates a animated line between two nodes
+#
+# @param startNode {Node} starting node
+# @param endNode {Node} End Node
+# Creates a animated line between two nodes
+#
+# @param startNode {Node} starting node
+# @param endNode {Node} End Node
   animatePath: (startNode, endNode) ->
     if not @pathContainer
       @pathContainer = new Gotham.Graphics.Graphics()
@@ -553,7 +553,7 @@
     tween.to {}, 2500
     tween.onUpdate (chainItem)->
 
-      # Elapsed tween time
+# Elapsed tween time
       elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
       # Start from beginning
       if elapsed + 0.2 > 1
@@ -589,11 +589,11 @@
 
 
 # Adds a cable to given node
-  #
-  # @param cable {Object} The cable Data
+#
+# @param cable {Object} The cable Data
   addCable: (cable) ->
 
-    # Create a new graphics element
+# Create a new graphics element
     graphics = new Gotham.Graphics.Graphics();
     graphics.visible = false
     graphics.lineStyle(1, 0xffd900, 1);
@@ -618,15 +618,15 @@
     @nodeContainer.addChild graphics
 
 
-  # Adds a network to the worldMap
-  #
-  # @param host [Host] Host object
-  # @param lat [Double] Latitude position
-  # @param lng [Double Longitude position
-  # @param isPlayer [Boolean] If its the player
+# Adds a network to the worldMap
+#
+# @param host [Host] Host object
+# @param lat [Double] Latitude position
+# @param lng [Double Longitude position
+# @param isPlayer [Boolean] If its the player
   addNetwork: (network,  isPlayer) ->
 
-    # Create a node formatted object
+# Create a node formatted object
     networkNode =
       lat: network.lat
       lng: network.lng
@@ -664,7 +664,7 @@
     tween.to {}, 2500
     tween.onUpdate (chainItem)->
 
-      # Elapsed tween time
+# Elapsed tween time
       elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
 
       points =
