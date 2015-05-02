@@ -130,6 +130,7 @@ class Pathfinder
     wrongWay = 0
     best = null
     maxBacktrack = startBacktrack
+    deltaTime = 0
 
     ###############################################################################################
     ##### Returns sibling closest to goal (gets siblings list from input node)
@@ -210,7 +211,7 @@ class Pathfinder
     preCheck = ->
 
       # Check if start and goal is the same
-      if start == goal
+      if start.id == goal.id
         log.info("Start and goal is on the same node, no need for pathfinding")
         return false
 
@@ -232,7 +233,8 @@ class Pathfinder
     run = ( ->
       loop
 
-        if performance() > 5000
+        deltaTime = new Date().getTime() - startTime
+        if deltaTime > 5000
           log.info("Pathfinder timed out. Check if path is valid")
           return
 
@@ -267,11 +269,11 @@ class Pathfinder
         if wrongWay >= maxBacktrack
           reverse(wrongWay)
           wrongWay = 0
-          log.info("Wrong ways more than #{maxBacktrack}, skipped back \n")
+          #log.info("Wrong ways more than #{maxBacktrack}, skipped back \n")
           continue
 
         # If next node is sibling of previous node
-        #allSiblings = allSiblings.filter (id) -> id isnt current.id
+        #allSiblings = allSiblings.filter (id) -> id is not current.id
         cutCheck(nextNode)
 
         # If next node is further away than current, register it wrong way.
@@ -290,7 +292,8 @@ class Pathfinder
     )
 
 
-    startBench = performance()
+
+    startTime = new Date().getTime()
     if not preCheck()then return
 
 
@@ -304,7 +307,7 @@ class Pathfinder
       if result.length < best.length
         best = result
 
-    log.info "Path found in: #{(performance() - startBench).toFixed(1)} ms"
+    log.info "Path found in: #{(deltaTime).toFixed(1)} ms"
     return best
 
   @toIdList = (solution) ->

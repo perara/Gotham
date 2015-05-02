@@ -53,8 +53,12 @@ class TracerouteRoom extends Room
       solution = Traffic.Pathfinder.bStar(sourceNode, targetNode)
 
       # Make session for this traceroute
-      session = new Traffic.Session(sourceHost, targetNetwork)
-      console.log session
+      session = new Traffic.Session(sourceHost, targetNetwork, "ICMP")
+
+      for node in session.path
+        console.log node.id
+        console.log session.nodeHeaders[node.id]
+
 
       # TODO LOL - Output path
       outputarr = []

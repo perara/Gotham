@@ -94,7 +94,7 @@ setup =
     GothamGame.Renderer.setScene("World")
 
   startNetwork: (callback) ->
-    GothamGame.Network = new Gotham.Network "128.39.148.43", 8081
+    GothamGame.Network = new Gotham.Network "localhost", 8081
     GothamGame.Network.connect()
     GothamGame.Network.onConnect = ->
       callback(GothamGame.Network)
