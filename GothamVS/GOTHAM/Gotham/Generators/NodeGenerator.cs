@@ -248,7 +248,7 @@ namespace Gotham.Application.Generators
 
             foreach (var node in nodes)
             {
-                node.MAC = GetRandomMacAddress(random);
+                node.Network.MAC = GetRandomMacAddress(random);
             }
 
         }

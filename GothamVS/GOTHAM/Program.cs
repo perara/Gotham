@@ -26,6 +26,7 @@ namespace Gotham
             //TxtParse.ParseGregNodes(@"C:\temp\seaLandings.txt");;
             //CableGenerator.ConnectNodesToCables(1);
             //NodeGenerator.FixNodeCountries();
+            //NodeNetworkGenerator.Generate();
 
             System.Windows.Forms.Application.EnableVisualStyles();
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);

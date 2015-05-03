@@ -57,27 +57,7 @@ class SettingsView extends Gotham.Pattern.MVC.View
 
     # When Close button is clicked
     topBar_Close.click = (data) ->
-      console.log that
       that.parent.removeObject that.Controller
-
-
-    topBar.mousedown = topBar.touchstart = (e) ->
-      @sx = e.data.getLocalPosition(@parent).x * spriteContainer.scale.x;
-      @sy = e.data.getLocalPosition(@parent).y * spriteContainer.scale.y;
-      @dragging = true
-
-
-    topBar.mouseup = topBar.mouseupoutside = topBar.touchend = topBar.touchendoutside = (e) ->
-      @data = null
-      @dragging = false
-
-    topBar.mousemove = topBar.touchmove = (e) ->
-      if @dragging
-        newPosition = e.data.getLocalPosition(spriteContainer.parent);
-        spriteContainer.position.x = newPosition.x - @sx
-        spriteContainer.position.y = newPosition.y - @sy
-
-
 
 
     ##########################################################

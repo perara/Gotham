@@ -45,7 +45,7 @@ class MissionController extends Gotham.Pattern.MVC.Controller
   setupMissions: ->
 
     db_mission = Gotham.Database.table("mission")
-    allMissions = db_mission().first()
+    allMissions = db_mission.data[0]
     missions = []
 
 

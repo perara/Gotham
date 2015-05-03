@@ -67,6 +67,7 @@
     <Compile Include="Model\DNSEntity.cs" />
     <Compile Include="Model\FilesystemEntity.cs" />
     <Compile Include="Model\HostEntity.cs" />
+    <Compile Include="Model\IdentityNetwork.cs" />
     <Compile Include="Model\LocationEntity.cs" />
     <Compile Include="Model\NetworkEntity.cs" />
     <Compile Include="Model\NodeCableEntity.cs" />

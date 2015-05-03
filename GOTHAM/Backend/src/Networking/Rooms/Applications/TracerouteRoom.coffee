@@ -30,10 +30,11 @@ class TracerouteRoom extends Room
       db_network = Gotham.LocalDatabase.table("Network")
 
       # Fetch source host
-      sourceHost  = db_host.findOne(id: packet.sourceHost)
+      sourceHost = db_host.findOne(id: packet.sourceHost)
 
       # Fetch target host
       targetNetwork = db_network.findOne(external_ip_v4: packet.target)
+
 
       # SourceHost does not exist
       if not sourceHost
@@ -49,8 +50,11 @@ class TracerouteRoom extends Room
       sourceNode = sourceHost.getNetwork().getNode()
       targetNode = targetNetwork.getNode()
 
+
+
+
       # Calculate solution
-      solution = Traffic.Pathfinder.bStar(sourceNode, targetNode)
+      solution = Traffic.Pathfinder.bStar(sourceNode, targetNode, 2, 3)
 
       # Make session for this traceroute
       session = new Traffic.Session(sourceHost, targetNetwork, "ICMP")

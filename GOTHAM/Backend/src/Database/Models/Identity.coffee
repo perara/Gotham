@@ -6,6 +6,11 @@ module.exports = (sequelize, DataTypes) ->
         allowNull: false
         primaryKey: true
         autoIncrement: true
+      fk_user:
+        type: DataTypes.INTEGER
+        allowNull: false
+        references: 'user'
+        referencesKey: 'id'
       first_name:
         type: DataTypes.STRING
         allowNull: false

@@ -10,6 +10,7 @@ class BarView extends Gotham.Pattern.MVC.View
     Bottom: undefined
     Side:
       Left: undefined
+      Right: undefined
 
   constructor: ->
 
@@ -18,13 +19,13 @@ class BarView extends Gotham.Pattern.MVC.View
 
   create: ->
     @create_topBar()
-    @create_sideBar()
+    @create_sideBars()
     #@create_bottomBar()
 
 
 
 
-  create_sideBar: ->
+  create_sideBars: ->
     texture_side_left = Gotham.Preload.fetch("sidebar", "image")
     @Bar.Side.Left = new Gotham.Graphics.Sprite texture_side_left
     @Bar.Side.Left.y = 80
@@ -32,6 +33,15 @@ class BarView extends Gotham.Pattern.MVC.View
     @Bar.Side.Left.width = 70
     @Bar.Side.Left.height = 1080
     @addChild @Bar.Side.Left
+
+    texture_side_right = Gotham.Preload.fetch("sidebar", "image")
+    @Bar.Side.Right = new Gotham.Graphics.Sprite texture_side_right
+    @Bar.Side.Right.y = 80
+    @Bar.Side.Right.x = 1920 - 80
+    @Bar.Side.Right.width = 70
+    @Bar.Side.Right.height = 1080
+    @addChild @Bar.Side.Right
+
 
 
   create_topBar: ->
@@ -57,13 +67,19 @@ class BarView extends Gotham.Pattern.MVC.View
     @addChild bottomBar
 
 
-  addSidebarItem: (margin, callback) ->
+  addSidebarItem: (side, margin, callback) ->
+    if side == "LEFT"
+      bar = @Bar.Side.Left
+    else if side == "RIGHT"
+      bar = @Bar.Side.Right
+    else
+      throw new Error  "adding To sidebar requires LEFT or RIGHT"
 
     newItem = callback()
 
     # Find largest Y value with the "valign"
     lastElement = null
-    for _ch in  @Bar.Side.Left.children
+    for _ch in  bar.children
       if not lastElement
         lastElement = _ch
         continue
@@ -75,11 +91,11 @@ class BarView extends Gotham.Pattern.MVC.View
     # If no lastElement (Empty)
     if not lastElement
       newItem.y = 10
-      @Bar.Side.Left.addChild newItem
+      bar.addChild newItem
       return
 
     newItem.y = lastElement.y + lastElement.height + margin
-    @Bar.Side.Left.addChild newItem
+    bar.addChild newItem
 
 
 

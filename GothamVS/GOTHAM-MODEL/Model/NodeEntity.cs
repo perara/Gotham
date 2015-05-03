@@ -48,6 +48,11 @@ namespace Gotham.Model
         public virtual int Priority { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public virtual int? NetworkID { get; set; }
+
+        /// <summary>
         /// Bandwidth of the node in bytes?
         /// </summary>
         public virtual double Bandwidth { get; set; }
@@ -63,15 +68,9 @@ namespace Gotham.Model
         public virtual double Lng { get; set; }
 
         /// <summary>
-        /// MAC
+        /// Network connected to this node
         /// </summary>
-        public virtual string MAC { get; set; }
-
-        /// <summary>
-        /// List of networks connected to this node
-        /// </summary>
-        [JsonIgnore]
-        public virtual IList<NetworkEntity> Networks { get; set; }
+        public virtual NetworkEntity Network { get; set; }
 
         /// <summary>
         /// List of cables connected to this node
@@ -155,7 +154,7 @@ namespace Gotham.Model
             Map(x => x.Priority).Not.Nullable();
             Map(x => x.Lat).Not.Nullable();
             Map(x => x.Lng).Not.Nullable();
-            Map(x => x.MAC).Not.Nullable();
+            Map(x => x.NetworkID, "network").Not.Nullable();
 
             References(x => x.Tier)
                 .Not.Nullable()
@@ -167,11 +166,8 @@ namespace Gotham.Model
                 .ForeignKey("countryCode")
                 .Not.LazyLoad();
 
-            HasMany(x => x.Networks)
-             .Cascade.All()
-             .Inverse()
-             .KeyColumn("node")
-             .Not.LazyLoad();
+            References(x => x.Network, "network");
+     
 
             HasManyToMany(x => x.Cables)
                 .Cascade.All()

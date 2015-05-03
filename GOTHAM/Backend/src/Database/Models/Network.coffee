@@ -16,16 +16,6 @@ module.exports = (sequelize, DataTypes) ->
       external_ip_v4:
         type: DataTypes.STRING
         allowNull: false
-      identity:
-        type: DataTypes.INTEGER
-        allowNull: false
-        references: 'identity'
-        referencesKey: 'id'
-      node:
-        type: DataTypes.INTEGER
-        allowNull: false
-        references: 'node'
-        referencesKey: 'id'
       isLocal:
         type: DataTypes.BOOLEAN
         allowNull: false
@@ -35,6 +25,14 @@ module.exports = (sequelize, DataTypes) ->
       lng:
         type: DataTypes.DECIMAL
         allowNull: false
+      mac:
+        type: DataTypes.STRING
+        allowNull: false
+      node:
+        type: DataTypes.INTEGER
+        allowNull: false
+        references: 'node'
+        referencesKey: 'id'
     },
     {
       tableName: 'network'

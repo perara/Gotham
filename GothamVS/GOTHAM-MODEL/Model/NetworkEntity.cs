@@ -23,12 +23,11 @@ namespace Gotham.Model
         public virtual string Submask { get; set; }
         public virtual string ExternalIPv4 { get; set; }
         public virtual string InternalIPv4 { get; set; }
+        public virtual string MAC { get; set; }
         public virtual string DNS { get; set; }
-        public virtual NodeEntity Node { get; set; }
         public virtual Boolean IsLocal { get; set; }
         public virtual Double Lat { get; set; }
         public virtual Double Lng { get; set; }
-        public virtual IdentityEntity Identity { get; set; }
     }
 
     public class NetworkEntityMap : ClassMap<NetworkEntity>
@@ -47,19 +46,7 @@ namespace Gotham.Model
             Map(x => x.IsLocal, "isLocal").Not.Nullable();
             Map(x => x.Lat, "lat").Not.Nullable();
             Map(x => x.Lng, "lng").Not.Nullable();
-
-            References(x => x.Identity)
-                .Column("identity")
-                .ForeignKey("id")
-                .Nullable()
-                .Not.LazyLoad();
-
-
-            References(x => x.Node)
-                .Column("node")
-                .Not.Nullable()
-                .Not.LazyLoad();
-
+            Map(x => x.MAC, "mac").Not.Nullable();
         }
 
     }

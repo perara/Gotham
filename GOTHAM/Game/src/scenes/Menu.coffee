@@ -53,18 +53,30 @@ class Menu extends Gotham.Graphics.Scene
   createBackground: () ->
 
     # Game Title
-    @gameTitle = gameTitle = new Gotham.Graphics.Text("Gotham v1.0", {font: "bold 60px Podkova", fill: "#dd00ff", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
+    @gameTitle = gameTitle = new Gotham.Graphics.Text("Gotham", {font: "bold 100px Orbitron", fill: "#000000", align: "center", stroke: "#FFFFFF", strokeThickness: 4});
     gameTitle.x = 1920 / 2
-    gameTitle.y = 100
+    gameTitle.y = 125
     gameTitle.anchor =
       x: 0.5
       y: 0.5
 
+    originalTitleScale =
+      x: gameTitle.scale.x
+      y: gameTitle.scale.y
+
     tween = new Gotham.Tween gameTitle
     tween.repeat(Infinity)
     tween.easing Gotham.Tween.Easing.Linear.None
-    tween.to {rotation: 0.1, rotation: 0.1}, 1500
-    tween.to {rotation: -0.1, rotation: -0.1}, 1500
+    tween.to {
+      scale:
+        x: originalTitleScale.x + 0.1
+        y: originalTitleScale.y + 0.1
+    }, 10000
+    tween.to {
+      scale:
+        x: originalTitleScale.x
+        y: originalTitleScale.y
+    }, 10000
     tween.start()
 
 
@@ -72,6 +84,35 @@ class Menu extends Gotham.Graphics.Scene
     sprite = new Gotham.Graphics.Sprite texture
     sprite.width = 1920
     sprite.height = 1080
+    sprite.anchor =
+      x: 0.5
+      y: 0.5
+    sprite.position =
+      x: sprite.width / 2
+      y: sprite.height / 2
+
+    originalScale =
+      x: sprite.scale.x
+      y: sprite.scale.y
+
+    tween = new Gotham.Tween sprite
+    tween.repeat(Infinity)
+    tween.easing Gotham.Tween.Easing.Linear.None
+    tween.to {
+      scale:
+        x: originalScale.x + 0.6
+        y: originalScale.y + 0.6
+    }, 25000
+    tween.delay 10000
+    tween.to {
+      scale:
+        x: originalScale.x
+        y: originalScale.y
+    }, 25000
+    tween.start()
+
+
+
     @addChild sprite
     @addChild gameTitle
 
@@ -80,12 +121,13 @@ class Menu extends Gotham.Graphics.Scene
   addButton: (text, onClick) ->
 
     texture = Gotham.Preload.fetch("menu_button", "image")
-    #hoverTexture = Gotham.Preload.fetch("button_texture_hover", "image")
+    hoverTexture = Gotham.Preload.fetch("menu_button_hover", "image")
+
 
     # Create a sprite
     sprite = new Gotham.Graphics.Sprite texture
-    sprite.width = 350
-    sprite.height = 200
+    sprite.width = 300
+    sprite.height = 100
     sprite.originalScale = sprite.scale
     sprite.anchor =
       x: 0.5
@@ -94,7 +136,7 @@ class Menu extends Gotham.Graphics.Scene
     sprite.buttonMode = true
 
     # Create a text object
-    text = new Gotham.Graphics.Text(text, {font: "bold 70px Arial", fill: "#ffffff", align: "center"}, 0,0)
+    text = new Gotham.Graphics.Text(text, {font: "bold 70px Arial", fill: "#ffffff", align: "center", dropShadow: true }, 0,0)
 
     # Ensure anchors are 0
     text.anchor =
@@ -107,14 +149,18 @@ class Menu extends Gotham.Graphics.Scene
 
     # Create Events
     sprite.mouseover = (mouseData) ->
-      console.log ":D"
-      @scale =
-        x: 0.8
-        y: 0.8
+      @texture = hoverTexture
+      @bringToFront()
+
+      sound = Gotham.Preload.fetch("button_click_1", "audio")
+      sound.volume(0.5)
+      sound.loop(false)
+      sound.play()
+
 
     that = @
     sprite.mouseout = (mouseData) ->
-      @scale = @originalScale
+      @texture = texture
 
     sprite.click = (mouseData) ->
 
@@ -127,7 +173,7 @@ class Menu extends Gotham.Graphics.Scene
   drawButtons: () ->
 
     startX = (1920 / 2)
-    startY = 250
+    startY = 350
     counter = 0
     for button in @buttons
       button.x = startX

@@ -24,7 +24,7 @@ namespace Gotham.Tests.Tools
                 Assert.Greater(node.Cables.Count, 0, "Node with ID " + node.Id + " is not connected to any cables");
                 Assert.IsNotEmpty(node.Name, "Node with ID " + node.Id + " does not have a name");
                 Assert.AreEqual(node.CountryCode.Count(), 2, "Node with ID " + node.Id + " has a long countrycode. Is this country name?");
-                Assert.NotNull(node.MAC, "Node with ID " + node.Id + " does not have a MAC address");
+                Assert.NotNull(node.Network.MAC, "Node with ID " + node.Id + " does not have a MAC address");
             }
         }
 
@@ -39,8 +39,7 @@ namespace Gotham.Tests.Tools
             foreach (var node in nodes)
             {
                 
-                Assert.Greater(node.Networks.Count, 0, "Node with ID " + node.Id + " does not have any networks");
-
+                Assert.NotNull(node.Network, "Node with ID " + node.Id + " does not have any network");
 
             }
 

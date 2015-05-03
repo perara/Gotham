@@ -13,7 +13,27 @@ class Loading extends Gotham.Graphics.Scene
     background.y =  0
     background.width = 1920
     background.height = 1080
+    background.anchor =
+      x: 0.5
+      y: 0.5
+    background.position =
+      x: background.width / 2
+      y: background.height / 2
+    background.scale =
+      x: 1.4
+      y: 1.4
+
     @addChild background
+
+    tween = new Gotham.Tween background
+    tween.repeat(Infinity)
+    tween.easing Gotham.Tween.Easing.Linear.None
+    tween.to {
+      scale:
+        x: 1
+        y: 1
+    }, 20000
+    tween.start()
 
     # Document Container
     @documentContainer = new Gotham.Graphics.Container()
@@ -40,6 +60,8 @@ class Loading extends Gotham.Graphics.Scene
       #console.log @ + " started!"
     tween.start()
     @addChild text
+
+
     #################
     ## Loading Bar ##
     #################
@@ -59,23 +81,23 @@ class Loading extends Gotham.Graphics.Scene
     random = (min, max) ->
       return Math.floor(Math.random() * (max - min)) + min;
 
-    document = Gotham.Graphics.Sprite.fromImage './assets/img/file.png'
+
+    if type == "Image"
+      document = Gotham.Graphics.Sprite.fromImage './assets/img/load_image.png'
+    else if type == "JSON"
+      document = Gotham.Graphics.Sprite.fromImage './assets/img/load_json.png'
+    else if type == "Data"
+      document = Gotham.Graphics.Sprite.fromImage './assets/img/load_data.png'
+    else if type == "Audio"
+      document = Gotham.Graphics.Sprite.fromImage './assets/img/load_audio.png'
+
     document.x = -64
-    document.y =  random(500, 800)
-    document.width = 64 / document.scale.x
-    document.height = 64 / document.scale.y
-
-    title = new Gotham.Graphics.Text(type, {font: "bold 40px calibri", fill: "#000000", align: "center"});
-    title.width = document.width / document.scale.x
-    title.height = document.height / document.scale.y
-    title.x = 15 / document.scale.x
-    title.y = 5 / document.scale.y
-    document.addChild title
-
+    document.y =  random(600, 900)
+    document.alpha = 0.4
 
     tween = new Gotham.Tween document
     tween.easing Gotham.Tween.Easing.Linear.None
-    tween.delay random(0, 10000)
+    tween.delay random(0, 20000)
     tween.to {position: x: 1960}, 10000
     tween.onStart ->
       #console.log "[STARTED] #{name}"

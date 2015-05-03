@@ -18,6 +18,8 @@ class Session
     @sourceNode = sourceHost.getNetwork().getNode()
     @sourceHost = sourceHost
     @targetHost = target
+
+
     @path = Gotham.Micro.Pathfinder.bStar(@sourceNode, @targetNode)
     @layers = Gotham.Micro.LayerStructure.Packet[type]()
     @nodeHeaders = {}

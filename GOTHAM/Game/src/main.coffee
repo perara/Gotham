@@ -2,24 +2,46 @@ Gotham = require '../../GameFramework/src/Gotham.coffee'
 GothamGame = require './GothamGame.coffee'
 require './dependencies/jquery-ui.min'
 
+
 setup =
   started: false
 
-  database: ->
-    # Create Node Table
-    db_nodes = Gotham.Database.createTable "node"
 
-    # Create Cable Table
-    db_cables = Gotham.Database.createTable "cable"
 
-    # Create Host Table
-    db_host = Gotham.Database.createTable "user"
+  preloadFonts: (_c)->
+    # Just return if user is IE:
+    userAgent = userAgent or navigator.userAgent
+    if userAgent.indexOf('MSIE ') > -1 or userAgent.indexOf('Trident/') > -1
+      _c()
+      return false
 
-    # Create Mission Table
-    db_mission = Gotham.Database.createTable "mission"
+    done = false
 
-    # Create Temp Table
-    db_temp = Gotham.Database.createTable "temp"
+
+    # Export Google WebFont Config
+    window.WebFontConfig =
+    # Load some fonts from google
+      google:
+        families: ['Inconsolata', 'Pacifico', 'Orbitron', 'Droid Serif']
+
+    # ... you can do something here if you'd like
+      active: () ->
+        if not done
+          done = true
+          _c()
+
+
+    # Create a timeout if WebFonts hangs.
+    setTimeout window.WebFontConfig.active(), 5000
+    # Create script tag matching protocol
+    s = document.createElement 'script'
+    s.src = "#{if document.location.protocol is 'https:' then 'https' else 'http'}://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"
+    s.type = 'text/javascript'
+    s.async = 'true'
+
+    # Insert it before the first script tag
+    s0 = (document.getElementsByTagName 'script')[0]
+    s0.parentNode.insertBefore s, s0
 
 
   preload: ->
@@ -27,6 +49,8 @@ setup =
     Gotham.Preload.image("/assets/img/user_management_background.jpg", "user_management_background", "image")
     Gotham.Preload.image("/assets/img/user_management_frame.png", "user_management_frame", "image")
     Gotham.Preload.image("/assets/img/user_management_network_item.png","user_management_network_item", "image")
+    Gotham.Preload.image("/assets/img/user_mangement_host.png","user_mangement_host", "image")
+
 
     # Mission
     Gotham.Preload.image("/assets/img/mission_background.jpg","mission_background", "image")
@@ -34,6 +58,9 @@ setup =
     Gotham.Preload.image("/assets/img/mission_spacer.png","mission_spacer", "image")
     Gotham.Preload.image("/assets/img/mission_item.png","mission_item", "image")
     Gotham.Preload.image("/assets/img/user_management_frame.png", "mission_frame", "image")
+
+    # Node
+    Gotham.Preload.image("/assets/img/node_details.png","node_details", "image")
 
 
     Gotham.Preload.image("/assets/img/map_marker.png", "map_marker", "image")
@@ -52,12 +79,17 @@ setup =
     Gotham.Preload.image("/assets/img/inventory.png", "inventory", "image")
     Gotham.Preload.image("/assets/img/settings.png", "settings", "image")
     Gotham.Preload.image("/assets/img/help.png", "help", "image")
+    Gotham.Preload.image("/assets/img/attack.png", "attack", "image")
+    Gotham.Preload.image("/assets/img/cable.png", "cable", "image")
 
 
     # Menu
-    Gotham.Preload.image("/assets/img/menu_button_texture.png", "menu_button", "image")
+    Gotham.Preload.image("/assets/img/menu_button.png", "menu_button", "image")
+    Gotham.Preload.image("/assets/img/menu_button_hover.png", "menu_button_hover", "image")
     Gotham.Preload.image("/assets/img/menu_background.jpg", "menu_background", "image")
     Gotham.Preload.mp3("./assets/audio/menu_theme.mp3", "menu_theme")
+    Gotham.Preload.mp3("./assets/audio/button_click_1.mp3", "button_click_1")
+
 
     # Settings
     Gotham.Preload.image("/assets/img/settings_background.jpg", "settings_background", "image")
@@ -73,7 +105,7 @@ setup =
     socket = GothamGame.Network
 
     Gotham.Preload.network("GetNodes", Gotham.Database.table("node"), socket)
-    #Gotham.Preload.network("GetCables", Gotham.Database.table("cable"), socket)
+    Gotham.Preload.network("GetCables", Gotham.Database.table("cable"), socket)
     Gotham.Preload.network("GetUser", Gotham.Database.table("user"), socket)
     Gotham.Preload.network("GetMission", Gotham.Database.table("mission"), socket)
 
@@ -94,8 +126,9 @@ setup =
     GothamGame.Renderer.setScene("World")
 
   startNetwork: (callback) ->
-    GothamGame.Network = new Gotham.Network "localhost", 8081
+    GothamGame.Network = new Gotham.Network "128.39.148.43", 8081
     GothamGame.Network.connect()
+    console.log "Connecting...."
     GothamGame.Network.onConnect = ->
       callback(GothamGame.Network)
 
@@ -106,22 +139,19 @@ setup =
 
 
 
-# Setup Database
-setup.database()
+# Preload Google Fonts
+setup.preloadFonts ->
+  # Start networking, Callback to preload when done
+  setup.startNetwork ->
 
+    # Preload Assets
+    setup.preload()
 
-
-# Start networking, Callback to preload when done
-setup.startNetwork ->
-  # Start asset loading
-  setup.preload()
-
-  GothamGame.Network.Socket.emit 'Login', {"username" : "per", "password": "per"}
-  GothamGame.Network.Socket.on 'Login', (reply) ->
-    if reply.status == 200
-      # Start Network Preloading
-      setup.networkPreload()
-
+    GothamGame.Network.Socket.emit 'Login', {"username" : "per", "password": "per"}
+    GothamGame.Network.Socket.on 'Login', (reply) ->
+      if reply.status == 200
+        # Start Network Preloading
+        setup.networkPreload()
 
 scene_Loading  = new GothamGame.Scenes.Loading 0x3490CF, true
 

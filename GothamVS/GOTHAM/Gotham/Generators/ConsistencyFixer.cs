@@ -35,7 +35,7 @@ namespace Gotham.Gotham.Generators
             var work = new UnitOfWork();
 
             var repo = work.GetRepository<CableEntity>();
-            var seaCables = repo.All().ToList().Where(x => x.Type.Id == 1);
+            var seaCables = repo.All().ToList().Where(x => x.Type == 1);
 
             work.Dispose();
 

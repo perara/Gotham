@@ -18,7 +18,8 @@ namespace Gotham.Model
         public virtual double Distance { get; set; }
         public virtual string Name { get; set; }
         public virtual int Year { get; set; }
-        public virtual CableTypeEntity Type { get; set; }
+        //public virtual CableTypeEntity Type { get; set; }
+        public virtual int Type { get; set; }
 
         public virtual IList<NodeEntity> Nodes { get; set; }
 
@@ -32,7 +33,7 @@ namespace Gotham.Model
         public CableEntity(double capacity, CableTypeEntity type, double distance, string name)
         {
             Capacity = capacity;
-            Type = type;
+            Type = type.Id;
             Distance = distance;
             Name = name;
         }
@@ -53,6 +54,7 @@ namespace Gotham.Model
             Map(x => x.Distance);
             Map(x => x.Name);
             Map(x => x.Year);
+            Map(x => x.Type);
 
 
             // Cable Parts, No further loading
@@ -63,7 +65,7 @@ namespace Gotham.Model
              .Not.LazyLoad();
 
 
-            References(x => x.Type, "type");
+            //References(x => x.Type, "type");
 
             HasManyToMany(x => x.Nodes)
                 .Cascade.All()

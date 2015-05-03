@@ -20,11 +20,10 @@ class Cable extends GothamObject
   # @return {CableType}
   ###
   getCableType: ->
-    if not @_cableType
+    if not @CableType
       db_cableType = Gotham.LocalDatabase.table("CableType")
-      @_cableType = db_cableType.findOne({id: @type})
-
-    return @_cableType
+      @CableType = db_cableType.findOne({id: @type})
+    return @CableType
 
   ###*
   # Get CableParts of this cable
@@ -32,10 +31,11 @@ class Cable extends GothamObject
   # @return {CablePart[]}
   ###
   getCableParts: ->
-    if not @_cableParts
+    if not @CableParts
       db_cablePart = Gotham.LocalDatabase.table("CablePart")
-      @_cableParts = db_cablePart.find({cable: @id})
-    return @_cableParts
+      @CableParts = db_cablePart.find({cable: @id})
+      @CableParts.reverse()
+    return @CableParts
 
   ###*
   # Get all associated nodes for this Cable
@@ -43,13 +43,13 @@ class Cable extends GothamObject
   # @return {Node[]}
   ###
   getNodes: ->
-    if not @_nodes
+    if not @Nodes
       db_node = Gotham.LocalDatabase.table("Node")
       db_nodeCable = Gotham.LocalDatabase.table("NodeCable")
-      @_nodes = []
+      @Nodes = []
       for nodeCable in db_nodeCable.find({cable: @id})
-        @_nodes.push  db_node.findOne({id: nodeCable.node})
-    return @_nodes
+        @Nodes.push  db_node.findOne({id: nodeCable.node})
+    return @Nodes
 
 
 

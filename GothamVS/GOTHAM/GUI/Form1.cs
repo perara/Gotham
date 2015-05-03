@@ -241,6 +241,36 @@ namespace Gotham.Application.GUI
             DrawNodes();
             DrawCables();
         }
+
+        private void btnConnectSeaNodesToLand_Click(object sender, EventArgs e)
+        {
+            CableGenerator.ConnectSeaNodesToLand();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var work = new UnitOfWork();
+            var nodeRepo = work.GetRepository<NodeEntity>();
+            var nodes = nodeRepo.All().ToList();
+            work.Dispose();
+
+            CableGenerator.GenerateCables(nodes, 2, 3, 1700);
+            CableGenerator.ConnectSeaNodesToLand();
+            CableGenerator.ConnectNodesToCables();
+
+
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            CableGenerator.ConnectNodesToCables();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            NodeNetworkGenerator.Generate();
+        }
     }
 }
 

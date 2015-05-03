@@ -63,22 +63,50 @@ class Traceroute extends Application
     # Traceroute Callback
     GothamGame.Network.Socket.on 'Traceroute', (path, output, targetNetwork) ->
       @removeListener('Traceroute')
+
+      # Parse Target Network JSON
       targetNetwork = JSON.parse(targetNetwork)
 
+
+      # Send Missio EMIT
       GothamGame.MissionEngine.emit 'traceroute', targetNetwork.external_ip_v4, ->
         console.log "Traceroute emit registererd. setting to completed!"
 
-
-      db_node = Gotham.Database.table("node")
-
-      # Clear old paths
+      # Clear old Traceroute paths
       GothamGame.Renderer.getScene("World").getObject("WorldMap").View.clearAnimatePath()
 
-      last = that._commandObject.controller.network # Basicly the host location
+
+
+      # Fetch all Nodes
+      db_node = Gotham.Database.table("node")
+
+      # The Host Location (Source host)
+      last = that._commandObject.controller.network
 
       for nodeID in path
-        current = db_node({id: nodeID}).first()
 
+        # Find the node in the database
+        current = db_node.findOne({id: nodeID})
+
+
+        direction = if (last.lng < 0) then 180 else -180
+        lengthGap = Math.abs(last.lng - current.lng)
+        console.log lengthGap
+        if lengthGap > 160
+          newEnd =
+            lat: current.lat
+            lng: direction * -1
+          newStart =
+            lat: current.lat
+            lng: direction
+
+
+          tween = GothamGame.Renderer.getScene("World").getObject("WorldMap").View.animatePath(last, newEnd)
+          tween.start()
+          last = newStart
+
+
+        # Create a animated tween path.
         tween = GothamGame.Renderer.getScene("World").getObject("WorldMap").View.animatePath(last, current)
         tween.start()
         last = current
@@ -86,7 +114,6 @@ class Traceroute extends Application
       # Finally add path between last node and network
       tween = GothamGame.Renderer.getScene("World").getObject("WorldMap").View.animatePath(last, targetNetwork)
       tween.start()
-
 
 
 

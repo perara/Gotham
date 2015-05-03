@@ -16,7 +16,8 @@ class UserController extends Gotham.Pattern.MVC.Controller
 
   setupIdentities: ->
     db_user = Gotham.Database.table "user"
-    identities = db_user().first().Identities
+    console.log db_user
+    identities = db_user.data[0].Identities
 
 
     for identity in identities
@@ -32,7 +33,8 @@ class UserController extends Gotham.Pattern.MVC.Controller
 
   setupHosts: ->
     db_user = Gotham.Database.table "user"
-    identities = db_user().first().Identities
+    identities = db_user.data[0].Identities
+
 
     for identity in identities
       for network in identity.Networks

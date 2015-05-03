@@ -1,6 +1,6 @@
 
 module.exports = (sequelize, DataTypes) ->
-  return sequelize.define 'Node_Cable', {
+  return sequelize.define 'NodeCable', {
       id:
         type: DataTypes.INTEGER
         allowNull: false

@@ -47,7 +47,7 @@ class Network extends GothamObject
   ###
   getNode: ->
     if not @Node
-      db_node = Gotham.LocalDatabase.table("Node")
+      db_node = Gotham.LocalDatabase.table "Node"
       @Node = db_node.findOne({id: @node})
     return @Node
 
@@ -85,12 +85,8 @@ class Network extends GothamObject
 # @property {String} dns
 ###
 ###*
-# The identity of the network
-# @property {Integer} identity
-###
-###*
-# The node of the network
-# @property {Integer} node
+# The mac of the network
+# @property {String} mac
 ###
 ###*
 # The isLocal of the network

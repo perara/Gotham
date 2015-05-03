@@ -165,7 +165,7 @@ class UserView extends Gotham.Pattern.MVC.View
     networkSprite.y = @networkY
     networkSprite.interactive = true
 
-    text = new Gotham.Graphics.Text("IP: #{network.external_ip_v4} Mask: #{network.submask}\nNode: #{db_node({id: network.Node}).first().name}", {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
+    text = new Gotham.Graphics.Text("IP: #{network.external_ip_v4} Mask: #{network.submask}\nNode: #{db_node.findOne({id: network.Node}).name}", {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
     text.x = 5
     text.y = 5
     networkSprite.addChild text
@@ -180,7 +180,7 @@ class UserView extends Gotham.Pattern.MVC.View
 
   addHost: (network, host) ->
 
-    hostSprite = new Gotham.Graphics.Sprite Gotham.Preload.fetch("user_management_network_item", "image")
+    hostSprite = new Gotham.Graphics.Sprite Gotham.Preload.fetch("user_mangement_host", "image")
     hostSprite.x = 5
     hostSprite.width -= 10
     hostSprite.y = @networkY

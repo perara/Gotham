@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Gotham.Application.Generators;
 using Gotham.Model;
 using Gotham.Model.Tools;
 using Gotham.Tools;
@@ -22,7 +23,7 @@ namespace Gotham.Gotham.Generators
 
         public static void Generate()
         {
-
+            var random = new Random();
             var resultDNS = new List<DNSEntity>();
             var resultNetwork = new List<NetworkEntity>();
 
@@ -53,7 +54,7 @@ namespace Gotham.Gotham.Generators
             // Foreach of the nodes
             foreach (var node in nodes)
             {
-                if (networks.Exists(x => x.Node == node))
+                if (node.NetworkID != null)
                     continue;
 
 
@@ -119,13 +120,14 @@ namespace Gotham.Gotham.Generators
                 var network = new NetworkEntity();
                 network.ExternalIPv4 = externalIP;
                 network.InternalIPv4 = internalIP;
-                network.Node = node;
                 network.DNS = "4.4.4.4";
                 network.Lat = node.Lat;
                 network.Lng = node.Lng;
-                network.Identity = null;
+                network.MAC = NodeGenerator.GetRandomMacAddress(random);
                 network.Submask = "255.255.255.0"; // TODO? http://www.iplocation.net/subnet-mask
                 network.IsLocal = false;
+
+                
 
                 // Create a DNS record for this network
                 var dnsEntry = new DNSEntity();
@@ -137,14 +139,29 @@ namespace Gotham.Gotham.Generators
                 // ADD TO RESULT list
                 resultDNS.Add(dnsEntry);
                 resultNetwork.Add(network);
-                Debug.WriteLine(externalIP);
+
+                using (var session = EntityManager.GetSessionFactory().OpenSession())
+                {
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        session.Save(dnsEntry);
+                        session.Save(network);
+                        node.NetworkID = network.Id;
+                        session.Update(node);
+                        transaction.Commit();
+
+
+                    }
+                }
+
             }
 
             // Save to db
-            work = new UnitOfWork();
+            /*work = new UnitOfWork();
             work.GetRepository<DNSEntity>().Add(resultDNS);
             work.GetRepository<NetworkEntity>().Add(resultNetwork);
-            work.Dispose();
+            work.GetRepository<NodeEntity>().Update(nodes);
+            work.Dispose();*/
 
 
         }

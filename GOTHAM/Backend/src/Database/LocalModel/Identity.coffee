@@ -33,7 +33,12 @@ class Identity extends GothamObject
   getNetworks: ->
     if not @Networks
       db_network = Gotham.LocalDatabase.table("Network")
-      @Networks = db_network.find({identity: @id})
+      db_id_network = Gotham.LocalDatabase.table("IdentityNetwork")
+
+      @Networks = db_id_network.find({identity: @id}).map (identNetwork) ->
+        network = db_network.findOne(id: identNetwork.network)
+        return network
+
     return @Networks
 
 

@@ -105,8 +105,8 @@ class TerminalView extends Gotham.Pattern.MVC.View
       {
         id: "terminal_console_frame_content_#{terminalCount}"
         style: """
-          width: 98%;
-          height: 98%;
+          width: 100%;
+          height: 100%;
           background-image: url('./assets/img/terminal_background.png');
           background-size:cover;
           border-bottom: 1px solid gray;
@@ -140,7 +140,7 @@ class TerminalView extends Gotham.Pattern.MVC.View
         type: "text"
         id: "terminal_input_field_#{terminalCount}"
         style: """
-          width: 99%;
+          width: 100%;
           height: 100%;
           background-color: black;
           display: inline-block;

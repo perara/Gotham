@@ -225,7 +225,7 @@ namespace Gotham.Application.Parsers
                         Name = segments[0],
                         Priority = 0,
                         Capacity = Double.Parse(segments[1]),
-                        Type = new CableTypeEntity() { Id = 0 },
+                        Type = 0,
                         Distance = Double.Parse(segments[4]),
                         Year = Int32.Parse(segments[7])
                     };

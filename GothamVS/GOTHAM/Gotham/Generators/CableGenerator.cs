@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Windows.Forms;
 using Gotham.Model;
 using Gotham.Model.Tools;
 using Gotham.Tools;
@@ -317,13 +319,27 @@ namespace Gotham.Application.Generators
         /// <summary>
         /// Connects all sea nodes to the closest land node and writes the cables to DB
         /// </summary>
-        public static void ConnectSeaNodesToLand(int maxDistance = 10^12)
+        public static void ConnectSeaNodesToLand(int maxDistance = 100000)
         {
             Log.Info("Connecting sea nodes to the closest land node");
             var work = new UnitOfWork();
             var landNodeRepository = work.GetRepository<NodeEntity>().All().Where(x => x.Tier.Id == 1).ToList();
             var seaNodeRepository = work.GetRepository<NodeEntity>().All().Where(x => x.Tier.Id == 4).ToList();
-            var newCables = (from seaNode in seaNodeRepository let closest = GetClosestNode(seaNode, landNodeRepository, maxDistance) where closest != null select NewCable(seaNode, closest)).ToList();
+            var nodeCables = work.GetRepository<NodeCableEntity>().All().ToList();
+
+
+            var newCables = new List<CableEntity>();
+
+            foreach (var seaNode in seaNodeRepository)
+            {
+                var closest = GetClosestNode(seaNode, landNodeRepository, maxDistance);
+
+                if (closest == null) continue;
+
+                var newCable = NewCable(seaNode, closest);
+                newCables.Add(newCable);
+
+            }
 
             // Save newCables
             var cableRepository = work.GetRepository<CableEntity>();

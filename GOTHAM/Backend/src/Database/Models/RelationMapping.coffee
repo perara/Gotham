@@ -5,7 +5,8 @@ class RelationMapping
 
   constructor: (Model) ->
     @Model = Model
-    @Mapping_CablePart()
+
+    """@Mapping_CablePart()
     @Mapping_Cable()
 
     @Mapping_NodeCable()
@@ -18,7 +19,7 @@ class RelationMapping
 
     @Mapping_DNS()
     @Mapping_IPProvider()
-    @Mapping_UserMission()
+    @Mapping_UserMission()"""
 
 
   Mapping_UserMission: ->

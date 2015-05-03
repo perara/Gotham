@@ -31,13 +31,20 @@ class WorldMapRoom extends Room
       nodes = db_node.find().map (item) ->
         return {
           bandwidth: item.bandwidth
-          countryCode: item.countryCode
+          Country: item.getCountry()
           id: item.id
           lat: item.lat
           lng: item.lng
           name: item.name
           priority: item.priority
           tier: item.tier
+          Network:
+            submask: item.getNetwork().submask
+            internal_ip_v4: item.getNetwork().internal_ip_v4
+            external_ip_v4: item.getNetwork().external_ip_v4
+            dns: item.getNetwork().dns
+            lat: item.getNetwork().lat
+            lng: item.getNetwork().lng
           Cables: item.getCables().map (i) ->
             return {
               capacity: i.capacity
@@ -58,15 +65,24 @@ class WorldMapRoom extends Room
     # @submodule Backend.Emitters
     ###
     @addEvent "GetCables", (data) ->
+      client = @
       that.log.info "[WMRoom] GetCables called" + data
 
       db_cable = Gotham.LocalDatabase.table("Cable")
 
       cables = db_cable.find().map (cable) ->
-        cable.getCablePart()
-        cable.getCableType()
-        cable.getNodes()
-        return cable
+        return {
+          id: cable.id
+          distance: cable.distance
+          name: cable.name
+          year: cable.year
+          priority: cable.priority
+          capacity: cable.capacity
+          CableParts: cable.getCableParts()
+          CableType: cable.getCableType()
+          Nodes: cable.getNodes().map (i) ->
+            return i.id
+        }
 
       client.emit 'GetCables', cables
 

@@ -31,6 +31,17 @@ class Node extends GothamObject
 
     return @Cables
 
+  ###*
+  # Get node's network
+  # @method getNetwork
+  # @return {Network} Network
+  ###
+  getNetwork: ->
+    if not @Network
+      db_network = Gotham.LocalDatabase.table("Network")
+      @Network = db_network.findOne({id: @network})
+    return @Network
+
 
   ###*
   # Get All siblings nodes to this Node
@@ -72,7 +83,7 @@ class Node extends GothamObject
   getCountry: ->
     if not @Country
       db_country = Gotham.LocalDatabase.table("Country")
-      @Country = db_country.findOne({id: @country})
+      @Country = db_country.findOne({countryCode: @countryCode})
     return @Country
 
 
@@ -124,6 +135,10 @@ class Node extends GothamObject
 ###*
 # The lng of the node
 # @property {Double} lng
+###
+###*
+# The network of the node
+# @property {Integer} network
 ###
 
 

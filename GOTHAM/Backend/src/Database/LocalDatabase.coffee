@@ -60,6 +60,7 @@ class LocalDatabase
         # Remove Extension
         file = file.replace(/\.[^/.]+$/, "")
 
+
         promises.push Gotham.Database.Model[file].all().then((objs) ->
           # Require object class
           Object = require "./LocalModel/#{fullName}"
@@ -70,6 +71,7 @@ class LocalDatabase
           db_obj = Gotham.LocalDatabase.table(file)
           db_obj.insert new Object(obj) for obj in objs
         ).catch((e)->
+          console.log file
           console.log e
         )
 

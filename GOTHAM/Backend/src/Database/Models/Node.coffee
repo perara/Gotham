@@ -31,9 +31,11 @@ module.exports = (sequelize, DataTypes) ->
       lng:
         type: DataTypes.DECIMAL
         allowNull: false
-      mac:
-        type: DataTypes.STRING
+      network:
+        type: DataTypes.INTEGER
         allowNull: false
+        references: 'network'
+        referencesKey: 'id'
     },
     {
       tableName: 'node'

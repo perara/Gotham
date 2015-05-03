@@ -1,10 +1,11 @@
-﻿class WorldMapView extends Gotham.Pattern.MVC.View
+﻿
 
+class WorldMapView extends Gotham.Pattern.MVC.View
   constructor: ->
     super
 
     @__width = 1920
-    @__height = 1080 - 70 # Subtract bar heights
+    @__height = 1080 # Subtract bar heights
 
     @__mapSize =
       width: 7200
@@ -25,7 +26,6 @@
 
   create: ->
 
-
     """
     Create the background
     """
@@ -40,41 +40,25 @@
 
 
   createBackground: ->
-
-
-
     @_background = background = new Gotham.Graphics.Sprite Gotham.Preload.fetch("sea_background", "image")
     background.width = @__width
     background.height = @__height + 140
     background._size = @size
-    background.y = 70
+    background.y = 0
     @addChild background
 
-
-    # Create mask background
-    backgroundMask = new Gotham.Graphics.Graphics
-    backgroundMask.beginFill(0x232323, 1)
-    backgroundMask.drawRect(0,0,  @__width, @__height)
-    backgroundMask.y = 70
-    @addChild backgroundMask
-    background.mask = backgroundMask
-
   scaleNodes: (zoomOut) ->
-# Determine weither its zoom in or zoom out
-    inorout = if zoomOut then 1 else -1
+    that = @
 
     # Fetch node table
     db_node = Gotham.Database.table "node"
 
     # Scale each of the nodes
-    db_node().each (row) ->
+    for row in db_node.find()
       node = row.sprite
-      if zoomOut
-        node.scale.x = (node.scale.x * 1.08)
-        node.scale.y = (node.scale.y * 1.08)
-      else
-        node.scale.x = (node.scale.x / 1.08)
-        node.scale.y = (node.scale.y / 1.08)
+
+      node.scale.x = (Math.max(0.08, (that.mapContainer.scale.x * 4)**-1))
+      node.scale.y = (Math.max(0.08, (that.mapContainer.scale.y * 4)**-1))
 
 
   createWorldMap: ->
@@ -83,7 +67,7 @@
     """
     Create a container for world map
     """
-    mapContainer = new Gotham.Graphics.Container
+    @mapContainer = mapContainer = new Gotham.Graphics.Container
     mapContainer.interactive = true
     mapContainer.scale =
       x: 0.8
@@ -99,30 +83,22 @@
     """
     GothamGame.Renderer.pixi.addWheelScrollObject(mapContainer)
 
+
     """
     Activate Panning - Return False and ignore if Longitude < -180 or > 180 and False if Latitude < -90 or > 90
     """
     mapContainer.setPanning (newPosition) ->
+      # Hide Node Details
+      that.hideNodeDetails()
+
       @offset = newPosition
       return {x: true, y: true}
-      """
-      results =
-        x: true
-        y: true
-
-      diff =
-        x: mapContainer.width - that.__width
-        y: mapContainer.height - that.__height
-
-      if diff.x < (newPosition.x * -1) or newPosition.x > 0
-        results.x = false
-
-      if diff.y < (newPosition.y * -1) or newPosition.y > 0
-        results.y = false
 
 
-    panningCheck
-    """
+    mapContainer.offset =
+      y: -70
+      x: 0
+
 
     """
     MapContainers mouse move:
@@ -131,8 +107,6 @@
     * Sets topBarText
     """
     mapContainer.onMouseMove =  (e) ->
-
-#console.log e.stopPropegation()
 
       pos = e.data.getLocalPosition this
       @_lastMousePosition = pos
@@ -150,6 +124,27 @@
 
       that.parent.getObject("Bar").updateCoordinates lat, long
 
+    mapContainer.click = () ->
+
+      # If GothShark is visible and the map is clicked. Tween back to original map position
+      if $("#node-details").is(":visible")
+        that.hideNodeDetails()
+
+        @offset =
+          y: -70
+          x: 0
+
+        tween = new Gotham.Tween @
+        tween.to {
+          scale:
+            x: 0.8
+            y: 0.8
+        }, 250
+        tween.onUpdate () ->
+          mapContainer.x = (that.__width - (that.__width * mapContainer.scale.x)) / 2
+          that.scaleNodes()
+
+        tween.start()
 
     """
     OnWheelScroll
@@ -162,9 +157,6 @@
 
     mapContainer.onWheelScroll = (e) ->
       if not @canScroll then return
-
-
-
       direction = e.wheelDeltaY / Math.abs(e.wheelDeltaY)
 
       # -1 = Wheel out, 1 = Wheen In
@@ -179,23 +171,25 @@
 
       # Calculate what next scaling should be
       nextScale =
-        x : if zoomOut then @scale.x / factor else @scale.x * factor
-        y : if zoomOut then @scale.y / factor else @scale.y * factor
-
+        x: @scale.x * (factor**direction)
+        y: @scale.y * (factor**direction)
 
       # IF: Determine weither we should ignore the scaling
       # ELSE: Scaling should happen, update offsets
-      if nextScale.x < 0.6 or nextScale.y < 0.6
+      if nextScale.x < 0.4 or nextScale.y < 0.4
         return
       else if nextScale.x > 10 or nextScale.y > 10
         return
       else
+        # Hide Node Details
+        that.hideNodeDetails()
+
         @scale = nextScale
         # Scale Nodes
         that.scaleNodes(zoomOut)
 
-      @offset.x = if zoomOut then  @offset.x / factor else @offset.x * factor
-      @offset.y  = if zoomOut then @offset.y / factor else @offset.y * factor
+      @offset.x = @offset.x * (factor**direction)
+      @offset.y = @offset.y * (factor**direction)
 
       # Calculate the size offset, we do this to move
       prevSize =
@@ -221,7 +215,22 @@
     Create World Map
     """
     worldMap = @createMap()
-    mapContainer.addChildArray worldMap
+
+    for mapItem in worldMap
+      if mapItem.width < 10 or mapItem.height < 10
+        continue
+      mapContainer.addChild mapItem
+
+
+    """count = 0
+    setInterval (() ->
+
+      mapContainer.addChild worldMap[count++]
+      console.log worldMap[count].width, worldMap[count].height
+    ), 50"""
+
+
+    #mapContainer.addChildArray worldMap
 
 
     """
@@ -343,12 +352,10 @@
     coordinates = @coordinateToPixel(node.lat, node.lng)
 
     # Create a node sprite
-
-
     gNode = new Gotham.Graphics.Sprite Gotham.Preload.fetch("map_marker", "image")
     gNode.tint = 0xF8E23B
 
-    gNode.infoFrame = @nodeInfoFrame()
+    gNode.infoFrame = @nodeInfoFrame(node)
     gNode.addChild gNode.infoFrame
 
     # Set position according to the Lat,Lng conversion
@@ -356,13 +363,18 @@
       x: coordinates.x
       y: coordinates.y
 
+    # Add original scale variable
+    gNode.originalScale =
+      x: gNode.scale.x
+      y: gNode.scale.y
+
     # Set Sprites Size
     gNode.width = 8
     gNode.height = 8
 
     gNode.anchor =
-      x: 0.5
-      y: 0.5
+      x: 0.4
+      y: 0.4
 
     # Add a sprite property to the node
     node.sprite = gNode
@@ -378,15 +390,19 @@
     that = @
 
     # The Node should be interactive
-    node.sprite.setInteractive true
+    node.sprite.interactive = true
 
     # Whenever a node is hovered or exited (mouseover and mouseout)
     nodeHover = (node, tint, visible) ->
+
+      # Update country information
+      that.parent.getObject("Bar").updateCountry node.Country
+
       node.sprite.tint = tint
 
       for _cable in node.Cables
 
-        cable = Gotham.Database.table("cable")({id: _cable.id}).first()
+        cable = Gotham.Database.table("cable").findOne({id: _cable.id})
         if not cable then return
 
         for part in cable.CableParts
@@ -410,10 +426,107 @@
       nodeHover node, 0xF8E23B, false
 
 
+  showNodeDetails: (node) ->
+    window.updateNode(node)
+    $("#node-details").fadeIn()
 
-  nodeInfoFrame: ->
-    infoFrame = new Gotham.Graphics.Sprite Gotham.Preload.fetch("mission_background", "image")
+  hideNodeDetails: () ->
+    $("#node-details").fadeOut()
+
+  nodeInfoFrame: (node) ->
+    that = @
+
+    infoFrame = new Gotham.Graphics.Sprite Gotham.Preload.fetch("node_details", "image")
     infoFrame.visible = false
+    infoFrame.interactive = true
+
+    wireShark = new Gotham.Controls.Button "Sniff", 450, 200, {textSize: 70}
+    wireShark.x = 80
+    wireShark.y = 40
+    infoFrame.addChild wireShark
+
+
+    infoFrame.click = ->
+      @ready = if not @ready then true else @ready
+
+
+      if @ready
+        infoFrame.visible = false
+        @ready = false
+
+        that.mapContainer.interactive = false
+        that.mapContainer.isDragging = false
+
+
+        originalScale =
+          x: that.mapContainer.scale.x
+          y: that.mapContainer.scale.y
+
+
+        tween = new Gotham.Tween that.mapContainer
+        tween.easing Gotham.Tween.Easing.Quadratic.In
+        tween.to {
+          position:
+            y: 1
+            x: (that.__width / 2) - (that.__width * 0.4)/2
+        }, 400
+        tween.start()
+        tween.onUpdate (tweenChain) ->
+          elapsed = tweenChain.elapsed
+
+          # Scale Stuff
+          diffScale =
+            x: (0.4 - originalScale.x) * elapsed
+            y: (0.4 - originalScale.y) * elapsed
+
+          nexScale =
+            x: originalScale.x - (diffScale.x * -1)
+            y: originalScale.y - (diffScale.y * -1)
+
+
+          factor =
+            x: (that.__width * nexScale.x) / (that.__width * that.mapContainer.scale.x)
+            y: (that.__height * nexScale.y) / (that.__height * that.mapContainer.scale.y)
+
+          # Size stuff
+          prevSize =
+            width : that.__width
+            height : that.__height
+
+          nextSize =
+            width : that.__width * nexScale.x
+            height : that.__height * nexScale.y
+
+          diffSize =
+            width: prevSize.width - nextSize.width
+            height: prevSize.height - nextSize.height
+
+
+          that.mapContainer.scale.x = nexScale.x
+          that.mapContainer.scale.y = nexScale.y
+
+          that.mapContainer.offset.x *= factor.x
+          that.mapContainer.offset.y *= factor.y
+
+
+          that.mapContainer.position.x = (diffSize.width / 2) + that.mapContainer.offset.x
+          that.mapContainer.position.y = (diffSize.height / 2) +  that.mapContainer.offset.y
+          that.scaleNodes true
+        #that.mapContainer.position.x = 0 # (that.mapContainer.offset.x * diffScale.x) + (diffSize.width / 2)
+        #that.mapContainer.position.y = 0 #(that.mapContainer.offset.y * diffScale.y) + (diffSize.height / 2)
+
+
+        tween.onComplete (tweenObj) ->
+
+          that.mapContainer.offset = {y: -305, x: 0}
+
+          # Set interactive and Y pos
+          that.mapContainer.interactive = true
+
+          # Show node detail
+          that.showNodeDetails(node)
+
+          @ready = true
 
     return infoFrame
 
@@ -478,19 +591,19 @@
     length = 20.0 # Line length in pixels
     endModifier = length / distance
 
-    t = distance / 0.5
+    t = distance / 0.4
 
     # Tween lazer
     tween = new Gotham.Tween lazer
     tween.to {}, t
     tween.onUpdate (chainItem)->
-# Elapsed tween time
+      # Elapsed tween time
       elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
 
       points =
         start:
-          x : sourcePixel.x +  diff.x * elapsed
-          y : sourcePixel.y +  diff.y * elapsed
+          x : sourcePixel.x +  diff.x * Math.max(elapsed,0)
+          y : sourcePixel.y +  diff.y * Math.max(elapsed,0)
         end:
           x : sourcePixel.x + diff.x * Math.min(elapsed + endModifier, 1)
           y : sourcePixel.y + diff.y * Math.min(elapsed + endModifier, 1)
@@ -529,6 +642,8 @@
       start: @coordinateToPixel(startNode.lat, startNode.lng)
       end: @coordinateToPixel(endNode.lat, endNode.lng)
 
+
+
     # Create graphics object for cable
     gCable = new Gotham.Graphics.Graphics();
     gCable.visible = true
@@ -550,29 +665,23 @@
     tween = new Gotham.Tween()
     gCable.tween = tween
     tween.repeat Infinity
-    tween.to {}, 2500
+    tween.to {}, 1500
     tween.onUpdate (chainItem)->
 
-# Elapsed tween time
-      elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
-      # Start from beginning
-      if elapsed + 0.2 > 1
-        points =
-          start:
-            x : path.start.x + diff.x * 0
-            y : path.start.y + diff.y * 0
-          end:
-            x : path.start.x + diff.x * Math.min(elapsed + 0.2 - 1, 1)
-            y : path.start.y + diff.y * Math.min(elapsed + 0.2 - 1, 1)
-      else
-        points =
-          start:
-            x : path.start.x + diff.x * elapsed
-            y : path.start.y + diff.y * elapsed
-          end:
-            x : path.start.x + diff.x * Math.min(elapsed + 0.2, 1)
-            y : path.start.y + diff.y * Math.min(elapsed + 0.2, 1)
 
+      # Elapsed tween time
+      elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
+
+
+      points =
+        start:
+          x : path.start.x + diff.x * Math.max(elapsed - 0, 0)
+          y : path.start.y + diff.y * Math.max(elapsed - 0, 0)
+        end:
+          x : path.start.x + diff.x * Math.min(elapsed + 0.1, 1)
+          y : path.start.y + diff.y * Math.min(elapsed + 0.1, 1)
+
+      # Start drawing
       animationGraphics.clear()
       animationGraphics.lineStyle(1, 0x00ff00, 1);
       animationGraphics.moveTo(points.start.x, points.start.y)
@@ -580,12 +689,6 @@
 
 
     return tween
-
-
-
-
-
-
 
 
 # Adds a cable to given node
@@ -603,13 +706,14 @@
 
     for partData in cable.CableParts
       currentLocation = @coordinateToPixel(partData.lat, partData.lng)
-      if  partData.number is 0
+
+      if partData.number is 0
         graphics.coordinates.start = currentLocation
         graphics.moveTo(currentLocation.x, currentLocation.y)
         cablePartsGraphics.push graphics
       else
         graphics.coordinates.end = currentLocation
-        graphics.lineTo(currentLocation.x, currentLocation.y);
+        graphics.lineTo(currentLocation.x, currentLocation.y)
 
 
     # Add graphics cable parts to the cable
@@ -697,6 +801,8 @@
 
 
     tween.start()
+
+
 
 
 module.exports = WorldMapView
