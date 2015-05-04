@@ -1,11 +1,16 @@
 optparse = require '../../../dependencies/optparse.js'
 
 
-
+###*
+# Application Base class, Takes care of command parsing and opt parsing
+# @class Application
+# @module Frontend
+# @submodule Frontend.Terminal.Application
+# @namespace GothamGame.Terminal.Application
+###
 class Application
+
   @Command = undefined
-
-
 
 
   constructor: (command) ->

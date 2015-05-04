@@ -1,5 +1,13 @@
 'use strict'
 
+
+###*
+# Terminal Class is a collection of modules. These modules in total represents a terminal which can be used by the User
+# @class Terminal
+# @module Frontend
+# @submodule Frontend.Terminal
+# @namespace GothamGame.Terminal
+###
 class Terminal
 
   constructor: ->

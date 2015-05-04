@@ -1,7 +1,15 @@
 View = require '../View/MissionView.coffee'
 
 
-
+###*
+# MissionController, This controller manages all Mission related data. This beeing the emitter from Backend and adding Missions to the view.
+# @class MissionController
+# @module Frontend
+# @submodule Frontend.Controllers
+# @namespace GothamGame.Controllers
+# @constructor
+# @param name {String} Name of the Controller
+###
 class MissionController extends Gotham.Pattern.MVC.Controller
 
   constructor: (name) ->

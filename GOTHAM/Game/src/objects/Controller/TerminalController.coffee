@@ -1,7 +1,15 @@
 View = require '../View/TerminalView.coffee'
 
 
-
+###*
+# This class keeps track of the terminal data + redrawing of the terminal.
+# @class TerminalController
+# @module Frontend
+# @submodule Frontend.Controllers
+# @namespace GothamGame.Controllers
+# @constructor
+# @param name {String} Name of the Controller
+###
 class TerminalController extends Gotham.Pattern.MVC.Controller
 
   # Keycodes

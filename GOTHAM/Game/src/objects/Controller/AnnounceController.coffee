@@ -1,5 +1,14 @@
 View = require '../View/AnnounceView.coffee'
 
+###*
+# AnnounceController, This controller handles the Announcement which turn up on middle of the screen. Used in Mission for example
+# @class AnnounceController
+# @module Frontend
+# @submodule Frontend.Controllers
+# @namespace GothamGame.Controllers
+# @constructor
+# @param name {String} Name of the Controller
+###
 class AnnounceController extends Gotham.Pattern.MVC.Controller
 
   constructor: (name) ->
@@ -55,7 +64,6 @@ class AnnounceController extends Gotham.Pattern.MVC.Controller
           that.isWaiting = true
           message = that.messageQueue.shift()
           that.View.startMessage message, ->
-            console.log "Complete!"
             that.isWaiting = false
             that.queue()
           clearInterval(id)

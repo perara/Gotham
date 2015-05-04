@@ -1,10 +1,14 @@
 Terminal = require './Terminal.coffee'
 
 
-# Console Class
-# Contains all data of the console window, Acts much like an array, but have some extended functionality for
-# easy manipulation
-#
+
+###*
+# Console Class Contains all data of the console window, Acts much like an array, but have some extended functionality for easy data manipulation
+# @class Console
+# @module Frontend
+# @submodule Frontend.Terminal
+# @namespace GothamGame.Terminal
+###
 class Console
 
   constructor: ()->

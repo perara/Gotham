@@ -2,6 +2,16 @@ Application = require './Application.coffee'
 
 #http://ha.ckers.org/slowloris/slowloris.pl
 
+
+
+###*
+# Application which simulates the behaviour of the perl application Slow Loris
+# @class Slowloris
+# @module Frontend
+# @submodule Frontend.Terminal.Application
+# @extends Application
+# @namespace GothamGame.Terminal.Application
+###
 class Slowloris extends Application
 
 

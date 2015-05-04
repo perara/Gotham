@@ -1,6 +1,12 @@
 Terminal = require './Terminal.coffee'
 
-
+###*
+# The Filesystem Class parses the filestructure and makes it possible to navigate through the structure.
+# @class Filesystem
+# @module Frontend
+# @submodule Frontend.Terminal
+# @namespace GothamGame.Terminal
+###
 class Filesystem
 
   constructor: (json) ->

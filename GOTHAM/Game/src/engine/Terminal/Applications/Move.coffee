@@ -1,7 +1,14 @@
 Application = require './Application.coffee'
 
-
-class Move  extends Application
+###*
+# Application for the mv comamnd in Unix
+# @class Move
+# @module Frontend
+# @submodule Frontend.Terminal.Application
+# @extends Application
+# @namespace GothamGame.Terminal.Application
+###
+class Move extends Application
 
   @Command = "mv"
 

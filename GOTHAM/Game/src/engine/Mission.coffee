@@ -1,8 +1,14 @@
 
 
+
+###*
+# Mission contains all of the mission data retrieved from backend. It emits on Update, Complete etc.
+# @class Mission
+# @module Frontend
+# @submodule Frontend.Mission
+# @namespace GothamGame.Mission
+###
 class Mission
-
-
 
   constructor: () ->
     @id = null
@@ -184,11 +190,13 @@ class Mission
 
 
 
-  # Chain based class to create an requirement for an mission
-  #
-  # @example How to chain Requirement
-  #   mission.addRequirement("hack").expect("10").default("0").description("Hack 10 targets")
-  #
+  ###*
+  # Requirement class for adding part of a mission. A requirement is basically part of a mission. Example: Ping IP: null/192.168.21.1
+  # @class Requirement
+  # @module Frontend
+  # @submodule Frontend.Mission
+  # @namespace GothamGame.Mission
+  ###
   class Requirement
 
     # Creates an requirement object

@@ -1,6 +1,16 @@
 View = require '../View/WorldMapView.coffee'
 
 
+###*
+# World map controller manages all events inside the WorldMap. Hosts, Cables, Nodes, IPViking
+# @class WorldMapController
+# @module Frontend
+# @submodule Frontend.Controllers
+# @namespace GothamGame.Controllers
+# @constructor
+# @param name {String} Name of the Controller
+# @extends Gotham.Pattern.MVC.Controller
+###
 class WorldMapController extends Gotham.Pattern.MVC.Controller
 
 

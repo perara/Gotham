@@ -1,6 +1,14 @@
 Application = require './Application.coffee'
 
 
+###*
+# Application for the "ls" command in Unix.
+# @class ListSegments
+# @module Frontend
+# @submodule Frontend.Terminal.Application
+# @extends Application
+# @namespace GothamGame.Terminal.Application
+###
 class ListSegments extends Application
 
   @Command = "ls"

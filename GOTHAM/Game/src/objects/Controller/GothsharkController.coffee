@@ -1,6 +1,16 @@
 View = require '../View/GothsharkView.coffee'
 
 
+
+###*
+# GothsharkController is the data management of the Gothshark Application. This is a quite special controller, since gothshark is located inside index.html
+# @class GothsharkController
+# @module Frontend
+# @submodule Frontend.Controllers
+# @namespace GothamGame.Controllers
+# @constructor
+# @param name {String} Name of the Controller
+###
 class GothsharkController extends Gotham.Pattern.MVC.Controller
 
   constructor : (name) ->
@@ -37,7 +47,6 @@ class GothsharkController extends Gotham.Pattern.MVC.Controller
 
         nodeObject.packets.push packet
 
-        console.log packet
       currentNode = window.GothShark.getCurrentNode()
       if currentNode
         node = db_node.findOne(id: currentNode.id)

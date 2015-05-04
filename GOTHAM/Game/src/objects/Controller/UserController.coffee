@@ -1,80 +1,34 @@
 View = require '../View/UserView.coffee'
 
-
+###*
+# Manages data which is to be drawn on the UserView
+# @class UserController
+# @module Frontend
+# @submodule Frontend.Controllers
+# @namespace GothamGame.Controllers
+# @constructor
+# @param name {String} Name of the Controller
+###
 class UserController extends Gotham.Pattern.MVC.Controller
 
   constructor: (name) ->
     super View, name
 
   create: ->
-    @setupIdentities()
-    @setupHosts()
+    #@hide()
 
-    @View.hide()
+    @setupUser()
 
-
-
-  setupIdentities: ->
+  setupUser: ->
     db_user = Gotham.Database.table "user"
-    console.log db_user
-    identities = db_user.data[0].Identities
 
+    console.log db_user.data[0]
 
-    for identity in identities
-
-      identity = jQuery.extend({}, identity)
-      delete identity.id
-      delete identity.fk_user
-      delete identity.Networks
-      delete identity.lat
-      delete identity.lng
-
-      @View.addIdentity identity
-
-  setupHosts: ->
-    db_user = Gotham.Database.table "user"
-    identities = db_user.data[0].Identities
-
-
-    for identity in identities
-      for network in identity.Networks
-        @View.addNetwork network
-        for host in network.Hosts
-          sprite = @View.addHost network, host
+    @View.setUser(db_user.data[0])
 
 
 
-          # Create a terminal
-          terminal = new GothamGame.Controllers.Terminal "Terminal_#{host.ip}"
-          terminal.View.create()
-          terminal.setIdentity(identity)
-          terminal.setHost(host)
-          terminal.setNetwork(network)
-          terminal.create()
-          sprite.terminal = terminal
-          sprite.click = ->
-            @__toggled = if not @__toggled then true else false
-
-            if @__toggled
-              @terminal.show()
-            else
-              @terminal.hide()
-
-
-          sprite.mouseout = ->
-            @tint = 0xffffff
-          sprite.mouseover = ->
-            @tint = 0xff0000
-
-
-
-
-
-
-
-
-
-
+  addMoney: ->
 
   show: ->
     @View.show()

@@ -1,5 +1,13 @@
 Application = require './Application.coffee'
 
+###*
+# Application for Ping which simulates Unix based ping
+# @class Ping
+# @module Frontend
+# @submodule Frontend.Terminal.Application
+# @extends Application
+# @namespace GothamGame.Terminal.Application
+###
 class Ping  extends Application
   @Command = "ping"
 

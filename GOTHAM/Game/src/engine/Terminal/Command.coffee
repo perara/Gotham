@@ -1,5 +1,15 @@
 
-# Command class
+
+###*
+# Command is a terminal module which parses the input to the terminal. The command registers and identifies which command that should run.
+# @class Command
+# @module Frontend
+# @submodule Frontend.Terminal
+# @namespace GothamGame.Terminal
+# @constructor
+# @param tC {TerminalController} The terminal controller object
+# @param input {String} The input string from Terminal input field
+###
 class Command
 
   constructor: (tC, input) ->

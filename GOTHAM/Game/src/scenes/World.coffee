@@ -11,6 +11,9 @@ class World extends Gotham.Graphics.Scene
     Bar = new GothamGame.Controllers.Bar "Bar"
     @addObject Bar
 
+    IdentityManagement = new GothamGame.Controllers.Identity "Identity"
+    @addObject IdentityManagement
+
     UserManagement = new GothamGame.Controllers.User "User"
     @addObject UserManagement
 

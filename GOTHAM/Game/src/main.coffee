@@ -81,7 +81,7 @@ setup =
     Gotham.Preload.image("/assets/img/help.png", "help", "image")
     Gotham.Preload.image("/assets/img/attack.png", "attack", "image")
     Gotham.Preload.image("/assets/img/cable.png", "cable", "image")
-
+    Gotham.Preload.image("/assets/img/user.png", "user", "image")
 
     # Menu
     Gotham.Preload.image("/assets/img/menu_button.png", "menu_button", "image")

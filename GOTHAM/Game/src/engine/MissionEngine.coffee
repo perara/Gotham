@@ -1,5 +1,13 @@
 
 
+
+###*
+# MissionEngine class which keeps track of all missions. Adding, Removal and emits for each of the missions.
+# @class MissionEngine
+# @module Frontend
+# @submodule Frontend.Mission
+# @namespace GothamGame.MissionEngine
+###
 class MissionEngine
 
   constructor: ->

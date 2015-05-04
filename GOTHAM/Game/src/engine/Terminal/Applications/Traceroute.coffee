@@ -1,6 +1,15 @@
 Application = require './Application.coffee'
 
 
+
+###*
+# Application which simulates Traceroute from the Unix platform
+# @class Traceroute
+# @module Frontend
+# @submodule Frontend.Terminal.Application
+# @extends Application
+# @namespace GothamGame.Terminal.Application
+###
 class Traceroute extends Application
   @Command = "traceroute"
 
@@ -91,7 +100,7 @@ class Traceroute extends Application
 
         direction = if (last.lng < 0) then 180 else -180
         lengthGap = Math.abs(last.lng - current.lng)
-        console.log lengthGap
+
         if lengthGap > 160
           newEnd =
             lat: current.lat
