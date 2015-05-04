@@ -2,7 +2,7 @@
 # Session object containing source, target ,traffic path and packets exchanged
 class Session
 
-  constructor: (sourceHost, targetNetwork, type, packets = [""]) ->
+  constructor: (sourceHost, targetNetwork, type, packets = [new Gotham.Micro.Packet()], customPath) ->
     type = if not type then "None" else type
 
     # Set source variables
@@ -15,23 +15,22 @@ class Session
     @targetNode = targetNetwork.getNode()
     @target = targetNetwork
 
+    if customPath
+      @path = customPath
+    else
+      @path = Gotham.Micro.Pathfinder.bStar(@sourceNode, @targetNode)
 
 
-    @path = Gotham.Micro.Pathfinder.bStar(@sourceNode, @targetNode)
-    console.log type
     @layers = Gotham.Micro.LayerStructure.Packet[type]()
-    console.log @layers
     @nodeHeaders = {}
-
-    # Generate packet details
-    @packets = @getPacketsInfo(packets)
+    @packets = packets
 
     # For each node, get header info for each packets
 
     @getNodeHeaders()
 
     # Sets MAC and IP in default Layer Structure (template)
-    @layers.L2.sourceMAC = @sourceNetwork.mac
+    @layers.L2.sourceMAC = @sourceNode.getNetwork().mac
     @layers.L2.destMAC = @targetNetwork.mac
     @layers.L3.sourceIP = @sourceNetwork.internal_ip_v4
     @layers.L3.destIP = @targetNetwork.internal_ip_v4
@@ -40,25 +39,61 @@ class Session
   getNodeHeaders: () ->
     time = 0
 
-    for node in @path
-      #nodeHeader = []
-      deltaHeader = {}
-      deltaHeader.L2 = {}
-      deltaHeader.misc = {}
+    for index in [0...@path.length]
+      node = @path[index]
+      nodeHeader = []
+      seq = 0
 
+      console.log index
 
-      # Set source and target MAC depending on current node
-      current = @path.indexOf(node)
-      deltaHeader.L2.sourceMAC = if (current != @path.length - 1) then @path[current].getNetwork().mac else @path[current - 1].getNetwork().mac
-      deltaHeader.L2.destMAC = if (current != @path.length - 1) then @path[current + 1].getNetwork().mac else @path[current].getNetwork().mac
+      for packet in @packets
 
-      # Set time
-      deltaHeader.misc.time = time += @layers.L3.delay
-      console.log time
+        #console.log packet.ttl, "   ", index + 1
 
-      #nodeHeader.push(deltaHeader)
+        # If time to live is less than node index, this packet should die
+        if packet.ttl <= index
+          continue
 
-      @nodeHeaders[node.id] = deltaHeader
+        console.log packet.ttl, " is greater than ", index + 1
+
+        deltaHeader = {}
+        deltaHeader.L2 = {}
+        deltaHeader.L3 = {}
+
+        deltaHeader.misc = {}
+
+        # Set source and target MAC depending on current node
+        # If sending packet to target
+        if packet.fromSource
+          deltaHeader.L2.sourceMAC = if (index != @path.length - 1) then @path[index].getNetwork().mac else @path[index - 1].getNetwork().mac
+          deltaHeader.L2.destMAC = if (index != @path.length - 1) then @path[index + 1].getNetwork().mac else @path[index].getNetwork().mac
+
+        # If receiving packet from target
+        else
+          deltaHeader.L2.sourceMAC = if (index != 0) then @path[index].getNetwork().mac else @path[index + 1].getNetwork().mac
+          deltaHeader.L2.destMAC = if (index != 0) then @path[index - 1].getNetwork().mac else @path[index].getNetwork().mac
+
+        # Set time
+        deltaHeader.misc.time = time += @layers.L3.delay
+
+        # Checking if this is a 3 or a 7 layer session
+        if not @layers.L4
+          deltaHeader.L3.code = packet.data
+          deltaHeader.L3.ttl = packet.ttl
+          nodeHeader.push(deltaHeader)
+          continue
+
+        # If this is a TCP packet, sequence numbers are needed
+        if @layers.L4.type == "TCP"
+          deltaHeader.L3.seq = seq += packet.data.length
+
+        # Set package info
+        deltaHeader.L7 = {}
+        deltaHeader.L7.data = packet.data
+
+        nodeHeader.push(deltaHeader)
+
+      @nodeHeaders[node.id] = nodeHeader
 
   getPacketsInfo: (packets) ->
     result = []
@@ -75,10 +110,9 @@ class Session
 
     # Generate sequence numbers for each packet
     for packet in packets
-      deltaPacket = {}
-      deltaPacket.SEQ = seqNumber += packet.length
-      deltaPacket.data = packet
-      result.push(deltaPacket)
+      newPacket = {}
+      newPacket.SEQ = seqNumber += packet.length
+      newPacket.data = packet
 
       # If TCP then send ACK too
       if @layers.L3.type == "TCP"
@@ -90,6 +124,8 @@ class Session
 
   setLayer: (layer, name) ->
     @layers[layer] = Gotham.Micro.LayerStructure.Layers[layer][name]()
+
+
 
   printJSON: ->
     if not @layers.IntegrityCheck() then throw new Error("Inconsistent layers")

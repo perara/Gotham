@@ -57,8 +57,15 @@ class TracerouteRoom extends Room
       solution = Traffic.Pathfinder.bStar(sourceNode, targetNode, 2, 3)
 
       # Make session for this traceroute
+      ttl = 1
+      packets = []
+      for i in solution.length
+        packets.push("", true, ttl)
+        packets.push("", false)
       session = new Traffic.Session(sourceHost, targetNetwork, "ICMP")
-      session.layers.L3.code = 30
+
+
+
 
       #client.Socket.emit 'Session', session
 

@@ -1,10 +1,14 @@
 class Packet
 
-  constructor: (path) ->
+  constructor: (data = "", fromSource = true, ttl = 9999) ->
 
-    @consistent = false
-    @pathId = Gotham.Micro.Pathfinder.toIdList(path)
-    @path = path
-    @id
+    @data = data
+    @fromSource = fromSource
+    @ttl = ttl
+
+  @getIcmpRequest: ->
+    return{
+
+    }
 
 module.exports = Packet
