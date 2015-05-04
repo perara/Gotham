@@ -65,7 +65,6 @@ preload = (_c) ->
 # Preload then start server
 preload ->
   startServer()
-
   testSession()
 
 
@@ -88,7 +87,6 @@ testSession = ->
   #ls = new Gotham.Micro.LayerStructure().makeHTTP()
 
   #Gotham.Micro.LayerStructure.HTTP()
-
   packets = []
   packets.push(new Gotham.Micro.Packet("Hello", true))
   packets.push(new Gotham.Micro.Packet("Hello", true))
