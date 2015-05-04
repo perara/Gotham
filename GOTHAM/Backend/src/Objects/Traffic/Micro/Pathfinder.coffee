@@ -118,7 +118,7 @@ class Pathfinder
   ###############################################################################################
   ##### Improvement of aStar, supports reversing and removal of obsolete nodes
   ###############################################################################################
-  @bStar: (start, goal, startBacktrack = 3, escalations = 1) ->
+  @bStar: (start, goal, startBacktrack = 10, escalations = 1) ->
 
 
     # Declarations
@@ -131,6 +131,9 @@ class Pathfinder
     best = null
     maxBacktrack = startBacktrack
     deltaTime = 0
+    useGoalSibling = false
+    finalGoal = goal
+    currentGoalSibling = 0
 
     ###############################################################################################
     ##### Returns sibling closest to goal (gets siblings list from input node)
@@ -147,6 +150,17 @@ class Pathfinder
         allSiblings[sibling.id] = path.length
 
       return GeoTool.getClosest(goal, current.getSiblings(), blacklist)
+
+    ###############################################################################################
+    ##### Sets the goals sibling to current coal
+    ###############################################################################################
+
+    setGoalSibling = () ->
+      goalSiblings = finalGoal.getSiblings()
+
+      goal = goalSiblings[currentGoalSibling++]
+
+      useGoalSibling = false
 
     ###############################################################################################
     ##### Gets the distance from input note to goal
@@ -233,21 +247,24 @@ class Pathfinder
     run = ( ->
       loop
         deltaTime = new Date().getTime() - startTime
-        if deltaTime > 5000
-          log.info("Pathfinder timed out. Check if path is valid")
-          return
+        #if deltaTime > 5000
+        #  log.info("Pathfinder timed out. Check if path is valid")
+        #  return
 
         # Checking for pathfinding suicide. If found, reset and expanding maxBacktrack with one
         if path.length == 0
           log.info "No node added, maxWrongWays too small?"
+          useGoalSibling = true
           expand()
 
         current = path[path.length - 1]
 
-        nextNode = getBestSibling(current)
+        nextNode = if not useGoalSibling then getBestSibling(current) else setGoalSibling()
 
         # If there is no siblings (Reached end)
         if not nextNode
+          console.log path.map (node) ->
+            return node.id
           reverse()
           continue
 
@@ -304,6 +321,8 @@ class Pathfinder
         best = result
       if result.length < best.length
         best = result
+      if goal != finalGoal
+        path.push(finalGoal)
 
     log.info "Path found in: #{(deltaTime).toFixed(1)} ms"
     return best

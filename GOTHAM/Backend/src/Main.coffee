@@ -76,7 +76,7 @@ testSession = ->
   db_host = Gotham.LocalDatabase.table("Host")
 
   host1 = db_host.findOne(id: 2)
-  host2 = db_network.findOne(id: 800)
+  host2 = db_network.findOne(id: 2362)
 
   # Make layers
   #ls = new Gotham.Micro.LayerStructure().makeHTTP()
@@ -84,7 +84,7 @@ testSession = ->
   #Gotham.Micro.LayerStructure.HTTP()
 
   packets = ["Data of packet 1", "Packet 2 this is"]
-  sess = new Gotham.Micro.Session(host1, host2, "ICMP", packets)
+  sess = new Gotham.Micro.Session(host1, host2, "ICMP")
   sess.setJumpDelay(1)
   #sess.setPorts(80)
   console.log JSON.stringify(sess)

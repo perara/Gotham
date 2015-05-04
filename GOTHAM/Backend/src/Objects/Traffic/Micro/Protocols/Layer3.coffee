@@ -15,17 +15,17 @@ class Layer3 extends BaseLayer
 
 
     l3.messages =
-      EchoReply: 0
-      Unreachable: 3
-      Echo: 8
-      Timeout: 11
-      Tracert: 30
+      "0": "EchoReply"
+      "3": "Unreachable"
+      "8": "Echo"
+      "11": "Timeout"
+      "30": "Tracert"
 
     l3.returnCodes =
-      NetUnreachable: 0
-      HostUnreachable: 1
-      ProtocolUnreachable: 2
-      PortUnreachable: 3
+      "0": "NetUnreachable"
+      "1": "HostUnreachable"
+      "2": "ProtocolUnreachable"
+      "3": "PortUnreachable"
     return l3
 
 

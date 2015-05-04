@@ -18,7 +18,9 @@ class Session
 
 
     @path = Gotham.Micro.Pathfinder.bStar(@sourceNode, @targetNode)
+    console.log type
     @layers = Gotham.Micro.LayerStructure.Packet[type]()
+    console.log @layers
     @nodeHeaders = {}
 
     # Generate packet details
@@ -62,6 +64,15 @@ class Session
     result = []
     seqNumber = 0
 
+    # Is this TCP (then SYN ACK)
+    if @layers.L3.type == "TCP"
+      deltaSyn = {}
+      deltaSynAck = {}
+      deltaSyn.SYN = 1
+      deltaSynAck.SYN = deltaSynAck.ACK = 1
+      result.push(deltaSyn)
+      result.push(deltaSynAck)
+
     # Generate sequence numbers for each packet
     for packet in packets
       deltaPacket = {}
@@ -70,9 +81,9 @@ class Session
       result.push(deltaPacket)
 
       # If TCP then send ACK too
-      if @layers.L3.type = "TCP"
+      if @layers.L3.type == "TCP"
         deltaPacket = {}
-        deltaPacket.ACK = seqNumber = packet.length
+        deltaPacket.ACK = seqNumber
         result.push(deltaPacket)
 
     return result
@@ -105,7 +116,6 @@ class Session
   setJumpDelay: (delay) ->
     @layers.L3.delay = delay
     @getNodeHeaders()
-    return @
 
   toJSON: ->
     return {
