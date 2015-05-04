@@ -427,7 +427,7 @@ class WorldMapView extends Gotham.Pattern.MVC.View
 
 
   showNodeDetails: (node) ->
-    window.updateNode(node)
+    window.GothShark.updateNode(node)
     $("#node-details").fadeIn()
 
   hideNodeDetails: () ->

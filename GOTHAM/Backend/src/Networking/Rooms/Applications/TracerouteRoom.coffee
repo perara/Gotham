@@ -59,8 +59,9 @@ class TracerouteRoom extends Room
       # Make session for this traceroute
       session = new Traffic.Session(sourceHost, targetNetwork, "ICMP")
       session.layers.L3.code = 30
+      session.setJumpDelay(1)
 
-      #client.Socket.emit 'Session', session
+      client.Socket.emit 'Session', session
 
       # TODO LOL - Output path
       outputarr = []

@@ -23,6 +23,7 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
     db_node = Gotham.Database.table "node"
 
     for node in db_node.find()
+      node.packets = []
       that.View.addNode node, true
 
     console.log "Process Nodes: " + (new Date().getTime() - start) + "ms"
