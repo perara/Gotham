@@ -160,7 +160,7 @@ class Pathfinder
 
       goal = goalSiblings[currentGoalSibling++]
 
-      useGoalSibling = false
+      #useGoalSibling = false
 
     ###############################################################################################
     ##### Gets the distance from input note to goal
@@ -254,6 +254,7 @@ class Pathfinder
         # Checking for pathfinding suicide. If found, reset and expanding maxBacktrack with one
         if path.length == 0
           log.info "No node added, maxWrongWays too small?"
+          #console.log goal
           useGoalSibling = true
           expand()
 
@@ -263,8 +264,8 @@ class Pathfinder
 
         # If there is no siblings (Reached end)
         if not nextNode
-          console.log path.map (node) ->
-            return node.id
+          #console.log path.map (node) ->
+          #  return node.id
           reverse()
           continue
 

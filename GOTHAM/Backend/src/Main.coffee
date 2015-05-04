@@ -65,7 +65,7 @@ preload = (_c) ->
 # Preload then start server
 preload ->
   startServer()
-  #testSession()
+  testSession()
 
 
 testSession = ->
@@ -74,16 +74,111 @@ testSession = ->
   db_network = Gotham.LocalDatabase.table("Network")
   db_host = Gotham.LocalDatabase.table("Host")
 
-  host1 = db_host.findOne(id: 2)
-  host2 = db_network.findOne(id: 2362)
+  sourceHost = db_host.findOne(id: 2)
+  targetNetwork = db_network.findOne(id: 1598)
+
+  nodes = []
+
+  nodes.push(db_node.findOne(id: 50))
+  nodes.push(db_node.findOne(id: 51))
+  nodes.push(db_node.findOne(id: 52))
 
   # Make layers
   #ls = new Gotham.Micro.LayerStructure().makeHTTP()
 
   #Gotham.Micro.LayerStructure.HTTP()
+  packets = []
+  packets.push(new Gotham.Micro.Packet("Hello", true))
+  packets.push(new Gotham.Micro.Packet("Hello", true))
+  packets.push(new Gotham.Micro.Packet("YEs dog", false))
 
-  packets = ["Data of packet 1", "Packet 2 this is"]
-  sess = new Gotham.Micro.Session(host1, host2, "ICMP")
-  sess.setJumpDelay(1)
-  #sess.setPorts(80)
-  console.log JSON.stringify(sess)
+
+  # Get nodes for source and target
+  sourceNode = sourceHost.getNetwork().getNode()
+  targetNode = targetNetwork.getNode()
+
+  # Calculate solution
+  solution = Gotham.Micro.Pathfinder.bStar(sourceNode, targetNode, 2, 3)
+
+  # Make session for this traceroute
+  ttl = 1
+  packets = []
+  for i in [0...solution.length]
+    sendPacket = new Gotham.Micro.Packet("8", true, ttl)
+    returnPacket = new Gotham.Micro.Packet("0", false, ttl)
+    packets.push(sendPacket)
+    packets.push(returnPacket)
+    ttl++
+
+  session = new Gotham.Micro.Session(sourceHost, targetNetwork, "ICMP", packets)
+  console.log JSON.stringify(session)
+
+
+  #console.log sess
+
+
+MakeMission = (missionID, userID) ->
+
+  getRandomNetwork = ->
+    hosts = Gotham.LocalDatabase.table("Host").data
+    return hosts[Math.floor(Math.random() * hosts.length)].host
+
+  # Load missions and requirements
+  missions = Gotham.LocalDatabase.table("MissionRequirement")
+  requirements =  missions.find(mission: missionID)
+
+  # Generate user_mission object
+  userMission = {}
+  userMission.id = 0
+  userMission.mission = missionID
+  userMission.user = userID
+
+  commands = {}
+
+  # Get data from requirements and generate base for missions
+  for req in requirements
+
+    expected = JSON.parse(req.expected)
+    key = expected["key"]
+    command = expected["command"]
+    propDef = expected["prop"]
+    prop = null
+
+    # Connection table in database hopefully remove this
+    missionReq = {}
+    missionReq.user_mission = userMission
+    missionReq.mission_requirement = req.id
+
+    # Check if shit command exists
+    if not commands[command] then commands[command] = {}
+
+    # Check if shit key exists in shit command
+    if not commands[command][key]
+
+      switch command
+
+      #### If command is network #####
+        when "network"
+          commands[command][key] = getRandomNetwork()
+
+          if propDef
+            prop = Gotham.Util.StringTools.Resolve(commands[command][key], propDef)
+
+      #### If command is none ####
+        when "none"
+          commands[command][key] = {}
+
+          if propDef
+            commands[command][key] = propDef
+
+
+  console.log commands
+
+
+  # Get all requirements
+  for req in requirements
+
+    emit_value = JSON.parse(req.emit_value)
+    emit_input = JSON.parse(req.emit_input)
+    expected = JSON.parse(req.expected)
+
