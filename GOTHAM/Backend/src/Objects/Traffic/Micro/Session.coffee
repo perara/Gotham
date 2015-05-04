@@ -2,22 +2,19 @@
 # Session object containing source, target ,traffic path and packets exchanged
 class Session
 
-  constructor: (sourceHost, target, type, packets = [""]) ->
+  constructor: (sourceHost, targetNetwork, type, packets = [""]) ->
     type = if not type then "None" else type
 
-    # Checks if target is a network or a host
-    if not target.network
-      @targetNetwork = target
-      @targetNode = target.getNode()
-    else
-      @targetNetwork = target.getNetwork()
-      @targetNode = target.getNetwork().getNode()
-
-    # Set accessible variables
+    # Set source variables
     @sourceNetwork = sourceHost.getNetwork()
     @sourceNode = sourceHost.getNetwork().getNode()
     @sourceHost = sourceHost
-    @targetHost = target
+
+    # Set target variables
+    @targetNetwork = targetNetwork
+    @targetNode = targetNetwork.getNode()
+    @target = targetNetwork
+
 
 
     @path = Gotham.Micro.Pathfinder.bStar(@sourceNode, @targetNode)
@@ -32,27 +29,34 @@ class Session
     @getNodeHeaders()
 
     # Sets MAC and IP in default Layer Structure (template)
-    @layers.L2.sourceMAC = @sourceNode.mac
-    @layers.L2.destMAC = @targetNode.mac
+    @layers.L2.sourceMAC = @sourceNetwork.mac
+    @layers.L2.destMAC = @targetNetwork.mac
     @layers.L3.sourceIP = @sourceNetwork.internal_ip_v4
     @layers.L3.destIP = @targetNetwork.internal_ip_v4
 
+
   getNodeHeaders: () ->
+    time = 0
+
     for node in @path
-      nodeHeader = []
+      #nodeHeader = []
+      deltaHeader = {}
+      deltaHeader.L2 = {}
+      deltaHeader.misc = {}
 
-      # Make header info for this node on each packet
-      for packet in @packets
-        deltaHeader = {}
 
-        # Set source and target MAC depending on current node
-        current = @path.indexOf(node)
-        deltaHeader.sourceMAC = @path[current].mac
-        deltaHeader.destMAC = if (current != @path.length - 1) then @path[current + 1].mac else null
+      # Set source and target MAC depending on current node
+      current = @path.indexOf(node)
+      deltaHeader.L2.sourceMAC = @path[current].getNetwork().mac
+      deltaHeader.L2.destMAC = if (current != @path.length - 1) then @path[current + 1].getNetwork().mac else null
 
-        nodeHeader.push(deltaHeader)
+      # Set time
+      deltaHeader.misc.time = time += @layers.L3.delay
+      console.log time
 
-      @nodeHeaders[node.id] = nodeHeader
+      #nodeHeader.push(deltaHeader)
+
+      @nodeHeaders[node.id] = deltaHeader
 
   getPacketsInfo: (packets) ->
     result = []
@@ -61,9 +65,15 @@ class Session
     # Generate sequence numbers for each packet
     for packet in packets
       deltaPacket = {}
-      deltaPacket.seqNumber = seqNumber += packet.length
+      deltaPacket.SEQ = seqNumber += packet.length
       deltaPacket.data = packet
       result.push(deltaPacket)
+
+      # If TCP then send ACK too
+      if @layers.L3.type = "TCP"
+        deltaPacket = {}
+        deltaPacket.ACK = seqNumber = packet.length
+        result.push(deltaPacket)
 
     return result
 
@@ -87,6 +97,27 @@ class Session
     log.Info("Application Layer: \t" + @layers.L7.type)
 
     log.Info("=========================================")
+
+  setPorts: (source, target = source) ->
+      @layers.L4.sourcePort = source
+      @layers.L4.targetPort = target
+
+  setJumpDelay: (delay) ->
+    @layers.L3.delay = delay
+    @getNodeHeaders()
+    return @
+
+  toJSON: ->
+    return {
+      sourceNetwork: @sourceNetwork.id
+      sourceHost: @sourceHost.id
+      targetNetwork: @targetNetwork.id
+      path: @path.map (node) -> return node.id
+      packets: @packets
+      layers : @layers
+      nodeHeaders: @nodeHeaders
+
+    }
 
 
 module.exports = Session

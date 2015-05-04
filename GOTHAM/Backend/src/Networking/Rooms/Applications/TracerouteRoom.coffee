@@ -58,11 +58,9 @@ class TracerouteRoom extends Room
 
       # Make session for this traceroute
       session = new Traffic.Session(sourceHost, targetNetwork, "ICMP")
+      session.layers.L3.code = 30
 
-      for node in session.path
-        console.log node.id
-        console.log session.nodeHeaders[node.id]
-
+      #client.Socket.emit 'Session', session
 
       # TODO LOL - Output path
       outputarr = []

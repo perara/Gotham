@@ -9,6 +9,10 @@ class Layer3 extends BaseLayer
 
   @ICMP = ->
     l3 = new Layer3("ICMP")
+    l3.delay = 0
+    l3.code = null
+    l3.returnCode = null
+
 
     l3.messages =
       EchoReply: 0

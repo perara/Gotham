@@ -232,7 +232,6 @@ class Pathfinder
     ###############################################################################################
     run = ( ->
       loop
-
         deltaTime = new Date().getTime() - startTime
         if deltaTime > 5000
           log.info("Pathfinder timed out. Check if path is valid")
@@ -290,7 +289,6 @@ class Pathfinder
         break if path[path.length - 1] == goal
       return path
     )
-
 
 
     startTime = new Date().getTime()

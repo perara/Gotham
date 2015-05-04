@@ -10,6 +10,7 @@ class Layer7 extends BaseLayer
   @HTTP = ->
     l7 = new Layer7("HTTP")
 
+
     return l7
 
   @FTP = ->

@@ -72,21 +72,25 @@ preload ->
 testSession = ->
 
   db_node = Gotham.LocalDatabase.table("Node")
+  db_network = Gotham.LocalDatabase.table("Network")
   db_host = Gotham.LocalDatabase.table("Host")
 
   host1 = db_host.findOne(id: 2)
-  host2 = db_host.findOne(id: 4)
+  host2 = db_network.findOne(id: 800)
 
-# Make layers
-#ls = new Gotham.Micro.LayerStructure().makeHTTP()
+  # Make layers
+  #ls = new Gotham.Micro.LayerStructure().makeHTTP()
 
-#Gotham.Micro.LayerStructure.HTTP()
+  #Gotham.Micro.LayerStructure.HTTP()
 
-#packets = ["Data of packet 1", "Packet 2 this is"]
-#sess = new Gotham.Micro.Session(host1, host2, "ICMP", packets)
-#sess.L7.setData("Test")
+  packets = ["Data of packet 1", "Packet 2 this is"]
+  sess = new Gotham.Micro.Session(host1, host2, "ICMP", packets)
+  sess.setJumpDelay(1)
+  #sess.setPorts(80)
+  console.log JSON.stringify(sess)
 
-#console.log sess.nodeHeaders
+
+  #console.log sess
 
 
 MakeMission = (missionID, userID) ->
