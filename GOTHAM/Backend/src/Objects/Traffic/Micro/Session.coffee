@@ -49,8 +49,8 @@ class Session
 
       # Set source and target MAC depending on current node
       current = @path.indexOf(node)
-      deltaHeader.L2.sourceMAC = @path[current].getNetwork().mac
-      deltaHeader.L2.destMAC = if (current != @path.length - 1) then @path[current + 1].getNetwork().mac else null
+      deltaHeader.L2.sourceMAC = if (current != @path.length - 1) then @path[current].getNetwork().mac else @path[current - 1].getNetwork().mac
+      deltaHeader.L2.destMAC = if (current != @path.length - 1) then @path[current + 1].getNetwork().mac else @path[current].getNetwork().mac
 
       # Set time
       deltaHeader.misc.time = time += @layers.L3.delay
