@@ -19,10 +19,11 @@ class GothsharkController extends Gotham.Pattern.MVC.Controller
 
   create: ->
     @setupPacketListener()
+    @processPacket()
 
 
   setupPacketListener: ->
-
+    that = @
 
     GothamGame.Network.Socket.on 'Session', (session) ->
 
@@ -46,12 +47,50 @@ class GothsharkController extends Gotham.Pattern.MVC.Controller
           for prop, val of layer
             packet[key][prop] = val
 
-        nodeObject.packets.push packet
+        # Process the packet data
+        processedPacket = processPacket(packet)
 
-      currentNode = window.GothShark.getCurrentNode()
-      if currentNode
-        node = db_node.findOne(id: currentNode.id)
-        window.GothShark.updateNode(node)
+        # Add the processed packet to the packet array
+        nodeObject.packets.push processedPacket
+
+      @redraw()
+
+
+  ###*
+  # Redraws the node gothshark view with current node
+  # @method redraw
+  ###
+  redraw: ->
+    if @currentNode
+      @showNode(@currentNode)
+
+
+  showNode: (node) ->
+    # Set currentNode
+    @currentNode = node
+
+    # Clear the table
+    @View.clearTable()
+
+    # Add all of the packets
+    for packet in node.packets
+      @View.addPacket(packet)
+
+
+
+
+  processPacket: (packet) ->
+    # TODO
+    obj = {
+      number: "1"
+      time: "lol"
+      source: "10.0.0.1"
+      dest: "10.0.0.2"
+      protocol: "11001"
+      length: "10"
+      info: "Some info"
+    }
+    return obj
 
 
 

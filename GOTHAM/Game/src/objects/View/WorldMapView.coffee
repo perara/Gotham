@@ -32,6 +32,12 @@ class WorldMapView extends Gotham.Pattern.MVC.View
       width: 7200
       height: 3600
 
+    ###*
+    # List of all info frames currently drawn on the monitor
+    # @property {Array} _visible_info_frames
+    ###
+    @_visible_info_frames = []
+
 
   ###*
   # Get the coorinate factors for latitude and longitude based on the maps current size and scale
@@ -202,6 +208,7 @@ class WorldMapView extends Gotham.Pattern.MVC.View
 
           # Zooms the map back to original size
           that.zoomMap(0.8, 400)
+          @offset.y = 0
 
 
     """
@@ -209,12 +216,10 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     """
     mapContainer.mouseover = () ->
       @canScroll = true
-      console.log "Setting true"
 
     mapContainer.mouseout = () ->
       @canScroll = false
       @isDragging = false
-      console.log "Setting false"
 
     mapContainer.onWheelScroll = (e) ->
       if not @canScroll then return
@@ -492,9 +497,18 @@ class WorldMapView extends Gotham.Pattern.MVC.View
 
       if @_toggle
         @infoFrame.visible = true
+
+        # Set all info frames to hidden, and remove
+        for _info_frames in that._visible_info_frames
+          _info_frames.visible = false
+          that._visible_info_frames.remove _info_frames
+
+
+        that._visible_info_frames.push @infoFrame
         @bringToFront()
       else
         @infoFrame.visible = false
+        that._visible_info_frames.remove @infoFrame
 
 
     node.sprite.mouseover = ->
@@ -532,9 +546,25 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     infoFrame.visible = false
     infoFrame.interactive = true
 
+    if node.sprite == null
+      return infoFrame
+
+
+    nodeName = new Gotham.Graphics.Text(""+node.name, {font: "bold 70px calibri", fill: "#ffffff", align: "center"});
+    nodeName.x = 80
+    nodeName.y = 30
+    nodeName.width = 260
+    infoFrame.addChild nodeName
+
+    nodeIP = new Gotham.Graphics.Text(""+node.Network.external_ip_v4, {font: "bold 80px calibri", fill: "#000000", align: "center"});
+    nodeIP.x = 80
+    nodeIP.y = 120
+    infoFrame.addChild nodeIP
+
+
     wireShark = new Gotham.Controls.Button "Sniff", 450, 200, {textSize: 70}
     wireShark.x = 80
-    wireShark.y = 40
+    wireShark.y = 240
     infoFrame.addChild wireShark
 
 

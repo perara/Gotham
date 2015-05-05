@@ -28,15 +28,7 @@ class Menu extends Gotham.Graphics.Scene
     @addButton "Settings", ->
       Settings = new GothamGame.Controllers.Settings "Settings"
       that.addObject Settings
-      """object_settings = new GothamGame.objects.Settings
-      object_settings.width = 1920
-      object_settings.height = 1080
-      object_settings.onInteractiveChange = (state) ->
-        if !state
-          that.removeObject object_settings
-          that.setInteractive true
 
-      that.addObject object_settings"""
 
     # About Button
     @addButton "About", ->
@@ -47,7 +39,7 @@ class Menu extends Gotham.Graphics.Scene
 
 
     @drawButtons()
-    @setupMusic()
+    #@setupMusic()
 
 
 
