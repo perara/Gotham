@@ -1,6 +1,12 @@
 
 
-
+###*
+# The user view shows the user data. Example is Name, Money, Experience etc.
+# @class UserView
+# @module Frontend.View
+# @namespace GothamGame.View
+# @extends Gotham.Pattern.MVC.View
+###
 class UserView extends Gotham.Pattern.MVC.View
 
   constructor: ->
@@ -12,10 +18,12 @@ class UserView extends Gotham.Pattern.MVC.View
 
 
 
+
+
   create: ->
     @createFrame()
     @createTitles()
-
+    @hide()
 
   createTitles: ->
 
@@ -39,6 +47,7 @@ class UserView extends Gotham.Pattern.MVC.View
     window.width = 800
     window.height = 700
     window.y = 1080 - 70 - 700
+    window.x = 400
     window.interactive = true
     window.mousemove = (e)->
 

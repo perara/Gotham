@@ -2,7 +2,13 @@
 
 
 
-
+###*
+# View for the Bars
+# @class BarView
+# @module Frontend.View
+# @namespace GothamGame.View
+# @extends Gotham.Pattern.MVC.View
+###
 class BarView extends Gotham.Pattern.MVC.View
 
   Bar:

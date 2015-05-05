@@ -8,6 +8,7 @@ View = require '../View/AnnounceView.coffee'
 # @namespace GothamGame.Controllers
 # @constructor
 # @param name {String} Name of the Controller
+# @extends Gotham.Pattern.MVC.Controller
 ###
 class AnnounceController extends Gotham.Pattern.MVC.Controller
 

@@ -1,4 +1,12 @@
 
+
+###*
+# THe menu scene is running after the loading scene. Options are to Play Game ,
+# @class Menu
+# @module Frontend.Scenes
+# @namespace GothamGame.Scenes
+# @extends Gotham.Graphics.Scene
+###
 class Menu extends Gotham.Graphics.Scene
 
   create: ->
@@ -13,7 +21,7 @@ class Menu extends Gotham.Graphics.Scene
 
     # Singleplayer button
     @buttons = []
-    @addButton "Single Player", ->
+    @addButton "Play Game", ->
       GothamGame.Renderer.setScene "World"
 
     # Settings button
@@ -39,7 +47,7 @@ class Menu extends Gotham.Graphics.Scene
 
 
     @drawButtons()
-    #@setupMusic()
+    @setupMusic()
 
 
 
@@ -47,7 +55,7 @@ class Menu extends Gotham.Graphics.Scene
   setupMusic: () ->
     sound = Gotham.Preload.fetch("menu_theme", "audio")
     sound.volume(0.5)
-    sound.loop(true)
+    sound.loop true
     sound.play()
 
   createBackground: () ->
@@ -69,8 +77,8 @@ class Menu extends Gotham.Graphics.Scene
     tween.easing Gotham.Tween.Easing.Linear.None
     tween.to {
       scale:
-        x: originalTitleScale.x + 0.1
-        y: originalTitleScale.y + 0.1
+        x: originalTitleScale.x + 0.2
+        y: originalTitleScale.y + 0.2
     }, 10000
     tween.to {
       scale:
@@ -84,6 +92,7 @@ class Menu extends Gotham.Graphics.Scene
     sprite = new Gotham.Graphics.Sprite texture
     sprite.width = 1920
     sprite.height = 1080
+    sprite.alpha = 1
     sprite.anchor =
       x: 0.5
       y: 0.5
@@ -100,15 +109,21 @@ class Menu extends Gotham.Graphics.Scene
     tween.easing Gotham.Tween.Easing.Linear.None
     tween.to {
       scale:
-        x: originalScale.x + 0.6
-        y: originalScale.y + 0.6
-    }, 25000
-    tween.delay 10000
+        x: originalScale.x + 0.8
+        y: originalScale.y + 0.8
+    }, 80000
+    tween.delay(2000)
+    tween.to {
+      alpha: 0
+    }, 5000
     tween.to {
       scale:
         x: originalScale.x
         y: originalScale.y
-    }, 25000
+    }, 1
+    tween.to {
+      alpha: 1
+    }, 2000
     tween.start()
 
 

@@ -123,7 +123,7 @@ setup =
     scene_Menu.documentContainer.addChild GothamGame.Renderer.getScene("Loading").documentContainer
 
     # Set Menu Scene
-    GothamGame.Renderer.setScene("World")
+    GothamGame.Renderer.setScene("Menu")
 
   startNetwork: (callback) ->
     GothamGame.Network = new Gotham.Network "128.39.148.43", 8081

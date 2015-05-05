@@ -1,5 +1,12 @@
 
 
+###*
+# View for the announcement messages
+# @class AnnounceView
+# @module Frontend.View
+# @namespace GothamGame.View
+# @extends Gotham.Pattern.MVC.View
+###
 class AnnounceView extends Gotham.Pattern.MVC.View
 
   constructor: ->

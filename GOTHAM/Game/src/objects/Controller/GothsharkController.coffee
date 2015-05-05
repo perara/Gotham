@@ -10,6 +10,7 @@ View = require '../View/GothsharkView.coffee'
 # @namespace GothamGame.Controllers
 # @constructor
 # @param name {String} Name of the Controller
+# @extends Gotham.Pattern.MVC.Controller
 ###
 class GothsharkController extends Gotham.Pattern.MVC.Controller
 

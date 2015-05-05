@@ -1,5 +1,10 @@
 ﻿
-
+###*
+#
+# @class GothamGame
+# @module Frontend
+# @namespace GothamGame
+###
 class GothamGame
 
   window.GothamGame = GothamGame

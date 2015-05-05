@@ -8,6 +8,7 @@ View = require '../View/BarView.coffee'
 # @namespace GothamGame.Controllers
 # @constructor
 # @param name {String} Name of the Controller
+# @extends Gotham.Pattern.MVC.Controller
 ###
 class BarController extends Gotham.Pattern.MVC.Controller
 
@@ -85,8 +86,34 @@ class BarController extends Gotham.Pattern.MVC.Controller
   sideBarLeft: ->
     that = @
 
+    closeAll = (src) ->
+      # Home Button (Identity)
+      if src != that.home
+        that.home.tint = 0x4169E1
+        that.home.toggle = false
+        that.scene.getObject("Identity").hide()
+
+      # User Button (User)
+      if src != that.user
+        that.user.tint = 0x4169E1
+        that.user.toggle = false
+        that.scene.getObject("User").hide()
+
+      if src != that.mission
+        that.mission.tint = 0x4169E1
+        that.mission.toggle = false
+        that.scene.getObject("Mission").hide()
+
+      if src != that.inventory
+        that.inventory.tint = 0x4169E1
+        that.inventory.toggle = false
+        # TODO add inventory
+
+
+
+
     @View.addSidebarItem  "LEFT", 15, ->
-      home = new Gotham.Graphics.Sprite Gotham.Preload.fetch("home", "image")
+      that.home = home = new Gotham.Graphics.Sprite Gotham.Preload.fetch("home", "image")
       home.tint = 0x4169E1
       home.alpha = 0.4
       home.interactive = true
@@ -96,6 +123,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
         @toggle = if not @toggle then true else !@toggle
 
         if @toggle
+          closeAll(@)
           that.scene.getObject("Identity").show()
           that.scene.getObject("Identity").View.bringToFront()
           home.tint = 0xFF0000
@@ -105,7 +133,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
       return home
 
     @View.addSidebarItem  "LEFT", 15, ->
-      user = new Gotham.Graphics.Sprite Gotham.Preload.fetch("user", "image")
+      that.user = user = new Gotham.Graphics.Sprite Gotham.Preload.fetch("user", "image")
       user.tint = 0x4169E1
       user.alpha = 0.4
       user.interactive = true
@@ -115,6 +143,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
         @toggle = if not @toggle then true else !@toggle
 
         if @toggle
+          closeAll(@)
           that.scene.getObject("User").show()
           that.scene.getObject("User").View.bringToFront()
           user.tint = 0xFF0000
@@ -125,7 +154,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
 
 
     @View.addSidebarItem "LEFT", 15, ->
-      inventory = new Gotham.Graphics.Sprite Gotham.Preload.fetch("inventory", "image")
+      that.inventory = inventory = new Gotham.Graphics.Sprite Gotham.Preload.fetch("inventory", "image")
       inventory.tint = 0x4169E1
       inventory.alpha = 0.4
       inventory.interactive = true
@@ -135,7 +164,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
         @toggle = if not @toggle then true else !@toggle
 
         if @toggle
-          # TODO
+          closeAll(@)
           @tint = 0xFF0000
         else
           # TODO
@@ -144,7 +173,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
 
 
     @View.addSidebarItem "LEFT", 15, ->
-      mission = new Gotham.Graphics.Sprite Gotham.Preload.fetch("mission", "image")
+      that.mission = mission = new Gotham.Graphics.Sprite Gotham.Preload.fetch("mission", "image")
       mission.tint = 0x4169E1
       mission.alpha = 0.4
       mission.interactive = true
@@ -154,6 +183,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
         @toggle = if not @toggle then true else !@toggle
 
         if @toggle
+          closeAll(@)
           that.scene.getObject("Mission").show()
           that.scene.getObject("Mission").View.bringToFront()
           @tint = 0xFF0000

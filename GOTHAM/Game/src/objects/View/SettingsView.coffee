@@ -1,6 +1,12 @@
 
 
-
+###*
+# SettingsView shows the setting panel
+# @class SettingsView
+# @module Frontend.View
+# @namespace GothamGame.View
+# @extends Gotham.Pattern.MVC.View
+###
 class SettingsView extends Gotham.Pattern.MVC.View
 
 

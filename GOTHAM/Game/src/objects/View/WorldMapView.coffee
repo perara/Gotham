@@ -1,22 +1,58 @@
 ﻿
 
+###*
+# WorldMapView is the view part of the world map. Map creation, node, calbe and animations are done here. see method docs
+# @class WorldMapView
+# @module Frontend.View
+# @namespace GothamGame.View
+# @extends Gotham.Pattern.MVC.View
+###
 class WorldMapView extends Gotham.Pattern.MVC.View
   constructor: ->
     super
 
+
+    ###*
+    # Width of the world map
+    # @property {Number} __width
+    ###
     @__width = 1920
+
+    ###*
+    # Height of the world map
+    # @property {Number} __height
+    ###
     @__height = 1080 # Subtract bar heights
 
+    ###*
+    # Initial / Original map size
+    # @property {Object} __mapSize
+    ###
     @__mapSize =
       width: 7200
       height: 3600
 
+
+  ###*
+  # Get the coorinate factors for latitude and longitude based on the maps current size and scale
+  # @method getCoordFactors
+  # @return {Object}the latitude and longitude property inside a object
+  ###
   getCoordFactors: ->
     return {
     latitude: ((@__height / 2) / 90) * -1
     longitude: ((@__width / 2) / 180)
     }
 
+
+  ###*
+  # Converts a lat,lng coordinate to a pixel coordinate (x,y)
+  #
+  # @method coordinateToPixel
+  # @param lat {Number} The latitude
+  # @param lng {Number} The longitude
+  # @returns {Object} The X and Y coordinate inside a object
+  ###
   coordinateToPixel: (lat, lng) ->
     return {
     x: (lng * @getCoordFactors().longitude) + (@__width / 2)
@@ -24,6 +60,11 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     }
 
 
+  ###*
+  # Creates everything
+  #
+  # @method create
+  ###
   create: ->
 
     """
@@ -39,6 +80,11 @@ class WorldMapView extends Gotham.Pattern.MVC.View
 
 
 
+  ###*
+  # Creates the background object
+  #
+  # @method createBackground
+  ###
   createBackground: ->
     @_background = background = new Gotham.Graphics.Sprite Gotham.Preload.fetch("sea_background", "image")
     background.width = @__width
@@ -47,7 +93,13 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     background.y = 0
     @addChild background
 
-  scaleNodes: (zoomOut) ->
+
+  ###*
+  # Scale the node to reflect WorldMap's scale
+  #
+  # @method scaleNodes
+  ###
+  scaleNodes: () ->
     that = @
 
     # Fetch node table
@@ -61,6 +113,12 @@ class WorldMapView extends Gotham.Pattern.MVC.View
       node.scale.y = (Math.max(0.08, (that.mapContainer.scale.y * 4)**-1))
 
 
+  ###*
+  # Creates the WorldMap container with the worldMap function.
+  # Adds this sprite array to the container and creates the map.
+  #
+  # @method createWorldMap
+  ###
   createWorldMap: ->
     that = @
 
@@ -92,6 +150,7 @@ class WorldMapView extends Gotham.Pattern.MVC.View
       that.hideNodeDetails()
 
       @offset = newPosition
+
       return {x: true, y: true}
 
 
@@ -128,32 +187,34 @@ class WorldMapView extends Gotham.Pattern.MVC.View
 
       # If GothShark is visible and the map is clicked. Tween back to original map position
       if $("#node-details").is(":visible")
-        that.hideNodeDetails()
 
-        @offset =
-          y: -70
-          x: 0
+        # Check if user is hovering ANY of the terminal frames
+        isHovering = false
+        $('.terminal_frame').each (index) ->
+          check = $(@).is(":hover")
+          if check
+            isHovering = true
+            return
 
-        tween = new Gotham.Tween @
-        tween.to {
-          scale:
-            x: 0.8
-            y: 0.8
-        }, 250
-        tween.onUpdate () ->
-          mapContainer.x = (that.__width - (that.__width * mapContainer.scale.x)) / 2
-          that.scaleNodes()
+        # Hide and zoom back if not hovering
+        if not isHovering
+          that.hideNodeDetails()
 
-        tween.start()
+          # Zooms the map back to original size
+          that.zoomMap(0.8, 400)
+
 
     """
     OnWheelScroll
     """
     mapContainer.mouseover = () ->
       @canScroll = true
+      console.log "Setting true"
 
     mapContainer.mouseout = () ->
       @canScroll = false
+      @isDragging = false
+      console.log "Setting false"
 
     mapContainer.onWheelScroll = (e) ->
       if not @canScroll then return
@@ -250,6 +311,11 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     mapContainer.addChild middle
     return mapContainer
 
+  ###*
+  # Creates the World map from json,
+  # @method createMap
+  # @return {Gotham.Graphics.Sprite[]} Array of all the country polygons
+  ###
   createMap: ->
     that = @
 
@@ -318,7 +384,7 @@ class WorldMapView extends Gotham.Pattern.MVC.View
       Mouseover callback
       """
       sprite.mouseover =  (e) ->
-# Calculate which country it belongs to
+        # Calculate which country it belongs to
         setTimeout((->
           country = Gotham.Util.Geocoding.getCountry(that.currentCoordinates.latitude, that.currentCoordinates.longitude)
           that.parent.getObject("Bar").updateCountry country
@@ -336,6 +402,11 @@ class WorldMapView extends Gotham.Pattern.MVC.View
       worldMap.push sprite
     return worldMap
 
+
+  ###*
+  # Deletes all nodes in the node container
+  # @method clearNodeContainer
+  ###
   clearNodeContainer: ->
     for i in @nodeContainer.children
       if i
@@ -344,11 +415,15 @@ class WorldMapView extends Gotham.Pattern.MVC.View
         sprite = null
 
 
-# Adds a nopde to the node container
-#
-# @param node {Object} The Node Data
+
+  ###*
+  # Adds a nopde to the node container
+  # @method addNode
+  # @param node {Object} The Node ObjECT
+  # @param interact {Boolean} Weither the node should be interactive or not
+  ###
   addNode: (node, interact) ->
-# Convert Lat, Lng to Pixel's X and Y
+    # Convert Lat, Lng to Pixel's X and Y
     coordinates = @coordinateToPixel(node.lat, node.lng)
 
     # Create a node sprite
@@ -385,7 +460,11 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     if interact
       @addNodeInteraction node
 
-
+  ###*
+  # Adds interaction to a node, Typically hovering it showing cables.
+  # @method addNodeInteraction
+  # @param node {Node}
+  ###
   addNodeInteraction: (node) ->
     that = @
 
@@ -425,14 +504,27 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     node.sprite.mouseout = ->
       nodeHover node, 0xF8E23B, false
 
-
+  ###*
+  # Shows the node-details selector in HTML (GothShark)
+  # @method showNodeDetails
+  ###
   showNodeDetails: (node) ->
     window.GothShark.updateNode(node)
     $("#node-details").fadeIn()
 
+  ###*
+  # Hides the node-details selector in HTML (GothShark)
+  # @method hideNodeDetails
+  ###
   hideNodeDetails: () ->
     $("#node-details").fadeOut()
 
+  ###*
+  # Creates the information plate of each of the node,
+  # @method nodeInfoFrame
+  # @param node {Gotham.Graphics.Sprite} The node object
+  # @return {Gotham.Graphics.Sprite} The newly created sprite (Info Frame)
+  ###
   nodeInfoFrame: (node) ->
     that = @
 
@@ -457,65 +549,8 @@ class WorldMapView extends Gotham.Pattern.MVC.View
         that.mapContainer.interactive = false
         that.mapContainer.isDragging = false
 
-
-        originalScale =
-          x: that.mapContainer.scale.x
-          y: that.mapContainer.scale.y
-
-
-        tween = new Gotham.Tween that.mapContainer
-        tween.easing Gotham.Tween.Easing.Quadratic.In
-        tween.to {
-          position:
-            y: 1
-            x: (that.__width / 2) - (that.__width * 0.4)/2
-        }, 400
-        tween.start()
-        tween.onUpdate (tweenChain) ->
-          elapsed = tweenChain.elapsed
-
-          # Scale Stuff
-          diffScale =
-            x: (0.4 - originalScale.x) * elapsed
-            y: (0.4 - originalScale.y) * elapsed
-
-          nexScale =
-            x: originalScale.x - (diffScale.x * -1)
-            y: originalScale.y - (diffScale.y * -1)
-
-
-          factor =
-            x: (that.__width * nexScale.x) / (that.__width * that.mapContainer.scale.x)
-            y: (that.__height * nexScale.y) / (that.__height * that.mapContainer.scale.y)
-
-          # Size stuff
-          prevSize =
-            width : that.__width
-            height : that.__height
-
-          nextSize =
-            width : that.__width * nexScale.x
-            height : that.__height * nexScale.y
-
-          diffSize =
-            width: prevSize.width - nextSize.width
-            height: prevSize.height - nextSize.height
-
-
-          that.mapContainer.scale.x = nexScale.x
-          that.mapContainer.scale.y = nexScale.y
-
-          that.mapContainer.offset.x *= factor.x
-          that.mapContainer.offset.y *= factor.y
-
-
-          that.mapContainer.position.x = (diffSize.width / 2) + that.mapContainer.offset.x
-          that.mapContainer.position.y = (diffSize.height / 2) +  that.mapContainer.offset.y
-          that.scaleNodes true
-        #that.mapContainer.position.x = 0 # (that.mapContainer.offset.x * diffScale.x) + (diffSize.width / 2)
-        #that.mapContainer.position.y = 0 #(that.mapContainer.offset.y * diffScale.y) + (diffSize.height / 2)
-
-
+        # Zooms out the map to make room for GothOS
+        tween = that.zoomMap(0.4, 400)
         tween.onComplete (tweenObj) ->
 
           that.mapContainer.offset = {y: -305, x: 0}
@@ -533,10 +568,12 @@ class WorldMapView extends Gotham.Pattern.MVC.View
 
 
 
-
-# Clears animated paths
+  ###*
+  # Clears the pathContainer, This is typically Traceroutes
+  # @method clearAnimatePath
+  ####
   clearAnimatePath: () ->
-# Remove all pathcontainer children # TODO
+    # Remove all pathcontainer children # TODO
     if not @pathContainer
       return
 
@@ -546,23 +583,28 @@ class WorldMapView extends Gotham.Pattern.MVC.View
 
     @pathContainer.children = []
 
-# Create a animated attack sequence between two coordinates
-# Parameters are as folloiwng
-# @example Input format
-#     source =
-#         latitude: ""
-#         longitude: ""
-#         country: ""
-#         company: ""
-#     target =
-#         latitude: ""
-#         longitude: ""
-#         country: ""
-#         city: ""
-#         company: ""
+  ###*
+  # Create a animated attack sequence between two coordinates
+  # Parameters are as folloiwng
+  # @method animateAttack
+  # @param source {Object} Source Data
+  # @param target {Object} Target Data
+  # @example Input format
+  #   source =
+  #     latitude: ""
+  #     longitude: ""
+  #     country: ""
+  #     company: ""
+  #   target =
+  #     latitude: ""
+  #     longitude: ""
+  #     country: ""
+  #     city: ""
+  #     company: ""
+  ###
   animateAttack: (source, target) ->
 
-# Ignore 0,0 attacks
+    # Ignore 0,0 attacks
     if target.country == "O1"
       return
 
@@ -609,9 +651,6 @@ class WorldMapView extends Gotham.Pattern.MVC.View
           y : sourcePixel.y + diff.y * Math.min(elapsed + endModifier, 1)
 
 
-
-
-
       lazer.clear()
       lazer.lineStyle(3, 0xff00ff, 1);
       lazer.moveTo(points.start.x, points.start.y)
@@ -623,14 +662,14 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     tween.start()
 
 
-# Creates a animated line between two nodes
-#
-# @param startNode {Node} starting node
-# @param endNode {Node} End Node
-# Creates a animated line between two nodes
-#
-# @param startNode {Node} starting node
-# @param endNode {Node} End Node
+  ###*
+  # Creates a animated line between two nodes
+  #
+  # @method animatePath
+  # @param startNode {Node} starting node
+  # @param endNode {Node} End Node
+  # @return {Tween} The tween object for the animation
+  ###
   animatePath: (startNode, endNode) ->
     if not @pathContainer
       @pathContainer = new Gotham.Graphics.Graphics()
@@ -691,12 +730,14 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     return tween
 
 
-# Adds a cable to given node
-#
-# @param cable {Object} The cable Data
+  ###*
+  # Adds a cable and draws it between two nodes (Sibling)
+  # @method addCable
+  # @param cable {Object}
+  ###
   addCable: (cable) ->
 
-# Create a new graphics element
+    # Create a new graphics element
     graphics = new Gotham.Graphics.Graphics();
     graphics.visible = false
     graphics.lineStyle(1, 0xffd900, 1);
@@ -722,15 +763,17 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     @nodeContainer.addChild graphics
 
 
-# Adds a network to the worldMap
-#
-# @param host [Host] Host object
-# @param lat [Double] Latitude position
-# @param lng [Double Longitude position
-# @param isPlayer [Boolean] If its the player
+  ###*
+  # Adds a network to the worldMap
+  # @method addNetwork
+  # @param host [Host] Host object
+  # @param lat [Double] Latitude position
+  # @param lng [Double Longitude position
+  # @param isPlayer [Boolean] If its the player
+  ###
   addNetwork: (network,  isPlayer) ->
 
-# Create a node formatted object
+    # Create a node formatted object
     networkNode =
       lat: network.lat
       lng: network.lng
@@ -768,7 +811,7 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     tween.to {}, 2500
     tween.onUpdate (chainItem)->
 
-# Elapsed tween time
+      # Elapsed tween time
       elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
 
       points =
@@ -797,10 +840,77 @@ class WorldMapView extends Gotham.Pattern.MVC.View
         animationGraphics.moveTo(points.start.x, points.start.y)
         animationGraphics.lineTo(points.end.x, points.end.y)
 
-
-
-
     tween.start()
+
+  ###*
+  # Zooms the map to a given Scale, The map is Centered around Width/2 and Height /2
+  # The animation is done by tweening
+  # @method zoomMap
+  # @param scale {Number} The scale number, Usually, never above 1.5
+  # @param duration=2000 {Number} The Animation duration
+  ###
+  zoomMap: (scale, duration = 400) ->
+    that = @
+
+    # Capture original scale of the mapContainer
+    originalScale =
+      x: that.mapContainer.scale.x
+      y: that.mapContainer.scale.y
+
+    # Create tween object
+    tween = new Gotham.Tween that.mapContainer
+    tween.easing Gotham.Tween.Easing.Quadratic.In
+    tween.to {
+      position:
+        y: 1
+        x: (that.__width / 2) - (that.__width * scale)/2
+    }, duration
+    tween.start()
+    tween.onUpdate (tweenChain) ->
+      elapsed = tweenChain.elapsed
+
+      # Scale Stuff
+      diffScale =
+        x: (scale - originalScale.x) * elapsed
+        y: (scale - originalScale.y) * elapsed
+
+      nexScale =
+        x: originalScale.x - (diffScale.x * -1)
+        y: originalScale.y - (diffScale.y * -1)
+
+
+      factor =
+        x: (that.__width * nexScale.x) / (that.__width * that.mapContainer.scale.x)
+        y: (that.__height * nexScale.y) / (that.__height * that.mapContainer.scale.y)
+
+      # Size stuff
+      prevSize =
+        width : that.__width
+        height : that.__height
+
+      nextSize =
+        width : that.__width * nexScale.x
+        height : that.__height * nexScale.y
+
+      diffSize =
+        width: prevSize.width - nextSize.width
+        height: prevSize.height - nextSize.height
+
+
+      that.mapContainer.scale.x = nexScale.x
+      that.mapContainer.scale.y = nexScale.y
+
+      that.mapContainer.offset.x *= factor.x
+      that.mapContainer.offset.y *= factor.y
+
+
+      that.mapContainer.position.x = (diffSize.width / 2) + that.mapContainer.offset.x
+      that.mapContainer.position.y = (diffSize.height / 2) +  that.mapContainer.offset.y
+
+      that.scaleNodes true
+    return tween
+
+
 
 
 

@@ -9,6 +9,7 @@ View = require '../View/SettingsView.coffee'
 # @namespace GothamGame.Controllers
 # @constructor
 # @param name {String} Name of the Controller
+# @extends Gotham.Pattern.MVC.Controller
 ###
 class SettingsController extends Gotham.Pattern.MVC.Controller
 
