@@ -9,6 +9,7 @@ View = require '../View/TerminalView.coffee'
 # @namespace GothamGame.Controllers
 # @constructor
 # @param name {String} Name of the Controller
+# @extends Gotham.Pattern.MVC.Controller
 ###
 class TerminalController extends Gotham.Pattern.MVC.Controller
 
@@ -155,6 +156,20 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
     else
       # Execute Command
       command.execute()
+
+
+  toggle: ->
+
+
+
+    console.log $(@View.terminal_frame).is(":visible")
+
+    if $(@View.terminal_frame).is(":visible")
+      @View.terminal_frame.hide()
+    else
+      $(".terminal_frame").hide()
+      @View.terminal_frame.show()
+
 
   show: () ->
     $(".terminal_frame").hide()

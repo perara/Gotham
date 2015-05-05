@@ -1,6 +1,12 @@
 
 
-
+###*
+# The terminal view shows / displays the terminal. These are created with JQUERY and appended to the index file
+# @class TerminalView
+# @module Frontend.View
+# @namespace GothamGame.View
+# @extends Gotham.Pattern.MVC.View
+###
 class TerminalView extends Gotham.Pattern.MVC.View
 
   TerminalView.count = 0
@@ -80,11 +86,31 @@ class TerminalView extends Gotham.Pattern.MVC.View
           text-align: center;
           color: white;
           position: relative;
-          top: 30%
+          display: inline-block;
+          width:90%;
           #{selection}
         """
         text: "Terminal x64"
       })
+
+
+    terminal_title_close = $('<div\>',
+      {
+        id: "terminal_title_close#{terminalCount}"
+        style: """
+          text-align: center;
+          color: white;
+          position: relative;
+          display: inline-block;
+          width:5%;
+          cursor: pointer;
+          #{selection}
+        """
+        text: "X"
+      })
+    $(terminal_title_close).on 'click', ->
+      $(terminal_frame).hide();
+
 
 
     terminal_console_frame = $('<div\>',
@@ -155,8 +181,49 @@ class TerminalView extends Gotham.Pattern.MVC.View
         """
       })
 
+
+    # Minimize button
+    terminal_title_minimize = $('<div\>',
+      {
+        id: "terminal_title_close#{terminalCount}"
+        style: """
+          text-align: center;
+          color: white;
+          position: relative;
+          display: inline-block;
+          width:5%;
+          cursor: pointer;
+          #{selection}
+        """
+        text: "_"
+      })
+    minimized = false
+    oldHeight = 0
+    terminal_title_minimize.on 'click', ->
+      minimized = !minimized
+
+      if minimized
+        $(terminal_console_frame).hide()
+        $(terminal_input_frame).hide()
+        oldHeight = $(terminal_frame).css("height")
+        $(terminal_title_minimize).text("+")
+        $(terminal_frame).css("height", "auto")
+      else
+        $(terminal_console_frame).show()
+        $(terminal_input_frame).show()
+        $(terminal_title_minimize).text("_")
+        $(terminal_frame).css("height", oldHeight)
+
+
+
+
+
+
+
     $(terminal_frame).append(terminal_title_frame)
     $(terminal_title_frame).append(terminal_title_text)
+    $(terminal_title_frame).append(terminal_title_minimize)
+    $(terminal_title_frame).append(terminal_title_close)
 
     $(terminal_frame).append(terminal_console_frame)
     $(terminal_console_frame).append(terminal_console_content)

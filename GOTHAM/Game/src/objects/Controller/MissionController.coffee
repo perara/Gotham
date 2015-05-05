@@ -9,6 +9,7 @@ View = require '../View/MissionView.coffee'
 # @namespace GothamGame.Controllers
 # @constructor
 # @param name {String} Name of the Controller
+# @extends Gotham.Pattern.MVC.Controller
 ###
 class MissionController extends Gotham.Pattern.MVC.Controller
 
@@ -35,6 +36,19 @@ class MissionController extends Gotham.Pattern.MVC.Controller
       # Create a mission object
       _m = GothamGame.MissionEngine.createMission _mission
       _m.setOngoing true
+
+      _m.onComplete = (mission) ->
+        #TODO
+
+      # Whenever the mission has progress
+      _m.onRequirementComplete = _m.onProgress = (requirement) ->
+
+        # Emit progress to the server
+        GothamGame.Network.Socket.emit 'ProgressMission', {
+          userMissionRequirement: requirement.userMissionRequirementData.id
+          current: requirement._current
+        }
+
 
       GothamGame.MissionEngine.addMission _m
       that.View.removeAvailableMission _m

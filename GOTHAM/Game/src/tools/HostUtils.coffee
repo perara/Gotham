@@ -1,6 +1,11 @@
 
 
-
+###*
+# Tools for Host / IP validation
+# @class HostUtils
+# @module Frontend.Tools
+# @namespace GothamGame.Tools
+###
 class HostUtils
 
 

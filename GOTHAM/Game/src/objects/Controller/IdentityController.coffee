@@ -8,6 +8,7 @@ View = require '../View/IdentityView.coffee'
 # @namespace GothamGame.Controllers
 # @constructor
 # @param name {String} Name of the Controller
+# @extends Gotham.Pattern.MVC.Controller
 ###
 class IdentityController extends Gotham.Pattern.MVC.Controller
 
@@ -60,12 +61,7 @@ class IdentityController extends Gotham.Pattern.MVC.Controller
           terminal.create()
           sprite.terminal = terminal
           sprite.click = ->
-            @__toggled = if not @__toggled then true else false
-
-            if @__toggled
-              @terminal.show()
-            else
-              @terminal.hide()
+            @terminal.toggle()
 
 
           sprite.mouseout = ->

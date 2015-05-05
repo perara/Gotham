@@ -10,6 +10,7 @@ View = require '../View/WorldMapView.coffee'
 # @constructor
 # @param name {String} Name of the Controller
 # @extends Gotham.Pattern.MVC.Controller
+
 ###
 class WorldMapController extends Gotham.Pattern.MVC.Controller
 

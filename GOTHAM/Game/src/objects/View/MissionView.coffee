@@ -1,5 +1,12 @@
 
 
+###*
+# MissionVIew shows all available mission + ongoing missions
+# @class MissionView
+# @module Frontend.View
+# @namespace GothamGame.View
+# @extends Gotham.Pattern.MVC.View
+###
 class MissionView extends Gotham.Pattern.MVC.View
 
 

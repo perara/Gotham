@@ -1,6 +1,12 @@
 
 
-
+###*
+# View for the Identity + Host/Networks
+# @class IdentityView
+# @module Frontend.View
+# @namespace GothamGame.View
+# @extends Gotham.Pattern.MVC.View
+###
 class IdentityView extends Gotham.Pattern.MVC.View
 
   constructor: ->
@@ -42,6 +48,7 @@ class IdentityView extends Gotham.Pattern.MVC.View
     window.width = 800
     window.height = 700
     window.y = 1080 - 70 - 700
+    window.x = 400
     window.interactive = true
     window.mousemove = (e)->
 

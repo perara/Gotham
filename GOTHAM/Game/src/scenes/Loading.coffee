@@ -1,6 +1,12 @@
 ﻿
 
-
+###*
+# The game loading scene. Happens while preloading the game files
+# @class Loading
+# @module Frontend.Scenes
+# @namespace GothamGame.Scenes
+# @extends Gotham.Graphics.Scene
+###
 class Loading extends Gotham.Graphics.Scene
 
 

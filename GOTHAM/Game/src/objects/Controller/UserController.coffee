@@ -8,6 +8,7 @@ View = require '../View/UserView.coffee'
 # @namespace GothamGame.Controllers
 # @constructor
 # @param name {String} Name of the Controller
+# @extends Gotham.Pattern.MVC.Controller
 ###
 class UserController extends Gotham.Pattern.MVC.Controller
 

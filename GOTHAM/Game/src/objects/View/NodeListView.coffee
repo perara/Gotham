@@ -1,6 +1,12 @@
 
 
-
+###*
+# NodeListView shows all nodes on the map
+# @class NodeListView
+# @module Frontend.View
+# @namespace GothamGame.View
+# @extends Gotham.Pattern.MVC.View
+###
 class NodeListView extends Gotham.Pattern.MVC.View
 
 
