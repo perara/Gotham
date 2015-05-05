@@ -44,17 +44,11 @@ class Session
       nodeHeader = []
       seq = 0
 
-      console.log index
-
       for packet in @packets
-
-        #console.log packet.ttl, "   ", index + 1
 
         # If time to live is less than node index, this packet should die
         if packet.ttl <= index
           continue
-
-        console.log packet.ttl, " is greater than ", index + 1
 
         deltaHeader = {}
         deltaHeader.L2 = {}

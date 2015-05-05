@@ -57,9 +57,17 @@ class TracerouteRoom extends Room
       solution = Traffic.Pathfinder.bStar(sourceNode, targetNode, 2, 3)
 
       # Make session for this traceroute
-      session = new Traffic.Session(sourceHost, targetNetwork, "ICMP")
-      session.layers.L3.code = 30
-      session.setJumpDelay(1)
+      ttl = 1
+      packets = []
+
+      for i in [0...solution.length]
+        sendPacket = new Gotham.Micro.Packet("8", true, ttl)
+        returnPacket = new Gotham.Micro.Packet("0", false, ttl)
+        packets.push(sendPacket)
+        packets.push(returnPacket)
+        ttl++
+
+      session = new Gotham.Micro.Session(sourceHost, targetNetwork, "ICMP", packets)
 
       client.Socket.emit 'Session', session
 

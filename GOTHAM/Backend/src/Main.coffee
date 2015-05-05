@@ -75,22 +75,15 @@ testSession = ->
   db_host = Gotham.LocalDatabase.table("Host")
 
   sourceHost = db_host.findOne(id: 2)
-  targetNetwork = db_network.findOne(id: 1598)
+  targetNetwork = db_network.findOne(id: 1337)
 
-  nodes = []
-
-  nodes.push(db_node.findOne(id: 50))
-  nodes.push(db_node.findOne(id: 51))
-  nodes.push(db_node.findOne(id: 52))
-
-  # Make layers
-  #ls = new Gotham.Micro.LayerStructure().makeHTTP()
 
   #Gotham.Micro.LayerStructure.HTTP()
   packets = []
   packets.push(new Gotham.Micro.Packet("Hello", true))
-  packets.push(new Gotham.Micro.Packet("Hello", true))
-  packets.push(new Gotham.Micro.Packet("YEs dog", false))
+  packets.push(new Gotham.Micro.Packet("Hello you too", false))
+  packets.push(new Gotham.Micro.Packet("YEs dog", true))
+  packets.push(new Gotham.Micro.Packet("Cat dog", false))
 
 
   # Get nodes for source and target
@@ -98,20 +91,13 @@ testSession = ->
   targetNode = targetNetwork.getNode()
 
   # Calculate solution
-  solution = Gotham.Micro.Pathfinder.bStar(sourceNode, targetNode, 2, 3)
+  solution = Gotham.Micro.Pathfinder.bStar(sourceNode, targetNode)
+  console.log Gotham.Micro.Pathfinder.toIdList(solution)
+  console.log solution.length
 
-  # Make session for this traceroute
-  ttl = 1
-  packets = []
-  for i in [0...solution.length]
-    sendPacket = new Gotham.Micro.Packet("8", true, ttl)
-    returnPacket = new Gotham.Micro.Packet("0", false, ttl)
-    packets.push(sendPacket)
-    packets.push(returnPacket)
-    ttl++
 
-  session = new Gotham.Micro.Session(sourceHost, targetNetwork, "ICMP", packets)
-  console.log JSON.stringify(session)
+  #session = new Gotham.Micro.Session(sourceHost, targetNetwork, "HTTP", packets)
+  #console.log JSON.stringify(session)
 
 
   #console.log sess

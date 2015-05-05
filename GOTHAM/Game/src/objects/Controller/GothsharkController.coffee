@@ -30,22 +30,31 @@ class GothsharkController extends Gotham.Pattern.MVC.Controller
 
       template = session.layers
       for node in session.path
+
         nodeObject = db_node.findOne(id: node)
 
+        # Get array of diff packages
+        diffArray = session.nodeHeaders[node]
+
+        for diff in diffArray
+
+          # Create new packet for the DIFF
+          packet = JSON.parse(JSON.stringify(template))
+
+          # Iterate over properties on the diff (L2, L3)
+          for key, layer of diff
+            if key == "misc"
+             continue
+
+            # Iterate over properties of the Layer (srcMAC, targetMAC)
+            for prop, val of layer
+              packet[key][prop] = val
 
 
-        packet = jQuery.extend({}, template)
+          nodeObject.packets.push packet
+          console.log packet["L2"]
+        console.log nodeObject.packets
 
-        diffData = session.nodeHeaders[node]
-
-        for key, layer of diffData
-          if key == "misc"
-            continue
-
-          for prop, val of layer
-            packet[key][prop] = val
-
-        nodeObject.packets.push packet
 
       currentNode = window.GothShark.getCurrentNode()
       if currentNode
