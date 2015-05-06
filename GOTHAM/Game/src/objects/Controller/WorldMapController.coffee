@@ -19,15 +19,17 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
     super View, name
 
   create: ->
+    # Clear node container (Else risking memory leak)
+    @View.clearNodeContainer()
+
+    @createHost()
     @createNodes()
     @createCables()
-    @createHost()
+
     @setupIPViking()
 
   createNodes: ->
     that = @
-    # Clear node container (Else risking memory leak)
-    that.View.clearNodeContainer()
 
     # Iterate Through the Node Table
     start = new Date().getTime()

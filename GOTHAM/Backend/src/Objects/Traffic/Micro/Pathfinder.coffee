@@ -118,7 +118,7 @@ class Pathfinder
   ###############################################################################################
   ##### Improvement of aStar, supports reversing and removal of obsolete nodes
   ###############################################################################################
-  @bStar: (_start, _goal, startBacktrack = 1, escalations = 1) ->
+  @bStar: (_start, _goal, startBacktrack = 1, escalations = 1, _onError = ->) ->
 
     start = _start
     goal = _goal
@@ -246,12 +246,15 @@ class Pathfinder
         deltaTime = new Date().getTime() - startTime
         if deltaTime > 5000
           log.info("Pathfinder timed out. Check if path is valid")
+          _onError(_start.id, _goal.id)
           return
 
         # Checking for pathfinding suicide. If found, reset and expanding maxBacktrack with one
         if path.length == 0
           log.info "No node added, maxWrongWays too small?"
-          changeDirection()
+          expand()
+
+          #changeDirection()
 
         current = path[path.length - 1]
         nextNode = getBestSibling(current)

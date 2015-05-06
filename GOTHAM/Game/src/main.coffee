@@ -126,7 +126,7 @@ setup =
     GothamGame.Renderer.setScene("World")
 
   startNetwork: (callback) ->
-    GothamGame.Network = new Gotham.Network "localhost", 8081
+    GothamGame.Network = new Gotham.Network "128.39.148.43", 8081
     GothamGame.Network.connect()
     console.log "Connecting...."
     GothamGame.Network.onConnect = ->
@@ -135,7 +135,7 @@ setup =
     GothamGame.Network.onReconnecting = ->
       console.log "Attempting to reconnect"
     GothamGame.Network.onReconnect = ->
-      GothamGame.Network.Socket.emit 'Login', {"username" : "per", "password": "per"}
+      GothamGame.Network.Socket.emit 'ReconnectLogin', {"username" : "per", "password": "per"}
       console.log "Reconnected!"
 
 

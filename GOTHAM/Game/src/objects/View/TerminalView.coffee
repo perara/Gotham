@@ -232,7 +232,15 @@ class TerminalView extends Gotham.Pattern.MVC.View
     $(terminal_input_frame).append(terminal_input_field)
 
 
-    $(terminal_frame).draggable({handle: terminal_title_frame});
+    $(terminal_frame).draggable({
+      handle: terminal_title_frame
+      drag: (e, ui) ->
+        ui.position.top = Math.max(0, ui.position.top );
+        ui.position.left = Math.max(0, ui.position.left );
+
+        ui.position.top = Math.min($(window).height() - $(@).height(), ui.position.top );
+        ui.position.left = Math.min($(window).width() - $(@).width(), ui.position.left );
+    })
     $(terminal_frame).resizable();
 
     $("body").append(@terminal_frame);

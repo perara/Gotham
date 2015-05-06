@@ -46,41 +46,25 @@ class TracerouteRoom extends Room
         client.Socket.emit 'TracerouteRoom_Error', "ERROR_NO_TARGET_HOST" #TODO
         return
 
-      # Get nodes for source and target
-      sourceNode = sourceHost.getNetwork().getNode()
-      targetNode = targetNetwork.getNode()
 
-
-
-
-      # Calculate solution
-      solution = Traffic.Pathfinder.bStar(sourceNode, targetNode, 2, 3)
+      # Start Solution
+      session = new Gotham.Micro.Session(sourceHost, targetNetwork, "ICMP")
 
       # Make session for this traceroute
-      ttl = 1
-      packets = []
+      for ttl in [1...(session.getPath().length + 1)]
+        session.addPacket new Gotham.Micro.Packet("8", true, ttl)
+        session.addPacket new Gotham.Micro.Packet("0", false, ttl)
 
-      for i in [0...solution.length]
-        sendPacket = new Gotham.Micro.Packet("8", true, ttl)
-        returnPacket = new Gotham.Micro.Packet("0", false, ttl)
-        packets.push(sendPacket)
-        packets.push(returnPacket)
-        ttl++
-
-      session = new Gotham.Micro.Session(sourceHost, targetNetwork, "ICMP", packets)
 
       client.Socket.emit 'Session', session
 
       # TODO LOL - Output path
       outputarr = []
-      outputarr.push ("=======================================")
-      outputarr.push ("Path of nodes (#{solution.length}):")
-      outputarr.push ("---------------------------------------")
-      for node in solution
-        outputarr.push (node.id + " - " +node.name)
-      outputarr.push ("=======================================")
 
-      client.Socket.emit 'Traceroute', Traffic.Pathfinder.toIdList(solution), outputarr, JSON.prune(targetNetwork)
+      for node in session.getPath()
+        outputarr.push (node.id + " - " +node.name)
+
+      client.Socket.emit 'Traceroute', Traffic.Pathfinder.toIdList(session.getPath()), outputarr, JSON.prune(targetNetwork)
 
 
 

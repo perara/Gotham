@@ -52,7 +52,6 @@ startServer = () ->
     log.info "[SERVER] Client Disconnected #{_client.id}"
 
 preload = (_c) ->
-
   start = performance()
   Gotham.LocalDatabase.preload ->
     log.info "Preload done in #{((performance() - start) / 1000).toFixed(2)} Seconds"
@@ -65,106 +64,13 @@ preload = (_c) ->
 # Preload then start server
 preload ->
   startServer()
-  testSession()
 
+  db_node = Gotham.LocalDatabase.table "Node"
+  nodes = db_node.find()
 
-testSession = ->
+  for _n1 in nodes
+    for _n2 in nodes
+      new Gotham.Micro.Pathfinder.bStar _n1,_n2, 1, 1, (startId, goalId) ->
+        console.log "Fail on: #{startId}, #{goalId}"
 
-  db_node = Gotham.LocalDatabase.table("Node")
-  db_network = Gotham.LocalDatabase.table("Network")
-  db_host = Gotham.LocalDatabase.table("Host")
-
-  sourceHost = db_host.findOne(id: 2)
-  targetNetwork = db_network.findOne(id: 1337)
-
-
-  #Gotham.Micro.LayerStructure.HTTP()
-  packets = []
-  packets.push(new Gotham.Micro.Packet("Hello", true))
-  packets.push(new Gotham.Micro.Packet("Hello you too", false))
-  packets.push(new Gotham.Micro.Packet("YEs dog", true))
-  packets.push(new Gotham.Micro.Packet("Cat dog", false))
-
-
-  # Get nodes for source and target
-  sourceNode = sourceHost.getNetwork().getNode()
-  targetNode = targetNetwork.getNode()
-
-  # Calculate solution
-  solution = Gotham.Micro.Pathfinder.bStar(sourceNode, targetNode)
-  console.log Gotham.Micro.Pathfinder.toIdList(solution)
-  console.log solution.length
-
-
-  #session = new Gotham.Micro.Session(sourceHost, targetNetwork, "HTTP", packets)
-  #console.log JSON.stringify(session)
-
-
-  #console.log sess
-
-
-MakeMission = (missionID, userID) ->
-
-  getRandomNetwork = ->
-    hosts = Gotham.LocalDatabase.table("Host").data
-    return hosts[Math.floor(Math.random() * hosts.length)].host
-
-  # Load missions and requirements
-  missions = Gotham.LocalDatabase.table("MissionRequirement")
-  requirements =  missions.find(mission: missionID)
-
-  # Generate user_mission object
-  userMission = {}
-  userMission.id = 0
-  userMission.mission = missionID
-  userMission.user = userID
-
-  commands = {}
-
-  # Get data from requirements and generate base for missions
-  for req in requirements
-
-    expected = JSON.parse(req.expected)
-    key = expected["key"]
-    command = expected["command"]
-    propDef = expected["prop"]
-    prop = null
-
-    # Connection table in database hopefully remove this
-    missionReq = {}
-    missionReq.user_mission = userMission
-    missionReq.mission_requirement = req.id
-
-    # Check if shit command exists
-    if not commands[command] then commands[command] = {}
-
-    # Check if shit key exists in shit command
-    if not commands[command][key]
-
-      switch command
-
-      #### If command is network #####
-        when "network"
-          commands[command][key] = getRandomNetwork()
-
-          if propDef
-            prop = Gotham.Util.StringTools.Resolve(commands[command][key], propDef)
-
-      #### If command is none ####
-        when "none"
-          commands[command][key] = {}
-
-          if propDef
-            commands[command][key] = propDef
-
-
-  console.log commands
-
-
-  # Get all requirements
-  for req in requirements
-
-    emit_value = JSON.parse(req.emit_value)
-    emit_input = JSON.parse(req.emit_input)
-    expected = JSON.parse(req.expected)
 

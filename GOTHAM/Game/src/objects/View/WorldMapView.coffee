@@ -192,7 +192,7 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     mapContainer.click = () ->
 
       # If GothShark is visible and the map is clicked. Tween back to original map position
-      if $("#node-details").is(":visible")
+      if $("#gothshark_frame").is(":visible")
 
         # Check if user is hovering ANY of the terminal frames
         isHovering = false
@@ -297,6 +297,11 @@ class WorldMapView extends Gotham.Pattern.MVC.View
 
 
     #mapContainer.addChildArray worldMap
+
+
+
+    @pathContainer = new Gotham.Graphics.Graphics()
+    mapContainer.addChild @pathContainer
 
 
     """
@@ -523,15 +528,15 @@ class WorldMapView extends Gotham.Pattern.MVC.View
   # @method showNodeDetails
   ###
   showNodeDetails: (node) ->
-    window.GothShark.updateNode(node)
-    $("#node-details").fadeIn()
+    @parent.getObject("Gothshark").setNode(node)
+    $("#gothshark_frame").fadeIn()
 
   ###*
   # Hides the node-details selector in HTML (GothShark)
   # @method hideNodeDetails
   ###
   hideNodeDetails: () ->
-    $("#node-details").fadeOut()
+    $("#gothshark_frame").fadeOut()
 
   ###*
   # Creates the information plate of each of the node,
@@ -701,11 +706,6 @@ class WorldMapView extends Gotham.Pattern.MVC.View
   # @return {Tween} The tween object for the animation
   ###
   animatePath: (startNode, endNode) ->
-    if not @pathContainer
-      @pathContainer = new Gotham.Graphics.Graphics()
-      @nodeContainer.addChild @pathContainer
-
-
     # Create cable from the network to connected node
     path =
       start: @coordinateToPixel(startNode.lat, startNode.lng)

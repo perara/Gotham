@@ -19,41 +19,46 @@ class GothsharkController extends Gotham.Pattern.MVC.Controller
 
   create: ->
     @setupPacketListener()
-    @processPacket()
 
 
   setupPacketListener: ->
     that = @
 
     GothamGame.Network.Socket.on 'Session', (session) ->
-
       db_node = Gotham.Database.table "node"
 
-
       template = session.layers
+
       for node in session.path
         nodeObject = db_node.findOne(id: node)
 
-
-
-        packet = jQuery.extend({}, template)
-
         diffData = session.nodeHeaders[node]
 
-        for key, layer of diffData
-          if key == "misc"
-            continue
 
-          for prop, val of layer
-            packet[key][prop] = val
+        for i in [0...diffData.length]
+          diff = diffData[i]
 
-        # Process the packet data
-        processedPacket = processPacket(packet)
+          packet = jQuery.extend({}, template)
 
-        # Add the processed packet to the packet array
-        nodeObject.packets.push processedPacket
+          for layerNum, layer of diff
+            if layerNum == "misc"
+              continue
 
-      @redraw()
+            for prop, val of layer
+              packet[layerNum][prop] = val
+              packet["L7"] =
+                data: session.packets[i].data
+
+
+          processedPacket = that.processPacket(packet, nodeObject.packets.length + 1)
+
+          # Add the processed packet to the packet array
+          nodeObject.packets.push processedPacket
+
+
+
+
+      that.redraw()
 
 
   ###*
@@ -62,15 +67,20 @@ class GothsharkController extends Gotham.Pattern.MVC.Controller
   ###
   redraw: ->
     if @currentNode
-      @showNode(@currentNode)
+      @setNode(@currentNode)
 
 
-  showNode: (node) ->
+  setNode: (node) ->
     # Set currentNode
     @currentNode = node
 
     # Clear the table
     @View.clearTable()
+
+    @View.setNode({
+      name: node.name
+      ip: node.Network.external_ip_v4
+    })
 
     # Add all of the packets
     for packet in node.packets
@@ -79,18 +89,44 @@ class GothsharkController extends Gotham.Pattern.MVC.Controller
 
 
 
-  processPacket: (packet) ->
-    # TODO
-    obj = {
-      number: "1"
-      time: "lol"
-      source: "10.0.0.1"
-      dest: "10.0.0.2"
-      protocol: "11001"
-      length: "10"
-      info: "Some info"
-    }
-    return obj
+  ###*
+  # Processed the packet information to a readable wireshark row
+  # @method processPacket
+  # @param packet {Object} The raw packet information
+  # @param number {Number} Numbering
+  ###
+  processPacket: (packet, number) ->
+    console.log packet
+    processedPacket =
+      number: null
+      time: null
+      source: null
+      dest: null
+      protocol: null
+      length: null
+      info: null
+
+
+    # Check which type this packet is (L3)
+    if packet.L3.type == "ICMP"
+
+      if packet.L3.code == "0"
+        type = "Echo (ping) Reply"
+      else if packet.L3.code == "8"
+        type = "Echo (ping) Request"
+
+      processedPacket["length"] =  74
+      processedPacket.info = "#{type}   src=#{packet.L2.sourceMAC} dest=#{packet.L2.destMAC} ttl=#{packet.L3.ttl}"
+
+
+    processedPacket.number = ""+number
+    processedPacket.time = "TODO"
+
+    processedPacket.source = ""+packet.L3.sourceIP
+    processedPacket.dest = ""+packet.L3.destIP
+    processedPacket.protocol = ""+packet.L3.type
+
+    return processedPacket
 
 
 

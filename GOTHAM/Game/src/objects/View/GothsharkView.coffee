@@ -12,36 +12,6 @@ class GothsharkView extends Gotham.Pattern.MVC.View
   constructor: ->
     super
 
-  """
-    <div class="navbar navbar-default navbar-sm">
-        <div class="navbar-header"><a class="navbar-brand" href="#">GothShark</a>
-            <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">File</a></li>
-                <li><a href="#">Edit</a></li>
-                <li><a href="#">View</a></li>
-                <li><a href="#">Help</a></li>
-            </ul>
-        </div>
-
-        <div class="navbar-collapse collapse table-striped">
-
-            <form class="form-inline">
-                <div class="form-group" style="padding:2px;">
-                    Filter:
-                    <input type="text" class="form-control input-sm" style="border-radius:0px;" id="filter">
-                    | Node: {{node.name}} | IP: {{node.Network.external_ip_v4}}
-                </div>
-            </form>
-        </div>
-    </div>
-  """
   create: ->
 
     @gothshark_frame = $('<div\>',
@@ -144,7 +114,7 @@ class GothsharkView extends Gotham.Pattern.MVC.View
       "info":     false,
       bFilter: true,
       bInfo: false
-      "dom": "frtiS",
+      "dom": "rtiS",
       "scrollY": "400px"
     })
 
@@ -167,7 +137,22 @@ class GothsharkView extends Gotham.Pattern.MVC.View
   # @param data.info {String} The information string
   ###
   addPacket: (data) ->
+
+    console.log data
+
     @table.row.add([data.number, data.time, data.source, data.dest, data.protocol, data.length, data.info]).draw();
+
+
+  ###*
+  # Sets node data
+  # @method setNode
+  # @param data {Object} The node data
+  # @param data.name {String} Name of the node
+  # @param data.ip {String} IP of the node
+  ###
+  setNode: (data) ->
+    $("#node-name").text(data.name)
+    $("#node-ip").text(data.ip)
 
 
   ###*

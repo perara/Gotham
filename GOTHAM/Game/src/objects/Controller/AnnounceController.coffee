@@ -38,12 +38,14 @@ class AnnounceController extends Gotham.Pattern.MVC.Controller
     else if type == "ERROR"
       color = "#FF0000"
     else if type == "MISSION"
-      color = "#FCC200"
+      color = "#004600"
     else
       color = "#000000"
 
 
-    message = new Gotham.Graphics.Text(message, {font: "bold #{size}px calibri", fill: color, align: "center"});
+
+
+    message = new Gotham.Graphics.Text(message, {font: "bold #{size}px calibri", fill: color, align: "center", dropShadow: true});
     message.x = 1920 / 2
     message.y = 1080 / 6
     message.anchor =

@@ -2,7 +2,7 @@
 # Session object containing source, target ,traffic path and packets exchanged
 class Session
 
-  constructor: (sourceHost, targetNetwork, type, packets = [new Gotham.Micro.Packet()], customPath) ->
+  constructor: (sourceHost, targetNetwork, type, customPath) ->
     type = if not type then "None" else type
 
     # Set source variables
@@ -23,11 +23,7 @@ class Session
 
     @layers = Gotham.Micro.LayerStructure.Packet[type]()
     @nodeHeaders = {}
-    @packets = packets
-
-    # For each node, get header info for each packets
-
-    @getNodeHeaders()
+    @packets = []
 
     # Sets MAC and IP in default Layer Structure (template)
     @layers.L2.sourceMAC = @sourceNode.getNetwork().mac
@@ -35,9 +31,19 @@ class Session
     @layers.L3.sourceIP = @sourceNetwork.internal_ip_v4
     @layers.L3.destIP = @targetNetwork.internal_ip_v4
 
+    return @
+
+  getPath: ->
+    return @path
+
+  addPacket: (packet) ->
+    @packets.push packet
+    @getNodeHeaders()
+    return @
 
   getNodeHeaders: () ->
     time = 0
+    @nodeHeaders = {}
 
     for index in [0...@path.length]
       node = @path[index]

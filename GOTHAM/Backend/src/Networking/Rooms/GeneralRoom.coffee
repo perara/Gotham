@@ -45,6 +45,35 @@ class GeneralRoom extends Room
         client.Socket.disconnect()
 
     ###*
+    # Emitter for Reconnect login (Defined as class, but is in reality a method inside GeneralRoom)
+    # @class Emitter_ReconnectLogin
+    # @submodule Backend.Emitters
+    ###
+    @addEvent "ReconnectLogin", (login) ->
+      client = that.getClient @id
+
+      that.log.info "[GeneralRoom] ReconnectLogin called: " + login
+      that.log.info "---- Attempting to ReconnectLogin with #{login.username}:#{login.password}"
+
+      db_user = Gotham.LocalDatabase.table("User")
+
+      # Check if credential is correct
+      user = db_user.findOne({
+        username: login.username
+        password: login.password
+      })
+
+      # Send OK to frontend if ok else 500
+      if user
+        client.setUser user
+        client.authenticate true
+        client.Socket.emit 'ReconnectLogin', {"status": 200}
+      else
+        client.Socket.emit 'ReconnectLogin', {"status": 500}
+        client.Socket.disconnect()
+
+
+    ###*
     # Emitter for Logout (Defined as class, but is in reality a method inside GeneralRoom)
     # @class Emitter_Logout
     # @submodule Backend.Emitters
