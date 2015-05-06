@@ -54,8 +54,7 @@ class GothsharkView extends Gotham.Pattern.MVC.View
           background-repeat: no-repeat;
           background-position: 50% 60%;
           position: fixed;
-          /*display: none;*/
-          display: block;
+          display: none;
           top: 47%;
           left: 20%;
           width: 60%;

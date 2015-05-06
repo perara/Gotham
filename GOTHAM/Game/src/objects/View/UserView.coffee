@@ -23,12 +23,86 @@ class UserView extends Gotham.Pattern.MVC.View
   create: ->
     @createFrame()
     @createTitles()
-    @hide()
+    #@hide()
+
+    @emitSetExperience()
 
   createTitles: ->
+    title = @title = new Gotham.Graphics.Text("Player Information", {font: "bold 50px calibri", fill: "#ffffff", align: "center"});
+    title.x = 40
+    title.y = 30
+    @window.addChild(title)
+
+    # Description Text
+    username = @username = new Gotham.Graphics.Text("Username: [NONE]", {font: "bold 25px calibri", fill: "#ffffff", align: "center"});
+    username.y = 100
+    username.x = 40
+    @window.addChild(username)
+
+    email = @email = new Gotham.Graphics.Text("Email: [NONE]", {font: "bold 25px calibri", fill: "#ffffff", align: "center"});
+    email.y = 140
+    email.x = 40
+    @window.addChild(email)
+
+    money = @money = new Gotham.Graphics.Text("Money: [NONE]", {font: "bold 25px calibri", fill: "#ffffff", align: "center"});
+    money.y = 180
+    money.x = 40
+    @window.addChild(money)
+
+    experience = @experience = new Gotham.Graphics.Text("Experience: [NONE]", {font: "bold 25px calibri", fill: "#ffffff", align: "center"});
+    experience.y = 220
+    experience.x = 40
+    @window.addChild(experience)
+
+    identities = @identities = new Gotham.Graphics.Text("Identities: [NONE]", {font: "bold 25px calibri", fill: "#ffffff", align: "center"});
+    identities.y = 100
+    identities.x = 400
+    @window.addChild(identities)
+
+    networks = @networks = new Gotham.Graphics.Text("Networks: [NONE]", {font: "bold 25px calibri", fill: "#ffffff", align: "center"});
+    networks.y = 140
+    networks.x = 400
+    @window.addChild(networks)
+
+    hosts = @hosts = new Gotham.Graphics.Text("Hosts: [NONE]", {font: "bold 25px calibri", fill: "#ffffff", align: "center"});
+    hosts.y = 180
+    hosts.x = 400
+    @window.addChild(hosts)
+
+  emitSetMoney: () ->
+    #@money.text = "Money: " + num
+
+  emitSetExperience: () ->
+    that = @
+    GothamGame.Network.Socket.on 'UpdatePlayerExperience', (experience) ->
+      oldExperience = parseInt(that.experience.text.replace("Experience: ", ""))
+      gain = experience - oldExperience
+
+      GothamGame.Announce.message "You gained #{gain} experience!", "MISSION", 50
+      that.experience.text = "Experience: " + experience
 
 
   setUser: (user) ->
+    numIdentities = 0
+    numNetworks = 0
+    numHosts = 0
+
+    # Count Identity, Network and Hosts
+    for identity in user.Identities
+      numIdentities++
+      for network in identity.Networks
+        numNetworks++
+        for host in network.Hosts
+          numHosts++
+
+    @username.text = @username.text.replace "[NONE]", user.username
+    @email.text = @email.text.replace "[NONE]", user.email
+    @money.text = @money.text.replace "[NONE]", user.money
+    @experience.text = @experience.text.replace "[NONE]", user.experience
+    @identities.text = @identities.text.replace "[NONE]", numNetworks
+    @networks.text = @networks.text.replace "[NONE]", numNetworks
+    @hosts.text = @hosts.text.replace "[NONE]", numHosts
+
 
 
 

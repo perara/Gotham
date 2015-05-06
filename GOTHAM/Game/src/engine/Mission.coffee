@@ -108,6 +108,11 @@ class Mission
   setID: (id) ->
     @id = id
 
+  setUserMissionID: (userMissionId) ->
+    @userMissionId = userMissionId
+  getUserMissionID: ->
+    return @userMissionId
+
   setOngoing: (ongoing) ->
     @ongoing = ongoing
 

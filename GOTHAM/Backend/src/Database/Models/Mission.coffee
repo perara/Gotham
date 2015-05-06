@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) ->
       required_xp:
         type: DataTypes.INTEGER
         allowNull: false
+      experience_gain:
+        type: DataTypes.INTEGER
+        allowNull: false
 
     },
     {

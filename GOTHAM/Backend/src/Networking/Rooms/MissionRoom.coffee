@@ -17,6 +17,51 @@ class MissionRoom extends Room
 
 
     ###*
+    # Emitter for mission Completion (Defined as class, but is in reality a method inside MissionRoom)
+    # @class Emitter_CompleteMission
+    # @submodule Backend.Emitters
+    ###
+    @addEvent "CompleteMission", (data) ->
+      client = that.getClient(@id)
+      db_user = Gotham.LocalDatabase.table "User"
+      db_userMission = Gotham.LocalDatabase.table("UserMission")
+
+
+      # Find the user mission
+      userMission = db_userMission.findOne(id: data.id)
+      _m = userMission.getMission()
+
+      isComplete = true
+      for userMissionRequirement in userMission.getUserMissionRequirements()
+        if userMissionRequirement.current != userMissionRequirement.expected
+          isComplete = false
+
+      # Update the mission status to complete
+      if isComplete
+        # Set Completed to true
+        userMission.update({
+          complete: true
+        })
+
+        user = db_user.findOne(id: client.getUser().id)
+        user.update({
+          experience: user.experience + _m.experience_gain
+        })
+
+        client.Socket.emit 'UpdatePlayerExperience', user.experience
+
+
+
+      else
+        client.Socket.emit 'ERROR', {
+          type: "ERROR_MISSION_NOT_COMPLETED"
+          message: "The mission you attempted to complete is not completed yet!"
+        } # TODO Multilangual
+
+      client.Socket.emit 'CompleteMission', _m
+
+
+    ###*
     # Emitter for mission Progression (Defined as class, but is in reality a method inside MissionRoom)
     # @class Emitter_ProgressMission
     # @submodule Backend.Emitters
@@ -59,7 +104,7 @@ class MissionRoom extends Room
       })
 
       # If a result was found, return with error
-      if userMission
+      if userMission and userMission.complete == false
         client.Socket.emit 'ERROR', {
           type: "ERROR_MISSION_ONGOING"
           message: "You cannot start the same mission twice!"
@@ -90,8 +135,7 @@ class MissionRoom extends Room
 
       # Fetch the user mission
       userMission = db_userMission.findOne({
-        user: client.getUser().id
-        mission: mission.id
+        id: mission.id
       })
 
       # Fetch the user mission requirements
@@ -107,7 +151,7 @@ class MissionRoom extends Room
             userMission.delete(->)
 
             # Emit back empty mission
-            _m = db_mission.findOne(id: mission.id)
+            _m = db_mission.findOne(id: userMission.mission)
             _m.getMissionRequirements()
             client.Socket.emit 'AbandonMission', _m
 
@@ -140,6 +184,14 @@ class MissionRoom extends Room
       missions.ongoing = db_userMission.find({
         user: client.getUser().id
       })
+
+      missions.ongoing = missions.ongoing.filter (i) ->
+        if i.complete
+          return false
+        return true
+
+
+
 
       for _m in missions.ongoing
         _m.getMission()
@@ -286,7 +338,7 @@ class MissionRoom extends Room
           userMissionRequirement[key] = Gotham.Util.StringTools.Resolve object, value.property
 
     # Done generation, Create Entities
-    Gotham.LocalDatabase.Model.UserMission.create({user: userId, mission: missionId}, (userMission) ->
+    Gotham.LocalDatabase.Model.UserMission.create({user: userId, mission: missionId, complete: false}, (userMission) ->
 
       if userMission == null
         # TODO error out, most likely unique error

@@ -31,14 +31,12 @@ class MissionController extends Gotham.Pattern.MVC.Controller
     # Whenever a mission has been accepted (OK from Server)
     GothamGame.Network.Socket.on 'AcceptMission', (mission) ->
       _mission = mission.Mission
+      _mission.userMissionId = mission.id
       _mission.UserMissionRequirements = mission.UserMissionRequirements
 
       # Create a mission object
       _m = GothamGame.MissionEngine.createMission _mission
       _m.setOngoing true
-
-      _m.onComplete = (mission) ->
-        #TODO
 
       # Whenever the mission has progress
       _m.onRequirementComplete = _m.onProgress = (requirement) ->
@@ -49,12 +47,26 @@ class MissionController extends Gotham.Pattern.MVC.Controller
           current: requirement._current
         }
 
-
       GothamGame.MissionEngine.addMission _m
       that.View.removeAvailableMission _m
-      that.View.addOngoingMission _m
+      elements = that.View.addOngoingMission _m
+
+      # When mission is completed
+      _m.onComplete = (mission) ->
+        elements.journal.abandonButton.visible = false
+        elements.journal.completeMissionButton.visible = true
+        elements.missionTitle.text = elements.missionTitle.text + " (Complete)"
+
 
     GothamGame.Network.Socket.on 'AbandonMission', (mission) ->
+      # Create a mission object
+      _m = GothamGame.MissionEngine.createMission mission
+
+      GothamGame.MissionEngine.removeMission _m
+      that.View.addAvailableMission _m
+      that.View.removeOngoingMission _m
+
+    GothamGame.Network.Socket.on 'CompleteMission', (mission) ->
 
       # Create a mission object
       _m = GothamGame.MissionEngine.createMission mission
@@ -62,6 +74,9 @@ class MissionController extends Gotham.Pattern.MVC.Controller
       GothamGame.MissionEngine.removeMission _m
       that.View.addAvailableMission _m
       that.View.removeOngoingMission _m
+
+
+
 
 
   setupMissions: ->
@@ -79,7 +94,9 @@ class MissionController extends Gotham.Pattern.MVC.Controller
 
     for _m in allMissions.ongoing
       _m["Mission"]["UserMissionRequirements"] = _m["UserMissionRequirements"]
+      userMissionId = _m.id
       _m = _m["Mission"]
+      _m.userMissionId = userMissionId
       _m.ongoing = true
       missions.push _m
 

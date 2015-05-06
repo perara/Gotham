@@ -135,6 +135,7 @@ setup =
     GothamGame.Network.onReconnecting = ->
       console.log "Attempting to reconnect"
     GothamGame.Network.onReconnect = ->
+      GothamGame.Network.Socket.emit 'Login', {"username" : "per", "password": "per"}
       console.log "Reconnected!"
 
 

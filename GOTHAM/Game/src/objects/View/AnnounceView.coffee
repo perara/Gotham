@@ -25,6 +25,7 @@ class AnnounceView extends Gotham.Pattern.MVC.View
 
     tween = new Gotham.Tween text
     tween.to {alpha: 1}, 2000
+    tween.delay(2000)
     tween.to {alpha: 0}, 2000
     tween.onComplete () ->
       that.removeChild text

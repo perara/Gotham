@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) ->
         allowNull: false
         references: 'mission'
         referencesKey: 'id'
+      complete:
+        type: DataTypes.BOOLEAN
+        allowNull: false
     },
     {
       tableName: 'user_mission'

@@ -81,13 +81,13 @@ class MissionView extends Gotham.Pattern.MVC.View
 
 
   addOngoingMission: (mission) ->
-    @addMission(mission, @missions.ongoing)
+    return @addMission(mission, @missions.ongoing)
 
   removeOngoingMission: (mission) ->
     @removeMission mission, @missions.ongoing
 
   addAvailableMission: (mission) ->
-    @addMission(mission, @missions.available)
+    return @addMission(mission, @missions.available)
 
   removeAvailableMission: (mission) ->
     @removeMission mission, @missions.available
@@ -96,6 +96,7 @@ class MissionView extends Gotham.Pattern.MVC.View
 
     for element in container.elements
       if element.mission.id == mission.id
+        element.journalItem.visible = false
         container.elements.remove element
         @window.removeChild element
         break
@@ -145,6 +146,7 @@ class MissionView extends Gotham.Pattern.MVC.View
     missionDescription.y = 180
     journalContainer.addChild missionDescription
 
+
     # Create accept button if not ongoing
     if !mission.getOngoing()
       acceptButton = new Gotham.Controls.Button "Accept", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 50}
@@ -168,31 +170,40 @@ class MissionView extends Gotham.Pattern.MVC.View
         startY += requirmentGraphics.height + 5
 
       startY += 40
+
+
+      abandonButton = new Gotham.Controls.Button "Abandon", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 50}
+      abandonButton.y = startY
+      abandonButton.x = 480
+      abandonButton.interactive = true
+      abandonButton.visible = false
+      journalContainer.addChild abandonButton
+      abandonButton.click = () ->
+        that.selected.journalItem.visible = false
+        that.selected = null
+        GothamGame.Network.Socket.emit 'AbandonMission', {id: mission.getUserMissionID() }
+
+
+      completeMissionButton = new Gotham.Controls.Button "Complete Mission", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 35}
+      completeMissionButton.y = startY
+      completeMissionButton.x = 480
+      completeMissionButton.visible = false
+      journalContainer.addChild completeMissionButton
+      completeMissionButton.click = () ->
+        #that.selected = null
+        GothamGame.Network.Socket.emit 'CompleteMission', {id: mission.getUserMissionID() }
+
       if !mission.isCompleted()
-
-        abandonButton = new Gotham.Controls.Button "Abandon", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 50}
-        abandonButton.y = startY
-        abandonButton.x = 480
-        abandonButton.interactive = true
-        journalContainer.addChild abandonButton
-        abandonButton.click = () ->
-          that.selected.journalItem.visible = false
-          that.selected = null
-
-          GothamGame.Network.Socket.emit 'AbandonMission', {id: mission.getID() }
+        abandonButton.visible = true
       else
-        completeMissionButton = new Gotham.Controls.Button "Complete Mission", 100, 50, {toggle: false, texture: Gotham.Preload.fetch("iron_button", "image"), textSize: 35}
-        completeMissionButton.y = startY
-        completeMissionButton.x = 480
-        journalContainer.addChild completeMissionButton
-        completeMissionButton.click = () ->
-          #that.selected = null
-          GothamGame.Network.Socket.emit 'CompleteMission', {id: mission.getID() }
+        completeMissionButton.visible = true
 
 
-
-
-    return journalContainer
+    return {
+      container: journalContainer
+      completeMissionButton: completeMissionButton
+      abandonButton: abandonButton
+    }
 
   updateStats: () ->
     for key, type of @missions
@@ -218,7 +229,8 @@ class MissionView extends Gotham.Pattern.MVC.View
     missionItem.requirements = []
     missionItem.interactive = true
     missionItem.visible = true
-    missionItem.journalItem = @generateMissionJournalItem(mission, missionItem)
+    journalItems = @generateMissionJournalItem(mission, missionItem)
+    missionItem.journalItem = journalItems.container
 
     # Add to the container list
     container.elements.push missionItem
@@ -278,6 +290,14 @@ class MissionView extends Gotham.Pattern.MVC.View
     @window.addChild missionItem
 
     @updateVisibility()
+
+    return {
+      missionItem: missionItem
+      missionTitle: missionTitle
+      journal: journalItems
+    }
+
+
 
 
   # Update The quest list with pagination
