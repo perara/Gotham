@@ -114,11 +114,12 @@ class Pathfinder
     log.info "Path found in: #{performance() - start} ms"
     return path
 
-
-  ###############################################################################################
-  ##### Improvement of aStar, supports reversing and removal of obsolete nodes
-  ###############################################################################################
-  @bStar: (_start, _goal, startBacktrack = 1, escalations = 1, _onError = ->) ->
+  ####################################################################################################################
+  ####################################################################################################################
+  ##### Improvement of aStar, supports reversing and removal of obsolete nodes #######################################
+  ####################################################################################################################
+  ####################################################################################################################
+  @bStar: (_start, _goal, startBacktrack = 1, escalations = 2, _onError = ->) ->
 
     start = _start
     goal = _goal
@@ -133,10 +134,12 @@ class Pathfinder
     best = null
     maxBacktrack = startBacktrack
     deltaTime = 0
+    isReverse = false
 
-    ###############################################################################################
-    ##### Returns sibling closest to goal (gets siblings list from input node)
-    ###############################################################################################
+    ################################################################################################
+    ##### Returns sibling closest to goal (gets siblings list from input node) #####################
+    ################################################################################################
+
     getBestSibling = (current) ->
       bestSibling = GeoTool.getClosest(goal, current.getSiblings(), blacklist)
 
@@ -157,7 +160,8 @@ class Pathfinder
     changeDirection = () ->
       goal = _start
       start = _goal
-      expand()
+      isReverse = if isReverse then false else true
+      reset()
 
     ###############################################################################################
     ##### Gets the distance from input note to goal
@@ -186,7 +190,6 @@ class Pathfinder
       #log.info "Fine Node #{node.id}"
 
     ###############################################################################################
-    ##### TODO: Complete
     ##### Checks if node is sibling of previous nodes. If yes, cut obsolete nodes from path #####
     ###############################################################################################
     cutCheck = (node) ->
@@ -208,13 +211,18 @@ class Pathfinder
     ##### Resets path, blacklist and increases max wrong ways with one #####
     ###############################################################################################
     expand = ->
+      tempBT = maxBacktrack
+      reset()
+      maxBacktrack = tempBT += 1
+
+    reset = ->
       path = []
       blacklist = []
       allSiblings = {}
       path.push(start)
       blacklist.push(start)
       wrongWay = 0
-      maxBacktrack += 1
+      maxBacktrack = startBacktrack
 
     ###############################################################################################
     ##### Checks for illegal input, returns false if path contains illegal input #####
@@ -244,14 +252,15 @@ class Pathfinder
     run = ( ->
       loop
         deltaTime = new Date().getTime() - startTime
-        if deltaTime > 5000
+        if deltaTime > 500
           log.info("Pathfinder timed out. Check if path is valid")
           _onError(_start.id, _goal.id)
+          deltaTime = 0
           return
 
         # Checking for pathfinding suicide. If found, reset and expanding maxBacktrack with one
         if path.length == 0
-          log.info "No node added, maxWrongWays too small?"
+          #log.info "No node added, maxWrongWays too small?"
           expand()
 
           #changeDirection()
@@ -312,16 +321,17 @@ class Pathfinder
 
     # Runs specified number of escalations and returns the shortest path
     for [-1...escalations]
+      changeDirection()
       result = run()
 
-      if not best
-        best = result
+      if not result then continue
+      if isReverse then result.reverse()
+      if not best then best = result
       if result.length < best.length
         best = result
 
-      changeDirection()
 
-    log.info "Path found in: #{(deltaTime).toFixed(1)} ms"
+    #log.info "Path found in: #{(deltaTime).toFixed(1)} ms"
     return best
 
   @toIdList = (solution) ->
