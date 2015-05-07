@@ -28,6 +28,9 @@ module.exports = (sequelize, DataTypes) ->
       mac:
         type: DataTypes.STRING
         allowNull: false
+      dns:
+        type: DataTypes.STRING
+        allowNull: false
       node:
         type: DataTypes.INTEGER
         allowNull: false

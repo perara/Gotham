@@ -23,7 +23,6 @@ class UserController extends Gotham.Pattern.MVC.Controller
   setupUser: ->
     db_user = Gotham.Database.table "user"
 
-    console.log db_user.data[0]
 
     @View.setUser(db_user.data[0])
 

@@ -41,6 +41,7 @@ class GothamGame
     Settings : require './objects/Controller/SettingsController.coffee'
     Gothshark: require './objects/Controller/GothsharkController.coffee'
     User: require './objects/Controller/UserController.coffee'
+    Shop: require './objects/Controller/ShopController.coffee'
 
 
   # Game Scenes

@@ -104,10 +104,10 @@ class BarController extends Gotham.Pattern.MVC.Controller
         that.mission.toggle = false
         that.scene.getObject("Mission").hide()
 
-      if src != that.inventory
-        that.inventory.tint = 0x4169E1
-        that.inventory.toggle = false
-        # TODO add inventory
+      if src != that.shop
+        that.shop.tint = 0x4169E1
+        that.shop.toggle = false
+        that.scene.getObject("Shop").hide()
 
 
 
@@ -154,22 +154,24 @@ class BarController extends Gotham.Pattern.MVC.Controller
 
 
     @View.addSidebarItem "LEFT", 15, ->
-      that.inventory = inventory = new Gotham.Graphics.Sprite Gotham.Preload.fetch("inventory", "image")
-      inventory.tint = 0x4169E1
-      inventory.alpha = 0.4
-      inventory.interactive = true
-      inventory.mouseover = -> @alpha = 1
-      inventory.mouseout = -> @alpha = 0.6
-      inventory.click = ->
+      that.shop = shop = new Gotham.Graphics.Sprite Gotham.Preload.fetch("shop", "image")
+      shop.tint = 0x4169E1
+      shop.alpha = 0.4
+      shop.interactive = true
+      shop.mouseover = -> @alpha = 1
+      shop.mouseout = -> @alpha = 0.6
+      shop.click = ->
         @toggle = if not @toggle then true else !@toggle
 
         if @toggle
           closeAll(@)
+          that.scene.getObject("Shop").show()
+          that.scene.getObject("Shop").View.bringToFront()
           @tint = 0xFF0000
         else
-          # TODO
           @tint = 0x4169E1
-      return inventory
+          that.scene.getObject("Shop").hide()
+      return shop
 
 
     @View.addSidebarItem "LEFT", 15, ->

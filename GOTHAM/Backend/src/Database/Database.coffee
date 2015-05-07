@@ -47,6 +47,7 @@ class Database
     @sequelize = new Sequelize('gotham', 'root', 'root', {
       host: 'localhost'
       dialect: 'mysql'
+      logging: null
 
       pool:
         max: 5

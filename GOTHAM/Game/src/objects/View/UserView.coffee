@@ -12,6 +12,7 @@ class UserView extends Gotham.Pattern.MVC.View
   constructor: ->
     super
 
+
     @movable()
     @click = ->
       @bringToFront()
@@ -23,7 +24,7 @@ class UserView extends Gotham.Pattern.MVC.View
   create: ->
     @createFrame()
     @createTitles()
-    #@hide()
+    @hide()
 
     @emitSetExperience()
     @emitSetMoney()

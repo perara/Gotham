@@ -36,8 +36,8 @@ class Network extends GothamObject
   ###
   getIdentity: ->
     if not @Identity
-      db_identity = Gotham.LocalDatabase.table("Identity")
-      @Identity = db_identity.findOne({id: @identity})
+      db_identity_network = Gotham.LocalDatabase.table("IdentityNetwork")
+      @Identity = db_identity_network.findOne({network: @id}).getIdentity()
     return @Identity
 
   ###*
@@ -62,6 +62,18 @@ class Network extends GothamObject
       @Hosts = db_host.find({network: @id})
 
     return @Hosts
+
+  ###*
+  # Get DNS record for this network'S ip
+  # @method getDNS
+  # @return {DNS} The DNS record
+  ###
+  getDNS: ->
+    if not @DNS
+      db_dns = Gotham.LocalDatabase.table "DNS"
+      @DNS = db_dns.findOne(ipv4: @external_ip_v4)
+    return @DNS
+
 
 
 ###*

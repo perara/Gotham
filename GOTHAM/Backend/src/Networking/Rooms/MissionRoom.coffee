@@ -69,7 +69,7 @@ class MissionRoom extends Room
     # @submodule Backend.Emitters
     ###
     @addEvent "ProgressMission", (data) ->
-      that.log.info "[MissionRoom] AcceptMission called"
+      that.log.info "[MissionRoom] ProgressMission called"
       client = that.getClient(@id)
 
       db_userMissionRequirement = Gotham.LocalDatabase.table("UserMissionRequirement")
@@ -93,11 +93,18 @@ class MissionRoom extends Room
     # @class Emitter_AcceptMission
     # @submodule Backend.Emitters
     ###
-    @addEvent "AcceptMission", (mission) ->
+    @addEvent "AcceptMission", (data) ->
       that.log.info "[MissionRoom] AcceptMission called"
       client = that.getClient(@id)
 
+      db_mission = Gotham.LocalDatabase.table("Mission")
+      db_user = Gotham.LocalDatabase.table("User")
       db_userMission = Gotham.LocalDatabase.table("UserMission")
+
+      # The user that starts the mission
+      user = db_user.findOne({id: client.getUser().id})
+
+      mission = db_mission.findOne(id: data.id)
 
       # Look for existsing user mission entry
       userMission = db_userMission.findOne({
@@ -107,15 +114,22 @@ class MissionRoom extends Room
 
       # If a result was found, return with error
       if userMission and userMission.complete == false
-        client.Socket.emit 'ERROR', {
-          type: "ERROR_MISSION_ONGOING"
+        client.Socket.emit 'ANNOUNCE', {
+          type: "ERROR"
           message: "You cannot start the same mission twice!"
         } # TODO Multilangual
         return
 
+      if user.experience < mission.required_xp
+        client.Socket.emit 'ANNOUNCE', {
+          type: "ERROR"
+          message: "You cannot start this mission, Require #{mission.required_xp}. You have #{user.experience}"
+        }
+        return false
+
 
       # Create Mission
-      that.generateUserMission(client.getUser().id, mission.id, (userMission) ->
+      that.generateUserMission(client.getUser().id, data.id, (userMission) ->
         userMission.getUserMissionRequirements()
         userMission.getMissionRequirements()
         userMission.getMission()

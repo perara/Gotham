@@ -51,6 +51,9 @@ setup =
     Gotham.Preload.image("/assets/img/user_management_network_item.png","user_management_network_item", "image")
     Gotham.Preload.image("/assets/img/user_mangement_host.png","user_mangement_host", "image")
 
+    # Shop Background
+    Gotham.Preload.image("/assets/img/shop_background.jpg", "shop_background", "image")
+
 
     # Mission
     Gotham.Preload.image("/assets/img/mission_background.jpg","mission_background", "image")
@@ -76,7 +79,7 @@ setup =
     Gotham.Preload.image("/assets/img/home.png", "home", "image")
     Gotham.Preload.image("/assets/img/mission.png", "mission", "image")
     Gotham.Preload.image("/assets/img/menu.png", "menu", "image")
-    Gotham.Preload.image("/assets/img/inventory.png", "inventory", "image")
+    Gotham.Preload.image("/assets/img/shop.png", "shop", "image")
     Gotham.Preload.image("/assets/img/settings.png", "settings", "image")
     Gotham.Preload.image("/assets/img/help.png", "help", "image")
     Gotham.Preload.image("/assets/img/attack.png", "attack", "image")
@@ -126,14 +129,16 @@ setup =
     GothamGame.Renderer.setScene("World")
 
   startNetwork: (callback) ->
-    GothamGame.Network = new Gotham.Network "localhost", 8081
+    GothamGame.Network = new Gotham.Network location.hostname, 8081
     GothamGame.Network.connect()
-    console.log "Connecting...."
+    console.log "Connecting to #{location.hostname}:8081 ..."
     GothamGame.Network.onConnect = ->
+      console.log "Connected!"
       callback(GothamGame.Network)
 
     GothamGame.Network.onReconnecting = ->
       console.log "Attempting to reconnect"
+
     GothamGame.Network.onReconnect = ->
       GothamGame.Network.Socket.emit 'ReconnectLogin', {"username" : "per", "password": "per"}
       console.log "Reconnected!"

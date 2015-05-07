@@ -154,8 +154,11 @@ class MissionView extends Gotham.Pattern.MVC.View
       acceptButton.y = missionDescription.y + missionDescription.height + 20
       acceptButton.x = 480
       acceptButton.click = () ->
+        that.selected.tint = 0xFFFFFF
+        that.selected._toggle = false
         that.selected.journalItem.visible = false
         that.selected = null
+        that.noDisplayedMission.visible = true
         GothamGame.Network.Socket.emit 'AcceptMission', { id: mission.getID() }
       journalContainer.addChild acceptButton
     else
@@ -181,6 +184,7 @@ class MissionView extends Gotham.Pattern.MVC.View
       abandonButton.click = () ->
         that.selected.journalItem.visible = false
         that.selected = null
+        that.noDisplayedMission.visible = true
         GothamGame.Network.Socket.emit 'AbandonMission', {id: mission.getUserMissionID() }
 
 

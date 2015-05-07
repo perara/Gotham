@@ -160,10 +160,6 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
 
   toggle: ->
 
-
-
-    console.log $(@View.terminal_frame).is(":visible")
-
     if $(@View.terminal_frame).is(":visible")
       @View.terminal_frame.hide()
     else

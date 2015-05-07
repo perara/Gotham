@@ -24,8 +24,8 @@ class AnnounceController extends Gotham.Pattern.MVC.Controller
 
   networkMessages: ->
     that = @
-    GothamGame.Network.Socket.on 'ERROR', (data) ->
-      that.message(data.message, "ERROR", 40)
+    GothamGame.Network.Socket.on 'ANNOUNCE', (data) ->
+      that.message(data.message, data.type, 40)
 
 
   message: (message, type, size) ->
@@ -33,18 +33,22 @@ class AnnounceController extends Gotham.Pattern.MVC.Controller
     type = if not type then "NORMAL" else type
 
     color = null
+    stroke = null
     if type == "NORMAL"
       color = "#FFFFFF"
+      stroke = "#000000"
     else if type == "ERROR"
       color = "#FF0000"
+      stroke = "#000000"
     else if type == "MISSION"
       color = "#004600"
+      stroke = "#FFFFFF"
     else
       color = "#000000"
 
 
 
-    message = new Gotham.Graphics.Text(message, {font: "bold #{size}px calibri", stroke: "#ffffff", strokeThickness: 4, fill: color, align: "center", dropShadow: true});
+    message = new Gotham.Graphics.Text(message, {font: "bold #{size}px calibri", stroke: stroke, strokeThickness: 4, fill: color, align: "center", dropShadow: true});
     message.x = (1920/2)
     message.y = (1080/6)
     message.anchor =

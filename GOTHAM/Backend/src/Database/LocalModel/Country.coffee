@@ -15,8 +15,6 @@ class Country extends GothamObject
   constructor: (model) ->
     super model
 
-    delete @["country"]
-
 
 ###*
 # The identifier for this Country

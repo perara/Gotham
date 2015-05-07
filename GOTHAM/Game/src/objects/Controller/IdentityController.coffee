@@ -18,6 +18,8 @@ class IdentityController extends Gotham.Pattern.MVC.Controller
   create: ->
     @setupIdentities()
     @setupHosts()
+    @emitNetwork()
+    @emitHost()
 
     @View.hide()
 
@@ -39,6 +41,29 @@ class IdentityController extends Gotham.Pattern.MVC.Controller
 
       @View.addIdentity identity
 
+  ###*
+  # Emits for when Networks has been updated. For example a purchase
+  # @method emitNetwork
+  ###
+  emitNetwork: ->
+    that = @
+    GothamGame.Network.Socket.on 'NetworkPurchaseUpdate', (network) ->
+      that.View.addNetwork network
+
+  ###*
+  # Emits for when A host has been purchased,
+  # @method emitHost
+  ###
+  emitHost: ->
+    that = @
+
+    GothamGame.Network.Socket.on 'HostPurchaseUpdate', (host) ->
+      sprite = that.View.addHost host.Network, host
+      that.createTerminal sprite, host, host.Network, host.Identity
+      that.View.redraw()
+
+
+
   setupHosts: ->
     db_user = Gotham.Database.table "user"
     identities = db_user.data[0].Identities
@@ -50,24 +75,32 @@ class IdentityController extends Gotham.Pattern.MVC.Controller
         for host in network.Hosts
           sprite = @View.addHost network, host
 
+          @createTerminal sprite, host, network, identity
+
+    @View.redraw()
 
 
-          # Create a terminal
-          terminal = new GothamGame.Controllers.Terminal "Terminal_#{host.ip}"
-          terminal.View.create()
-          terminal.setIdentity(identity)
-          terminal.setHost(host)
-          terminal.setNetwork(network)
-          terminal.create()
-          sprite.terminal = terminal
-          sprite.click = ->
-            @terminal.toggle()
 
 
-          sprite.mouseout = ->
-            @tint = 0xffffff
-          sprite.mouseover = ->
-            @tint = 0xff0000
+
+  createTerminal: (sprite, host, network, identity)->
+
+    # Create a terminal
+    terminal = new GothamGame.Controllers.Terminal "Terminal_#{host.ip}"
+    terminal.View.create()
+    terminal.setIdentity(identity)
+    terminal.setHost(host)
+    terminal.setNetwork(network)
+    terminal.create()
+    sprite.terminal = terminal
+    sprite.click = ->
+      @terminal.toggle()
+
+
+    sprite.mouseout = ->
+      @tint = 0xffffff
+    sprite.mouseover = ->
+      @tint = 0xff0000
 
   show: ->
     @View.show()

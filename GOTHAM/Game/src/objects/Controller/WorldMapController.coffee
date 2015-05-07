@@ -54,6 +54,10 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
     console.log "Process Cables: " + (new Date().getTime() - start) + "ms"
 
   createHost: ->
+    that = @
+    GothamGame.Network.Socket.on 'NetworkPurchaseUpdate', (network) ->
+      gNetworkNode = that.View.addNetwork(network)
+      gNetworkNode.bringToBack()
 
     db_user = Gotham.Database.table('user')
     user = db_user.find()[0]

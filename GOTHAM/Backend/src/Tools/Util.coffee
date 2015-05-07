@@ -6,4 +6,5 @@ class Util
 
   @GeoTool = require './GeoTool.coffee'
 
+  @IPTool = require './IPTool.coffee'
 module.exports = Util

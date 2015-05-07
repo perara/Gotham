@@ -38,6 +38,12 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     ###
     @_visible_info_frames = []
 
+    ###*
+    # Callback which are used to purchase networks. This callback goes to ShopView
+    # @property {Callback} shopOnNodeClick
+    ###
+    @shopOnNodeClick = ->
+
 
   ###*
   # Get the coorinate factors for latitude and longitude based on the maps current size and scale
@@ -503,6 +509,9 @@ class WorldMapView extends Gotham.Pattern.MVC.View
       if @_toggle
         @infoFrame.visible = true
 
+        # Fire Shop node click callback
+        that.shopOnNodeClick(node)
+
         # Set all info frames to hidden, and remove
         for _info_frames in that._visible_info_frames
           _info_frames.visible = false
@@ -811,10 +820,11 @@ class WorldMapView extends Gotham.Pattern.MVC.View
 
     # Add the network to the world map as a node representation
     @addNode networkNode, false
-    networkNode.sprite.width = 32
-    networkNode.sprite.height = 32
+    networkNode.sprite.width = 16
+    networkNode.sprite.height = 16
     networkNode.sprite.tint = 0x00ff00
 
+    return networkNode.sprite
     return #TODO TODO
 
     # Create cable from the network to connected node
@@ -871,6 +881,7 @@ class WorldMapView extends Gotham.Pattern.MVC.View
         animationGraphics.lineTo(points.end.x, points.end.y)
 
     tween.start()
+
 
   ###*
   # Zooms the map to a given Scale, The map is Centered around Width/2 and Height /2
