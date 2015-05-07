@@ -44,17 +44,23 @@ class AnnounceController extends Gotham.Pattern.MVC.Controller
 
 
 
-
-    message = new Gotham.Graphics.Text(message, {font: "bold #{size}px calibri", fill: color, align: "center", dropShadow: true});
-    message.x = 1920 / 2
-    message.y = 1080 / 6
+    message = new Gotham.Graphics.Text(message, {font: "bold #{size}px calibri", stroke: "#ffffff", strokeThickness: 4, fill: color, align: "center", dropShadow: true});
+    message.x = (1920/2)
+    message.y = (1080/6)
     message.anchor =
       x: 0.5
       y: 0.5
-    message.alpha = 0
+    message.alpha = 1
     message.visible = true
 
-    @messageQueue.push message
+    container = new Gotham.Graphics.Graphics()
+    container.beginFill "#000000", 0.5
+    container.drawRect (1920/2) - (message.width/2) ,(1080/6) - (message.height/2) ,message.width, message.height
+
+
+    container.addChild message
+
+    @messageQueue.push container
 
   queue: ->
     that = @

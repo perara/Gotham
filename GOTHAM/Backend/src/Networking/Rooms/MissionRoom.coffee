@@ -46,8 +46,10 @@ class MissionRoom extends Room
         user = db_user.findOne(id: client.getUser().id)
         user.update({
           experience: user.experience + _m.experience_gain
+          money: user.money + _m.money_gain
         })
 
+        client.Socket.emit 'UpdatePlayerMoney', user.money
         client.Socket.emit 'UpdatePlayerExperience', user.experience
 
 

@@ -26,6 +26,7 @@ class UserView extends Gotham.Pattern.MVC.View
     #@hide()
 
     @emitSetExperience()
+    @emitSetMoney()
 
   createTitles: ->
     title = @title = new Gotham.Graphics.Text("Player Information", {font: "bold 50px calibri", fill: "#ffffff", align: "center"});
@@ -70,7 +71,13 @@ class UserView extends Gotham.Pattern.MVC.View
     @window.addChild(hosts)
 
   emitSetMoney: () ->
-    #@money.text = "Money: " + num
+    that = @
+    GothamGame.Network.Socket.on 'UpdatePlayerMoney', (money) ->
+      oldMoney = parseInt(that.money.text.replace("Money: ", ""))
+      gain = money - oldMoney
+
+      GothamGame.Announce.message "You gained #{gain} money!", "MISSION", 50
+      that.money.text = "Money: " + money
 
   emitSetExperience: () ->
     that = @
@@ -99,7 +106,7 @@ class UserView extends Gotham.Pattern.MVC.View
     @email.text = @email.text.replace "[NONE]", user.email
     @money.text = @money.text.replace "[NONE]", user.money
     @experience.text = @experience.text.replace "[NONE]", user.experience
-    @identities.text = @identities.text.replace "[NONE]", numNetworks
+    @identities.text = @identities.text.replace "[NONE]", numIdentities
     @networks.text = @networks.text.replace "[NONE]", numNetworks
     @hosts.text = @hosts.text.replace "[NONE]", numHosts
 

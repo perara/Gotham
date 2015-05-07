@@ -56,7 +56,7 @@ class IdentityView extends Gotham.Pattern.MVC.View
 
     # Create mask background
     windowMask = new Gotham.Graphics.Graphics
-    windowMask.beginFill(0x232323, 1)
+    windowMask.beginFill(0x000000, 1)
     windowMask.drawRect(0, 0,  window.width / window.scale.x, window.height / window.scale.y)
     window.addChild windowMask
     window.mask = windowMask
@@ -78,7 +78,7 @@ class IdentityView extends Gotham.Pattern.MVC.View
 
 
     networkContainerTexture =  new Gotham.Graphics.Graphics()
-    networkContainerTexture.beginFill(0x00ff00, 1)
+    networkContainerTexture.beginFill(0x00ff00, 0.2)
     networkContainerTexture.drawRect(0, 0, 360,660)
     networkContainerTexture.endFill()
     networkContainerTexture = networkContainerTexture.generateTexture()
@@ -181,25 +181,24 @@ class IdentityView extends Gotham.Pattern.MVC.View
     @networkContainer.addChild networkSprite
 
 
-    @networkY += 70
+    @networkY += 65
     @networkCount++
 
 
   addHost: (network, host) ->
 
     hostSprite = new Gotham.Graphics.Sprite Gotham.Preload.fetch("user_mangement_host", "image")
-    hostSprite.x = 5
-    hostSprite.width -= 10
+    hostSprite.x = 0
     hostSprite.y = @networkY
     hostSprite.interactive = true
     @networkContainer.addChild hostSprite
 
     text = new Gotham.Graphics.Text("Machine: #{host.machine_name} IP: #{host.ip}\nMAC: #{host.mac} Online: #{host.online}", {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
-    text.x = 5
+    text.x = 30
     text.y = 5
     hostSprite.addChild text
 
-    @networkY += hostSprite.height + 10
+    @networkY += hostSprite.height + 5
     return hostSprite
 
 

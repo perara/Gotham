@@ -107,11 +107,6 @@ class MissionController extends Gotham.Pattern.MVC.Controller
       _m = GothamGame.MissionEngine.createMission mission
       _m.setOngoing mission.ongoing
 
-      # Set complete callback, emitting back to server when its done.
-      _m.onComplete = (mission) ->
-        #console.log "#{mission._title} is complete!"
-
-
       # Whenever the mission has progress
       _m.onRequirementComplete = _m.onProgress = (requirement) ->
 
@@ -127,9 +122,16 @@ class MissionController extends Gotham.Pattern.MVC.Controller
 
       if mission.ongoing
         GothamGame.MissionEngine.addMission _m
-        @View.addOngoingMission _m
+        elements = @View.addOngoingMission _m
       else
-        @View.addAvailableMission _m
+        elements = @View.addAvailableMission _m
+
+      # Set complete callback, emitting back to server when its done.
+      _m.onComplete = (mission) ->
+        elements.journal.abandonButton.visible = false
+        elements.journal.completeMissionButton.visible = true
+        elements.missionTitle.text = elements.missionTitle.text + " (Complete)"
+
 
 
   show: ->

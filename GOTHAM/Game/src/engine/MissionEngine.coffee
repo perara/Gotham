@@ -25,6 +25,8 @@ class MissionEngine
     mission.setDescription missionData.description
     mission.setRequiredXP missionData.required_xp
     mission.addRequirements missionData.MissionRequirements
+    mission.setMoneyGain missionData.money_gain
+    mission.setExperienceGain missionData.experience_gain
 
     if missionData.UserMissionRequirements
       mission.setUserMissionID missionData.userMissionId

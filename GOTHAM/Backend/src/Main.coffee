@@ -64,6 +64,10 @@ preload = (_c) ->
 # Preload then start server
 preload ->
   startServer()
+
+
+
+  """
   console.log "EGPT"
 
   db_node = Gotham.LocalDatabase.table "Node"
@@ -77,11 +81,12 @@ preload ->
     for _n2 in nodes
       if count % 100000 then console.log(count, " nodes tested")
       new Gotham.Micro.Pathfinder.bStar _n1,_n2, 1, 1, (startId, goalId) ->
-        errors.push ("Fail on: #{startId}, #{goalId}")
+        errors.push ("Fail on: {startId}, {goalId}")
         console.log errors.pop()
 
   for e in errors
     console.log e
+  """
 
 
 
