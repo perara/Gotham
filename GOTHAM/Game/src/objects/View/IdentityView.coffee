@@ -237,7 +237,7 @@ class IdentityView extends Gotham.Pattern.MVC.View
     hostSprite.interactive = true
     @networkContainer.addChild hostSprite
 
-    text = new Gotham.Graphics.Text("Machine: #{host.machine_name} IP: #{host.ip}\nMAC: #{host.mac} Online: #{host.online}", {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
+    text = new Gotham.Graphics.Text("#{host.machine_name}          Online: #{host.online}\n#{host.ip}       #{host.mac}", {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
     text.x = 30
     text.y = 5
     hostSprite.addChild text

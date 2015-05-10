@@ -84,6 +84,7 @@ class IdentityController extends Gotham.Pattern.MVC.Controller
 
 
   createTerminal: (sprite, host, network, identity)->
+    that = @
 
     # Create a terminal
     terminal = new GothamGame.Controllers.Terminal "Terminal_#{host.ip}"
@@ -94,7 +95,11 @@ class IdentityController extends Gotham.Pattern.MVC.Controller
     terminal.create()
     sprite.terminal = terminal
     sprite.click = ->
-      @terminal.toggle()
+      toggled = @terminal.toggle()
+
+      if toggled
+        that.scene.getObject("Bar").closeAll(null)
+
 
 
     sprite.mouseout = ->

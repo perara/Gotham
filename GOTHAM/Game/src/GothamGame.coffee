@@ -26,6 +26,7 @@ class GothamGame
 
   @Tools =
     HostUtils: require './tools/HostUtils.coffee'
+    ColorUtil: require './tools/ColorUtil.coffee'
 
   # Networking
   @Network = null
@@ -42,7 +43,7 @@ class GothamGame
     Gothshark: require './objects/Controller/GothsharkController.coffee'
     User: require './objects/Controller/UserController.coffee'
     Shop: require './objects/Controller/ShopController.coffee'
-
+    Help: require './objects/Controller/HelpController.coffee'
 
   # Game Scenes
   @Scenes =

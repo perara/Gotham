@@ -27,6 +27,10 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
     @createCables()
 
     @setupIPViking()
+    @emitNodeLoad()
+    @emitClock()
+
+    @currentMinutes = 0
 
   createNodes: ->
     that = @
@@ -67,6 +71,65 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
           @View.addNetwork(network)
 
     return
+  ###*
+  # Create a emit listener NodeLoad
+  # This stream is relayed from main server
+  # Emitter: NodeLoadUpdate
+  # @method emitNodeLoad
+  ###
+  emitNodeLoad: ->
+    that = @
+
+    db_node = Gotham.Database.table("node")
+
+    GothamGame.Network.Socket.on 'NodeLoadUpdate', (json) ->
+
+
+      for id, load of json
+        node = db_node.findOne(id: parseInt(id))
+        node.time = ((node.lng + 180) / 0.25) + that.currentMinutes
+
+
+
+        node.loadColor = GothamGame.Tools.ColorUtil.getColorForPercentage(load)
+
+
+        node.sprite.infoFrame.nodeLoad.text = "Load: #{(load*100).toFixed(2)}"
+
+
+        # Calculate time
+        utc = moment().utcOffset('+0000')
+        utc.subtract(utc.hours(), "hours")
+        utc.minutes(utc.minutes(), "minutes")
+        utc.add(12, 'hours')
+        nowthen = utc.add(node.time, "minutes")
+        node.sprite.infoFrame.nodeTime.text = "Time: #{nowthen.format('H:mm')}"
+
+        node.sprite.tint = node.loadColor
+
+  ###*
+  # Create a emit for World Clock
+  # @method emitClock
+  ###
+  emitClock: ->
+    that = @
+    maxTime = 1440
+
+    GothamGame.Network.Socket.on 'World_Clock', (data) ->
+      that.currentMinutes = data.minutes
+      current = ((data.minutes / maxTime) * (180 * 2) - 180) * -1
+
+
+      position = that.View.coordinateToPixel(10, current)
+      that.View.sun.visible = true
+      that.View.sun.x = position.x
+
+
+
+
+
+
+
 
   # Create a emit listener for the IPViking stream
   # This stream is relayed from main server

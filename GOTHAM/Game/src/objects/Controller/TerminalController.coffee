@@ -47,7 +47,7 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
     # Filesystem Initialize
     @filesystem = new GothamGame.Terminal.Filesystem(@host.Filesystem)
     @filesystem.onError = (error) ->
-      console.add error
+      that.console.add error
 
 
     @setupInput()
@@ -162,9 +162,11 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
 
     if $(@View.terminal_frame).is(":visible")
       @View.terminal_frame.hide()
+      return false
     else
       $(".terminal_frame").hide()
       @View.terminal_frame.show()
+      return true
 
 
   show: () ->
@@ -193,14 +195,15 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
       "",
       "  System information as of #{new Date()}",
       "",
-      "  System load:  0.18                Processes:           162",
-      "  Usage of /:   16.6% of 157.36GB   Users logged in:     0",
-      "  Memory usage: 48%                 IP address for eth0: #{@host.ip}",
-      "  Swap usage:   0%                  IP address for eth1: 10.131.240.142",
+      #"  System load:  0.18                Processes:           162",
+      #"  Usage of /:   16.6% of 157.36GB   Users logged in:     0",
+      #"  Memory usage: 48%                 IP address for eth0: #{@host.ip}",
+      #"  Swap usage:   0%                  IP address for eth1: 10.131.240.142",
+      "  IP address for eth0: #{@host.ip}",
       "",
       "",
-      "23 packages can be updated.",
-      "19 updates are security updates.",
+      "0 packages can be updated.",
+      "0 updates are security updates.",
       "",
       "Last login: Fri Mar 20 17:09:49 2015 from grm-studby-128-39-148-43.studby.uia.no"
     ]

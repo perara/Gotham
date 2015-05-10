@@ -14,9 +14,9 @@ class ChangeDirectory extends Application
   @Command = "cd"
 
 
-  @execute = (command) ->
+  execute: ->
 
-    command.controller.filesystem.cd command.arguments
+    @Controller.filesystem.cd @Arguments
 
 
 module.exports = ChangeDirectory

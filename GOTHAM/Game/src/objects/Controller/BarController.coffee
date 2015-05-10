@@ -40,8 +40,8 @@ class BarController extends Gotham.Pattern.MVC.Controller
 
 
     # Emit for World_Clock
-    GothamGame.Network.Socket.on 'World_Clock', (time) ->
-      world_clock.label.text = time
+    GothamGame.Network.Socket.on 'World_Clock', (data) ->
+      world_clock.label.text = data.text
 
   sideBarRight: ->
     that = @
@@ -83,34 +83,37 @@ class BarController extends Gotham.Pattern.MVC.Controller
       return home
 
 
+  closeAll: (src) ->
+    that = @
+    # Home Button (Identity)
+    if src != that.home
+      that.home.tint = 0x4169E1
+      that.home.toggle = false
+      that.scene.getObject("Identity").hide()
+
+    # User Button (User)
+    if src != that.user
+      that.user.tint = 0x4169E1
+      that.user.toggle = false
+      that.scene.getObject("User").hide()
+
+    if src != that.mission
+      that.mission.tint = 0x4169E1
+      that.mission.toggle = false
+      that.scene.getObject("Mission").hide()
+
+    if src != that.shop
+      that.shop.tint = 0x4169E1
+      that.shop.toggle = false
+      that.scene.getObject("Shop").hide()
+
+    if src != that.help
+      that.help.tint = 0x4169E1
+      that.help.toggle = false
+      that.scene.getObject("Help").hide()
+
   sideBarLeft: ->
     that = @
-
-    closeAll = (src) ->
-      # Home Button (Identity)
-      if src != that.home
-        that.home.tint = 0x4169E1
-        that.home.toggle = false
-        that.scene.getObject("Identity").hide()
-
-      # User Button (User)
-      if src != that.user
-        that.user.tint = 0x4169E1
-        that.user.toggle = false
-        that.scene.getObject("User").hide()
-
-      if src != that.mission
-        that.mission.tint = 0x4169E1
-        that.mission.toggle = false
-        that.scene.getObject("Mission").hide()
-
-      if src != that.shop
-        that.shop.tint = 0x4169E1
-        that.shop.toggle = false
-        that.scene.getObject("Shop").hide()
-
-
-
 
     @View.addSidebarItem  "LEFT", 15, ->
       that.home = home = new Gotham.Graphics.Sprite Gotham.Preload.fetch("home", "image")
@@ -123,7 +126,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
         @toggle = if not @toggle then true else !@toggle
 
         if @toggle
-          closeAll(@)
+          that.closeAll(@)
           that.scene.getObject("Identity").show()
           that.scene.getObject("Identity").View.bringToFront()
           home.tint = 0xFF0000
@@ -143,7 +146,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
         @toggle = if not @toggle then true else !@toggle
 
         if @toggle
-          closeAll(@)
+          that.closeAll(@)
           that.scene.getObject("User").show()
           that.scene.getObject("User").View.bringToFront()
           user.tint = 0xFF0000
@@ -164,7 +167,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
         @toggle = if not @toggle then true else !@toggle
 
         if @toggle
-          closeAll(@)
+          that.closeAll(@)
           that.scene.getObject("Shop").show()
           that.scene.getObject("Shop").View.bringToFront()
           @tint = 0xFF0000
@@ -185,7 +188,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
         @toggle = if not @toggle then true else !@toggle
 
         if @toggle
-          closeAll(@)
+          that.closeAll(@)
           that.scene.getObject("Mission").show()
           that.scene.getObject("Mission").View.bringToFront()
           @tint = 0xFF0000
@@ -195,7 +198,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
       return mission
 
     @View.addSidebarItem "LEFT", 450 ,->
-      help = new Gotham.Graphics.Sprite Gotham.Preload.fetch("help", "image")
+      that.help = help = new Gotham.Graphics.Sprite Gotham.Preload.fetch("help", "image")
       help.tint = 0x4169E1
       help.alpha = 0.4
       help.interactive = true
@@ -205,10 +208,10 @@ class BarController extends Gotham.Pattern.MVC.Controller
         @toggle = if not @toggle then true else !@toggle
 
         if @toggle
-          # TODO
+          that.scene.getObject("Help").show()
           @tint = 0xFF0000
         else
-          # TODO
+          that.scene.getObject("Help").hide()
           @tint = 0x4169E1
       return help
 
@@ -243,45 +246,6 @@ class BarController extends Gotham.Pattern.MVC.Controller
         GothamGame.Renderer.setScene("Menu")
 
       return menu
-
-
-
-    #@_background.addChild home
-    """ready = true
-    home.tint = 0x4169E1
-    home.click = ->
-      if ready
-        ready = false
-        mapContainer.interactive = false
-        home.tint = 0xFF0000
-
-        prevSize =
-          width : that.__width
-          height : that.__height
-
-        nextSize =
-          width : mapContainer.width
-          height : mapContainer.height
-
-        diffSize =
-          width: prevSize.width - nextSize.width
-          height: prevSize.height - nextSize.height
-
-        tween = new Gotham.Tween mapContainer
-        tween.easing Gotham.Tween.Easing.Exponential.Out
-        tween.to {position: {x: (diffSize.width / 2), y: (diffSize.height / 2)}}, 500
-        tween.start()
-        tween.onComplete () ->
-          home.tint = 0x4169E1
-          mapContainer.interactive = true
-          mapContainer.offset.x = 0
-          mapContainer.offset.y = 0
-          ready = true
-      """
-
-
-
-
 
 
   bottomBar: ->

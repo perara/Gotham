@@ -1,6 +1,7 @@
 Gotham = require '../../GameFramework/src/Gotham.coffee'
 GothamGame = require './GothamGame.coffee'
 require './dependencies/jquery-ui.min'
+window.moment = require './dependencies/moment.min'
 
 
 setup =
@@ -62,13 +63,12 @@ setup =
     Gotham.Preload.image("/assets/img/mission_item.png","mission_item", "image")
     Gotham.Preload.image("/assets/img/user_management_frame.png", "mission_frame", "image")
 
-    # Node
+    # World Map
     Gotham.Preload.image("/assets/img/node_details.png","node_details", "image")
-
-
     Gotham.Preload.image("/assets/img/map_marker.png", "map_marker", "image")
     Gotham.Preload.json("/assets/json/json.json", "map")
     Gotham.Preload.image("/assets/img/sea_background.png", "sea_background", "image")
+    Gotham.Preload.image("/assets/img/sun.png", "sun", "image")
 
     # Bar
     Gotham.Preload.image("/assets/img/bottomBar.png", "bottomBar", "image")
@@ -90,6 +90,8 @@ setup =
     Gotham.Preload.image("/assets/img/menu_button.png", "menu_button", "image")
     Gotham.Preload.image("/assets/img/menu_button_hover.png", "menu_button_hover", "image")
     Gotham.Preload.image("/assets/img/menu_background.jpg", "menu_background", "image")
+    Gotham.Preload.image("/assets/img/menu_background2.jpg", "menu_background2", "image")
+    Gotham.Preload.image("/assets/img/about_background.jpg", "about_background", "image")
     Gotham.Preload.mp3("./assets/audio/menu_theme.mp3", "menu_theme")
     Gotham.Preload.mp3("./assets/audio/button_click_1.mp3", "button_click_1")
 
@@ -97,6 +99,7 @@ setup =
     # Settings
     Gotham.Preload.image("/assets/img/settings_background.jpg", "settings_background", "image")
     Gotham.Preload.image("/assets/img/settings_close.png", "settings_close", "image")
+    Gotham.Preload.image("/assets/img/slider_background.png", "slider_background", "image")
 
     #NodeList
     Gotham.Preload.image("/assets/img/nodelist_background.jpg", "nodelist_background", "image")
@@ -126,7 +129,7 @@ setup =
     scene_Menu.documentContainer.addChild GothamGame.Renderer.getScene("Loading").documentContainer
 
     # Set Menu Scene
-    GothamGame.Renderer.setScene("World")
+    GothamGame.Renderer.setScene("Menu")
 
   startNetwork: (callback) ->
     GothamGame.Network = new Gotham.Network location.hostname, 8081

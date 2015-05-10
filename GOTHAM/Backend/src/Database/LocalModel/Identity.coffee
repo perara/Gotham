@@ -190,3 +190,7 @@ class Identity extends GothamObject
 
 
 module.exports = Identity
+
+
+GothamObject = require './GothamObject.coffee'
+

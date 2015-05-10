@@ -30,7 +30,7 @@ class World
     # @property {FREQUENCY} Frequency
     # @private
     ###
-    FREQUENCY = 1000
+    FREQUENCY = 5000
 
     ###*
     # The world clock
@@ -72,15 +72,27 @@ class World
   updateNodeLoad: ->
     db_node = Gotham.LocalDatabase.table "Node"
 
+
+    node_load = {}
+
     for node in db_node.find()
       node.updateLoad()
 
-      # Update API
+      node_load[node.id] = node.load
+
+
       @apiData["nodes"][node.id] =
         load: node.load
         minutes: ((node.lng + 180) / 0.25)  + Gotham.World.Clock.getMinutes()
         lng: node.lng
         name: node.name
+
+
+
+    # Send update to all clients
+    for key, client of Gotham.SocketServer.getClients()
+      client.Socket.emit 'NodeLoadUpdate', node_load
+
 
 
 

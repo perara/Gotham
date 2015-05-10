@@ -45,6 +45,7 @@ startServer = () ->
   server.registerRoom new (require './Networking/Rooms/ShopRoom.coffee')()
   server.registerRoom new (require './Networking/Rooms/Applications/TracerouteRoom.coffee')()
   server.registerRoom new (require './Networking/Rooms/Applications/PingRoom.coffee')()
+  server.registerRoom new (require './Networking/Rooms/AdministrationRoom.coffee')()
   server.start()
 
   server.onConnect = (_client) ->

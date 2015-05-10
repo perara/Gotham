@@ -37,6 +37,10 @@ class World extends Gotham.Graphics.Scene
     Gothshark = new GothamGame.Controllers.Gothshark "Gothshark"
     @addObject Gothshark
 
+    Help = new GothamGame.Controllers.Help "Help"
+    @addObject Help
+
+
     # Add the Announce Module
     @addObject GothamGame.Announce
 

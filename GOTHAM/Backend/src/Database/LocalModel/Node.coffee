@@ -89,8 +89,8 @@ class Node extends GothamObject
 
   ###*
   # Updates load on node based of time
-  # @method
-  #
+  # @method updateLoad
+  # @returns {Double} the load
   ###
   updateLoad: ->
     sumCableLoad = 0
@@ -100,6 +100,7 @@ class Node extends GothamObject
       sumCableLoad += cable.updateLoad()
 
     @load = sumCableLoad / cables.length
+    return @load
 
 
 

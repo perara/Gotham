@@ -25,7 +25,7 @@ class Clock
     self = this
     setInterval ->
       self.tick()
-    , 1000
+    , 20
 
   ###*
   # tick the clock by a minute
@@ -38,7 +38,10 @@ class Clock
 
     # Broadcast to clients
     for key, client of Gotham.SocketServer.getClients()
-      client.Socket.emit 'World_Clock', that._time.format('D MMM YYYY, H:mm')
+      client.Socket.emit 'World_Clock', {
+        text: that._time.format('D MMM YYYY, H:mm')
+        minutes: that.getMinutes()
+      }
 
 
   ###*

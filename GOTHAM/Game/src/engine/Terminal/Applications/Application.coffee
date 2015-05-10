@@ -18,6 +18,7 @@ class Application
     @Command = command.command
     @Arguments = command.arguments
     @Console = command.controller.console
+    @Controller = command.controller
 
 
   ArgumentParser: () ->
