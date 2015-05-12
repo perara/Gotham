@@ -154,7 +154,7 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
       # Pass animation if Gotham Engine is unactive
 
 
-      if Gotham.Running
+      if Gotham.Running and GothamGame.Globals.showAttacks == true
         that.View.animateAttack source, target
 
 

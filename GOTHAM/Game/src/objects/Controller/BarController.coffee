@@ -57,11 +57,12 @@ class BarController extends Gotham.Pattern.MVC.Controller
         @toggle = if not @toggle then true else !@toggle
 
         if @toggle
-          #DO SOMTHING
+          GothamGame.Globals.showAttacks = true
           home.tint = 0xFF0000
         else
-          # DO SOMTHING
+          GothamGame.Globals.showAttacks = false
           home.tint = 0x4169E1
+      home.click()
       return home
 
     @View.addSidebarItem  "RIGHT", 15, ->
@@ -75,10 +76,12 @@ class BarController extends Gotham.Pattern.MVC.Controller
         @toggle = if not @toggle then true else !@toggle
 
         if @toggle
-          #DO SOMTHING
+          GothamGame.Globals.showCables = true
+          that.scene.getObject("WorldMap").View.setCableVisibility(GothamGame.Globals.showCables);
           home.tint = 0xFF0000
         else
-          # DO SOMTHING
+          GothamGame.Globals.showCables = false
+          that.scene.getObject("WorldMap").View.setCableVisibility(GothamGame.Globals.showCables);
           home.tint = 0x4169E1
       return home
 
@@ -111,6 +114,7 @@ class BarController extends Gotham.Pattern.MVC.Controller
       that.help.tint = 0x4169E1
       that.help.toggle = false
       that.scene.getObject("Help").hide()
+      GothamGame.Globals.canWheelScroll = true
 
   sideBarLeft: ->
     that = @
@@ -209,9 +213,11 @@ class BarController extends Gotham.Pattern.MVC.Controller
 
         if @toggle
           that.scene.getObject("Help").show()
+          GothamGame.Globals.canWheelScroll = false
           @tint = 0xFF0000
         else
           that.scene.getObject("Help").hide()
+          GothamGame.Globals.canWheelScroll = true
           @tint = 0x4169E1
       return help
 

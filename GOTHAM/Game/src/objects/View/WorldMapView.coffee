@@ -250,6 +250,7 @@ class WorldMapView extends Gotham.Pattern.MVC.View
       @isDragging = false
 
     mapContainer.onWheelScroll = (e) ->
+      if not GothamGame.Globals.canWheelScroll then return
       if not @canScroll then return
       direction = e.wheelDeltaY / Math.abs(e.wheelDeltaY)
 
@@ -512,6 +513,9 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     # Whenever a node is hovered or exited (mouseover and mouseout)
     nodeHover = (node, tint, visible) ->
 
+      if GothamGame.Globals.showCables
+        visible = true
+
       # Update country information
       that.parent.getObject("Bar").updateCountry node.Country
 
@@ -569,6 +573,21 @@ class WorldMapView extends Gotham.Pattern.MVC.View
   ###
   hideNodeDetails: () ->
     $("#gothshark_frame").fadeOut()
+
+  ###*
+  # Set the cable visibility
+  # @method setCableVisibility
+  # @param {Boolean} visible
+  ###
+  setCableVisibility: (visible) ->
+    cables = Gotham.Database.table("cable").find()
+
+    for cable in cables
+      for part in cable.CableParts
+        part.visible = visible
+
+
+
 
   ###*
   # Creates the information plate of each of the node,
@@ -825,7 +844,7 @@ class WorldMapView extends Gotham.Pattern.MVC.View
 
     # Create a new graphics element
     graphics = new Gotham.Graphics.Graphics();
-    graphics.visible = false
+    graphics.visible = GothamGame.Globals.showCables
     if cable.CableType.id == 1
       graphics.lineStyle(1, 0x3399FF, 1);
     else

@@ -9,6 +9,11 @@ class GothamGame
 
   window.GothamGame = GothamGame
 
+  @Globals =
+    canWheelScroll: true
+    showAttacks: true
+    showCables: false
+
   @Renderer = new Gotham.Graphics.Renderer 1920, 1080, {
     antialiasing:true
     transparent:false

@@ -16,12 +16,14 @@ class HelpView extends Gotham.Pattern.MVC.View
   ###
   addCategory: (category, origSelector) ->
     selector = if not origSelector then $(@helpMenu) else origSelector
+    tabbed = if origSelector then "padding-left: 40px;" else ""
 
     # Menu Item Selector
     menuItem = $("<a/>",{
       "href": ".item-" + category.id,
       "data-toggle": "collapse",
       "text": category.title,
+      "style": "#{tabbed}"
       "class": "list-group-item squared help-menu-item"
     })
 

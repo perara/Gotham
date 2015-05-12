@@ -91,11 +91,19 @@ class Traceroute extends Application
 
       # The Host Location (Source host)
       last = that._commandObject.controller.network
+      hopCount = 1
+
+      # Print the local network hop
+      that.Console.add "traceroute to #{targetNetwork.external_ip_v4} (#{targetNetwork.external_ip_v4}), 30 hops max, 60 byte packets"
+      that.Console.add(" #{hopCount++}  #{last.internal_ip_v4} (#{last.internal_ip_v4})")
 
       for nodeID in path
 
         # Find the node in the database
         current = db_node.findOne({id: nodeID})
+
+        # Print Node hops
+        that.Console.add(" #{hopCount++}  #{current.Network.external_ip_v4} (#{current.Network.external_ip_v4})")
 
 
         direction = if (last.lng < 0) then 180 else -180
@@ -119,6 +127,11 @@ class Traceroute extends Application
         tween = GothamGame.Renderer.getScene("World").getObject("WorldMap").View.animatePath(last, current)
         tween.start()
         last = current
+
+      # Add null hops for rest of the hopcount durcation
+      while hopCount++ < 30
+        that.Console.add(" #{hopCount++}  * * *")
+
 
       # Finally add path between last node and network
       tween = GothamGame.Renderer.getScene("World").getObject("WorldMap").View.animatePath(last, targetNetwork)
