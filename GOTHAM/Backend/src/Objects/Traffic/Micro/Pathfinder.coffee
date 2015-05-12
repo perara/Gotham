@@ -9,7 +9,7 @@ class Pathfinder
   ###############################################################################################
   ##### Tries random paths and returns the shortest that reached the goal
   ###############################################################################################
-  @tryRandom = (start, goal, tryPaths = 100000) ->
+  @tryRandom = (start, goal, blacklistIDs, tryPaths = 100000) ->
 
     nodes = Gotham.LocalDatabase.table("Node")
 
@@ -37,6 +37,7 @@ class Pathfinder
         siblings = currentNode.getSiblings()
 
         nextNodeId = siblings[rnd(0, siblings.length - 1)].id
+        if nextNodeId in blacklist then continue
 
         deltaTime = new Date().getTime()
         nextNode = nodes.findOne(id: nextNodeId)
@@ -63,30 +64,31 @@ class Pathfinder
   ###############################################################################################
   ##### Uses geometric locations of siblings to generate a path
   ###############################################################################################
-  @aStar: (start, goal) ->
+  @aStar: (start, goal, blacklistIDs) ->
 
     nodes = Gotham.LocalDatabase.table("Node")
 
     maxPathLength = 100
     path = []
-    blacklist = []
+    blacklist = blacklistIDs
     path.push(start)
-    blacklist.push(start)
+    blacklist.push(start.id)
 
     reverse = (node) ->
-      blacklist.push(node)
+      blacklist.push(node.id)
       path.pop()
       log.info "Foul Node #{node.id}"
 
     addNode = (node) ->
       path.push(node)
-      blacklist.push(node)
+      blacklist.push(node.id)
       log.info "Fine Node #{node.id}"
 
     start = performance()
     loop
 
       currentId = path[path.length - 1].id
+
       current = nodes.findOne(id: currentId)
       nextNode = GeoTool.getClosest(goal, current.getSiblings(), blacklist)
       wrongWay = 0
@@ -119,14 +121,14 @@ class Pathfinder
   ##### Improvement of aStar, supports reversing and removal of obsolete nodes #######################################
   ####################################################################################################################
   ####################################################################################################################
-  @bStar: (_start, _goal, startBacktrack = 1, escalations = 2, _onError = ->) ->
+  @bStar: (_start, _goal, blacklistIDs, startBacktrack = 1, escalations = 2, _onError = ->) ->
 
     start = _start
     goal = _goal
 
     # Declarations
     path = []
-    blacklist = []
+    blacklist = [].concat(blacklistIDs)
     allSiblings = {}
     path.push(start)
     blacklist.push(start)
@@ -215,9 +217,12 @@ class Pathfinder
       reset()
       maxBacktrack = tempBT += 1
 
+    ###############################################################################################
+    ##### Resets path, blacklist #####
+    ###############################################################################################
     reset = ->
       path = []
-      blacklist = []
+      blacklist = [].concat(blacklistIDs)
       allSiblings = {}
       path.push(start)
       blacklist.push(start)

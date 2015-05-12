@@ -65,23 +65,23 @@ preload = (_c) ->
 preload ->
   startServer()
   console.log "EGPT"
+  fs = require "fs"
 
   db_node = Gotham.LocalDatabase.table "Node"
   nodes = db_node.find()
-
-  errors = []
 
   count = 0
 
   for _n1 in nodes
     for _n2 in nodes
       if count % 100000 then console.log(count, " nodes tested")
-      new Gotham.Micro.Pathfinder.bStar _n1,_n2, 1, 1, (startId, goalId) ->
-        errors.push ("Fail on: #{startId}, #{goalId}")
-        console.log errors.pop()
+      new Gotham.Micro.Pathfinder.bStar _n1,_n2, null, 1, 1, (startId, goalId) ->
 
-  for e in errors
-    console.log e
+        errorNode = "#{startId};#{goalId}\n"
+        console.log errorNode
+        fs.appendFileSync './errorPaths.txt', errorNode
+
+
 
 
 

@@ -37,7 +37,7 @@ suite 'Networking Tests', ->
       ]
     ).then (nodes)->
 
-      solution = Traffic.Pathfinder.tryRandom(nodes[5], nodes[200])
+      solution = Traffic.Pathfinder.bStar(nodes[5], nodes[200])
       Traffic.Pathfinder.printSolution(solution)
 
 
