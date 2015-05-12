@@ -14,14 +14,14 @@ class Filesystem
     data = JSON.parse(json.data)
 
     @_fs = @parse data
-    @_root = @parse data
+    @_root = @_fs
 
     @onError = ->
 
 
   toRoot: ->
     root = @_fs
-    while @_fs.parent
+    while @_fs.parent != null
       root = @_fs.parent
     return root
 
@@ -46,7 +46,7 @@ class Filesystem
 
     paths = path.split("/")
 
-    curr = if startRoot then @ToRoot() else @_fs
+    curr = if startRoot then @toRoot() else @_fs
 
     for _path in paths
       if not curr then break

@@ -113,6 +113,18 @@ class Mission
   getUserMissionID: ->
     return @userMissionId
 
+  setMoneyGain: (moneyGain) ->
+    @money_gain = moneyGain
+
+  getMoneyGain: ->
+    return @money_gain
+
+  setExperienceGain: (expGain) ->
+    @experience_gain = expGain
+  getExperienceGain: ->
+    return @experience_gain
+
+
   setOngoing: (ongoing) ->
     @ongoing = ongoing
 

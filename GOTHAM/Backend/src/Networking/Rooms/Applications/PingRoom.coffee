@@ -74,8 +74,6 @@ class PingRoom extends Room
          client.Socket.emit 'Ping', "#{packetsize + 8} bytes from #{targetDNSResolve}: icmp_seq=#{i} ttl=#{ttl} time=#{rtt.toFixed(3)} ms"
 
 
-
-
           , if packet.interval then packet.interval * 1000 else 1000)
 
 

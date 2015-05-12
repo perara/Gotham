@@ -54,7 +54,7 @@ class Cable extends GothamObject
 
 
   updateLoad: ->
-    VARIATION = 5
+    VARIATION = 40
 
     cableParts = @getCableParts()
 
@@ -71,16 +71,17 @@ class Cable extends GothamObject
     closestPart = Gotham.Util.GeoTool.getClosest(midPoint, cableParts)
 
     # Calculating what time it is on the current latitude (in total minutes)
-    minutes = ((closestPart.lng + 180) / 0.25)  + Gotham.World.Clock.getMinutes()
+    minutes = ((closestPart.lng + 180) / 0.25) + Gotham.World.Clock.getMinutes()
 
     # Static variable for converting degrees to minutes with 12 hour offset
     deltaMinute = ((2 * Math.PI) / 1440)
 
     # Calculates the load from a sinus curve peaking at 18:00
-    loadValue = Math.sin(deltaMinute * minutes)
+    loadValue = (1 + Math.sin(deltaMinute * minutes)) / 2
+
 
     # Uses variation and multiplication to make a fictional amount of bandwidth
-    @load = ((loadValue) + VARIATION) / 10
+    @load = ((loadValue * 40) + 40) / 100
     return @load
 
 

@@ -72,14 +72,20 @@ class SettingsView extends Gotham.Pattern.MVC.View
     ### Settings controls
     ###
     ##########################################################
-    soundLevel = new Gotham.Controls.Slider(Gotham.Preload.fetch("map_marker", "image"), Gotham.Preload.fetch("topBar", "image"))
-    soundLevel.x = 100
-    soundLevel.y = 100
+
+    soundLevelTitle = new Gotham.Graphics.Text("Sound Volume",{font: "bold 20px Arial", fill: "#ffffff", align: "left"})
+    soundLevelTitle.x = 400
+    soundLevelTitle.y = 180
+    spriteContainer.addChild soundLevelTitle
+
+    soundLevel = new Gotham.Controls.Slider(Gotham.Preload.fetch("map_marker", "image"), Gotham.Preload.fetch("slider_background", "image"))
+    soundLevel.x = 350
+    soundLevel.y = 210
     soundLevel.width = 500
     soundLevel.height = 100
     soundLevel.onProgress = (progress) ->
       # Change sound level for all loaded audios
-      for audio in Gotham.Preload.getDatabase("audio")().get()
+      for audio in Gotham.Preload.getDatabase("audio").find()
         audio.object.volume (progress/100)
 
 

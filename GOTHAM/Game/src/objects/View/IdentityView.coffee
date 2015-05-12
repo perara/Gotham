@@ -23,8 +23,12 @@ class IdentityView extends Gotham.Pattern.MVC.View
     @identityTextMapping = {}
 
     # Network
-    @networkCount = 0
-    @networkY = 0
+    @itemCount = 0
+    @startY = 0
+    @networks = { }
+
+    # Callback used from ShopController
+    @shopOnNetworkClick = ->
 
 
 
@@ -56,7 +60,7 @@ class IdentityView extends Gotham.Pattern.MVC.View
 
     # Create mask background
     windowMask = new Gotham.Graphics.Graphics
-    windowMask.beginFill(0x232323, 1)
+    windowMask.beginFill(0x000000, 1)
     windowMask.drawRect(0, 0,  window.width / window.scale.x, window.height / window.scale.y)
     window.addChild windowMask
     window.mask = windowMask
@@ -70,7 +74,7 @@ class IdentityView extends Gotham.Pattern.MVC.View
     return @addChild window
 
   createTerminal: (window) ->
-
+    that = @
     title = new Gotham.Graphics.Text("Available Hosts", {font: "bold 50px calibri", fill: "#ffffff", align: "center"});
     title.x = 40
     title.y = 30
@@ -78,14 +82,46 @@ class IdentityView extends Gotham.Pattern.MVC.View
 
 
     networkContainerTexture =  new Gotham.Graphics.Graphics()
-    networkContainerTexture.beginFill(0x00ff00, 1)
+    networkContainerTexture.beginFill(0x00ff00, 0.2)
     networkContainerTexture.drawRect(0, 0, 360,660)
     networkContainerTexture.endFill()
     networkContainerTexture = networkContainerTexture.generateTexture()
 
+
+
     networkContainer = @networkContainer = new Gotham.Graphics.Sprite networkContainerTexture
     networkContainer.x = 40
     networkContainer.y = 90
+    GothamGame.Renderer.pixi.addWheelScrollObject(networkContainer)
+
+    # Container mask
+    networkContainerMask = new Gotham.Graphics.Graphics
+    networkContainerMask.beginFill(0x00ff00, 0.2)
+    networkContainerMask.drawRect(0, 0, 360,660)
+    networkContainer.addChild networkContainerMask
+    networkContainer.mask = networkContainerMask
+
+    networkContainer.interactive = true
+    networkContainer.mouseover = () ->
+      @canScroll = true
+    networkContainer.mouseout = () ->
+      @canScroll = false
+    networkContainer.onWheelScroll = (e) ->
+      if not @canScroll then return
+      direction = e.wheelDeltaY / Math.abs(e.wheelDeltaY)
+      isZoomOut = zoomOut = if direction == -1 then true else false
+
+      nextY = if isZoomOut then that.startY - 60 else that.startY + 60
+
+      if nextY > 0 or Math.abs(nextY) > Math.abs(((that.itemCount * 60) - 660))
+        return
+
+      that.startY = nextY
+
+      that.redraw()
+
+
+
 
     window.addChild(networkContainer)
 
@@ -163,44 +199,67 @@ class IdentityView extends Gotham.Pattern.MVC.View
 
 
   addNetwork: (network) ->
+    @itemCount++
+
+    that = @
 
     db_node = Gotham.Database.table("node")
 
 
 
     networkSprite = new Gotham.Graphics.Sprite Gotham.Preload.fetch("user_management_network_item", "image")
-    networkSprite.y = @networkY
+    networkSprite.y = 0
     networkSprite.interactive = true
+    networkSprite.click = ->
+      that.shopOnNetworkClick(network)
 
     text = new Gotham.Graphics.Text("IP: #{network.external_ip_v4} Mask: #{network.submask}\nNode: #{db_node.findOne({id: network.Node}).name}", {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
     text.x = 5
     text.y = 5
     networkSprite.addChild text
 
+    # Add network to array
+    @networks[network.id] = {
+      sprite: networkSprite
+      hosts: []
+    }
 
+    # Add to container
     @networkContainer.addChild networkSprite
 
 
-    @networkY += 70
-    @networkCount++
-
 
   addHost: (network, host) ->
-
+    @itemCount++
     hostSprite = new Gotham.Graphics.Sprite Gotham.Preload.fetch("user_mangement_host", "image")
-    hostSprite.x = 5
-    hostSprite.width -= 10
-    hostSprite.y = @networkY
+    hostSprite.x = 0
+    hostSprite.y = 0
     hostSprite.interactive = true
     @networkContainer.addChild hostSprite
 
-    text = new Gotham.Graphics.Text("Machine: #{host.machine_name} IP: #{host.ip}\nMAC: #{host.mac} Online: #{host.online}", {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
-    text.x = 5
+    text = new Gotham.Graphics.Text("#{host.machine_name}          Online: #{host.online}\n#{host.ip}       #{host.mac}", {font: "bold 20px calibri", fill: "#ffffff", align: "left"});
+    text.x = 30
     text.y = 5
     hostSprite.addChild text
 
-    @networkY += hostSprite.height + 10
+    @networks[network.id]["hosts"].push(hostSprite)
+
     return hostSprite
+
+
+  redraw: ->
+
+    y = @startY
+    for networkID, network of @networks
+      network.sprite.y = y
+      y += 60
+
+      for host in network.hosts
+        host.y = y
+        y += 60
+
+
+
 
 
 

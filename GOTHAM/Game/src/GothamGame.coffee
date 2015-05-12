@@ -9,6 +9,11 @@ class GothamGame
 
   window.GothamGame = GothamGame
 
+  @Globals =
+    canWheelScroll: true
+    showAttacks: true
+    showCables: false
+
   @Renderer = new Gotham.Graphics.Renderer 1920, 1080, {
     antialiasing:true
     transparent:false
@@ -26,6 +31,7 @@ class GothamGame
 
   @Tools =
     HostUtils: require './tools/HostUtils.coffee'
+    ColorUtil: require './tools/ColorUtil.coffee'
 
   # Networking
   @Network = null
@@ -41,7 +47,8 @@ class GothamGame
     Settings : require './objects/Controller/SettingsController.coffee'
     Gothshark: require './objects/Controller/GothsharkController.coffee'
     User: require './objects/Controller/UserController.coffee'
-
+    Shop: require './objects/Controller/ShopController.coffee'
+    Help: require './objects/Controller/HelpController.coffee'
 
   # Game Scenes
   @Scenes =

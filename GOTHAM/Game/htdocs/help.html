@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+
+
+    <!-- TinyMCE -->
+    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script type="text/javascript">
+
+        document.addEventListener("keydown", function(e) {
+            if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+                console.log("gimp")
+                e.preventDefault();
+                // Process event...
+            }
+        }, false);
+
+        tinymce.init({
+            selector: "textarea",
+            width: 600,
+            height: 1000,
+            theme: "modern",
+            plugins: [
+                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                "searchreplace wordcount visualblocks visualchars code fullscreen",
+                "insertdatetime media nonbreaking save table contextmenu directionality",
+                "emoticons template paste textcolor colorpicker textpattern"
+            ],
+            toolbar1: "insertfile undo redo styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons",
+            image_advtab: true,
+            templates: [
+                {title: 'Test template 1', content: 'Test 1'},
+                {title: 'Test template 2', content: 'Test 2'}
+            ],
+            setup : function(ed) {
+                ed.on('keyup change', function(e) {
+                    $(window.currentlySelected).html(ed.getContent());
+
+                });
+            }
+        });
+    </script>
+    <script>
+        // Socket IO connect
+        var socket = io(location.hostname + ":" + "8081");
+        socket.on('connect', function(data) {
+
+            // Get Help Items
+            socket.emit('GetHelpContent', {});
+
+
+        });
+
+
+        socket.on('GetHelpContent', function(items){
+            $.each(items, function(key, val){
+                addHelpCategory(val)
+
+
+            })
+
+            window.currentlySelected = $("#content-1")
+            $(window.currentlySelected).show()
+            tinymce.get('tiny-data').setContent($(window.currentlySelected).html());
+
+            // Save to DB regularly
+            setInterval(function(){
+
+                var data = {}
+
+                $(".help-content-item").each(function(item){
+                    var id = $(this).attr("id").split("-")[1]
+                    var text = $(this).html()
+
+                    data[id] = text
+
+                })
+
+                socket.emit('UpdateHelpContent', data)
+
+            }, 10000)
+        });
+
+        socket.on('UpdateHelpContent', function(status){
+            console.log(status)
+            console.log("|")
+        });
+
+    </script>
+
+
+    <!-- Help Specific -->
+    <script>
+        helpMenu = $(".help-menu")
+        window.currentlySelected = null
+
+        // Add new
+        addHelpCategory = function(category){
+            // <a href="#demo4" class="list-group-item squared help-menu-item" data-toggle="collapse">Item 4</a>
+            var menuItem = $("<a/>",{
+                "href": ".item-" + category.id,
+                "data-toggle": "collapse",
+                "text": category.title,
+                "class": "list-group-item squared help-menu-item"
+            }).appendTo(".help-menu")
+
+            // Add a content div
+            var contentDiv = $("<div/>", {
+                "class": "help-content-item",
+                "id": "content-" + category.id,
+                "style": "display: none;"
+            }).appendTo(".help-content")
+            $(contentDiv).html(category.text)
+
+            // When menu item is clicked
+            var toggled = false
+            $(menuItem).on("click", function(e){
+                $(".help-content-item").hide()
+                window.currentlySelected = $(contentDiv)
+                tinymce.get('tiny-data').setContent($(window.currentlySelected).html());
+                $(contentDiv).show()
+            })
+
+
+            // Add a child menu container
+            childMenuContainer = $("<div/>",{
+                "class": "collapse item-" + category.id
+            }).appendTo(".help-menu")
+
+
+            //  <a href="" class="list-group-item sub-item help-menu-item">Subitem 1</a>
+            $.each(category.Children, function(key, child){
+
+                var menuItem = $("<a/>",{
+                    "data-toggle": "collapse",
+                    "text": child.title,
+                    "class": "list-group-item squared sub-item help-menu-item",
+                    "style": "cursor: pointer;",
+                })
+
+                $(childMenuContainer).append(menuItem)
+
+                // Add Content Div for parent categories
+                var contentDiv = $("<div/>", {
+                    "class": "help-content-item tab-pane",
+                    "id": "content-" + child.id,
+                    "style": "display: none;"
+                }).appendTo(".help-content")
+                $(contentDiv).html(child.text)
+
+                // When menu item is clicked
+                $(menuItem).on("click", function(e){
+                    $(".help-content-item").hide()
+                    window.currentlySelected = $(contentDiv)
+                    tinymce.get('tiny-data').setContent($(window.currentlySelected).html());
+                    $(contentDiv).show()
+                })
+
+
+
+            })
+
+
+
+
+
+
+
+
+        }
+
+
+
+    </script>
+
+
+
+    <!-- Help FORM CSS STYLING -->
+    <style>
+        .help-form{
+            position: absolute;
+            top:100px;
+            left:950px;
+            width: 800px;
+            height: 600px;
+            background-color: #fdf5e8;
+            box-shadow: 10px 10px 5px #888888;
+            border: 1px solid black;
+        }
+
+        .no-padding{
+            padding: 0 !important;
+        }
+
+        .squared{
+            border-radius: 0 !important;
+        }
+
+        .help-title{
+            height: 25px;
+            text-align: center;
+            font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+            font-size: 24px;
+            font-style: normal;
+            font-variant: normal;
+            font-weight: 500;
+            line-height: 26.3999996185303px;
+        }
+
+        .help-menu{
+            height: 100%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            background-color: #FFFFFF;
+            border-right: 1px solid #ddd;
+        }
+
+        .sub-item{
+            padding-left: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .b-col {
+                float: left;
+            }
+        }
+
+        .help-menu-item{
+            border-right: none;
+        }
+
+        .help-content{
+            padding: 10px;
+            height: 90%;
+            overflow: scroll;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+
+    </style>
+
+    <!-- OTHER STYLING -->
+    <style>
+
+    </style>
+
+
+</head>
+<body>
+
+<!-- TinyMCE -->
+<div style="position: absolute; left: 300px;">
+    <form method="post">
+        <textarea id="tiny-data"></textarea>
+    </form>
+</div>
+
+
+<!-- HELPFORM -->
+<div class="help-form">
+
+
+
+    <div style="height: 100%;">
+
+        <!-- Menu -->
+        <div class="col-sm-3 b-col help-menu no-padding">
+
+            <!--
+            <a href="#demo4" class="list-group-item squared help-menu-item" data-toggle="collapse">Item 4</a>
+            <div class="collapse" id="demo4">
+                <a href="" class="list-group-item sub-item help-menu-item">Subitem 1</a>
+                <a href="" class="list-group-item sub-item help-menu-item">Subitem 1</a>
+                <a href="" class="list-group-item sub-item help-menu-item">Subitem 1</a>
+                <a href="" class="list-group-item sub-item help-menu-item">Subitem 1</a>
+                <a href="" class="list-group-item sub-item help-menu-item">Subitem 1</a>
+                <a href="" class="list-group-item sub-item help-menu-item">Subitem 1</a>
+            </div>-->
+
+        </div>
+
+
+        <div class="col-sm-9 help-title">
+            <p>Help Central</p>
+        </div>
+
+        <div class="col-sm-9 help-content">
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+
+
+</body>
+</html>

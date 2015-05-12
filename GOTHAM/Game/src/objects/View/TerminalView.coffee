@@ -145,6 +145,7 @@ class TerminalView extends Gotham.Pattern.MVC.View
           overflow-y: scroll;
           padding: 1%;
           white-space:pre;
+          word-wrap: break-word;
         """
         text: ""
       })

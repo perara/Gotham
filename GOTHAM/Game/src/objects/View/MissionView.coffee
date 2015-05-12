@@ -146,6 +146,7 @@ class MissionView extends Gotham.Pattern.MVC.View
     missionDescription.y = 180
     journalContainer.addChild missionDescription
 
+    startY = missionDescription.y + missionDescription.height + 60
 
     # Create accept button if not ongoing
     if !mission.getOngoing()
@@ -153,13 +154,15 @@ class MissionView extends Gotham.Pattern.MVC.View
       acceptButton.y = missionDescription.y + missionDescription.height + 20
       acceptButton.x = 480
       acceptButton.click = () ->
+        that.selected.tint = 0xFFFFFF
+        that.selected._toggle = false
         that.selected.journalItem.visible = false
         that.selected = null
+        that.noDisplayedMission.visible = true
         GothamGame.Network.Socket.emit 'AcceptMission', { id: mission.getID() }
       journalContainer.addChild acceptButton
     else
 
-      startY = missionDescription.y + missionDescription.height + 60
       for key, requirement of mission.getRequirements()
         current = if not requirement.getCurrent() then "None" else requirement.getCurrent()
         requirmentGraphics = new Gotham.Graphics.Text("#{requirement.getName()}: #{current}/#{requirement.getExpected()}", {font: "bold 20px calibri", fill: "#000000", align: "left"});
@@ -181,6 +184,7 @@ class MissionView extends Gotham.Pattern.MVC.View
       abandonButton.click = () ->
         that.selected.journalItem.visible = false
         that.selected = null
+        that.noDisplayedMission.visible = true
         GothamGame.Network.Socket.emit 'AbandonMission', {id: mission.getUserMissionID() }
 
 
@@ -198,6 +202,21 @@ class MissionView extends Gotham.Pattern.MVC.View
       else
         completeMissionButton.visible = true
 
+
+    gainTitle = new Gotham.Graphics.Text("You will gain", {font: "bold 30px calibri", fill: "#ffffff", align: "left"});
+    gainTitle.x = 480
+    gainTitle.y = startY + 70
+    journalContainer.addChild gainTitle
+
+    moneyGainText = new Gotham.Graphics.Text(mission.getMoneyGain() + "$" , {stroke: "#000000", strokeThickness: 2,font: "bold 30px calibri", fill: "#006400", align: "left"});
+    moneyGainText.x = 480
+    moneyGainText.y = startY + 110
+    journalContainer.addChild moneyGainText
+
+    experienceGainText = new Gotham.Graphics.Text(mission.getExperienceGain()+ " experience" , { stroke: "#000000", strokeThickness: 2, font: "bold 30px calibri", fill: "#006400", align: "left"});
+    experienceGainText.x = 480
+    experienceGainText.y = startY + 140
+    journalContainer.addChild experienceGainText
 
     return {
       container: journalContainer

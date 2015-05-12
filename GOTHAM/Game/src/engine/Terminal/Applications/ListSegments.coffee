@@ -17,28 +17,31 @@ class ListSegments extends Application
     super command
 
 
-  @execute: ->
-    command = @command
+  execute: ->
 
     output = ""
 
-    files = command.controller.filesystem.ls()
+    files = @Controller.filesystem.ls()
 
     # Extended LS
-    if "-la" in command.arguments
+    if "-la" in @Arguments
+
+      # For each of the files
       for filename, child of files
 
+        # Create output structure
+        # -rwxrwxrwx	Sherrifah	Sherrifah	4096	Apr 17 20:37	dir1
         dirPermission = if child.extension != "dir" then "d" else "-"
         permission = "rwxrwxrwx" #TODO
-        owner = command.controller.identity.first_name #TODO
-        group = command.controller.identity.first_name #TODO
+        owner = @Controller.identity.first_name #TODO
+        group = @Controller.identity.first_name #TODO
         size = 4096 # TODO
         createdDate = "Apr 17 20:37" #TODO
         extension = if child.extension != "dir" then ".#{child.extension}" else ""
         filename = filename + extension
 
         out = "#{dirPermission}#{permission}\t#{owner}\t#{group}\t#{size}\t#{createdDate}\t#{filename}"
-        command.controller.console.add out
+        @Console.add out
 
 
     else
@@ -46,7 +49,7 @@ class ListSegments extends Application
         ext = if child.extension != "dir" then ".#{child.extension}" else ""
         output += "#{filename}#{ext}    "
 
-      command.controller.console.add output
+      @Console.add output
 
 
 

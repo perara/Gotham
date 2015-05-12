@@ -21,5 +21,5 @@ module.exports = (sequelize, DataTypes) ->
         type: DataTypes.INTEGER
         allowNull: false
       ,
-        tableName: 'User'
+        tableName: 'user'
         timestamps: false

@@ -44,9 +44,10 @@ class Database
     # The Sequelize Instance
     # @property {Sequelize} sequelize
     ###
-    @sequelize = new Sequelize('gotham', 'root', 'root', {
-      host: 'localhost'
+    @sequelize = new Sequelize('gotham', 'root', '%123zombies%', {
+      host: 'hybel.keel.no'
       dialect: 'mysql'
+      logging: null
 
       pool:
         max: 5

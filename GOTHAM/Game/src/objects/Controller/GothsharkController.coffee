@@ -96,7 +96,6 @@ class GothsharkController extends Gotham.Pattern.MVC.Controller
   # @param number {Number} Numbering
   ###
   processPacket: (packet, number) ->
-    console.log packet
     processedPacket =
       number: null
       time: null

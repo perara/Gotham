@@ -38,6 +38,7 @@ class WorldMapRoom extends Room
           name: item.name
           priority: item.priority
           tier: item.tier
+          load: item.updateLoad()
           Network:
             submask: item.getNetwork().submask
             internal_ip_v4: item.getNetwork().internal_ip_v4

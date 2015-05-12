@@ -21,7 +21,9 @@ module.exports = (sequelize, DataTypes) ->
       experience_gain:
         type: DataTypes.INTEGER
         allowNull: false
-
+      money_gain:
+        type: DataTypes.INTEGER
+        allowNull: false
     },
     {
 

@@ -42,8 +42,10 @@ startServer = () ->
   server.registerRoom new (require './Networking/Rooms/WorldMapRoom.coffee')()
   server.registerRoom new (require './Networking/Rooms/GeneralRoom.coffee')()
   server.registerRoom new (require './Networking/Rooms/MissionRoom.coffee')()
+  server.registerRoom new (require './Networking/Rooms/ShopRoom.coffee')()
   server.registerRoom new (require './Networking/Rooms/Applications/TracerouteRoom.coffee')()
   server.registerRoom new (require './Networking/Rooms/Applications/PingRoom.coffee')()
+  server.registerRoom new (require './Networking/Rooms/AdministrationRoom.coffee')()
   server.start()
 
   server.onConnect = (_client) ->
@@ -64,22 +66,25 @@ preload = (_c) ->
 # Preload then start server
 preload ->
   startServer()
-  console.log "EGPT"
-  fs = require "fs"
 
-  db_node = Gotham.LocalDatabase.table "Node"
-  nodes = db_node.find()
 
-  count = 0
 
-  for _n1 in nodes
-    for _n2 in nodes
-      if count % 100000 then console.log(count, " nodes tested")
-      new Gotham.Micro.Pathfinder.bStar _n1,_n2, null, 1, 1, (startId, goalId) ->
 
-        errorNode = "#{startId};#{goalId}\n"
-        console.log errorNode
-        fs.appendFileSync './errorPaths.txt', errorNode
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

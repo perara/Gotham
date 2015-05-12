@@ -31,7 +31,59 @@ class Menu extends Gotham.Graphics.Scene
 
 
     # About Button
+    ready = true
     @addButton "About", ->
+      if ready
+        ready = false
+      else
+        return
+
+      # Credits
+      # [0] = Text
+      # [1] = Size
+      # [2] = Delay
+      credits = [
+        ["                 Introducing               ", 60, 0],
+        ["Project Development       Per-Arne Andersen", 40, 0],
+        ["Project Development       Paul Richard Lilleland", 40, 0],
+        ["                                                ", 40, 1000],
+        ["              Special Thanks to                 ", 60, 0],
+        ["Library Supplier          PIXI.js Team          ", 40, 0],
+        ["Library Supplier          Howler.js Team        ", 40, 0],
+        ["Library Supplier          Socket.IO Team        ", 40, 0],
+        ["Library Supplier          JQuery Team           ", 40, 0],
+      ]
+
+      i = 0
+      intervalID = setInterval (()->
+
+        item = credits[i++]
+
+        text = new Gotham.Graphics.Text(item[0], {font: "bold #{item[1]}px calibri", stroke: "#000000", strokeThickness: 4, fill: "#ffffff", align: "left", dropShadow: true});
+        text.anchor =
+          x: 0.5
+          y: 0.5
+        text.x = 1920 / 2
+        text.y = 1080
+        text.alpha = 0
+        that.addChild text
+
+        tween = new Gotham.Tween text
+        tween.delay item[2]
+        tween.to {y: 800, alpha: 1}, 2000
+        tween.to {y: 300}, 7000
+        tween.to {y: 200, alpha: 0}, 1300
+        tween.onComplete ()->
+          that.removeChild text
+        tween.start()
+
+        if i >= credits.length
+          ready = true
+          clearInterval intervalID
+      ),1000
+
+
+
 
     # Gotham Button
     @addButton "Exit", ->
@@ -39,7 +91,7 @@ class Menu extends Gotham.Graphics.Scene
 
 
     @drawButtons()
-    #@setupMusic()
+    @setupMusic()
 
 
 
@@ -81,7 +133,14 @@ class Menu extends Gotham.Graphics.Scene
 
 
     texture = Gotham.Preload.fetch("menu_background", "image")
-    sprite = new Gotham.Graphics.Sprite texture
+    texture2 = Gotham.Preload.fetch("menu_background2", "image")
+    textures = [texture, texture2]
+    swap = ->
+      next = textures.shift()
+      textures.push next
+      return next
+
+    sprite = new Gotham.Graphics.Sprite swap()
     sprite.width = 1920
     sprite.height = 1080
     sprite.alpha = 1
@@ -113,9 +172,13 @@ class Menu extends Gotham.Graphics.Scene
         x: originalScale.x
         y: originalScale.y
     }, 1
+    tween.func ->
+      sprite.texture = swap()
     tween.to {
-      alpha: 1
-    }, 2000
+        alpha: 1
+      }, 2000
+
+
     tween.start()
 
 
@@ -157,7 +220,6 @@ class Menu extends Gotham.Graphics.Scene
     # Create Events
     sprite.mouseover = (mouseData) ->
       @texture = hoverTexture
-      @bringToFront()
 
       sound = Gotham.Preload.fetch("button_click_1", "audio")
       sound.volume(0.5)

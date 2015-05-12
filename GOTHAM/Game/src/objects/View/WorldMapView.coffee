@@ -38,6 +38,12 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     ###
     @_visible_info_frames = []
 
+    ###*
+    # Callback which are used to purchase networks. This callback goes to ShopView
+    # @property {Callback} shopOnNodeClick
+    ###
+    @shopOnNodeClick = ->
+
 
   ###*
   # Get the coorinate factors for latitude and longitude based on the maps current size and scale
@@ -83,6 +89,11 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     """
     @createWorldMap()
 
+    """
+    Create the sun object
+    """
+    @createSun()
+
 
 
 
@@ -98,6 +109,23 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     background._size = @size
     background.y = 0
     @addChild background
+
+  ###*
+  # Creates a sun object, Hidden by default
+  # @method createSun
+  ###
+  createSun: ->
+    @sun = new Gotham.Graphics.Sprite Gotham.Preload.fetch("sun", "image")
+    @sun.x = 5
+    @sun.y = -20
+    @sun.width = 64
+    @sun.height = 64
+    @sun.visible = true
+    @sun.anchor =
+      x: 0.5
+      y: 0.5
+    @mapContainer.addChild @sun
+
 
 
   ###*
@@ -222,6 +250,7 @@ class WorldMapView extends Gotham.Pattern.MVC.View
       @isDragging = false
 
     mapContainer.onWheelScroll = (e) ->
+      if not GothamGame.Globals.canWheelScroll then return
       if not @canScroll then return
       direction = e.wheelDeltaY / Math.abs(e.wheelDeltaY)
 
@@ -484,6 +513,9 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     # Whenever a node is hovered or exited (mouseover and mouseout)
     nodeHover = (node, tint, visible) ->
 
+      if GothamGame.Globals.showCables
+        visible = true
+
       # Update country information
       that.parent.getObject("Bar").updateCountry node.Country
 
@@ -502,6 +534,10 @@ class WorldMapView extends Gotham.Pattern.MVC.View
 
       if @_toggle
         @infoFrame.visible = true
+
+
+        # Fire Shop node click callback
+        that.shopOnNodeClick(node)
 
         # Set all info frames to hidden, and remove
         for _info_frames in that._visible_info_frames
@@ -539,6 +575,21 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     $("#gothshark_frame").fadeOut()
 
   ###*
+  # Set the cable visibility
+  # @method setCableVisibility
+  # @param {Boolean} visible
+  ###
+  setCableVisibility: (visible) ->
+    cables = Gotham.Database.table("cable").find()
+
+    for cable in cables
+      for part in cable.CableParts
+        part.visible = visible
+
+
+
+
+  ###*
   # Creates the information plate of each of the node,
   # @method nodeInfoFrame
   # @param node {Gotham.Graphics.Sprite} The node object
@@ -547,29 +598,52 @@ class WorldMapView extends Gotham.Pattern.MVC.View
   nodeInfoFrame: (node) ->
     that = @
 
+
     infoFrame = new Gotham.Graphics.Sprite Gotham.Preload.fetch("node_details", "image")
     infoFrame.visible = false
     infoFrame.interactive = true
+
+
+    infoFrameMask = new Gotham.Graphics.Graphics
+    infoFrameMask.beginFill(0x00ff00, 0.2)
+    infoFrameMask.drawRect(0, 0, infoFrame.width - 5, infoFrame.height)
+    infoFrame.addChild infoFrameMask
+    infoFrame.mask = infoFrameMask
+
 
     if node.sprite == null
       return infoFrame
 
 
-    nodeName = new Gotham.Graphics.Text(""+node.name, {font: "bold 70px calibri", fill: "#ffffff", align: "center"});
+    nodeName = new Gotham.Graphics.Text("Name: "+node.name, {font: "bold 70px calibri", fill: "#ffffff", dropShadow: true, align: "center"});
     nodeName.x = 80
     nodeName.y = 30
     nodeName.width = 260
     infoFrame.addChild nodeName
 
-    nodeIP = new Gotham.Graphics.Text(""+node.Network.external_ip_v4, {font: "bold 80px calibri", fill: "#000000", align: "center"});
+    nodeLoad = new Gotham.Graphics.Text("Load: #{(node.load*100).toFixed(2)}", {font: "bold 70px calibri", dropShadow: true, fill: "#ffffff", align: "center"});
+    nodeLoad.x = 80
+    nodeLoad.y = 100
+    nodeLoad.width = 260
+    infoFrame.addChild nodeLoad
+    infoFrame.nodeLoad = nodeLoad
+
+    nodeTime = new Gotham.Graphics.Text("Time: ??", {font: "bold 70px calibri", fill: "#ffffff",dropShadow: true,  align: "center"});
+    nodeTime.x = 80
+    nodeTime.y = 170
+    nodeTime.width = 260
+    infoFrame.addChild nodeTime
+    infoFrame.nodeTime = nodeTime
+
+    nodeIP = new Gotham.Graphics.Text("IP: "+node.Network.external_ip_v4, {font: "bold 70px calibri", fill: "#ffffff", dropShadow: true, align: "center"});
     nodeIP.x = 80
-    nodeIP.y = 120
+    nodeIP.y = 240
     infoFrame.addChild nodeIP
 
 
-    wireShark = new Gotham.Controls.Button "Sniff", 450, 200, {textSize: 70}
-    wireShark.x = 80
-    wireShark.y = 240
+    wireShark = new Gotham.Controls.Button "Sniff", 300, 150, {textSize: 70}
+    wireShark.x = 140
+    wireShark.y = 350
     infoFrame.addChild wireShark
 
 
@@ -767,10 +841,15 @@ class WorldMapView extends Gotham.Pattern.MVC.View
   ###
   addCable: (cable) ->
 
+
     # Create a new graphics element
     graphics = new Gotham.Graphics.Graphics();
-    graphics.visible = false
-    graphics.lineStyle(1, 0xffd900, 1);
+    graphics.visible = GothamGame.Globals.showCables
+    if cable.CableType.id == 1
+      graphics.lineStyle(1, 0x3399FF, 1);
+    else
+      graphics.lineStyle(1, 0x009900, 1);
+
     graphics.coordinates = {start:null, end:null}
 
     cablePartsGraphics = []
@@ -811,10 +890,11 @@ class WorldMapView extends Gotham.Pattern.MVC.View
 
     # Add the network to the world map as a node representation
     @addNode networkNode, false
-    networkNode.sprite.width = 32
-    networkNode.sprite.height = 32
+    networkNode.sprite.width = 16
+    networkNode.sprite.height = 16
     networkNode.sprite.tint = 0x00ff00
 
+    return networkNode.sprite
     return #TODO TODO
 
     # Create cable from the network to connected node
@@ -871,6 +951,7 @@ class WorldMapView extends Gotham.Pattern.MVC.View
         animationGraphics.lineTo(points.end.x, points.end.y)
 
     tween.start()
+
 
   ###*
   # Zooms the map to a given Scale, The map is Centered around Width/2 and Height /2

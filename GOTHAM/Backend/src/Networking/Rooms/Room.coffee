@@ -44,7 +44,7 @@ class Room
     throw new Error "This function should be overrided"
 
   ###*
-  # Adda a event callback to the event list (Emit va socket)
+  # Add a event callback to the event list (Emit va socket)
   # @method addEvent
   # @param {String} eventName
   # @param {Callback} callback
