@@ -137,9 +137,6 @@ class GothsharkView extends Gotham.Pattern.MVC.View
   # @param data.info {String} The information string
   ###
   addPacket: (data) ->
-
-    console.log data
-
     @table.row.add([data.number, data.time, data.source, data.dest, data.protocol, data.length, data.info]).draw();
 
 

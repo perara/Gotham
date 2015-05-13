@@ -25,6 +25,11 @@ class GeoTool
 
     return d;
 
+  @getLatency: (pos1, pos2) ->
+    return GeoTool.getDistance(pos1, pos2) * 0.10
+
+
+
   ###*
   # Evaluate the closest element from a list given a element
   # @method getClosest
