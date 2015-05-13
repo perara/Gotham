@@ -38,8 +38,8 @@ class Session
 
   addPacket: (packet) ->
     @packets.push packet
-    @calculateDelay()
     @getNodeHeaders()
+    @calculateDelay()
     return @
 
   getNodeHeaders: () ->
@@ -77,7 +77,7 @@ class Session
           deltaHeader.L2.destMAC = if (index != 0) then @path[index - 1].getNetwork().mac else @path[index].getNetwork().mac
 
         # Set time
-        deltaHeader.misc.time = packet.time
+        #deltaHeader.misc.time = packet.time
 
         # Checking if this is a 3 or a 7 layer session
         if not @layers.L4
@@ -136,7 +136,7 @@ class Session
       packet.time = totalDelay
       for index in [0...@path.length]
         deltaTime += if index != @path.length - 1 then Gotham.Util.GeoTool.getLatency(@path[index], @path[index + 1]) else 0
-        packet.time = totalDelay + deltaTime
+        @nodeHeaders[@path[index].id][@packets.indexOf(packet)].misc.time = totalDelay + deltaTime
 
 
   setLayer: (layer, name) ->
