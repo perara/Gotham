@@ -67,6 +67,24 @@ preload = (_c) ->
 preload ->
   startServer()
 
+  db_host = Gotham.LocalDatabase.table("Host")
+  db_network = Gotham.LocalDatabase.table("Network")
+
+  source = db_host.findOne(id: 17)
+  target = db_network.findOne(id: 500)
+
+  session = new Gotham.Micro.Session(source, target, "ICMP")
+  session.addPacket(new Gotham.Micro.Packet("", true, 9999, 1000))
+  session.addPacket(new Gotham.Micro.Packet("", false, 9998, 0))
+  session.addPacket(new Gotham.Micro.Packet("", true, 9997, 1000))
+  session.addPacket(new Gotham.Micro.Packet("", false, 9996, 0))
+
+
+  for key, val of session.nodeHeaders
+    console.log val
+
+
+
 
 
 

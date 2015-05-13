@@ -50,5 +50,12 @@ class GeoTool
         closestDist = dist
     return closest
 
+  @getLatency: (pos1, pos2)->
+    distance = GeoTool.getDistance(pos1, pos2)
+    speed = 299792.458
+    milliseconds = (distance / speed) * 1000
+
+    return milliseconds
+
 module.exports = GeoTool
 

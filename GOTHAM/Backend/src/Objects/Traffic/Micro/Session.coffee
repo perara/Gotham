@@ -38,17 +38,20 @@ class Session
 
   addPacket: (packet) ->
     @packets.push packet
+    @calculateDelay()
     @getNodeHeaders()
     return @
 
   getNodeHeaders: () ->
     time = 0
     @nodeHeaders = {}
+    deltaTime = 0
 
     for index in [0...@path.length]
       node = @path[index]
       nodeHeader = []
       seq = 0
+
 
       for packet in @packets
 
@@ -74,7 +77,7 @@ class Session
           deltaHeader.L2.destMAC = if (index != 0) then @path[index - 1].getNetwork().mac else @path[index].getNetwork().mac
 
         # Set time
-        deltaHeader.misc.time = time += @layers.L3.delay
+        deltaHeader.misc.time = packet.time
 
         # Checking if this is a 3 or a 7 layer session
         if not @layers.L4
@@ -91,13 +94,15 @@ class Session
         deltaHeader.L7 = {}
         deltaHeader.L7.data = packet.data
 
+
         nodeHeader.push(deltaHeader)
 
       @nodeHeaders[node.id] = nodeHeader
 
-  getPacketsInfo: (packets) ->
+  getPacketsInfo: () ->
     result = []
     seqNumber = 0
+    totalDelay = 0
 
     # Is this TCP (then SYN ACK)
     if @layers.L3.type == "TCP"
@@ -108,8 +113,8 @@ class Session
       result.push(deltaSyn)
       result.push(deltaSynAck)
 
-    # Generate sequence numbers for each packet
-    for packet in packets
+    # Generate sequence numbers for each packet and calculate deltaTime for delayed packets
+    for packet in @packets
       newPacket = {}
       newPacket.SEQ = seqNumber += packet.length
       newPacket.data = packet
@@ -122,9 +127,20 @@ class Session
 
     return result
 
+  calculateDelay: ->
+    totalDelay = 0
+    deltaTime = 0
+
+    for packet in @packets
+      totalDelay += packet.delay
+      packet.time = totalDelay
+      for index in [0...@path.length]
+        deltaTime += if index != @path.length - 1 then Gotham.Util.GeoTool.getLatency(@path[index], @path[index + 1]) else 0
+        packet.time = totalDelay + deltaTime
+
+
   setLayer: (layer, name) ->
     @layers[layer] = Gotham.Micro.LayerStructure.Layers[layer][name]()
-
 
 
   printJSON: ->
