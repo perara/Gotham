@@ -18,7 +18,8 @@
     "when": "*",
     "moment": "*",
     "eventsource": "*",
-    "mysql": "*"
+    "mysql": "*",
+    "ws": "*"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
