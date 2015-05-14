@@ -1,7 +1,7 @@
 Clock = require './Components/Clock.coffee'
 IPViking = require './Components/IPViking.coffee'
 Cyberfeed = require './Components/Cyberfeed.coffee'
-HoneyCloud = require './Components/HoneyCloud.coffee'
+HoneyCloud = require './Components/Honeycloud.coffee'
 
 http = require 'http'
 
