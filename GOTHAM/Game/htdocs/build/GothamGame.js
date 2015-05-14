@@ -4492,7 +4492,7 @@ setup = {
     Gotham.Preload.json("/assets/json/json.json", "map");
     Gotham.Preload.image("/assets/img/sea_background.png", "sea_background", "image");
     Gotham.Preload.image("/assets/img/sun.png", "sun", "image");
-    Gotham.Preload.image("/assets/img/bottomBar.png", "bottomBar", "image");
+    Gotham.Preload.image("/assets/img/bottombar.png", "bottomBar", "image");
     Gotham.Preload.image("/assets/img/sidebar.png", "sidebar", "image");
     Gotham.Preload.image("/assets/img/topbar.png", "topBar", "image");
     Gotham.Preload.image("/assets/img/home.png", "home", "image");
