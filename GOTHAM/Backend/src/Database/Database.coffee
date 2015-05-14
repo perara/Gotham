@@ -1,4 +1,4 @@
-Sequelize = require('Sequelize')
+Sequelize = require('sequelize')
 fs =  require 'fs'
 log = require('log4js').getLogger("Database")
 User = require './Models/User.coffee'
