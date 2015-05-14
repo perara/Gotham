@@ -9,54 +9,56 @@ class Pathfinder
   ###############################################################################################
   ##### Tries random paths and returns the shortest that reached the goal
   ###############################################################################################
-  @tryRandom = (start, goal, blacklistIDs, tryPaths = 100000) ->
+  @tryRandom = (start, goal, blacklistIDs, maxLength = 50, tryPaths = 100000) ->
 
-    nodes = Gotham.LocalDatabase.table("Node")
-
+    # Set starting values
     sum = 0
     minPath = Number.MAX_VALUE
-
     path = []
     tries = 0
+    blacklist = blacklistIDs
 
+    # Method used for finding a number between min and max
     rnd = (min, max) ->
       Math.floor(Math.random() * (max - min + 1)) + min
 
-
     startTime = performance()
 
+    # Try finding a path a specific number of times (tryPaths)
     while (tries < tryPaths)
 
+      # Setting up values for a single path
       queue = []
       currentNode = start
       jumps = 0
       queue.push(start)
 
+      # Traversing through a path finding random routes
       loop
 
         siblings = currentNode.getSiblings()
+        nextNode = siblings[rnd(0, siblings.length - 1)]
 
-        nextNodeId = siblings[rnd(0, siblings.length - 1)].id
-        if nextNodeId in blacklist then continue
+        if nextNode.id in blacklist then continue
 
         deltaTime = new Date().getTime()
-        nextNode = nodes.findOne(id: nextNodeId)
         sum += (new Date().getTime() - deltaTime)
         queue.push(nextNode)
         currentNode = nextNode
         jumps++
 
+        # Should the goal be reached or path be longer than maxLength
+        break if currentNode.id == goal.id or jumps > maxLength
 
-        break if currentNode.id == goal.id or jumps > 50
-
+      # Checks if the new path is shorter than the best path.
       if currentNode == goal and queue.length < minPath
         path = queue;
         minPath = queue.length;
-        console.log "found new path"
+        #console.log "found new path"
 
       tries++
 
-    console.log ("Pathfinding: #{(performance() - startTime)} ms --- Deltatime: " + sum)
+    #console.log ("Pathfinding: #{(performance() - startTime)} ms --- Deltatime: " + sum)
 
     return path
 
@@ -66,36 +68,36 @@ class Pathfinder
   ###############################################################################################
   @aStar: (start, goal, blacklistIDs) ->
 
-    nodes = Gotham.LocalDatabase.table("Node")
-
+    # Set starting values
     maxPathLength = 100
     path = []
     blacklist = blacklistIDs
     path.push(start)
     blacklist.push(start.id)
 
+    # Function for reversing, should a node be bad
     reverse = (node) ->
       blacklist.push(node.id)
       path.pop()
-      log.info "Foul Node #{node.id}"
 
+    # Adding a good node to the path and preventing it from being used again
     addNode = (node) ->
       path.push(node)
       blacklist.push(node.id)
-      log.info "Fine Node #{node.id}"
 
+    # Starts the benchmarking tool and then the loop for finding a path
     start = performance()
     loop
 
-      currentId = path[path.length - 1].id
-
-      current = nodes.findOne(id: currentId)
+      # Getting the current node and finding the sibling closest to the goal
+      current = path[path.length - 1]
       nextNode = GeoTool.getClosest(goal, current.getSiblings(), blacklist)
       wrongWay = 0
 
       log.info "Current node: #{current.id}"
       log.info "Nodes in path: #{path.length}"
 
+      # Different checks for optimizations and error
       if not nextNode
         reverse(current)
         continue
@@ -109,11 +111,11 @@ class Pathfinder
       else
         log.info "No node added, why?"
 
-      log.info "Node #{path[path.length - 1].id} vs #{goal.id}\n"
+      #log.info "Node #{path[path.length - 1].id} vs #{goal.id}\n"
 
       break if path[path.length - 1].id == goal.id or path.length > maxPathLength
 
-    log.info "Path found in: #{performance() - start} ms"
+    #log.info "Path found in: #{performance() - start} ms"
     return path
 
   ####################################################################################################################
@@ -319,7 +321,7 @@ class Pathfinder
       return path
     )
 
-
+    # Starting benchmark and running pre check.
     startTime = new Date().getTime()
     if not preCheck() then return
 
@@ -339,18 +341,21 @@ class Pathfinder
     #log.info "Path found in: #{(deltaTime).toFixed(1)} ms"
     return best
 
+  # Converts a list of nodes to a list of IDs
   @toIdList = (solution) ->
 
     pathInt = []
     pathInt.push(node.id) for node in solution
     return pathInt
 
+  # Converts a list of nodes to a dictionary with node.id as key
   @toDictionary = (solution) ->
 
     pairs = {}
     pairs[node.id] = node for node in solution
     return pairs
 
+  # Prints out the id and name of each node in the list
   @printSolution = (solution) ->
 
     log.info("=======================================")

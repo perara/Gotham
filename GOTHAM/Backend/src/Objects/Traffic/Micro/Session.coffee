@@ -2,7 +2,7 @@
 # Session object containing source, target ,traffic path and packets exchanged
 class Session
 
-  constructor: (sourceHost, targetNetwork, type, customPath = false, blacklist = []) ->
+  constructor: (sourceHost, targetNetwork, type, customPath) ->
     type = if not type then "None" else type
 
     # Set source variables
@@ -18,7 +18,7 @@ class Session
     if customPath
       @path = customPath
     else
-      @path = Gotham.Micro.Pathfinder.bStar(@sourceNode, @targetNode, blacklist)
+      @path = Gotham.Micro.Pathfinder.bStar(@sourceNode, @targetNode)
     @reversePath = [].concat(@path)
 
     @layers = Gotham.Micro.LayerStructure.Packet[type]()
@@ -55,7 +55,7 @@ class Session
 
       for packet in @packets
 
-# If time to live is less than node index, this packet should die
+        # If time to live is less than node index, this packet should die
         if packet.ttl <= index
           continue
 
@@ -71,13 +71,13 @@ class Session
           deltaHeader.L2.sourceMAC = if (index != @path.length - 1) then @path[index].getNetwork().mac else @path[index - 1].getNetwork().mac
           deltaHeader.L2.destMAC = if (index != @path.length - 1) then @path[index + 1].getNetwork().mac else @path[index].getNetwork().mac
 
-# If receiving packet from target
+        # If receiving packet from target
         else
           deltaHeader.L2.sourceMAC = if (index != 0) then @path[index].getNetwork().mac else @path[index + 1].getNetwork().mac
           deltaHeader.L2.destMAC = if (index != 0) then @path[index - 1].getNetwork().mac else @path[index].getNetwork().mac
 
         # Set time
-        #deltaHeader.misc.time = packet.time
+        deltaHeader.misc.packetNr = @packets.indexOf(packet)
 
         # Checking if this is a 3 or a 7 layer session
         if not @layers.L4
@@ -133,12 +133,12 @@ class Session
 
     for packet in @packets
       totalDelay += packet.delay
-      packet.time = totalDelay
       path = if packet.fromSource then @path else @reversePath
 
       for index in [0...path.length]
         if not @nodeHeaders[path[index].id][@packets.indexOf(packet)] then continue
-        deltaTime += if index != path.length - 1 then Gotham.Util.GeoTool.getLatency(path[index], path[index + 1]) else 0
+        if not @nodeHeaders[path[index].id][@packets.indexOf(packet)].misc.packetNr == @packets.indexOf(packet) then continue
+        deltaTime += if index == path.length - 1 then 0 else Gotham.Util.GeoTool.getLatency(path[index], path[index + 1])
         @nodeHeaders[path[index].id][@packets.indexOf(packet)].misc.time = totalDelay + deltaTime
 
 
@@ -165,8 +165,8 @@ class Session
     log.Info("=========================================")
 
   setPorts: (source, target = source) ->
-    @layers.L4.sourcePort = source
-    @layers.L4.targetPort = target
+      @layers.L4.sourcePort = source
+      @layers.L4.targetPort = target
 
   setJumpDelay: (delay) ->
     @layers.L3.delay = delay
@@ -174,13 +174,13 @@ class Session
 
   toJSON: ->
     return {
-    sourceNetwork: @sourceNetwork.id
-    sourceHost: @sourceHost.id
-    targetNetwork: @targetNetwork.id
-    path: @path.map (node) -> return node.id
-    packets: @packets
-    layers : @layers
-    nodeHeaders: @nodeHeaders
+      sourceNetwork: @sourceNetwork.id
+      sourceHost: @sourceHost.id
+      targetNetwork: @targetNetwork.id
+      path: @path.map (node) -> return node.id
+      packets: @packets
+      layers : @layers
+      nodeHeaders: @nodeHeaders
 
     }
 
