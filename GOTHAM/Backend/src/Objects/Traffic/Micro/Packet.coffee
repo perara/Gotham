@@ -1,5 +1,6 @@
 class Packet
 
+  # Generating a basic packet with data, ttl, delay
   constructor: (data = "", fromSource = true, ttl = 9999, delay = 0) ->
 
     @data = data
@@ -7,9 +8,5 @@ class Packet
     @ttl = ttl
     @delay = delay
 
-  @getIcmpRequest: ->
-    return{
-
-    }
 
 module.exports = Packet

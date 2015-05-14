@@ -14,7 +14,7 @@ class LayerStructure
 
     return this
 
-
+  # Checks if the packet should have missing layers or if the structure is inconsistent
   integrityCheck: ->
 
     layerEnd = false;

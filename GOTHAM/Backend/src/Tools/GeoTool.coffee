@@ -2,12 +2,14 @@ log = require('log4js').getLogger("GeoTool")
 
 class GeoTool
 
+  # Returns a position in radians instead of degrees
   ToRadians = (pos) ->
 
     radLat = (Math.PI/180) * pos.lat
     radLng = (Math.PI/180) * pos.lng
     return {lat: radLat, lng: radLng}
 
+  # Calculates the distance between the two points
   @getDistance: (pos1, pos2) ->
 
     r = 6371.0  #KM
@@ -24,11 +26,6 @@ class GeoTool
     d = r * c;
 
     return d;
-
-  @getLatency: (pos1, pos2) ->
-    return GeoTool.getDistance(pos1, pos2) * 0.10
-
-
 
   ###*
   # Evaluate the closest element from a list given a element
@@ -55,6 +52,7 @@ class GeoTool
         closestDist = dist
     return closest
 
+  # Returns the time it takes for light to travel between the two points in milliseconds
   @getLatency: (pos1, pos2)->
     distance = GeoTool.getDistance(pos1, pos2)
     speed = 299792.458

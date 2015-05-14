@@ -1,5 +1,6 @@
 class Converters
 
+  # Converts bytes to a number with a size suffix, like KB, MB, GB
   @formatSizeUnits = (bytes) ->
     if bytes >= 1024**4 then bytes = (bytes / 1024**4).toFixed(2) + ' TB'
     else if bytes >= 1024**3 then bytes = (bytes / 1024**3).toFixed(2) + ' GB'

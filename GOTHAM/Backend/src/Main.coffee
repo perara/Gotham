@@ -74,13 +74,16 @@ preload ->
   target = db_network.findOne(id: 500)
 
   session = new Gotham.Micro.Session(source, target, "ICMP")
-  session.addPacket(new Gotham.Micro.Packet("", true, 9999, 1000))
-  session.addPacket(new Gotham.Micro.Packet("", false, 9998, 0))
-  session.addPacket(new Gotham.Micro.Packet("", true, 9997, 1000))
-  session.addPacket(new Gotham.Micro.Packet("", false, 9996, 0))
+  session.addPacket(new Gotham.Micro.Packet("8", true, 1, 1000))
+  session.addPacket(new Gotham.Micro.Packet("0", false, 1, 0))
+  session.addPacket(new Gotham.Micro.Packet("8", true, 2, 1000))
+  session.addPacket(new Gotham.Micro.Packet("0", false, 2, 0))
+
+
 
 
   for key, val of session.nodeHeaders
+    console.log key
     console.log val
 
 
