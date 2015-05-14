@@ -15,7 +15,16 @@ class Ping  extends Application
     super command
 
     @Packet =
+      sourceHost: null
       target: null
+      inverval: 1
+      count: 5
+      packetsize: 56
+      quiet: false
+      deadline: false
+      max_ttl: 56
+
+
 
 
   switches: ->
@@ -64,63 +73,79 @@ class Ping  extends Application
     that = @
     parser = @ArgumentParser()
 
+    # No Arguments, Show HELP
+    parser.on(->that.Console.addArray @toString().split("\n"))
 
-    ##############
-    ## IP Argument
-    ## Either last or first. ping [ip]? args [ip]?
-    ##############
-    ipCallback = (ipHost) ->
+    # Fetch the IP address, which should be located at the beginning or end of the command
+    # Example: ping 192.168.10.101 | ping -c 2 192.168.10.101
+    fetchIPAddress = (ipHost) ->
       if GothamGame.Tools.HostUtils.validIPHost(ipHost)
         that.Packet.target = ipHost
       else
         that.Console.add "#{that.Command}: unknown host: #{ipHost}"
 
-    parser.on(->that.Console.addArray @toString().split("\n"))
-    parser.on 0, ipCallback
-    parser.on @Arguments.length, ipCallback
+    # Beginning and end of argument list
+    [0, @Arguments.length].forEach (idx) ->
+      parser.on idx, fetchIPAddress
 
-    # Parse arguments
+    # Run argument parsing
     parser.parse(@Arguments)
+
+    # Host ID - Which should be resolved to resolve to Host IP
+    @Packet.sourceHost = @_commandObject.controller.host.id
+
 
 
     # Emit to server if target is set
     if @Packet.target
-
       # Send emit to Frontend Mission Engine, Callback are received on Completion
       GothamGame.MissionEngine.emit "Ping", @Packet.target, (req) ->
         GothamGame.Announce.message "#{req._mission._title}\n#{req._requirement} --> #{req._current}/#{req._expected}", "MISSION", 50
 
-      # Emit Ping Missions time requirement
-      target = @Packet.target
-      intervalID = setInterval (() ->
-        GothamGame.MissionEngine.emit "Time", target, (req) ->
-          console.log req
-      ),1000
-
-
-      # Send Emit to Backend server for an generated response
+      # Emit the ping rwquest back to the server
       GothamGame.Network.Socket.emit 'Ping', @Packet
+      GothamGame.Network.Socket.on 'Ping_Host_Not_found', ->
+        @removeListener('Ping_Host_Not_found')
+        that.Console.add "ping: unknown host #{that.Packet.target}"
 
-      # Ping Init (Start of ping)
-      GothamGame.Network.Socket.on 'Ping_Init', (output) ->
-        that.Console.add output
-
-      # Actual Ping Callback
-      GothamGame.Network.Socket.on 'Ping', (output) ->
-        that.Console.add output
-
-      # Ping Summary
-      GothamGame.Network.Socket.on 'Ping_Summary', (output) ->
-
-        # Stop the Mission Time interval counter
-        clearInterval intervalID
-
-        # Ping Event Done, Remove listeners
+      GothamGame.Network.Socket.on 'Ping', (session) ->
+        @removeListener('Ping_Host_Not_found')
         @removeListener('Ping')
-        @removeListener('Ping_Init')
-        @removeListener('Ping_Summary')
 
-        that.Console.addArray output
+        that.Console.add("PING #{session.target} (#{session.target}) #{session.packetsize}(#{session.packetsize+session.HEADER_SIZE}) bytes of data.")
+
+        i = 0
+        startTime = Date.now()
+        duration = null
+        min_rtt = 10000000
+        max_rtt = -1000000
+        avg_rtt = 0
+
+        onDone = ->
+          that.Console.add "--- #{session.target} ping statistics ---"
+          that.Console.add "#{i} packets transmitted, #{i} received, 0% packet loss, time #{duration}ms"
+          that.Console.add "rtt min/avg/max = #{min_rtt.toFixed(3)}/#{max_rtt.toFixed(3)}/#{avg_rtt.toFixed(3)} ms"
+
+        for ping in session.pings
+          setTimeout (()->
+            randomRTT = Math.floor(Math.random() * (ping.rtt + 10)) + Math.max(ping.rtt - 10, 0)
+            avg_rtt += randomRTT
+            if randomRTT < min_rtt
+              min_rtt = randomRTT
+            if randomRTT > max_rtt
+              max_rtt = randomRTT
+
+            that.Console.add "#{session.packetsize + 8} bytes from (#{session.target}): icmp_seq=#{i++} ttl=#{that.Packet.max_ttl} time=#{randomRTT.toFixed(3)} ms"
+
+            if i >= session.pings.length
+              duration = Date.now() - startTime
+              avg_rtt = avg_rtt / i
+              onDone()
+
+          ), ping.time
+
+
+
 
 
 

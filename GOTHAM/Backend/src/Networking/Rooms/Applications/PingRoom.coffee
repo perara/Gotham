@@ -23,58 +23,62 @@ class PingRoom extends Room
       client = that.getClient(@id)
       that.log.info "[TerminalRoom] Ping called: " + packet
 
-      # Resolve Values
       HEADER_SIZE = 28 #ICMP Header Size
-      packetsize = if packet.packetsize then Math.min(packet.packetsize, 65507) else 56
-      target = packet.target
-      targetDNSResolve = packet.target # TODO DO DNS LOOKUP
-      ttl = if packet.ttl then packet.ttl else 56
-      quiet = if packet.quiet then packet.quiet else false
-      deadline = if packet.deadline then performance() + (packet.deadline * 1000)  else false
+      args =
+        ttl: if packet.ttl then packet.ttl else 56
+        packetsize: if packet.packetsize then Math.min(packet.packetsize, 65507) else 56
+        deadline: if packet.deadline then performance() + (packet.deadline * 1000)  else false
+        max_count: if packet.count then Math.min(50, packet.count) else 5
+        interval: if packet.interval then packet.interval * 1000 else 1000
 
-      # Send ping start if not quiet
-      if not quiet
-        client.Socket.emit 'Ping_Init', "PING #{target} (#{targetDNSResolve}) #{packetsize}(#{packetsize+HEADER_SIZE}) bytes of data."
+      # Get tables
+      db_host = Gotham.LocalDatabase.table("Host")
+      db_network = Gotham.LocalDatabase.table("Network")
 
-      i = 0
-      start_time = performance()
-      min_rtt = 1000000
-      max_rtt = -100000
-      avg_rtt = 0
+      # Fetch source host
+      sourceHost = db_host.findOne(id: packet.sourceHost)
 
-      intervalID = setInterval(->
-        i++ # Increment counter
+      # Fetch target host
+      targetNetwork = db_network.findOne(external_ip_v4: packet.target)
 
-        # Figure out how many pings to do,
-        # Setting Maximum pings to 50 (between 0-50)
-        # If none count is set in packet, default to 5
-        # stopInterval if iterator has reached max_count
-        max_count = if packet.count then Math.min(50, packet.count) else 5
-        isDeadline = if !!deadline then if deadline < performance() then true else false
+      # IF target does not exist
+      if not targetNetwork
+        client.Socket.emit "Ping_Host_Not_found", {}
+        return
 
-        if i >= max_count or isDeadline
-          clearInterval(intervalID)
-          client.Socket.emit 'Ping_Summary', [
-            "--- #{target} ping statistics ---"
-            "#{i} packets transmitted, #{i} received, 0% packet loss, time #{Math.floor(performance()-start_time)}ms"
-            "rtt min/avg/max = #{min_rtt.toFixed(3)}/#{max_rtt.toFixed(3)}/#{avg_rtt.toFixed(3)} ms"
-          ]
-          return
+      # Start Solution
+      session = new Gotham.Micro.Session(sourceHost, targetNetwork, "ICMP")
+
+      # Add ICMP Ping packets
+      for i in [0...args.max_count]
+        session.addPacket new Gotham.Micro.Packet("8", true, args.ttl, args.interval)
+        session.addPacket new Gotham.Micro.Packet("0", false, args.ttl, 0)
 
 
-        rtt = Math.random() * (60 - 50) + 50 # TODO - SUM of latency between nodes (routing)
 
-        # Update RTT Statistics
-        min_rtt = if min_rtt > rtt then rtt else min_rtt
-        max_rtt = if max_rtt < rtt then rtt else max_rtt
-        avg_rtt = (avg_rtt + rtt) / 2
+      client.Socket.emit "Session", session
 
-        # Send the actual ping if not quiet
-        if not quiet
-         client.Socket.emit 'Ping', "#{packetsize + 8} bytes from #{targetDNSResolve}: icmp_seq=#{i} ttl=#{ttl} time=#{rtt.toFixed(3)} ms"
+      # Process Ping data
+      skip = false # flag to skip half of the packets
+      lastSkip = null
+      client.Socket.emit "Ping", {
+        target: packet.target
+        HEADER_SIZE: HEADER_SIZE
+        packetsize:  + args.packetsize
+        pings: session.nodeHeaders[Object.keys(session.nodeHeaders)[0]].map((item) ->
+          return {time: item.misc.time}
+        ).filter (item) ->
+          skip = !skip
+
+          if skip
+            lastSkip = item
+            return 0
+
+          item.rtt = item.time - lastSkip.time
+          return 1
 
 
-          , if packet.interval then packet.interval * 1000 else 1000)
+      }
 
 
 

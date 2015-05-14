@@ -66,6 +66,7 @@ setup =
     # World Map
     Gotham.Preload.image("/assets/img/node_details.png","node_details", "image")
     Gotham.Preload.image("/assets/img/map_marker.png", "map_marker", "image")
+    Gotham.Preload.image("/assets/img/map_marker_deactivated.png", "map_marker_deactivated", "image")
     Gotham.Preload.json("/assets/json/json.json", "map")
     Gotham.Preload.image("/assets/img/sea_background.png", "sea_background", "image")
     Gotham.Preload.image("/assets/img/sun.png", "sun", "image")
@@ -135,6 +136,7 @@ setup =
     GothamGame.Network = new Gotham.Network location.hostname, 8081
     GothamGame.Network.connect()
     console.log "Connecting to #{location.hostname}:8081 ..."
+
     GothamGame.Network.onConnect = ->
       console.log "Connected!"
       callback(GothamGame.Network)
@@ -145,6 +147,9 @@ setup =
     GothamGame.Network.onReconnect = ->
       GothamGame.Network.Socket.emit 'ReconnectLogin', {"username" : "per", "password": "per"}
       console.log "Reconnected!"
+
+    return
+
 
 
 

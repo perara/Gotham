@@ -127,7 +127,9 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
       historyPointer = if isUp then that.console.incrementHistoryPointer(-1) else that.console.incrementHistoryPointer(1)
       historyItem = that.console.getHistoryAt historyPointer
 
-      $(obj).val historyItem.command + " " +historyItem.arguments.join(" ")
+      if historyItem
+        text = historyItem.command + " " +historyItem.arguments.join(" ")
+        $(obj).val(text)
 
 
 
@@ -138,6 +140,7 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
       if keycode is TerminalController.KEYCODE.ENTER then enter(e, @)
       if keycode is TerminalController.KEYCODE.TAB then tab(e, @) else that.__tabCount = 0
       if keycode is TerminalController.KEYCODE.ARROW_UP or keycode is TerminalController.KEYCODE.ARROW_DOWN then arrow(e, @)
+
 
   parseInput: (input) ->
 
@@ -166,12 +169,14 @@ class TerminalController extends Gotham.Pattern.MVC.Controller
     else
       $(".terminal_frame").hide()
       @View.terminal_frame.show()
+      $(@View.terminal_input_field).focus()
       return true
 
 
   show: () ->
     $(".terminal_frame").hide()
     @View.terminal_frame.show()
+
   hide: () ->
     @View.terminal_frame.hide()
 

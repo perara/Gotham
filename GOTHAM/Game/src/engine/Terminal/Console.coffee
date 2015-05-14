@@ -52,6 +52,8 @@ class Console
     return @_history
 
   getHistoryAt: (index) ->
+    if @_history.length == 0
+      return null
     return @_history[index %% @_history.length]
 
   addHistory: (command) ->
