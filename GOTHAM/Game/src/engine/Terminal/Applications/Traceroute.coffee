@@ -19,6 +19,9 @@ class Traceroute extends Application
     @Packet =
       sourceHost: null #ID of the sending host
       target: null
+      algorithm: "b*"
+      max_ttl: 30
+      first_ttl: 1
 
 
   switches: ->
@@ -30,6 +33,27 @@ class Traceroute extends Application
         that.Console.addArray @toString().split("\n")
         that.Packet = {}
       ]
+
+      # [CUSTOM] Algorithm
+      ['-a', '--algorithm STRING', 'Choose algorithm to use, Default: b*', (key, val)->
+        if val?
+          that.Packet.algorithm = val
+        else
+          that.Console.add "Available Algorithms: [a*, b*, brutus]"
+      ]
+
+      # [REAL] Max HOP (TTL)
+      ['-m', '--max-hops max_ttl', 'Specifies the maximum number of hops (max time-to-live value) traceroute will probe. The default is 30.', (key, val)->
+        if val?
+          that.Packet.max_ttl = val
+      ]
+
+      # [REAL] First TTL
+      ['-f', '--first first_ttl', 'Specifies with what TTL to start. Defaults to 1.', (key, val)->
+        if val?
+          that.Packet.first_ttl = val
+      ]
+
       # Version
       ['-V', '--version', 'Show version number', (key, val)->
         that.Console.add "traceroute utility, traceroute.v01501-GOTHAM"
@@ -63,7 +87,7 @@ class Traceroute extends Application
     parser.parse(@Arguments)
 
     # Send Traceroute request
-    GothamGame.Network.Socket.emit 'Traceroute', @Packet
+    GothamGame.Network.Socket.emit 'Traceroute', @Packet, Gotham.Database.table("blacklist").data
 
     # Emit to MissionEngine
     GothamGame.MissionEngine.emit "Traceroute", @Packet.target, (req) ->

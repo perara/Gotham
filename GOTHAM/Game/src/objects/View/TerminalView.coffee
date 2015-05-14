@@ -162,7 +162,7 @@ class TerminalView extends Gotham.Pattern.MVC.View
       })
 
 
-    @_input = terminal_input_field = $('<input\>',
+    @_input = @terminal_input_field = terminal_input_field = $('<input\>',
       {
         type: "text"
         id: "terminal_input_field_#{terminalCount}"

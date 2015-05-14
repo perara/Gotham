@@ -62,6 +62,12 @@ class SocketServer
     @clients = {}
 
     ###*
+    # Banlist for the server
+    # @property {Array} banlist
+    ###
+    @banlist = []
+
+    ###*
     # List of registered rooms for the SocketServer
     # @property {Room[]} _rooms
     ###
@@ -87,6 +93,14 @@ class SocketServer
   start: ->
     @_createServer();
     @_startServer();
+
+  ###*
+  # Sets the banlist
+  # @method setBanlist
+  # @param {Array} banlist
+  ###
+  setBanlist: (banlist) ->
+    @banlist = banlist
 
   ###*
   # Stops the SocketServer
@@ -210,6 +224,10 @@ class SocketServer
     @_overrideEmitter @_socket
 
     @_socket.on 'connection', (client) ->
+
+      # Disconnect the player if IP ban
+      if client.handshake.address in that.banlist
+        client.disconnect()
 
       # Create client item, add the client and add rtooms to the client
       clientData = new SocketServer.Client(client)

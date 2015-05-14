@@ -22,9 +22,18 @@ class TracerouteRoom extends Room
     # @class Emitter_Traceroute
     # @submodule Backend.Emitters
     ###
-    @addEvent "Traceroute", (packet) ->
+    @addEvent "Traceroute", (packet, blacklist) ->
       client = that.getClient(@id)
 
+
+      # Data format is
+      # {node: id}
+      # Transform to:
+      # [id,id,id}
+      db_node = Gotham.LocalDatabase.table("Node")
+      blacklist = blacklist.map (obj) ->
+        return db_node.findOne(id: obj.node)
+  
       # Get tables
       db_host = Gotham.LocalDatabase.table("Host")
       db_network = Gotham.LocalDatabase.table("Network")
@@ -48,7 +57,11 @@ class TracerouteRoom extends Room
 
 
       # Start Solution
-      session = new Gotham.Micro.Session(sourceHost, targetNetwork, "ICMP")
+      session = new Gotham.Micro.Session(sourceHost, targetNetwork, "ICMP", false, blacklist)
+
+      if session.getPath() == null
+        return
+
 
       # Make session for this traceroute
       for ttl in [1...(session.getPath().length + 1)]

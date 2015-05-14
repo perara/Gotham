@@ -89,12 +89,10 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
         node = db_node.findOne(id: parseInt(id))
         node.time = ((node.lng + 180) / 0.25) + that.currentMinutes
 
-
-
         node.loadColor = GothamGame.Tools.ColorUtil.getColorForPercentage(load)
 
-
-        node.sprite.infoFrame.nodeLoad.text = "Load: #{(load*100).toFixed(2)}"
+        if node.sprite.infoFrame
+          node.sprite.infoFrame.nodeLoad.text = "Load: #{(load*100).toFixed(2)}"
 
 
         # Calculate time
@@ -103,7 +101,9 @@ class WorldMapController extends Gotham.Pattern.MVC.Controller
         utc.minutes(utc.minutes(), "minutes")
         utc.add(12, 'hours')
         nowthen = utc.add(node.time, "minutes")
-        node.sprite.infoFrame.nodeTime.text = "Time: #{nowthen.format('H:mm')}"
+
+        if node.sprite.infoFrame
+          node.sprite.infoFrame.nodeTime.text = "Time: #{nowthen.format('H:mm')}"
 
         node.sprite.tint = node.loadColor
 

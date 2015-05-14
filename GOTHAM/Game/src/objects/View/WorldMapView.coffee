@@ -465,12 +465,14 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     # Convert Lat, Lng to Pixel's X and Y
     coordinates = @coordinateToPixel(node.lat, node.lng)
 
-    # Create a node sprite
-    gNode = new Gotham.Graphics.Sprite Gotham.Preload.fetch("map_marker", "image")
-    gNode.tint = 0xF8E23B
+    deactivatedMarker = Gotham.Preload.fetch("map_marker_deactivated", "image")
+    activatedMarker = Gotham.Preload.fetch("map_marker", "image")
 
-    gNode.infoFrame = @nodeInfoFrame(node)
-    gNode.addChild gNode.infoFrame
+    # Create a node sprite
+    gNode = new Gotham.Graphics.Sprite activatedMarker
+    gNode.tint = 0xF8E23B
+    gNode.deactivated_marker = deactivatedMarker
+    gNode.activated_marker = gNode.texture
 
     # Set position according to the Lat,Lng conversion
     gNode.position =
@@ -499,6 +501,8 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     if interact
       @addNodeInteraction node
 
+    return
+
   ###*
   # Adds interaction to a node, Typically hovering it showing cables.
   # @method addNodeInteraction
@@ -509,6 +513,7 @@ class WorldMapView extends Gotham.Pattern.MVC.View
 
     # The Node should be interactive
     node.sprite.interactive = true
+    node.sprite.buttonMode = true
 
     # Whenever a node is hovered or exited (mouseover and mouseout)
     nodeHover = (node, tint, visible) ->
@@ -529,10 +534,33 @@ class WorldMapView extends Gotham.Pattern.MVC.View
         for part in cable.CableParts
           part.visible = visible
 
+    node.sprite.rightclick = ->
+      db_blacklist = Gotham.Database.table "blacklist"
+
+      element = db_blacklist.findOne(node: node.id)
+
+      if not element
+        db_blacklist.insert {node: node.id}
+        GothamGame.Announce.message "Disabled #{node.name} (#{node.id})", "NORMAL", 50
+        @texture = @deactivated_marker
+      else
+        db_blacklist.remove element
+        GothamGame.Announce.message "Enabled #{node.name} (#{node.id})", "NORMAL", 50
+        @texture = @activated_marker
+      that.scaleNodes()
+
+
+
     node.sprite.click = ->
       @_toggle = if not @_toggle then true else !@_toggle
 
       if @_toggle
+
+        # Add info frame if not exists
+        if not @infoFrame
+          @infoFrame = that.nodeInfoFrame(node)
+          @addChild @infoFrame
+
         @infoFrame.visible = true
 
 
@@ -566,6 +594,9 @@ class WorldMapView extends Gotham.Pattern.MVC.View
   showNodeDetails: (node) ->
     @parent.getObject("Gothshark").setNode(node)
     $("#gothshark_frame").fadeIn()
+    $("thead tr td")[0].click()
+    $("thead tr td")[0].click()
+
 
   ###*
   # Hides the node-details selector in HTML (GothShark)
@@ -628,7 +659,13 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     infoFrame.addChild nodeLoad
     infoFrame.nodeLoad = nodeLoad
 
-    nodeTime = new Gotham.Graphics.Text("Time: ??", {font: "bold 70px calibri", fill: "#ffffff",dropShadow: true,  align: "center"});
+
+    utc = moment().utcOffset('+0000')
+    utc.subtract(utc.hours(), "hours")
+    utc.minutes(utc.minutes(), "minutes")
+    utc.add(12, 'hours')
+    nowthen = utc.add(node.time, "minutes")
+    nodeTime = new Gotham.Graphics.Text("Time: #{nowthen.format('H:mm')}", {font: "bold 70px calibri", fill: "#ffffff",dropShadow: true,  align: "center"});
     nodeTime.x = 80
     nodeTime.y = 170
     nodeTime.width = 260
@@ -645,7 +682,6 @@ class WorldMapView extends Gotham.Pattern.MVC.View
     wireShark.x = 140
     wireShark.y = 350
     infoFrame.addChild wireShark
-
 
     infoFrame.click = ->
       @ready = if not @ready then true else @ready

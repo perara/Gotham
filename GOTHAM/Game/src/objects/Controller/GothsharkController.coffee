@@ -42,6 +42,7 @@ class GothsharkController extends Gotham.Pattern.MVC.Controller
 
           for layerNum, layer of diff
             if layerNum == "misc"
+              packet[layerNum] = layer
               continue
 
             for prop, val of layer
@@ -119,7 +120,7 @@ class GothsharkController extends Gotham.Pattern.MVC.Controller
 
 
     processedPacket.number = ""+number
-    processedPacket.time = "TODO"
+    processedPacket.time = packet.misc.time
 
     processedPacket.source = ""+packet.L3.sourceIP
     processedPacket.dest = ""+packet.L3.destIP
