@@ -72,7 +72,7 @@ setup =
     Gotham.Preload.image("/assets/img/sun.png", "sun", "image")
 
     # Bar
-    Gotham.Preload.image("/assets/img/bottomBar.png", "bottomBar", "image")
+    Gotham.Preload.image("/assets/img/bottombar.png", "bottomBar", "image")
     Gotham.Preload.image("/assets/img/sidebar.png", "sidebar", "image")
     Gotham.Preload.image("/assets/img/topbar.png", "topBar", "image")
 
