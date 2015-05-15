@@ -9046,7 +9046,7 @@ Menu = (function(_super) {
       return that.addObject(Settings);
     });
     ready = true;
-    this.addButton("About", function() {
+    this.addButton("Credits", function() {
       var credits, i, intervalID;
       if (ready) {
         ready = false;

@@ -32,7 +32,7 @@ class Menu extends Gotham.Graphics.Scene
 
     # About Button
     ready = true
-    @addButton "About", ->
+    @addButton "Credits", ->
       if ready
         ready = false
       else
