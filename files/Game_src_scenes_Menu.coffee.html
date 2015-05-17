@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Game\src\scenes\Menu.coffee</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdministrationRoom", "classes/Cable", "classes/CablePart", "classes/CableType", "classes/Client", "classes/Clock", "classes/Country", "classes/Cyberfeed", "classes/Database", "classes/DNS", "classes/Emitter_AbandonMission", "classes/Emitter_AcceptMission", "classes/Emitter_CompleteMission", "classes/Emitter_GetCables", "classes/Emitter_GetHelpContent", "classes/Emitter_GetHost", "classes/Emitter_GetMission", "classes/Emitter_GetNodes", "classes/Emitter_GetUser", "classes/Emitter_Login", "classes/Emitter_Logout", "classes/Emitter_Ping", "classes/Emitter_ProgressMission", "classes/Emitter_ReconnectLogin", "classes/Emitter_ShopPurchaseHost", "classes/Emitter_ShopPurchaseNetwork", "classes/Emitter_Terminate", "classes/Emitter_Traceroute", "classes/Emitter_UpdateHelpContent", "classes/Filesystem", "classes/GeneralRoom", "classes/Gotham.Controls.Button", "classes/Gotham.Controls.Slider", "classes/Gotham.Database", "classes/Gotham.GameLoop", "classes/Gotham.Graphics.Container", "classes/Gotham.Graphics.Graphics", "classes/Gotham.Graphics.Polygon", "classes/Gotham.Graphics.Rectangle", "classes/Gotham.Graphics.Sprite", "classes/Gotham.Graphics.Text", "classes/Gotham.Graphics.Texture", "classes/Gotham.Graphics.Tools", "classes/Gotham.Network", "classes/Gotham.Pattern.MVC.Controller", "classes/Gotham.Pattern.MVC.View", "classes/Gotham.Preload", "classes/Gotham.Renderer", "classes/Gotham.Scene", "classes/Gotham.Sound", "classes/Gotham.Util.Ajax", "classes/Gotham.Util.Compression", "classes/Gotham.Util.Geocoding", "classes/Gotham.Util.SearchTools", "classes/Gotham.Util.Util", "classes/GothamGame.Controllers.AnnounceController", "classes/GothamGame.Controllers.BarController", "classes/GothamGame.Controllers.GothsharkController", "classes/GothamGame.Controllers.HelpController", "classes/GothamGame.Controllers.IdentityController", "classes/GothamGame.Controllers.MissionController", "classes/GothamGame.Controllers.NodeListController", "classes/GothamGame.Controllers.SettingsController", "classes/GothamGame.Controllers.ShopController", "classes/GothamGame.Controllers.TerminalController", "classes/GothamGame.Controllers.UserController", "classes/GothamGame.Controllers.WorldMapController", "classes/GothamGame.GothamGame", "classes/GothamGame.Mission.Mission", "classes/GothamGame.Mission.Requirement", "classes/GothamGame.MissionEngine.MissionEngine", "classes/GothamGame.Scenes.Loading", "classes/GothamGame.Scenes.Menu", "classes/GothamGame.Scenes.World", "classes/GothamGame.Terminal.Application.Application", "classes/GothamGame.Terminal.Application.ChangeDirectory", "classes/GothamGame.Terminal.Application.Clear", "classes/GothamGame.Terminal.Application.Copy", "classes/GothamGame.Terminal.Application.ListSegments", "classes/GothamGame.Terminal.Application.Move", "classes/GothamGame.Terminal.Application.Perl", "classes/GothamGame.Terminal.Application.Ping", "classes/GothamGame.Terminal.Application.Slowloris", "classes/GothamGame.Terminal.Application.Traceroute", "classes/GothamGame.Terminal.Command", "classes/GothamGame.Terminal.Console", "classes/GothamGame.Terminal.Filesystem", "classes/GothamGame.Terminal.Terminal", "classes/GothamGame.Tools.HostUtils", "classes/GothamGame.View.AnnounceView", "classes/GothamGame.View.BarView", "classes/GothamGame.View.GothsharkView", "classes/GothamGame.View.HelpView", "classes/GothamGame.View.IdentityView", "classes/GothamGame.View.MissionView", "classes/GothamGame.View.NodeListView", "classes/GothamGame.View.SettingsView", "classes/GothamGame.View.ShopView", "classes/GothamGame.View.TerminalView", "classes/GothamGame.View.UserView", "classes/GothamGame.View.WorldMapView", "classes/GothamObject", "classes/Help", "classes/HoneyCloud", "classes/Host", "classes/HostRoom", "classes/Identity", "classes/IPProvider", "classes/IPViking", "classes/LocalDatabase", "classes/Mission", "classes/MissionRequirement", "classes/MissionRoom", "classes/Network", "classes/Node", "classes/NodeCable", "classes/PingRoom", "classes/SocketServer", "classes/Tier", "classes/TracerouteRoom", "classes/TweenCS.ChainItem", "classes/TweenCS.Tween", "classes/User", "classes/UserMission", "classes/UserMissionRequirement", "classes/UserRoom", "classes/World", "classes/WorldMapRoom", "modules/Backend", "modules/Backend.Database", "modules/Backend.Emitters", "modules/Backend.LocalDatabase", "modules/Backend.Networking", "modules/Backend.World", "modules/Framework", "modules/Framework.Controls", "modules/Framework.Graphics", "modules/Framework.Pattern.MVC", "modules/Framework.Util", "modules/Frontend", "modules/Frontend.Controllers", "modules/Frontend.Mission", "modules/Frontend.Scenes", "modules/Frontend.Terminal", "modules/Frontend.Terminal.Application", "modules/Frontend.Tools", "modules/Frontend.View", "modules/TweenCS"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdministrationRoom.html">AdministrationRoom</a></li>
+	                            <li><a href="../classes/Cable.html">Cable</a></li>
+	                            <li><a href="../classes/CablePart.html">CablePart</a></li>
+	                            <li><a href="../classes/CableType.html">CableType</a></li>
+	                            <li><a href="../classes/Client.html">Client</a></li>
+	                            <li><a href="../classes/Clock.html">Clock</a></li>
+	                            <li><a href="../classes/Country.html">Country</a></li>
+	                            <li><a href="../classes/Cyberfeed.html">Cyberfeed</a></li>
+	                            <li><a href="../classes/Database.html">Database</a></li>
+	                            <li><a href="../classes/DNS.html">DNS</a></li>
+	                            <li><a href="../classes/Emitter_AbandonMission.html">Emitter_AbandonMission</a></li>
+	                            <li><a href="../classes/Emitter_AcceptMission.html">Emitter_AcceptMission</a></li>
+	                            <li><a href="../classes/Emitter_CompleteMission.html">Emitter_CompleteMission</a></li>
+	                            <li><a href="../classes/Emitter_GetCables.html">Emitter_GetCables</a></li>
+	                            <li><a href="../classes/Emitter_GetHelpContent.html">Emitter_GetHelpContent</a></li>
+	                            <li><a href="../classes/Emitter_GetHost.html">Emitter_GetHost</a></li>
+	                            <li><a href="../classes/Emitter_GetMission.html">Emitter_GetMission</a></li>
+	                            <li><a href="../classes/Emitter_GetNodes.html">Emitter_GetNodes</a></li>
+	                            <li><a href="../classes/Emitter_GetUser.html">Emitter_GetUser</a></li>
+	                            <li><a href="../classes/Emitter_Login.html">Emitter_Login</a></li>
+	                            <li><a href="../classes/Emitter_Logout.html">Emitter_Logout</a></li>
+	                            <li><a href="../classes/Emitter_Ping.html">Emitter_Ping</a></li>
+	                            <li><a href="../classes/Emitter_ProgressMission.html">Emitter_ProgressMission</a></li>
+	                            <li><a href="../classes/Emitter_ReconnectLogin.html">Emitter_ReconnectLogin</a></li>
+	                            <li><a href="../classes/Emitter_ShopPurchaseHost.html">Emitter_ShopPurchaseHost</a></li>
+	                            <li><a href="../classes/Emitter_ShopPurchaseNetwork.html">Emitter_ShopPurchaseNetwork</a></li>
+	                            <li><a href="../classes/Emitter_Terminate.html">Emitter_Terminate</a></li>
+	                            <li><a href="../classes/Emitter_Traceroute.html">Emitter_Traceroute</a></li>
+	                            <li><a href="../classes/Emitter_UpdateHelpContent.html">Emitter_UpdateHelpContent</a></li>
+	                            <li><a href="../classes/Filesystem.html">Filesystem</a></li>
+	                            <li><a href="../classes/GeneralRoom.html">GeneralRoom</a></li>
+	                            <li><a href="../classes/Gotham.Controls.Button.html">Gotham.Controls.Button</a></li>
+	                            <li><a href="../classes/Gotham.Controls.Slider.html">Gotham.Controls.Slider</a></li>
+	                            <li><a href="../classes/Gotham.Database.html">Gotham.Database</a></li>
+	                            <li><a href="../classes/Gotham.GameLoop.html">Gotham.GameLoop</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Container.html">Gotham.Graphics.Container</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Graphics.html">Gotham.Graphics.Graphics</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Polygon.html">Gotham.Graphics.Polygon</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Rectangle.html">Gotham.Graphics.Rectangle</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Sprite.html">Gotham.Graphics.Sprite</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Text.html">Gotham.Graphics.Text</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Texture.html">Gotham.Graphics.Texture</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Tools.html">Gotham.Graphics.Tools</a></li>
+	                            <li><a href="../classes/Gotham.Network.html">Gotham.Network</a></li>
+	                            <li><a href="../classes/Gotham.Pattern.MVC.Controller.html">Gotham.Pattern.MVC.Controller</a></li>
+	                            <li><a href="../classes/Gotham.Pattern.MVC.View.html">Gotham.Pattern.MVC.View</a></li>
+	                            <li><a href="../classes/Gotham.Preload.html">Gotham.Preload</a></li>
+	                            <li><a href="../classes/Gotham.Renderer.html">Gotham.Renderer</a></li>
+	                            <li><a href="../classes/Gotham.Scene.html">Gotham.Scene</a></li>
+	                            <li><a href="../classes/Gotham.Sound.html">Gotham.Sound</a></li>
+	                            <li><a href="../classes/Gotham.Util.Ajax.html">Gotham.Util.Ajax</a></li>
+	                            <li><a href="../classes/Gotham.Util.Compression.html">Gotham.Util.Compression</a></li>
+	                            <li><a href="../classes/Gotham.Util.Geocoding.html">Gotham.Util.Geocoding</a></li>
+	                            <li><a href="../classes/Gotham.Util.SearchTools.html">Gotham.Util.SearchTools</a></li>
+	                            <li><a href="../classes/Gotham.Util.Util.html">Gotham.Util.Util</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.AnnounceController.html">GothamGame.Controllers.AnnounceController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.BarController.html">GothamGame.Controllers.BarController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.GothsharkController.html">GothamGame.Controllers.GothsharkController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.HelpController.html">GothamGame.Controllers.HelpController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.IdentityController.html">GothamGame.Controllers.IdentityController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.MissionController.html">GothamGame.Controllers.MissionController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.NodeListController.html">GothamGame.Controllers.NodeListController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.SettingsController.html">GothamGame.Controllers.SettingsController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.ShopController.html">GothamGame.Controllers.ShopController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.TerminalController.html">GothamGame.Controllers.TerminalController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.UserController.html">GothamGame.Controllers.UserController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.WorldMapController.html">GothamGame.Controllers.WorldMapController</a></li>
+	                            <li><a href="../classes/GothamGame.GothamGame.html">GothamGame.GothamGame</a></li>
+	                            <li><a href="../classes/GothamGame.Mission.Mission.html">GothamGame.Mission.Mission</a></li>
+	                            <li><a href="../classes/GothamGame.Mission.Requirement.html">GothamGame.Mission.Requirement</a></li>
+	                            <li><a href="../classes/GothamGame.MissionEngine.MissionEngine.html">GothamGame.MissionEngine.MissionEngine</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.Loading.html">GothamGame.Scenes.Loading</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.Menu.html">GothamGame.Scenes.Menu</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.World.html">GothamGame.Scenes.World</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Application.html">GothamGame.Terminal.Application.Application</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.ChangeDirectory.html">GothamGame.Terminal.Application.ChangeDirectory</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Clear.html">GothamGame.Terminal.Application.Clear</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Copy.html">GothamGame.Terminal.Application.Copy</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.ListSegments.html">GothamGame.Terminal.Application.ListSegments</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Move.html">GothamGame.Terminal.Application.Move</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Perl.html">GothamGame.Terminal.Application.Perl</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Ping.html">GothamGame.Terminal.Application.Ping</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Slowloris.html">GothamGame.Terminal.Application.Slowloris</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Traceroute.html">GothamGame.Terminal.Application.Traceroute</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Command.html">GothamGame.Terminal.Command</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Console.html">GothamGame.Terminal.Console</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Filesystem.html">GothamGame.Terminal.Filesystem</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Terminal.html">GothamGame.Terminal.Terminal</a></li>
+	                            <li><a href="../classes/GothamGame.Tools.HostUtils.html">GothamGame.Tools.HostUtils</a></li>
+	                            <li><a href="../classes/GothamGame.View.AnnounceView.html">GothamGame.View.AnnounceView</a></li>
+	                            <li><a href="../classes/GothamGame.View.BarView.html">GothamGame.View.BarView</a></li>
+	                            <li><a href="../classes/GothamGame.View.GothsharkView.html">GothamGame.View.GothsharkView</a></li>
+	                            <li><a href="../classes/GothamGame.View.HelpView.html">GothamGame.View.HelpView</a></li>
+	                            <li><a href="../classes/GothamGame.View.IdentityView.html">GothamGame.View.IdentityView</a></li>
+	                            <li><a href="../classes/GothamGame.View.MissionView.html">GothamGame.View.MissionView</a></li>
+	                            <li><a href="../classes/GothamGame.View.NodeListView.html">GothamGame.View.NodeListView</a></li>
+	                            <li><a href="../classes/GothamGame.View.SettingsView.html">GothamGame.View.SettingsView</a></li>
+	                            <li><a href="../classes/GothamGame.View.ShopView.html">GothamGame.View.ShopView</a></li>
+	                            <li><a href="../classes/GothamGame.View.TerminalView.html">GothamGame.View.TerminalView</a></li>
+	                            <li><a href="../classes/GothamGame.View.UserView.html">GothamGame.View.UserView</a></li>
+	                            <li><a href="../classes/GothamGame.View.WorldMapView.html">GothamGame.View.WorldMapView</a></li>
+	                            <li><a href="../classes/GothamObject.html">GothamObject</a></li>
+	                            <li><a href="../classes/Help.html">Help</a></li>
+	                            <li><a href="../classes/HoneyCloud.html">HoneyCloud</a></li>
+	                            <li><a href="../classes/Host.html">Host</a></li>
+	                            <li><a href="../classes/HostRoom.html">HostRoom</a></li>
+	                            <li><a href="../classes/Identity.html">Identity</a></li>
+	                            <li><a href="../classes/IPProvider.html">IPProvider</a></li>
+	                            <li><a href="../classes/IPViking.html">IPViking</a></li>
+	                            <li><a href="../classes/LocalDatabase.html">LocalDatabase</a></li>
+	                            <li><a href="../classes/Mission.html">Mission</a></li>
+	                            <li><a href="../classes/MissionRequirement.html">MissionRequirement</a></li>
+	                            <li><a href="../classes/MissionRoom.html">MissionRoom</a></li>
+	                            <li><a href="../classes/Network.html">Network</a></li>
+	                            <li><a href="../classes/Node.html">Node</a></li>
+	                            <li><a href="../classes/NodeCable.html">NodeCable</a></li>
+	                            <li><a href="../classes/PingRoom.html">PingRoom</a></li>
+	                            <li><a href="../classes/SocketServer.html">SocketServer</a></li>
+	                            <li><a href="../classes/Tier.html">Tier</a></li>
+	                            <li><a href="../classes/TracerouteRoom.html">TracerouteRoom</a></li>
+	                            <li><a href="../classes/TweenCS.ChainItem.html">TweenCS.ChainItem</a></li>
+	                            <li><a href="../classes/TweenCS.Tween.html">TweenCS.Tween</a></li>
+	                            <li><a href="../classes/User.html">User</a></li>
+	                            <li><a href="../classes/UserMission.html">UserMission</a></li>
+	                            <li><a href="../classes/UserMissionRequirement.html">UserMissionRequirement</a></li>
+	                            <li><a href="../classes/UserRoom.html">UserRoom</a></li>
+	                            <li><a href="../classes/World.html">World</a></li>
+	                            <li><a href="../classes/WorldMapRoom.html">WorldMapRoom</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/Backend.html">Backend</a></li>
+	                            <li><a href="../modules/Backend.Database.html">Backend.Database</a></li>
+	                            <li><a href="../modules/Backend.Emitters.html">Backend.Emitters</a></li>
+	                            <li><a href="../modules/Backend.LocalDatabase.html">Backend.LocalDatabase</a></li>
+	                            <li><a href="../modules/Backend.Networking.html">Backend.Networking</a></li>
+	                            <li><a href="../modules/Backend.World.html">Backend.World</a></li>
+	                            <li><a href="../modules/Framework.html">Framework</a></li>
+	                            <li><a href="../modules/Framework.Controls.html">Framework.Controls</a></li>
+	                            <li><a href="../modules/Framework.Graphics.html">Framework.Graphics</a></li>
+	                            <li><a href="../modules/Framework.Pattern.MVC.html">Framework.Pattern.MVC</a></li>
+	                            <li><a href="../modules/Framework.Util.html">Framework.Util</a></li>
+	                            <li><a href="../modules/Frontend.html">Frontend</a></li>
+	                            <li><a href="../modules/Frontend.Controllers.html">Frontend.Controllers</a></li>
+	                            <li><a href="../modules/Frontend.Mission.html">Frontend.Mission</a></li>
+	                            <li><a href="../modules/Frontend.Scenes.html">Frontend.Scenes</a></li>
+	                            <li><a href="../modules/Frontend.Terminal.html">Frontend.Terminal</a></li>
+	                            <li><a href="../modules/Frontend.Terminal.Application.html">Frontend.Terminal.Application</a></li>
+	                            <li><a href="../modules/Frontend.Tools.html">Frontend.Tools</a></li>
+	                            <li><a href="../modules/Frontend.View.html">Frontend.View</a></li>
+	                            <li><a href="../modules/TweenCS.html">TweenCS</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+                            <h1>Game\src\scenes\Menu.coffee <small>File</small></h1>
+                        </div>
+                        
+                        <div class="file">
+                            <pre class="prettyprint linenums">
+                        
+                        
+                        ###*
+                        # THe menu scene is running after the loading scene. Options are to Play Game ,
+                        # @class Menu
+                        # @module Frontend.Scenes
+                        # @namespace GothamGame.Scenes
+                        # @extends Gotham.Graphics.Scene
+                        ###
+                        class Menu extends Gotham.Graphics.Scene
+                        
+                          create: -&gt;
+                            that = @
+                        
+                            # Create Background
+                            @createBackground()
+                        
+                            # Document Container
+                            @documentContainer = new Gotham.Graphics.Container()
+                            @addChild @documentContainer
+                        
+                            # Singleplayer button
+                            @buttons = []
+                            @addButton &quot;Play Game&quot;, -&gt;
+                              GothamGame.Renderer.setScene &quot;World&quot;
+                        
+                            # Settings button
+                            @addButton &quot;Settings&quot;, -&gt;
+                              Settings = new GothamGame.Controllers.Settings &quot;Settings&quot;
+                              that.addObject Settings
+                        
+                        
+                            # About Button
+                            ready = true
+                            @addButton &quot;Credits&quot;, -&gt;
+                              if ready
+                                ready = false
+                              else
+                                return
+                        
+                              # Credits
+                              # [0] = Text
+                              # [1] = Size
+                              # [2] = Delay
+                              credits = [
+                                [&quot;                 Introducing               &quot;, 60, 0],
+                                [&quot;Project Development       Per-Arne Andersen&quot;, 40, 0],
+                                [&quot;Project Development       Paul Richard Lilleland&quot;, 40, 0],
+                                [&quot;                                                &quot;, 40, 1000],
+                                [&quot;                   Thanks to                    &quot;, 60, 0],
+                                [&quot;Supervisor                 Christian Auby       &quot;, 60, 0],
+                                [&quot;Supervisor                 Sigurd Kristian Brinch&quot;, 60, 0],
+                                [&quot;Assisting Supervisor       Morten Goodwin       &quot;, 60, 0],
+                                [&quot;                                                &quot;, 40, 1000],
+                                [&quot;              Special Thanks to                 &quot;, 60, 0],
+                                [&quot;Library Provider          PIXI.js Team          &quot;, 40, 0],
+                                [&quot;Library Provider          Howler.js Team        &quot;, 40, 0],
+                                [&quot;Library Provider          Socket.IO Team        &quot;, 40, 0],
+                                [&quot;Library Provider          JQuery Team           &quot;, 40, 0],
+                                [&quot;Library Provider          Sequelize Team        &quot;, 40, 0],
+                                [&quot;Library Provider          TaffyDB Team          &quot;, 40, 0],
+                                [&quot;Library Provider          nHibernate Team       &quot;, 40, 0],
+                                [&quot;                                                &quot;, 40, 1000],
+                                [&quot;               Other Technologies               &quot;, 60, 0],
+                                [&quot;                    MariaDB                     &quot;, 60, 0],
+                                [&quot;                    nginx                       &quot;, 60, 0],
+                                [&quot;                  Google Maps                   &quot;, 60, 0],
+                                [&quot;                    Node.JS                     &quot;, 60, 0],
+                        
+                              ]
+                        
+                              i = 0
+                              intervalID = setInterval (()-&gt;
+                        
+                                item = credits[i++]
+                        
+                                text = new Gotham.Graphics.Text(item[0], {font: &quot;bold #{item[1]}px calibri&quot;, stroke: &quot;#000000&quot;, strokeThickness: 4, fill: &quot;#ffffff&quot;, align: &quot;left&quot;, dropShadow: true});
+                                text.anchor =
+                                  x: 0.5
+                                  y: 0.5
+                                text.x = 1920 / 2
+                                text.y = 1080
+                                text.alpha = 0
+                                that.addChild text
+                        
+                                tween = new Gotham.Tween text
+                                tween.delay item[2]
+                                tween.to {y: 800, alpha: 1}, 2000
+                                tween.to {y: 300}, 7000
+                                tween.to {y: 200, alpha: 0}, 1300
+                                tween.onComplete ()-&gt;
+                                  that.removeChild text
+                                tween.start()
+                        
+                                if i &gt;= credits.length
+                                  ready = true
+                                  clearInterval intervalID
+                              ),1000
+                        
+                        
+                        
+                        
+                            # Gotham Button
+                            @addButton &quot;Exit&quot;, -&gt;
+                              window.location.href = &quot;http://gotham.no&quot;;
+                        
+                        
+                            @drawButtons()
+                            @setupMusic()
+                        
+                        
+                        
+                        
+                          setupMusic: () -&gt;
+                            sound = Gotham.Preload.fetch(&quot;menu_theme&quot;, &quot;audio&quot;)
+                            sound.volume(0.5)
+                            sound.loop true
+                            sound.play()
+                        
+                          createBackground: () -&gt;
+                        
+                            # Game Title
+                            @gameTitle = gameTitle = new Gotham.Graphics.Text(&quot;Gotham&quot;, {font: &quot;bold 100px Orbitron&quot;, fill: &quot;#000000&quot;, align: &quot;center&quot;, stroke: &quot;#FFFFFF&quot;, strokeThickness: 4});
+                            gameTitle.x = 1920 / 2
+                            gameTitle.y = 125
+                            gameTitle.anchor =
+                              x: 0.5
+                              y: 0.5
+                        
+                            originalTitleScale =
+                              x: gameTitle.scale.x
+                              y: gameTitle.scale.y
+                        
+                            tween = new Gotham.Tween gameTitle
+                            tween.repeat(Infinity)
+                            tween.easing Gotham.Tween.Easing.Linear.None
+                            tween.to {
+                              scale:
+                                x: originalTitleScale.x + 0.2
+                                y: originalTitleScale.y + 0.2
+                            }, 10000
+                            tween.to {
+                              scale:
+                                x: originalTitleScale.x
+                                y: originalTitleScale.y
+                            }, 10000
+                            tween.start()
+                        
+                        
+                            texture = Gotham.Preload.fetch(&quot;menu_background&quot;, &quot;image&quot;)
+                            texture2 = Gotham.Preload.fetch(&quot;menu_background2&quot;, &quot;image&quot;)
+                            textures = [texture, texture2]
+                            swap = -&gt;
+                              next = textures.shift()
+                              textures.push next
+                              return next
+                        
+                            sprite = new Gotham.Graphics.Sprite swap()
+                            sprite.width = 1920
+                            sprite.height = 1080
+                            sprite.alpha = 1
+                            sprite.anchor =
+                              x: 0.5
+                              y: 0.5
+                            sprite.position =
+                              x: sprite.width / 2
+                              y: sprite.height / 2
+                        
+                            originalScale =
+                              x: sprite.scale.x
+                              y: sprite.scale.y
+                        
+                            tween = new Gotham.Tween sprite
+                            tween.repeat(Infinity)
+                            tween.easing Gotham.Tween.Easing.Linear.None
+                            tween.to {
+                              scale:
+                                x: originalScale.x + 0.8
+                                y: originalScale.y + 0.8
+                            }, 80000
+                            tween.delay(2000)
+                            tween.to {
+                              alpha: 0
+                            }, 5000
+                            tween.to {
+                              scale:
+                                x: originalScale.x
+                                y: originalScale.y
+                            }, 1
+                            tween.func -&gt;
+                              sprite.texture = swap()
+                            tween.to {
+                                alpha: 1
+                              }, 2000
+                        
+                        
+                            tween.start()
+                        
+                        
+                        
+                            @addChild sprite
+                            @addChild gameTitle
+                        
+                        
+                        
+                          addButton: (text, onClick) -&gt;
+                        
+                            texture = Gotham.Preload.fetch(&quot;menu_button&quot;, &quot;image&quot;)
+                            hoverTexture = Gotham.Preload.fetch(&quot;menu_button_hover&quot;, &quot;image&quot;)
+                        
+                        
+                            # Create a sprite
+                            sprite = new Gotham.Graphics.Sprite texture
+                            sprite.width = 300
+                            sprite.height = 100
+                            sprite.originalScale = sprite.scale
+                            sprite.anchor =
+                              x: 0.5
+                              y: 0.5
+                            sprite.interactive = true
+                            sprite.buttonMode = true
+                        
+                            # Create a text object
+                            text = new Gotham.Graphics.Text(text, {font: &quot;bold 70px Arial&quot;, fill: &quot;#ffffff&quot;, align: &quot;center&quot;, dropShadow: true }, 0,0)
+                        
+                            # Ensure anchors are 0
+                            text.anchor =
+                              x: 0.5
+                              y: 0.5
+                        
+                            # Position the text centered in the sprite
+                            text.x = 0
+                            text.y = 0
+                        
+                            # Create Events
+                            sprite.mouseover = (mouseData) -&gt;
+                              @texture = hoverTexture
+                        
+                              sound = Gotham.Preload.fetch(&quot;button_click_1&quot;, &quot;audio&quot;)
+                              sound.volume(0.5)
+                              sound.loop(false)
+                              sound.play()
+                        
+                        
+                            that = @
+                            sprite.mouseout = (mouseData) -&gt;
+                              @texture = texture
+                        
+                            sprite.click = (mouseData) -&gt;
+                        
+                              onClick(mouseData)
+                        
+                            sprite.addChild text
+                        
+                            @buttons.push(sprite)
+                        
+                          drawButtons: () -&gt;
+                        
+                            startX = (1920 / 2)
+                            startY = 350
+                            counter = 0
+                            for button in @buttons
+                              button.x = startX
+                              button.y = startY + (counter * (button.height + 10))
+                              counter++
+                              @addChild button
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        module.exports = Menu
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>GothamGame.Controllers.ShopController</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdministrationRoom", "classes/Cable", "classes/CablePart", "classes/CableType", "classes/Client", "classes/Clock", "classes/Country", "classes/Cyberfeed", "classes/Database", "classes/DNS", "classes/Emitter_AbandonMission", "classes/Emitter_AcceptMission", "classes/Emitter_CompleteMission", "classes/Emitter_GetCables", "classes/Emitter_GetHelpContent", "classes/Emitter_GetHost", "classes/Emitter_GetMission", "classes/Emitter_GetNodes", "classes/Emitter_GetUser", "classes/Emitter_Login", "classes/Emitter_Logout", "classes/Emitter_Ping", "classes/Emitter_ProgressMission", "classes/Emitter_ReconnectLogin", "classes/Emitter_ShopPurchaseHost", "classes/Emitter_ShopPurchaseNetwork", "classes/Emitter_Terminate", "classes/Emitter_Traceroute", "classes/Emitter_UpdateHelpContent", "classes/Filesystem", "classes/GeneralRoom", "classes/Gotham.Controls.Button", "classes/Gotham.Controls.Slider", "classes/Gotham.Database", "classes/Gotham.GameLoop", "classes/Gotham.Graphics.Container", "classes/Gotham.Graphics.Graphics", "classes/Gotham.Graphics.Polygon", "classes/Gotham.Graphics.Rectangle", "classes/Gotham.Graphics.Sprite", "classes/Gotham.Graphics.Text", "classes/Gotham.Graphics.Texture", "classes/Gotham.Graphics.Tools", "classes/Gotham.Network", "classes/Gotham.Pattern.MVC.Controller", "classes/Gotham.Pattern.MVC.View", "classes/Gotham.Preload", "classes/Gotham.Renderer", "classes/Gotham.Scene", "classes/Gotham.Sound", "classes/Gotham.Util.Ajax", "classes/Gotham.Util.Compression", "classes/Gotham.Util.Geocoding", "classes/Gotham.Util.SearchTools", "classes/Gotham.Util.Util", "classes/GothamGame.Controllers.AnnounceController", "classes/GothamGame.Controllers.BarController", "classes/GothamGame.Controllers.GothsharkController", "classes/GothamGame.Controllers.HelpController", "classes/GothamGame.Controllers.IdentityController", "classes/GothamGame.Controllers.MissionController", "classes/GothamGame.Controllers.NodeListController", "classes/GothamGame.Controllers.SettingsController", "classes/GothamGame.Controllers.ShopController", "classes/GothamGame.Controllers.TerminalController", "classes/GothamGame.Controllers.UserController", "classes/GothamGame.Controllers.WorldMapController", "classes/GothamGame.GothamGame", "classes/GothamGame.Mission.Mission", "classes/GothamGame.Mission.Requirement", "classes/GothamGame.MissionEngine.MissionEngine", "classes/GothamGame.Scenes.Loading", "classes/GothamGame.Scenes.Menu", "classes/GothamGame.Scenes.World", "classes/GothamGame.Terminal.Application.Application", "classes/GothamGame.Terminal.Application.ChangeDirectory", "classes/GothamGame.Terminal.Application.Clear", "classes/GothamGame.Terminal.Application.Copy", "classes/GothamGame.Terminal.Application.ListSegments", "classes/GothamGame.Terminal.Application.Move", "classes/GothamGame.Terminal.Application.Perl", "classes/GothamGame.Terminal.Application.Ping", "classes/GothamGame.Terminal.Application.Slowloris", "classes/GothamGame.Terminal.Application.Traceroute", "classes/GothamGame.Terminal.Command", "classes/GothamGame.Terminal.Console", "classes/GothamGame.Terminal.Filesystem", "classes/GothamGame.Terminal.Terminal", "classes/GothamGame.Tools.HostUtils", "classes/GothamGame.View.AnnounceView", "classes/GothamGame.View.BarView", "classes/GothamGame.View.GothsharkView", "classes/GothamGame.View.HelpView", "classes/GothamGame.View.IdentityView", "classes/GothamGame.View.MissionView", "classes/GothamGame.View.NodeListView", "classes/GothamGame.View.SettingsView", "classes/GothamGame.View.ShopView", "classes/GothamGame.View.TerminalView", "classes/GothamGame.View.UserView", "classes/GothamGame.View.WorldMapView", "classes/GothamObject", "classes/Help", "classes/HoneyCloud", "classes/Host", "classes/HostRoom", "classes/Identity", "classes/IPProvider", "classes/IPViking", "classes/LocalDatabase", "classes/Mission", "classes/MissionRequirement", "classes/MissionRoom", "classes/Network", "classes/Node", "classes/NodeCable", "classes/PingRoom", "classes/SocketServer", "classes/Tier", "classes/TracerouteRoom", "classes/TweenCS.ChainItem", "classes/TweenCS.Tween", "classes/User", "classes/UserMission", "classes/UserMissionRequirement", "classes/UserRoom", "classes/World", "classes/WorldMapRoom", "modules/Backend", "modules/Backend.Database", "modules/Backend.Emitters", "modules/Backend.LocalDatabase", "modules/Backend.Networking", "modules/Backend.World", "modules/Framework", "modules/Framework.Controls", "modules/Framework.Graphics", "modules/Framework.Pattern.MVC", "modules/Framework.Util", "modules/Frontend", "modules/Frontend.Controllers", "modules/Frontend.Mission", "modules/Frontend.Scenes", "modules/Frontend.Terminal", "modules/Frontend.Terminal.Application", "modules/Frontend.Tools", "modules/Frontend.View", "modules/TweenCS"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdministrationRoom.html">AdministrationRoom</a></li>
+	                            <li><a href="../classes/Cable.html">Cable</a></li>
+	                            <li><a href="../classes/CablePart.html">CablePart</a></li>
+	                            <li><a href="../classes/CableType.html">CableType</a></li>
+	                            <li><a href="../classes/Client.html">Client</a></li>
+	                            <li><a href="../classes/Clock.html">Clock</a></li>
+	                            <li><a href="../classes/Country.html">Country</a></li>
+	                            <li><a href="../classes/Cyberfeed.html">Cyberfeed</a></li>
+	                            <li><a href="../classes/Database.html">Database</a></li>
+	                            <li><a href="../classes/DNS.html">DNS</a></li>
+	                            <li><a href="../classes/Emitter_AbandonMission.html">Emitter_AbandonMission</a></li>
+	                            <li><a href="../classes/Emitter_AcceptMission.html">Emitter_AcceptMission</a></li>
+	                            <li><a href="../classes/Emitter_CompleteMission.html">Emitter_CompleteMission</a></li>
+	                            <li><a href="../classes/Emitter_GetCables.html">Emitter_GetCables</a></li>
+	                            <li><a href="../classes/Emitter_GetHelpContent.html">Emitter_GetHelpContent</a></li>
+	                            <li><a href="../classes/Emitter_GetHost.html">Emitter_GetHost</a></li>
+	                            <li><a href="../classes/Emitter_GetMission.html">Emitter_GetMission</a></li>
+	                            <li><a href="../classes/Emitter_GetNodes.html">Emitter_GetNodes</a></li>
+	                            <li><a href="../classes/Emitter_GetUser.html">Emitter_GetUser</a></li>
+	                            <li><a href="../classes/Emitter_Login.html">Emitter_Login</a></li>
+	                            <li><a href="../classes/Emitter_Logout.html">Emitter_Logout</a></li>
+	                            <li><a href="../classes/Emitter_Ping.html">Emitter_Ping</a></li>
+	                            <li><a href="../classes/Emitter_ProgressMission.html">Emitter_ProgressMission</a></li>
+	                            <li><a href="../classes/Emitter_ReconnectLogin.html">Emitter_ReconnectLogin</a></li>
+	                            <li><a href="../classes/Emitter_ShopPurchaseHost.html">Emitter_ShopPurchaseHost</a></li>
+	                            <li><a href="../classes/Emitter_ShopPurchaseNetwork.html">Emitter_ShopPurchaseNetwork</a></li>
+	                            <li><a href="../classes/Emitter_Terminate.html">Emitter_Terminate</a></li>
+	                            <li><a href="../classes/Emitter_Traceroute.html">Emitter_Traceroute</a></li>
+	                            <li><a href="../classes/Emitter_UpdateHelpContent.html">Emitter_UpdateHelpContent</a></li>
+	                            <li><a href="../classes/Filesystem.html">Filesystem</a></li>
+	                            <li><a href="../classes/GeneralRoom.html">GeneralRoom</a></li>
+	                            <li><a href="../classes/Gotham.Controls.Button.html">Gotham.Controls.Button</a></li>
+	                            <li><a href="../classes/Gotham.Controls.Slider.html">Gotham.Controls.Slider</a></li>
+	                            <li><a href="../classes/Gotham.Database.html">Gotham.Database</a></li>
+	                            <li><a href="../classes/Gotham.GameLoop.html">Gotham.GameLoop</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Container.html">Gotham.Graphics.Container</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Graphics.html">Gotham.Graphics.Graphics</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Polygon.html">Gotham.Graphics.Polygon</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Rectangle.html">Gotham.Graphics.Rectangle</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Sprite.html">Gotham.Graphics.Sprite</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Text.html">Gotham.Graphics.Text</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Texture.html">Gotham.Graphics.Texture</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Tools.html">Gotham.Graphics.Tools</a></li>
+	                            <li><a href="../classes/Gotham.Network.html">Gotham.Network</a></li>
+	                            <li><a href="../classes/Gotham.Pattern.MVC.Controller.html">Gotham.Pattern.MVC.Controller</a></li>
+	                            <li><a href="../classes/Gotham.Pattern.MVC.View.html">Gotham.Pattern.MVC.View</a></li>
+	                            <li><a href="../classes/Gotham.Preload.html">Gotham.Preload</a></li>
+	                            <li><a href="../classes/Gotham.Renderer.html">Gotham.Renderer</a></li>
+	                            <li><a href="../classes/Gotham.Scene.html">Gotham.Scene</a></li>
+	                            <li><a href="../classes/Gotham.Sound.html">Gotham.Sound</a></li>
+	                            <li><a href="../classes/Gotham.Util.Ajax.html">Gotham.Util.Ajax</a></li>
+	                            <li><a href="../classes/Gotham.Util.Compression.html">Gotham.Util.Compression</a></li>
+	                            <li><a href="../classes/Gotham.Util.Geocoding.html">Gotham.Util.Geocoding</a></li>
+	                            <li><a href="../classes/Gotham.Util.SearchTools.html">Gotham.Util.SearchTools</a></li>
+	                            <li><a href="../classes/Gotham.Util.Util.html">Gotham.Util.Util</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.AnnounceController.html">GothamGame.Controllers.AnnounceController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.BarController.html">GothamGame.Controllers.BarController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.GothsharkController.html">GothamGame.Controllers.GothsharkController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.HelpController.html">GothamGame.Controllers.HelpController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.IdentityController.html">GothamGame.Controllers.IdentityController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.MissionController.html">GothamGame.Controllers.MissionController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.NodeListController.html">GothamGame.Controllers.NodeListController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.SettingsController.html">GothamGame.Controllers.SettingsController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.ShopController.html">GothamGame.Controllers.ShopController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.TerminalController.html">GothamGame.Controllers.TerminalController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.UserController.html">GothamGame.Controllers.UserController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.WorldMapController.html">GothamGame.Controllers.WorldMapController</a></li>
+	                            <li><a href="../classes/GothamGame.GothamGame.html">GothamGame.GothamGame</a></li>
+	                            <li><a href="../classes/GothamGame.Mission.Mission.html">GothamGame.Mission.Mission</a></li>
+	                            <li><a href="../classes/GothamGame.Mission.Requirement.html">GothamGame.Mission.Requirement</a></li>
+	                            <li><a href="../classes/GothamGame.MissionEngine.MissionEngine.html">GothamGame.MissionEngine.MissionEngine</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.Loading.html">GothamGame.Scenes.Loading</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.Menu.html">GothamGame.Scenes.Menu</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.World.html">GothamGame.Scenes.World</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Application.html">GothamGame.Terminal.Application.Application</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.ChangeDirectory.html">GothamGame.Terminal.Application.ChangeDirectory</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Clear.html">GothamGame.Terminal.Application.Clear</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Copy.html">GothamGame.Terminal.Application.Copy</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.ListSegments.html">GothamGame.Terminal.Application.ListSegments</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Move.html">GothamGame.Terminal.Application.Move</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Perl.html">GothamGame.Terminal.Application.Perl</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Ping.html">GothamGame.Terminal.Application.Ping</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Slowloris.html">GothamGame.Terminal.Application.Slowloris</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Traceroute.html">GothamGame.Terminal.Application.Traceroute</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Command.html">GothamGame.Terminal.Command</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Console.html">GothamGame.Terminal.Console</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Filesystem.html">GothamGame.Terminal.Filesystem</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Terminal.html">GothamGame.Terminal.Terminal</a></li>
+	                            <li><a href="../classes/GothamGame.Tools.HostUtils.html">GothamGame.Tools.HostUtils</a></li>
+	                            <li><a href="../classes/GothamGame.View.AnnounceView.html">GothamGame.View.AnnounceView</a></li>
+	                            <li><a href="../classes/GothamGame.View.BarView.html">GothamGame.View.BarView</a></li>
+	                            <li><a href="../classes/GothamGame.View.GothsharkView.html">GothamGame.View.GothsharkView</a></li>
+	                            <li><a href="../classes/GothamGame.View.HelpView.html">GothamGame.View.HelpView</a></li>
+	                            <li><a href="../classes/GothamGame.View.IdentityView.html">GothamGame.View.IdentityView</a></li>
+	                            <li><a href="../classes/GothamGame.View.MissionView.html">GothamGame.View.MissionView</a></li>
+	                            <li><a href="../classes/GothamGame.View.NodeListView.html">GothamGame.View.NodeListView</a></li>
+	                            <li><a href="../classes/GothamGame.View.SettingsView.html">GothamGame.View.SettingsView</a></li>
+	                            <li><a href="../classes/GothamGame.View.ShopView.html">GothamGame.View.ShopView</a></li>
+	                            <li><a href="../classes/GothamGame.View.TerminalView.html">GothamGame.View.TerminalView</a></li>
+	                            <li><a href="../classes/GothamGame.View.UserView.html">GothamGame.View.UserView</a></li>
+	                            <li><a href="../classes/GothamGame.View.WorldMapView.html">GothamGame.View.WorldMapView</a></li>
+	                            <li><a href="../classes/GothamObject.html">GothamObject</a></li>
+	                            <li><a href="../classes/Help.html">Help</a></li>
+	                            <li><a href="../classes/HoneyCloud.html">HoneyCloud</a></li>
+	                            <li><a href="../classes/Host.html">Host</a></li>
+	                            <li><a href="../classes/HostRoom.html">HostRoom</a></li>
+	                            <li><a href="../classes/Identity.html">Identity</a></li>
+	                            <li><a href="../classes/IPProvider.html">IPProvider</a></li>
+	                            <li><a href="../classes/IPViking.html">IPViking</a></li>
+	                            <li><a href="../classes/LocalDatabase.html">LocalDatabase</a></li>
+	                            <li><a href="../classes/Mission.html">Mission</a></li>
+	                            <li><a href="../classes/MissionRequirement.html">MissionRequirement</a></li>
+	                            <li><a href="../classes/MissionRoom.html">MissionRoom</a></li>
+	                            <li><a href="../classes/Network.html">Network</a></li>
+	                            <li><a href="../classes/Node.html">Node</a></li>
+	                            <li><a href="../classes/NodeCable.html">NodeCable</a></li>
+	                            <li><a href="../classes/PingRoom.html">PingRoom</a></li>
+	                            <li><a href="../classes/SocketServer.html">SocketServer</a></li>
+	                            <li><a href="../classes/Tier.html">Tier</a></li>
+	                            <li><a href="../classes/TracerouteRoom.html">TracerouteRoom</a></li>
+	                            <li><a href="../classes/TweenCS.ChainItem.html">TweenCS.ChainItem</a></li>
+	                            <li><a href="../classes/TweenCS.Tween.html">TweenCS.Tween</a></li>
+	                            <li><a href="../classes/User.html">User</a></li>
+	                            <li><a href="../classes/UserMission.html">UserMission</a></li>
+	                            <li><a href="../classes/UserMissionRequirement.html">UserMissionRequirement</a></li>
+	                            <li><a href="../classes/UserRoom.html">UserRoom</a></li>
+	                            <li><a href="../classes/World.html">World</a></li>
+	                            <li><a href="../classes/WorldMapRoom.html">WorldMapRoom</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/Backend.html">Backend</a></li>
+	                            <li><a href="../modules/Backend.Database.html">Backend.Database</a></li>
+	                            <li><a href="../modules/Backend.Emitters.html">Backend.Emitters</a></li>
+	                            <li><a href="../modules/Backend.LocalDatabase.html">Backend.LocalDatabase</a></li>
+	                            <li><a href="../modules/Backend.Networking.html">Backend.Networking</a></li>
+	                            <li><a href="../modules/Backend.World.html">Backend.World</a></li>
+	                            <li><a href="../modules/Framework.html">Framework</a></li>
+	                            <li><a href="../modules/Framework.Controls.html">Framework.Controls</a></li>
+	                            <li><a href="../modules/Framework.Graphics.html">Framework.Graphics</a></li>
+	                            <li><a href="../modules/Framework.Pattern.MVC.html">Framework.Pattern.MVC</a></li>
+	                            <li><a href="../modules/Framework.Util.html">Framework.Util</a></li>
+	                            <li><a href="../modules/Frontend.html">Frontend</a></li>
+	                            <li><a href="../modules/Frontend.Controllers.html">Frontend.Controllers</a></li>
+	                            <li><a href="../modules/Frontend.Mission.html">Frontend.Mission</a></li>
+	                            <li><a href="../modules/Frontend.Scenes.html">Frontend.Scenes</a></li>
+	                            <li><a href="../modules/Frontend.Terminal.html">Frontend.Terminal</a></li>
+	                            <li><a href="../modules/Frontend.Terminal.Application.html">Frontend.Terminal.Application</a></li>
+	                            <li><a href="../modules/Frontend.Tools.html">Frontend.Tools</a></li>
+	                            <li><a href="../modules/Frontend.View.html">Frontend.View</a></li>
+	                            <li><a href="../modules/TweenCS.html">TweenCS</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+                            <h1>GothamGame.Controllers.ShopController <small>Class</small></h1>
+                        </div>
+                        
+                        <div class="well well-small">
+                        
+                                <div class="extends">
+                                    Extends <a href="../classes/Gotham.Pattern.MVC.Controller.html" class="crosslink">Gotham.Pattern.MVC.Controller</a>
+                                </div>
+                        
+                                <div class="foundat">
+                                    Defined in: <a href="../files/Game_src_objects_Controller_ShopController.coffee.html#l4"><code>Game\src\objects\Controller\ShopController.coffee:4</code></a>
+                                </div>
+                        
+                                    Module: <a href="../modules/Frontend.Controllers.html">Frontend.Controllers</a><br>
+                                    Parent Module: <a href="../modules/Frontend.html">Frontend</a>
+                        
+                        </div>
+                        
+                        
+                        <div class="well well-small">
+                            <p>Controller which manages network purchase etc.</p>
+                        
+                        </div>
+                        
+                            <div class="constructor">
+                                <h2>Constructor</h2>
+                                <div id="method_GothamGame.Controllers.ShopController" class="method item">
+                                    <h3 class="name"><code>GothamGame.Controllers.ShopController</code></h3>
+                                
+                                        <div class="args">
+                                            <span class="paren">(</span><ul class="args-list inline commas">
+                                                <li class="arg">
+                                                        <code>name</code>
+                                                </li>
+                                            </ul><span class="paren">)</span>
+                                        </div>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                    <div class="meta">
+                                                <p>
+                                                Defined in
+                                        <a href="../files/Game_src_objects_Controller_ShopController.coffee.html#l4"><code>Game\src\objects\Controller\ShopController.coffee:4</code></a>
+                                        </p>
+                                
+                                
+                                
+                                    </div>
+                                
+                                    <div class="description">
+                                        
+                                    </div>
+                                
+                                        <div class="params">
+                                            <h4>Parameters:</h4>
+                                
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">name</code>
+                                                        <span class="type">String</span>
+                                
+                                
+                                                    <div class="param-description">
+                                                        <p>Name of the Controller</p>
+                                
+                                                    </div>
+                                
+                                                </li>
+                                            </ul>
+                                        </div>
+                                
+                                
+                                </div>
+                            </div>
+                        
+                        <div>
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#index">Index</a></li>
+                        
+                                    <li><a data-toggle="tab" href="#methods">Methods</a></li>
+                                    <li><a data-toggle="tab" href="#properties">Properties</a></li>
+                            </ul>
+                        
+                            <div class="tab-content">
+                                <div id="index" class="tab-pane active">
+                                    <h2 class="off-left">Item Index</h2>
+                        
+                                        <div class="index-section methods">
+                                            <h3>Methods</h3>
+                        
+                                            <ul class="index-list methods extends">
+                                                    <li class="index-item method inherited">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_addProcess" data-tablink="addProcess">addProcess</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method inherited">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_create" data-tablink="create">create</a>
+                        
+                                                    </li>
+                                            </ul>
+                                        </div>
+                        
+                                        <div class="index-section properties">
+                                            <h3>Properties</h3>
+                        
+                                            <ul class="index-list properties extends">
+                                                    <li class="index-item property private inherited">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__created" data-tablink="_created">_created</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__processes" data-tablink="_processes">_processes</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property_name" data-tablink="name">name</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property_View" data-tablink="View">View</a>
+                        
+                                                    </li>
+                                            </ul>
+                                        </div>
+                        
+                        
+                                </div>
+                        
+                                    <div id="methods" class="tab-pane">
+                                        <h2 class="off-left">Methods</h2>
+                        
+                                            <div id="method_addProcess" class="method item inherited">
+                                                <h3 class="name"><code>addProcess</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>func</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/Gotham.Pattern.MVC.Controller.html#method_addProcess">Gotham.Pattern.MVC.Controller</a>:
+                                                    <a href="../files/GameFramework_src_Modules_Pattern_MVC_Controller.coffee.html#l56"><code>GameFramework\src\Modules\Pattern\MVC\Controller.coffee:56</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Adds a process which is executed in the game loo</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">func</code>
+                                                                    <span class="type">Function</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>&lt;p&gt;&lt;p&gt;&lt;p&gt;&lt;p&gt;&lt;p&gt;&lt;p&gt;&lt;p&gt;&lt;p&gt;the function to execute in the game loop&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_create" class="method item inherited">
+                                                <h3 class="name"><code>create</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/Gotham.Pattern.MVC.Controller.html#method_create">Gotham.Pattern.MVC.Controller</a>:
+                                                    <a href="../files/GameFramework_src_Modules_Pattern_MVC_Controller.coffee.html#l49"><code>GameFramework\src\Modules\Pattern\MVC\Controller.coffee:49</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>This function should be overriden, It creates the controller</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                    </div>
+                        
+                                    <div id="properties" class="tab-pane">
+                                        <h2 class="off-left">Properties</h2>
+                        
+                                            <div id="property__created" class="property item private inherited">
+                                                <h3 class="name"><code>_created</code></h3>
+                                                <span class="type">Boolean</span>
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/Gotham.Pattern.MVC.Controller.html#property__created">Gotham.Pattern.MVC.Controller</a>:
+                                                    <a href="../files/GameFramework_src_Modules_Pattern_MVC_Controller.coffee.html#l22"><code>GameFramework\src\Modules\Pattern\MVC\Controller.coffee:22</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>The created state of the controller</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property__processes" class="property item inherited">
+                                                <h3 class="name"><code>_processes</code></h3>
+                                                <span class="type">Array</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/Gotham.Pattern.MVC.Controller.html#property__processes">Gotham.Pattern.MVC.Controller</a>:
+                                                    <a href="../files/GameFramework_src_Modules_Pattern_MVC_Controller.coffee.html#l29"><code>GameFramework\src\Modules\Pattern\MVC\Controller.coffee:29</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Processes belonging to this controller (Ran by GameLoop)</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_name" class="property item inherited">
+                                                <h3 class="name"><code>name</code></h3>
+                                                <span class="type">String</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/Gotham.Pattern.MVC.Controller.html#property_name">Gotham.Pattern.MVC.Controller</a>:
+                                                    <a href="../files/GameFramework_src_Modules_Pattern_MVC_Controller.coffee.html#l35"><code>GameFramework\src\Modules\Pattern\MVC\Controller.coffee:35</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Name of the controller</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_View" class="property item inherited">
+                                                <h3 class="name"><code>View</code></h3>
+                                                <span class="type"><a href="../classes/Gotham.Pattern.MVC.View.html" class="crosslink">Gotham.Pattern.MVC.View</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/Gotham.Pattern.MVC.Controller.html#property_View">Gotham.Pattern.MVC.Controller</a>:
+                                                    <a href="../files/GameFramework_src_Modules_Pattern_MVC_Controller.coffee.html#l41"><code>GameFramework\src\Modules\Pattern\MVC\Controller.coffee:41</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>View of the controller</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                    </div>
+                        
+                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

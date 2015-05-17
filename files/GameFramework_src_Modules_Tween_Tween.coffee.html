@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>GameFramework\src\Modules\Tween\Tween.coffee</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdministrationRoom", "classes/Cable", "classes/CablePart", "classes/CableType", "classes/Client", "classes/Clock", "classes/Country", "classes/Cyberfeed", "classes/Database", "classes/DNS", "classes/Emitter_AbandonMission", "classes/Emitter_AcceptMission", "classes/Emitter_CompleteMission", "classes/Emitter_GetCables", "classes/Emitter_GetHelpContent", "classes/Emitter_GetHost", "classes/Emitter_GetMission", "classes/Emitter_GetNodes", "classes/Emitter_GetUser", "classes/Emitter_Login", "classes/Emitter_Logout", "classes/Emitter_Ping", "classes/Emitter_ProgressMission", "classes/Emitter_ReconnectLogin", "classes/Emitter_ShopPurchaseHost", "classes/Emitter_ShopPurchaseNetwork", "classes/Emitter_Terminate", "classes/Emitter_Traceroute", "classes/Emitter_UpdateHelpContent", "classes/Filesystem", "classes/GeneralRoom", "classes/Gotham.Controls.Button", "classes/Gotham.Controls.Slider", "classes/Gotham.Database", "classes/Gotham.GameLoop", "classes/Gotham.Graphics.Container", "classes/Gotham.Graphics.Graphics", "classes/Gotham.Graphics.Polygon", "classes/Gotham.Graphics.Rectangle", "classes/Gotham.Graphics.Sprite", "classes/Gotham.Graphics.Text", "classes/Gotham.Graphics.Texture", "classes/Gotham.Graphics.Tools", "classes/Gotham.Network", "classes/Gotham.Pattern.MVC.Controller", "classes/Gotham.Pattern.MVC.View", "classes/Gotham.Preload", "classes/Gotham.Renderer", "classes/Gotham.Scene", "classes/Gotham.Sound", "classes/Gotham.Util.Ajax", "classes/Gotham.Util.Compression", "classes/Gotham.Util.Geocoding", "classes/Gotham.Util.SearchTools", "classes/Gotham.Util.Util", "classes/GothamGame.Controllers.AnnounceController", "classes/GothamGame.Controllers.BarController", "classes/GothamGame.Controllers.GothsharkController", "classes/GothamGame.Controllers.HelpController", "classes/GothamGame.Controllers.IdentityController", "classes/GothamGame.Controllers.MissionController", "classes/GothamGame.Controllers.NodeListController", "classes/GothamGame.Controllers.SettingsController", "classes/GothamGame.Controllers.ShopController", "classes/GothamGame.Controllers.TerminalController", "classes/GothamGame.Controllers.UserController", "classes/GothamGame.Controllers.WorldMapController", "classes/GothamGame.GothamGame", "classes/GothamGame.Mission.Mission", "classes/GothamGame.Mission.Requirement", "classes/GothamGame.MissionEngine.MissionEngine", "classes/GothamGame.Scenes.Loading", "classes/GothamGame.Scenes.Menu", "classes/GothamGame.Scenes.World", "classes/GothamGame.Terminal.Application.Application", "classes/GothamGame.Terminal.Application.ChangeDirectory", "classes/GothamGame.Terminal.Application.Clear", "classes/GothamGame.Terminal.Application.Copy", "classes/GothamGame.Terminal.Application.ListSegments", "classes/GothamGame.Terminal.Application.Move", "classes/GothamGame.Terminal.Application.Perl", "classes/GothamGame.Terminal.Application.Ping", "classes/GothamGame.Terminal.Application.Slowloris", "classes/GothamGame.Terminal.Application.Traceroute", "classes/GothamGame.Terminal.Command", "classes/GothamGame.Terminal.Console", "classes/GothamGame.Terminal.Filesystem", "classes/GothamGame.Terminal.Terminal", "classes/GothamGame.Tools.HostUtils", "classes/GothamGame.View.AnnounceView", "classes/GothamGame.View.BarView", "classes/GothamGame.View.GothsharkView", "classes/GothamGame.View.HelpView", "classes/GothamGame.View.IdentityView", "classes/GothamGame.View.MissionView", "classes/GothamGame.View.NodeListView", "classes/GothamGame.View.SettingsView", "classes/GothamGame.View.ShopView", "classes/GothamGame.View.TerminalView", "classes/GothamGame.View.UserView", "classes/GothamGame.View.WorldMapView", "classes/GothamObject", "classes/Help", "classes/HoneyCloud", "classes/Host", "classes/HostRoom", "classes/Identity", "classes/IPProvider", "classes/IPViking", "classes/LocalDatabase", "classes/Mission", "classes/MissionRequirement", "classes/MissionRoom", "classes/Network", "classes/Node", "classes/NodeCable", "classes/PingRoom", "classes/SocketServer", "classes/Tier", "classes/TracerouteRoom", "classes/TweenCS.ChainItem", "classes/TweenCS.Tween", "classes/User", "classes/UserMission", "classes/UserMissionRequirement", "classes/UserRoom", "classes/World", "classes/WorldMapRoom", "modules/Backend", "modules/Backend.Database", "modules/Backend.Emitters", "modules/Backend.LocalDatabase", "modules/Backend.Networking", "modules/Backend.World", "modules/Framework", "modules/Framework.Controls", "modules/Framework.Graphics", "modules/Framework.Pattern.MVC", "modules/Framework.Util", "modules/Frontend", "modules/Frontend.Controllers", "modules/Frontend.Mission", "modules/Frontend.Scenes", "modules/Frontend.Terminal", "modules/Frontend.Terminal.Application", "modules/Frontend.Tools", "modules/Frontend.View", "modules/TweenCS"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdministrationRoom.html">AdministrationRoom</a></li>
+	                            <li><a href="../classes/Cable.html">Cable</a></li>
+	                            <li><a href="../classes/CablePart.html">CablePart</a></li>
+	                            <li><a href="../classes/CableType.html">CableType</a></li>
+	                            <li><a href="../classes/Client.html">Client</a></li>
+	                            <li><a href="../classes/Clock.html">Clock</a></li>
+	                            <li><a href="../classes/Country.html">Country</a></li>
+	                            <li><a href="../classes/Cyberfeed.html">Cyberfeed</a></li>
+	                            <li><a href="../classes/Database.html">Database</a></li>
+	                            <li><a href="../classes/DNS.html">DNS</a></li>
+	                            <li><a href="../classes/Emitter_AbandonMission.html">Emitter_AbandonMission</a></li>
+	                            <li><a href="../classes/Emitter_AcceptMission.html">Emitter_AcceptMission</a></li>
+	                            <li><a href="../classes/Emitter_CompleteMission.html">Emitter_CompleteMission</a></li>
+	                            <li><a href="../classes/Emitter_GetCables.html">Emitter_GetCables</a></li>
+	                            <li><a href="../classes/Emitter_GetHelpContent.html">Emitter_GetHelpContent</a></li>
+	                            <li><a href="../classes/Emitter_GetHost.html">Emitter_GetHost</a></li>
+	                            <li><a href="../classes/Emitter_GetMission.html">Emitter_GetMission</a></li>
+	                            <li><a href="../classes/Emitter_GetNodes.html">Emitter_GetNodes</a></li>
+	                            <li><a href="../classes/Emitter_GetUser.html">Emitter_GetUser</a></li>
+	                            <li><a href="../classes/Emitter_Login.html">Emitter_Login</a></li>
+	                            <li><a href="../classes/Emitter_Logout.html">Emitter_Logout</a></li>
+	                            <li><a href="../classes/Emitter_Ping.html">Emitter_Ping</a></li>
+	                            <li><a href="../classes/Emitter_ProgressMission.html">Emitter_ProgressMission</a></li>
+	                            <li><a href="../classes/Emitter_ReconnectLogin.html">Emitter_ReconnectLogin</a></li>
+	                            <li><a href="../classes/Emitter_ShopPurchaseHost.html">Emitter_ShopPurchaseHost</a></li>
+	                            <li><a href="../classes/Emitter_ShopPurchaseNetwork.html">Emitter_ShopPurchaseNetwork</a></li>
+	                            <li><a href="../classes/Emitter_Terminate.html">Emitter_Terminate</a></li>
+	                            <li><a href="../classes/Emitter_Traceroute.html">Emitter_Traceroute</a></li>
+	                            <li><a href="../classes/Emitter_UpdateHelpContent.html">Emitter_UpdateHelpContent</a></li>
+	                            <li><a href="../classes/Filesystem.html">Filesystem</a></li>
+	                            <li><a href="../classes/GeneralRoom.html">GeneralRoom</a></li>
+	                            <li><a href="../classes/Gotham.Controls.Button.html">Gotham.Controls.Button</a></li>
+	                            <li><a href="../classes/Gotham.Controls.Slider.html">Gotham.Controls.Slider</a></li>
+	                            <li><a href="../classes/Gotham.Database.html">Gotham.Database</a></li>
+	                            <li><a href="../classes/Gotham.GameLoop.html">Gotham.GameLoop</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Container.html">Gotham.Graphics.Container</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Graphics.html">Gotham.Graphics.Graphics</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Polygon.html">Gotham.Graphics.Polygon</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Rectangle.html">Gotham.Graphics.Rectangle</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Sprite.html">Gotham.Graphics.Sprite</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Text.html">Gotham.Graphics.Text</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Texture.html">Gotham.Graphics.Texture</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Tools.html">Gotham.Graphics.Tools</a></li>
+	                            <li><a href="../classes/Gotham.Network.html">Gotham.Network</a></li>
+	                            <li><a href="../classes/Gotham.Pattern.MVC.Controller.html">Gotham.Pattern.MVC.Controller</a></li>
+	                            <li><a href="../classes/Gotham.Pattern.MVC.View.html">Gotham.Pattern.MVC.View</a></li>
+	                            <li><a href="../classes/Gotham.Preload.html">Gotham.Preload</a></li>
+	                            <li><a href="../classes/Gotham.Renderer.html">Gotham.Renderer</a></li>
+	                            <li><a href="../classes/Gotham.Scene.html">Gotham.Scene</a></li>
+	                            <li><a href="../classes/Gotham.Sound.html">Gotham.Sound</a></li>
+	                            <li><a href="../classes/Gotham.Util.Ajax.html">Gotham.Util.Ajax</a></li>
+	                            <li><a href="../classes/Gotham.Util.Compression.html">Gotham.Util.Compression</a></li>
+	                            <li><a href="../classes/Gotham.Util.Geocoding.html">Gotham.Util.Geocoding</a></li>
+	                            <li><a href="../classes/Gotham.Util.SearchTools.html">Gotham.Util.SearchTools</a></li>
+	                            <li><a href="../classes/Gotham.Util.Util.html">Gotham.Util.Util</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.AnnounceController.html">GothamGame.Controllers.AnnounceController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.BarController.html">GothamGame.Controllers.BarController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.GothsharkController.html">GothamGame.Controllers.GothsharkController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.HelpController.html">GothamGame.Controllers.HelpController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.IdentityController.html">GothamGame.Controllers.IdentityController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.MissionController.html">GothamGame.Controllers.MissionController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.NodeListController.html">GothamGame.Controllers.NodeListController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.SettingsController.html">GothamGame.Controllers.SettingsController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.ShopController.html">GothamGame.Controllers.ShopController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.TerminalController.html">GothamGame.Controllers.TerminalController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.UserController.html">GothamGame.Controllers.UserController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.WorldMapController.html">GothamGame.Controllers.WorldMapController</a></li>
+	                            <li><a href="../classes/GothamGame.GothamGame.html">GothamGame.GothamGame</a></li>
+	                            <li><a href="../classes/GothamGame.Mission.Mission.html">GothamGame.Mission.Mission</a></li>
+	                            <li><a href="../classes/GothamGame.Mission.Requirement.html">GothamGame.Mission.Requirement</a></li>
+	                            <li><a href="../classes/GothamGame.MissionEngine.MissionEngine.html">GothamGame.MissionEngine.MissionEngine</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.Loading.html">GothamGame.Scenes.Loading</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.Menu.html">GothamGame.Scenes.Menu</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.World.html">GothamGame.Scenes.World</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Application.html">GothamGame.Terminal.Application.Application</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.ChangeDirectory.html">GothamGame.Terminal.Application.ChangeDirectory</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Clear.html">GothamGame.Terminal.Application.Clear</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Copy.html">GothamGame.Terminal.Application.Copy</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.ListSegments.html">GothamGame.Terminal.Application.ListSegments</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Move.html">GothamGame.Terminal.Application.Move</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Perl.html">GothamGame.Terminal.Application.Perl</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Ping.html">GothamGame.Terminal.Application.Ping</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Slowloris.html">GothamGame.Terminal.Application.Slowloris</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Traceroute.html">GothamGame.Terminal.Application.Traceroute</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Command.html">GothamGame.Terminal.Command</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Console.html">GothamGame.Terminal.Console</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Filesystem.html">GothamGame.Terminal.Filesystem</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Terminal.html">GothamGame.Terminal.Terminal</a></li>
+	                            <li><a href="../classes/GothamGame.Tools.HostUtils.html">GothamGame.Tools.HostUtils</a></li>
+	                            <li><a href="../classes/GothamGame.View.AnnounceView.html">GothamGame.View.AnnounceView</a></li>
+	                            <li><a href="../classes/GothamGame.View.BarView.html">GothamGame.View.BarView</a></li>
+	                            <li><a href="../classes/GothamGame.View.GothsharkView.html">GothamGame.View.GothsharkView</a></li>
+	                            <li><a href="../classes/GothamGame.View.HelpView.html">GothamGame.View.HelpView</a></li>
+	                            <li><a href="../classes/GothamGame.View.IdentityView.html">GothamGame.View.IdentityView</a></li>
+	                            <li><a href="../classes/GothamGame.View.MissionView.html">GothamGame.View.MissionView</a></li>
+	                            <li><a href="../classes/GothamGame.View.NodeListView.html">GothamGame.View.NodeListView</a></li>
+	                            <li><a href="../classes/GothamGame.View.SettingsView.html">GothamGame.View.SettingsView</a></li>
+	                            <li><a href="../classes/GothamGame.View.ShopView.html">GothamGame.View.ShopView</a></li>
+	                            <li><a href="../classes/GothamGame.View.TerminalView.html">GothamGame.View.TerminalView</a></li>
+	                            <li><a href="../classes/GothamGame.View.UserView.html">GothamGame.View.UserView</a></li>
+	                            <li><a href="../classes/GothamGame.View.WorldMapView.html">GothamGame.View.WorldMapView</a></li>
+	                            <li><a href="../classes/GothamObject.html">GothamObject</a></li>
+	                            <li><a href="../classes/Help.html">Help</a></li>
+	                            <li><a href="../classes/HoneyCloud.html">HoneyCloud</a></li>
+	                            <li><a href="../classes/Host.html">Host</a></li>
+	                            <li><a href="../classes/HostRoom.html">HostRoom</a></li>
+	                            <li><a href="../classes/Identity.html">Identity</a></li>
+	                            <li><a href="../classes/IPProvider.html">IPProvider</a></li>
+	                            <li><a href="../classes/IPViking.html">IPViking</a></li>
+	                            <li><a href="../classes/LocalDatabase.html">LocalDatabase</a></li>
+	                            <li><a href="../classes/Mission.html">Mission</a></li>
+	                            <li><a href="../classes/MissionRequirement.html">MissionRequirement</a></li>
+	                            <li><a href="../classes/MissionRoom.html">MissionRoom</a></li>
+	                            <li><a href="../classes/Network.html">Network</a></li>
+	                            <li><a href="../classes/Node.html">Node</a></li>
+	                            <li><a href="../classes/NodeCable.html">NodeCable</a></li>
+	                            <li><a href="../classes/PingRoom.html">PingRoom</a></li>
+	                            <li><a href="../classes/SocketServer.html">SocketServer</a></li>
+	                            <li><a href="../classes/Tier.html">Tier</a></li>
+	                            <li><a href="../classes/TracerouteRoom.html">TracerouteRoom</a></li>
+	                            <li><a href="../classes/TweenCS.ChainItem.html">TweenCS.ChainItem</a></li>
+	                            <li><a href="../classes/TweenCS.Tween.html">TweenCS.Tween</a></li>
+	                            <li><a href="../classes/User.html">User</a></li>
+	                            <li><a href="../classes/UserMission.html">UserMission</a></li>
+	                            <li><a href="../classes/UserMissionRequirement.html">UserMissionRequirement</a></li>
+	                            <li><a href="../classes/UserRoom.html">UserRoom</a></li>
+	                            <li><a href="../classes/World.html">World</a></li>
+	                            <li><a href="../classes/WorldMapRoom.html">WorldMapRoom</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/Backend.html">Backend</a></li>
+	                            <li><a href="../modules/Backend.Database.html">Backend.Database</a></li>
+	                            <li><a href="../modules/Backend.Emitters.html">Backend.Emitters</a></li>
+	                            <li><a href="../modules/Backend.LocalDatabase.html">Backend.LocalDatabase</a></li>
+	                            <li><a href="../modules/Backend.Networking.html">Backend.Networking</a></li>
+	                            <li><a href="../modules/Backend.World.html">Backend.World</a></li>
+	                            <li><a href="../modules/Framework.html">Framework</a></li>
+	                            <li><a href="../modules/Framework.Controls.html">Framework.Controls</a></li>
+	                            <li><a href="../modules/Framework.Graphics.html">Framework.Graphics</a></li>
+	                            <li><a href="../modules/Framework.Pattern.MVC.html">Framework.Pattern.MVC</a></li>
+	                            <li><a href="../modules/Framework.Util.html">Framework.Util</a></li>
+	                            <li><a href="../modules/Frontend.html">Frontend</a></li>
+	                            <li><a href="../modules/Frontend.Controllers.html">Frontend.Controllers</a></li>
+	                            <li><a href="../modules/Frontend.Mission.html">Frontend.Mission</a></li>
+	                            <li><a href="../modules/Frontend.Scenes.html">Frontend.Scenes</a></li>
+	                            <li><a href="../modules/Frontend.Terminal.html">Frontend.Terminal</a></li>
+	                            <li><a href="../modules/Frontend.Terminal.Application.html">Frontend.Terminal.Application</a></li>
+	                            <li><a href="../modules/Frontend.Tools.html">Frontend.Tools</a></li>
+	                            <li><a href="../modules/Frontend.View.html">Frontend.View</a></li>
+	                            <li><a href="../modules/TweenCS.html">TweenCS</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+                            <h1>GameFramework\src\Modules\Tween\Tween.coffee <small>File</small></h1>
+                        </div>
+                        
+                        <div class="file">
+                            <pre class="prettyprint linenums">
+                        ﻿###*
+                        # @class ChainItem
+                        # @module TweenCS
+                        # @namespace TweenCS
+                        # @constructor
+                        ###
+                        class ChainItem
+                        
+                          constructor: -&gt;
+                        
+                            ###*
+                            # Which property this chain modifies
+                            # @property {Object} property
+                            # @private
+                            ###
+                            @property = null
+                        
+                            ###*
+                            # The chain item duration
+                            # @property {Integer} duration
+                            # @private
+                            ###
+                            @duration = null
+                        
+                            ###*
+                            # The start timestamp of the chainItem
+                            # @property {Long} startTime
+                            # @private
+                            ###
+                            @startTime = null
+                        
+                            ###*
+                            # The end timestamp of the chainItem
+                            # @property {Long} endTime
+                            # @private
+                            ###
+                            @endTime = null
+                        
+                            ###*
+                            # If the chainItem has been initialized
+                            # @property {Boolean} inited
+                            # @private
+                            ###
+                            @inited = false
+                        
+                            ###*
+                            # Which type this chain item is, Delay, Translation etc.
+                            # @property {String} type
+                            # @private
+                            ###
+                            @type = null
+                        
+                            ###*
+                            # Next chainItem in the loop
+                            # @property {TweenCS.ChainItem} next
+                            # @private
+                            ###
+                            @next = null
+                        
+                            ###*
+                            # Previous chainItem in the loop
+                            # @property {TweenCS.ChainItem} previous
+                            # @private
+                            ###
+                            @previous = null
+                        
+                            ###*
+                            # The elapsed percentage of the chainItem (Between 0 and 1)
+                            # @property {Number} elapsed
+                            # @private
+                            ###
+                            @elapsed = 0
+                        
+                        
+                        
+                        ###*
+                        ﻿# The tween class of Gotham
+                        # This class animates objects of any format
+                        # It features to reach deep proprerties in an object
+                        # @class Tween
+                        # @module TweenCS
+                        # @namespace TweenCS
+                        # @constructor
+                        # @param object {Object} The object to tween
+                        #
+                        # @example
+                        #       # How to use:
+                        #       # Start
+                        #       tweenTo =
+                        #         scale:
+                        #           x: 2
+                        #           y: 2
+                        #       rotation: 0.1
+                        #
+                        #       # End
+                        #       tweenBack =
+                        #         scale:
+                        #           x: 1
+                        #           y: 1
+                        #       rotation: -0.1
+                        #
+                        #       tween = new Tween object
+                        #       tween.startDelay 500
+                        #       tween.repeat(Infinity)
+                        #       tween.easing Tween.Easing.Circular.InOut
+                        #       tween.to tweenTo, 1500
+                        #       tween.to tweenBack, 1500
+                        #       tween.onStart -&gt;
+                        #         console.log @ + &quot; started!&quot;
+                        #       tween.start()
+                        ###
+                        class Tween
+                        
+                          ###*
+                          # Static list of all ongoing tweens
+                          # @property {Array[Tween]} _tweens
+                          # @static
+                          # @private
+                          ###
+                          @_tweens = []
+                        
+                          ###*
+                          # Clear all ongoing tweens in loop
+                          # @method clear
+                          # @static
+                          ####
+                          @clear = -&gt;
+                            for tween in Tween._tweens
+                              tween._complete = true
+                        
+                          ###*
+                          # Current runtime time, Retreived from GameLoop&#x27;s update()
+                          # @property _currentTime {Long}
+                          # @static
+                          ###
+                          @_currentTime = 0
+                        
+                          # Initializes the Tween object
+                          # Does however not start the tween
+                          # Adds &quot;this&quot; tween to the Static tween array
+                          constructor: (object) -&gt;
+                        
+                        
+                            ###*
+                            # The object to do tweening on
+                            # @property {Object} _object
+                            # @private
+                            ###
+                            @_object = object
+                        
+                        
+                            ###*
+                            # Chain of tweens to be applied to object (ChainItems)
+                            # @property {Array} _chain
+                            # @private
+                            ###
+                        
+                            @_chain = []
+                        
+                        
+                            ###*
+                            # The properties to process while tweening
+                            # @property {Array} _properties
+                            # @private
+                            ###
+                            @_properties = []
+                        
+                            ###*
+                            # The easing to use, Default is Linear
+                            # @property {Tween.Easing} _easing
+                            # @private
+                            ###
+                            @_easing = Tween.Easing.Linear.None
+                        
+                            ###*
+                            # Which interpolation to use, default is Linear
+                            # @property {Tween.Interpolation} _interpolation
+                            # @private
+                            ###
+                            @_interpolation = Tween.Interpolation.Linear
+                        
+                            ###*
+                            # onUpdate callback
+                            # @method _onUpdate
+                            # @private
+                            ###
+                            @_onUpdate = -&gt;
+                        
+                            ###*
+                            # onComplete callback
+                            # @method _onComplete
+                            # @private
+                            ###
+                            @_onComplete = -&gt;
+                        
+                            ###*
+                            # onStart callback
+                            # @method  _onStart
+                            # @private
+                            ###
+                            @_onStart = -&gt;
+                        
+                            ###*
+                            # If the tween collection has started or not
+                            # @property {Boolean} _started
+                            # @private
+                            ###
+                            @_started = false
+                        
+                            ###*
+                            # If the tween collection is complete or not
+                            # @property {Boolean} _complete
+                            # @private
+                            ###
+                            @_complete = false
+                        
+                            ###*
+                            # The tween start delay
+                            # @property {Number} _startDelay
+                            # @private
+                            ###
+                            @_startDelay = 0
+                        
+                            ###*
+                            # Number of runs done (Incremented per chainItem
+                            # @property {Number} _runCounter
+                            # @private
+                            ###
+                            @_runCounter = 0
+                        
+                            ###*
+                            # Number of remaining runs for this tween
+                            # @property {Number} _remainingRuns
+                            # @private
+                            ###
+                            @_remainingRuns = 1 # Remaining runs the tweet should do (default: 1 time) , Modified by .repeat(xx)
+                        
+                            # Adds this tween to the static tweens list
+                            Tween._tweens.push(@)
+                        
+                          ###*
+                          # Retrieve all chainItems of the Tween
+                          # @method getTweenChain
+                          # @returns {TweenCS.ChainItem} The tween Chain
+                          ###
+                          getTweenChain: -&gt;
+                            return @_chain
+                        
+                          ###*
+                          # Adds a new TweenCS.ChainItem to the chain
+                          # @method addToChain
+                          # @param newPath {TweenCS.ChainItem} The chain item
+                          ###
+                          addToChain: (newPath)-&gt;
+                        
+                            if @_chain.length &gt; 0
+                              # Retrieve last node in list
+                              last = @_chain[@_chain.length-1]
+                              last.next = newPath
+                        
+                              # Retrieve first node in list
+                              first = @_chain[0]
+                              first.previous = newPath
+                        
+                              newPath.previous = last
+                              newPath.next = first
+                            else
+                              newPath.previous = newPath # Self reference
+                              newPath.next = newPath
+                        
+                            # Add to the tweenChain
+                            @_chain.push(newPath)
+                        
+                        
+                        ############################################
+                        ##
+                        ## Events Like:
+                        ## * Start
+                        ## * Stop
+                        ## * Pause
+                        ##
+                        ############################################
+                        
+                          ###*
+                          # Sets Delay of the start
+                          # @method startDelay
+                          # @param time {Number} Delay in milliseconds
+                          ###
+                          startDelay: (time) -&gt;
+                            @_startDelay = time
+                        
+                          ###*
+                          # Starts the tween. _onStart callback is called
+                          # @method start
+                          ###
+                          start: -&gt;
+                            @_started = true
+                            @_onStart(@_object)
+                        
+                          ###*
+                          # Stops the tween
+                          # @method stop
+                          ###
+                          stop: -&gt;
+                            @_started = false
+                            @_complete = true
+                        
+                          ###*
+                          # Pauses the tween.
+                          # @method pause
+                          ###
+                          pause: -&gt;
+                            @_started = false
+                        
+                          ###*
+                          # Unpauses the tween.
+                          # @method unpause
+                          ###
+                          unpause: -&gt;
+                            @_started = true
+                        
+                            # Update end time
+                            time = performance.now()
+                            chainItem = @_chain[@_runCounter %% @_chain.length]
+                        
+                            # Determine how far current chainItem has animated
+                            elapsedTime = (chainItem.endTime - chainItem.startTime) * chainItem.elapsed
+                        
+                            # Subtract duration with elapsed time to get remaining animation time
+                            timeLeft = chainItem.duration - elapsedTime
+                        
+                            # Update endtime with timeLeft
+                            chainItem.endTime = time + timeLeft
+                            chainItem.startTime = chainItem.endTime - chainItem.duration
+                        
+                        
+                        
+                        
+                        
+                        ############################################
+                        ##
+                        ## Function which manipulate tween behaviour
+                        ##
+                        ############################################
+                        
+                          ###*
+                          # Set the easing algorithm for the tween
+                          # The easing algorithms are found in the Tween.Easing object.
+                          # @method easing
+                          # @param easing {Tween.Easing} The easing algorithm
+                          # @example
+                          #         obj.easing(Tween.Easing.Linear.None)
+                          #
+                          # @chainable
+                          ###
+                          easing: (easing) -&gt;
+                            @_easing = easing
+                            return @
+                        
+                        
+                          ###*
+                          # Adds a function to the tween chain. Neat for when you want logic to run between two tweens
+                          # @method func
+                          # @chainable
+                          ###
+                          func: (_c)-&gt;
+                            newPath = new ChainItem()
+                            newPath.callback = _c
+                            newPath.property = null
+                            newPath.properties = []
+                            newPath.shallow = true
+                            newPath.duration = 0
+                            newPath.startTime = null
+                            newPath.endTime = null
+                            newPath.inited = true
+                            newPath.next = null
+                            newPath.previous = null
+                            newPath.type = &quot;func&quot;
+                            newPath.elapsed = 0
+                            @addToChain newPath
+                            return @
+                        
+                          ###*
+                          # Add tween action to the tween chain
+                          # @method to
+                          # @param property {Object} The &quot;goal&quot; property of the tween (Where you want the target object to end up)
+                          # @param duration {Long} Duration of the tween from start --&gt; end (In milliseconds)
+                          # @chainable
+                          ###
+                          to: (property, duration) -&gt;
+                        
+                            properties = []
+                            shallow = false
+                            # Add properties to the property list
+                            for prop in Tween.flattenKeys property
+                        
+                              if prop.split(&quot;.&quot;).length &lt;= 1
+                                shallow = true
+                        
+                              properties.push prop
+                              @_properties.push(prop)
+                        
+                            newPath = new ChainItem()
+                            newPath.property = property # The Property to translate to
+                            newPath.properties = properties
+                            newPath.shallow = shallow
+                            newPath.duration = duration # Duration of the tween event
+                            newPath.startTime = null # Set when starting tween .start()
+                            newPath.endTime = null # Set when starting tween .start()
+                            newPath.inited = false
+                            newPath.type = &quot;translate&quot; # The type of the tweenEvent
+                            newPath.next = null
+                            newPath.previous = null
+                            newPath.elapsed = 0
+                        
+                            @addToChain newPath
+                        
+                            return @
+                        
+                        
+                        
+                        
+                          ###*
+                          # Add a delay between two tween goto&#x27;s
+                          # @method delay
+                          # @param time {Long} Delay in Milliseconds
+                          # @chainable
+                          ###
+                          delay: (time) -&gt;
+                        
+                            if typeof time isnt &#x27;number&#x27;
+                              throw new Error &quot;Time was not a number!&quot;
+                        
+                            delayItem =
+                              &quot;properties&quot;: []
+                              &quot;duration&quot; : time
+                              &quot;startTime&quot; : null # Set when starting tween .start()
+                              &quot;endTime&quot; : null # Set when starting tween .start()
+                              &quot;type&quot; : &quot;delay&quot;
+                              &quot;previous&quot;: null
+                              &quot;next&quot;: null
+                        
+                            @addToChain delayItem
+                            return @
+                        
+                          ###*
+                          # How many times you want to repeat the Tween
+                          # To repeat &quot;forever&quot;, use Infinity
+                          # @method repeat
+                          # @param num {Integer} Number of times to repeat
+                          # @chainable
+                          ###
+                          repeat: (num) -&gt;
+                            @_remainingRuns = num
+                            return @
+                        
+                        ############################################
+                        ##
+                        ## Callbacks
+                        ##
+                        ############################################
+                        
+                          ###*
+                          # The onUpdate callback
+                          # Is called when the tween is updated
+                          # @method onUpdate
+                          # @param callback {Callback} The onUpdate callback
+                          ###
+                          onUpdate: (callback) -&gt;
+                            @_onUpdate = callback
+                            @onUpdate = true
+                        
+                          ###*
+                          # The onComplete callback
+                          # Is called when the tween is completed
+                          # @method onComplete
+                          # @param callback {Callback} The onComplete callback
+                          ###
+                          onComplete: (callback) -&gt;
+                            @_onComplete = callback
+                        
+                          ###*
+                          # The onStart callback
+                          # Is called when the tween is started
+                          # @method onStart
+                          # @param callback {Callback} The onStart callback
+                          ###
+                          onStart: (callback) -&gt;
+                            @_onStart = callback
+                        
+                          ###*
+                          # Update loop of the tween engine ensures that tweening actually happens
+                          # IT is called from GameLoop.update()
+                          # @method update
+                          # @param time {Long} Render runtime in milliseconds
+                          # @static
+                          ###
+                          @update: (time) -&gt;
+                            Tween._currentTime = time
+                        
+                            # Return if no tweens
+                            if Tween._tweens.length &lt;= 0
+                              return
+                        
+                            # Iterate through each of the tweens
+                            for tween in Tween._tweens
+                        
+                              # Because we delete directly from _tweens array, it may iterate over a undefined node (if previous was deleted. This causes undefined tween. But IGNORE it)
+                              if not tween
+                                continue
+                        
+                              # Continue and remove if tween is complete
+                              if tween._complete
+                                tween._onComplete(tween)
+                                # Remove element
+                                Tween._tweens.splice(Tween._tweens.indexOf(tween), 1);
+                                continue
+                        
+                        
+                              # Continue if tween is paused
+                              if not tween._started
+                                continue
+                        
+                              # Continue if tween is not yet started
+                              if time &lt; tween._startTime + tween._startDelay
+                                continue
+                        
+                              # Set Tween to done if no items in chain
+                              if tween._chain.length &lt;= 0 or tween._remainingRuns &lt;= 0
+                                tween._complete = true
+                                continue
+                        
+                              # Fetch chainItem
+                              chainItem = tween._chain[tween._runCounter %% tween._chain.length]
+                        
+                        
+                              # Initialize Chain Item
+                              if !chainItem.inited
+                                chainItem.startTime =  performance.now()
+                                chainItem.endTime = chainItem.startTime + chainItem.duration
+                                chainItem.inited = true
+                        
+                                if chainItem.type == &quot;delay&quot; or chainItem.type == &quot;func&quot;
+                                  break
+                        
+                                chainItem.startPos = {}
+                        
+                                for property in tween._properties
+                                  key = property.split(&#x27;.&#x27;)[0]
+                                  value = tween._object[key]
+                        
+                                  chainItem.startPos[key] = if typeof value == &#x27;object&#x27; then Tween.clone(value) else value
+                        
+                        
+                              if time &gt; chainItem.endTime &amp;&amp; chainItem.elapsed &gt;= 0.99
+                        
+                                # Increment run counter
+                                tween._runCounter++
+                        
+                                # Reset chainItem data
+                                chainItem.startTime = null
+                                chainItem.endTime = null
+                                chainItem.inited = false
+                                chainItem.elapsed = 0 #TODO, be careful, Not fully tested
+                        
+                        
+                                # Decrement remaining runs by 1
+                                if tween._runCounter %% tween._chain.length == 0
+                                  tween._remainingRuns -= 1
+                                continue
+                        
+                        
+                              # Execute the callback function
+                              if chainItem.type == &quot;func&quot;
+                                chainItem.callback()
+                        
+                        
+                              # Elapsed Time of the tween
+                              startTime = chainItem.startTime
+                              #endTime = startTime + chainItem.duration
+                        
+                              # Start and end of the tween
+                              start = chainItem.startPos
+                              end = chainItem.property
+                        
+                              # The elapsed time of the tween
+                              elapsed = (performance.now() - startTime) / chainItem.duration
+                              elapsed = if elapsed &gt; 1 then  1 else elapsed
+                              chainItem.elapsed = elapsed
+                        
+                        
+                              # Calculate the new multiplication value
+                              value = tween._easing elapsed
+                        
+                              if(tween.onUpdate)
+                                tween._onUpdate(chainItem)
+                        
+                        
+                              for prop in chainItem.properties
+                                if chainItem.shallow
+                                  tween._object[prop] = start[prop] + (end[prop] - start[prop]) * value
+                                else
+                                  nextPos = (Tween.resolve(start, prop) + (Tween.resolve(end, prop) - Tween.resolve(start, prop)) * value)
+                                  Tween.resolve(tween._object, prop, null, nextPos)
+                        
+                              continue
+                        
+                        
+                          #eval(&quot;tween._object.#{prop} = start.#{prop} +  ( end.#{prop} - start.#{prop} ) * #{value}&quot;)
+                        
+                          ###*
+                          # Clones a object
+                          # @method clone
+                          # @param obj {Object} the object to clone
+                          # @static
+                          ###
+                          Tween.clone = (obj) -&gt;
+                            target = {}
+                            for i of obj
+                              if obj.hasOwnProperty(i)
+                                target[i] = obj[i]
+                            target
+                        
+                          ###*
+                          # Resolves a string property. Ex: &quot;a.b&quot;. which is obj[&quot;a&quot;][&quot;b&quot;]
+                          # @method resolve
+                          # @param obj {Object} the object to resolve
+                          # @param path {String} the object path
+                          # @param def {Object} default if not found
+                          # @param setValue {Object} Value to set on the path
+                          # @static
+                          ###
+                          Tween.resolve = (obj, path, def, setValue) -&gt;
+                            i = undefined
+                            len = undefined
+                            previous = obj
+                            i = 0
+                            path = path.split(&#x27;.&#x27;)
+                            len = path.length
+                        
+                            while i &lt; len
+                              if !obj or typeof obj != &#x27;object&#x27;
+                                return def
+                        
+                              previous = obj
+                              obj = obj[path[i]]
+                              i++
+                        
+                            if obj == undefined
+                              return def
+                        
+                            # If setValue is set, set the returning value to something
+                            if setValue
+                              previous[path[len-1]] = setValue
+                        
+                            return obj
+                        
+                          ###*
+                          # Function for finding properties recursively in an Object
+                          # @method flattenKeys
+                          # @param obj {Object} Start/Parent Node
+                          # @param delimiter {String} The Delimeter of the result. Default: &quot;.&quot;
+                          # @param max_depth {Integer} Max Depth of the recursion
+                          # @return {Array} Array with the resulting properties
+                          # @static
+                          ###
+                          @flattenKeys = (obj, delimiter, max_depth) -&gt;
+                            delimiter = delimiter or &#x27;.&#x27;
+                            max_depth = max_depth or 2
+                        
+                            # Recurse function
+                            recurse = (obj, path, result, level) -&gt;
+                        
+                              if level &gt; max_depth
+                                return
+                        
+                              level++
+                              if typeof obj == &#x27;object&#x27; and obj
+                                Object.keys(obj).forEach (key) -&gt;
+                                  path.push key
+                                  recurse obj[key], path, result, level
+                                  path.pop()
+                              else
+                                result.push path.join(delimiter)
+                              return result
+                        
+                            recurse obj, [], [], 0
+                        
+                          ###*
+                          # @property {Object} Easing
+                          # @property {Object} Easing.Linear
+                          # @property {Function} Easing.Linear.None
+                          # @property {Object} Easing.Quadratic
+                          # @property {Function} Easing.Quadratic.In
+                          # @property {Function} Easing.Quadratic.Out
+                          # @property {Function} Easing.Quadratic.InOut
+                          # @property {Object} Easing.Cubic
+                          # @property {Function} Easing.Cubic.In
+                          # @property {Function} Easing.Cubic.Out
+                          # @property {Function} Easing.Cubic.InOut
+                          # @property {Object} Easing.Quartic
+                          # @property {Function} Easing.Quartic.In
+                          # @property {Function} Easing.Quartic.Out
+                          # @property {Function} Easing.Quartic.InOut
+                          # @property {Object} Easing.Quintic
+                          # @property {Function} Easing.Quintic.In
+                          # @property {Function} Easing.Quintic.Out
+                          # @property {Function} Easing.Quintic.InOut
+                          # @property {Object} Easing.Sinusoidal
+                          # @property {Function} Easing.Sinusoidal.In
+                          # @property {Function} Easing.Sinusoidal.Out
+                          # @property {Function} Easing.Sinusoidal.InOut
+                          # @property {Object} Easing.Exponential
+                          # @property {Function} Easing.Exponential.In
+                          # @property {Function} Easing.Exponential.Out
+                          # @property {Function} Easing.Exponential.InOut
+                          # @property {Object} Easing.Circular
+                          # @property {Function} Easing.Circular.In
+                          # @property {Function} Easing.Circular.Out
+                          # @property {Function} Easing.Circular.InOut
+                          # @property {Object} Easing.Elastic
+                          # @property {Function} Easing.Elastic.In
+                          # @property {Function} Easing.Elastic.Out
+                          # @property {Function} Easing.Elastic.InOut
+                          # @property {Object} Easing.Back
+                          # @property {Function} Easing.Back.In
+                          # @property {Function} Easing.Back.Out
+                          # @property {Function} Easing.Back.InOut
+                          # @property {Object} Easing.Bounce
+                          # @property {Function} Easing.Bounce.In
+                          # @property {Function} Easing.Bounce.Out
+                          # @property {Function} Easing.Bounce.InOut
+                          # @static
+                          ###
+                          @Easing =
+                            Linear: None: (k) -&gt;
+                              k
+                            Quadratic:
+                              In: (k) -&gt;
+                                k * k
+                              Out: (k) -&gt;
+                                k * (2 - k)
+                              InOut: (k) -&gt;
+                                if (k *= 2) &lt; 1
+                                  return 0.5 * k * k
+                                -0.5 * (--k * (k - 2) - 1)
+                            Cubic:
+                              In: (k) -&gt;
+                                k * k * k
+                              Out: (k) -&gt;
+                                --k * k * k + 1
+                              InOut: (k) -&gt;
+                                if (k *= 2) &lt; 1
+                                  return 0.5 * k * k * k
+                                0.5 * ((k -= 2) * k * k + 2)
+                            Quartic:
+                              In: (k) -&gt;
+                                k * k * k * k
+                              Out: (k) -&gt;
+                                1 - --k * k * k * k
+                              InOut: (k) -&gt;
+                                if (k *= 2) &lt; 1
+                                  return 0.5 * k * k * k * k
+                                -0.5 * ((k -= 2) * k * k * k - 2)
+                            Quintic:
+                              In: (k) -&gt;
+                                k * k * k * k * k
+                              Out: (k) -&gt;
+                                --k * k * k * k * k + 1
+                              InOut: (k) -&gt;
+                                if (k *= 2) &lt; 1
+                                  return 0.5 * k * k * k * k * k
+                                0.5 * ((k -= 2) * k * k * k * k + 2)
+                            Sinusoidal:
+                              In: (k) -&gt;
+                                1 - Math.cos(k * Math.PI / 2)
+                              Out: (k) -&gt;
+                                Math.sin k * Math.PI / 2
+                              InOut: (k) -&gt;
+                                0.5 * (1 - Math.cos(Math.PI * k))
+                            Exponential:
+                              In: (k) -&gt;
+                                if k == 0 then 0 else 1024 ** (k - 1)
+                              Out: (k) -&gt;
+                                if k == 1 then 1 else 1 - 2 ** (-10 * k)
+                              InOut: (k) -&gt;
+                                if k == 0
+                                  return 0
+                                if k == 1
+                                  return 1
+                                if (k *= 2) &lt; 1
+                                  return 0.5 * 1024 ** (k - 1)
+                                0.5 * (-2 ** (-10 * (k - 1)) + 2)
+                            Circular:
+                              In: (k) -&gt;
+                                1 - Math.sqrt(1 - k * k)
+                              Out: (k) -&gt;
+                                Math.sqrt 1 - --k * k
+                              InOut: (k) -&gt;
+                                if (k *= 2) &lt; 1
+                                  return -0.5 * (Math.sqrt(1 - k * k) - 1)
+                                0.5 * (Math.sqrt(1 - (k -= 2) * k) + 1)
+                            Elastic:
+                              In: (k) -&gt;
+                                s = undefined
+                                a = 0.1
+                                p = 0.4
+                                if k == 0
+                                  return 0
+                                if k == 1
+                                  return 1
+                                if !a or a &lt; 1
+                                  a = 1
+                                  s = p / 4
+                                else
+                                  s = p * Math.asin(1 / a) / 2 * Math.PI
+                                -(a * 2 ** (10 * (k -= 1)) * Math.sin((k - s) * 2 * Math.PI / p))
+                              Out: (k) -&gt;
+                                s = undefined
+                                a = 0.1
+                                p = 0.4
+                                if k == 0
+                                  return 0
+                                if k == 1
+                                  return 1
+                                if !a or a &lt; 1
+                                  a = 1
+                                  s = p / 4
+                                else
+                                  s = p * Math.asin(1 / a) / 2 * Math.PI
+                                a * 2 ** (-10 * k) * Math.sin((k - s) * 2 * Math.PI / p) + 1
+                              InOut: (k) -&gt;
+                                s = undefined
+                                a = 0.1
+                                p = 0.4
+                                if k == 0
+                                  return 0
+                                if k == 1
+                                  return 1
+                                if !a or a &lt; 1
+                                  a = 1
+                                  s = p / 4
+                                else
+                                  s = p * Math.asin(1 / a) / 2 * Math.PI
+                                if (k *= 2) &lt; 1
+                                  return -0.5 * a * 2 ** (10 * (k -= 1)) * Math.sin((k - s) * 2 * Math.PI / p)
+                                a * 2 ** (-10 * (k -= 1)) * Math.sin((k - s) * 2 * Math.PI / p) * 0.5 + 1
+                            Back:
+                              In: (k) -&gt;
+                                s = 1.70158
+                                k * k * ((s + 1) * k - s)
+                              Out: (k) -&gt;
+                                s = 1.70158
+                                --k * k * ((s + 1) * k + s) + 1
+                              InOut: (k) -&gt;
+                                s = 1.70158 * 1.525
+                                if (k *= 2) &lt; 1
+                                  return 0.5 * k * k * ((s + 1) * k - s)
+                                0.5 * ((k -= 2) * k * ((s + 1) * k + s) + 2)
+                            Bounce:
+                              In: (k) -&gt;
+                                1 - Tween.Easing.Bounce.Out(1 - k)
+                              Out: (k) -&gt;
+                                if k &lt; 1 / 2.75
+                                  7.5625 * k * k
+                                else if k &lt; 2 / 2.75
+                                  7.5625 * (k -= 1.5 / 2.75) * k + 0.75
+                                else if k &lt; 2.5 / 2.75
+                                  7.5625 * (k -= 2.25 / 2.75) * k + 0.9375
+                                else
+                                  7.5625 * (k -= 2.625 / 2.75) * k + 0.984375
+                              InOut: (k) -&gt;
+                                if k &lt; 0.5
+                                  return Tween.Easing.Bounce.In(k * 2) * 0.5
+                                Tween.Easing.Bounce.Out(k * 2 - 1) * 0.5 + 0.5
+                        
+                          ###*
+                          # @property {Object} Interpolation
+                          # @property {Function} Interpolation.Linear
+                          # @property {Function} Interpolation.Bezier
+                          # @property {Function} Interpolation.CatmullRom
+                          # @property {Object} Interpolation.Utils
+                          # @property {Function} Interpolation.Utils.Linear
+                          # @property {Function} Interpolation.Utils.Bernstein
+                          # @property {Function} Interpolation.Utils.Factorial
+                          # @property {Function} Interpolation.Utils.CatmullRom
+                          # @static
+                          ###
+                          @Interpolation =
+                            Linear: (v, k) -&gt;
+                              m = v.length - 1
+                              f = m * k
+                              i = Math.floor(f)
+                              fn = Tween.Interpolation.Utils.Linear
+                              if k &lt; 0
+                                return fn(v[0], v[1], f)
+                              if k &gt; 1
+                                return fn(v[m], v[m - 1], m - f)
+                              fn v[i], v[if i + 1 &gt; m then m else i + 1], f - i
+                            Bezier: (v, k) -&gt;
+                              b = 0
+                              n = v.length - 1
+                              pw = Math.pow
+                              bn = Tween.Interpolation.Utils.Bernstein
+                              i = undefined
+                              i = 0
+                              while i &lt;= n
+                                b += pw(1 - k, n - i) * pw(k, i) * v[i] * bn(n, i)
+                                i++
+                              b
+                            CatmullRom: (v, k) -&gt;
+                              m = v.length - 1
+                              f = m * k
+                              i = Math.floor(f)
+                              fn = Tween.Interpolation.Utils.CatmullRom
+                              if v[0] == v[m]
+                                if k &lt; 0
+                                  i = Math.floor(f = m * (1 + k))
+                                fn v[(i - 1 + m) % m], v[i], v[(i + 1) % m], v[(i + 2) % m], f - i
+                              else
+                                if k &lt; 0
+                                  return v[0] - (fn(v[0], v[0], v[1], v[1], -f) - v[0])
+                                if k &gt; 1
+                                  return v[m] - (fn(v[m], v[m], v[m - 1], v[m - 1], f - m) - v[m])
+                                fn v[if i then i - 1 else 0], v[i], v[if m &lt; i + 1 then m else i + 1], v[if m &lt; i + 2 then m else i + 2], f - i
+                            Utils:
+                              Linear: (p0, p1, t) -&gt;
+                                (p1 - p0) * t + p0
+                              Bernstein: (n, i) -&gt;
+                                fc = Tween.Interpolation.Utils.Factorial
+                                fc(n) / fc(i) / fc(n - i)
+                              Factorial: do -&gt;
+                                a = [ 1 ]
+                                (n) -&gt;
+                                  s = 1
+                                  i = undefined
+                                  if a[n]
+                                    return a[n]
+                                  i = n
+                                  while i &gt; 1
+                                    s *= i
+                                    i--
+                                  a[n] = s
+                              CatmullRom: (p0, p1, p2, p3, t) -&gt;
+                                v0 = (p2 - p0) * 0.5
+                                v1 = (p3 - p1) * 0.5
+                                t2 = t * t
+                                t3 = t * t2
+                                (2 * p1 - 2 * p2 + v0 + v1) * t3 + (-3 * p1 + 3 * p2 - 2 * v0 - v1) * t2 + v0 * t + p1
+                        
+                        
+                        
+                        # UMD (Universal Module Definition)
+                        module.exports = Tween
+                        window.Tween = Tween
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

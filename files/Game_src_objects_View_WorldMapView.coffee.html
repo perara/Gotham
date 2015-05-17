@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Game\src\objects\View\WorldMapView.coffee</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdministrationRoom", "classes/Cable", "classes/CablePart", "classes/CableType", "classes/Client", "classes/Clock", "classes/Country", "classes/Cyberfeed", "classes/Database", "classes/DNS", "classes/Emitter_AbandonMission", "classes/Emitter_AcceptMission", "classes/Emitter_CompleteMission", "classes/Emitter_GetCables", "classes/Emitter_GetHelpContent", "classes/Emitter_GetHost", "classes/Emitter_GetMission", "classes/Emitter_GetNodes", "classes/Emitter_GetUser", "classes/Emitter_Login", "classes/Emitter_Logout", "classes/Emitter_Ping", "classes/Emitter_ProgressMission", "classes/Emitter_ReconnectLogin", "classes/Emitter_ShopPurchaseHost", "classes/Emitter_ShopPurchaseNetwork", "classes/Emitter_Terminate", "classes/Emitter_Traceroute", "classes/Emitter_UpdateHelpContent", "classes/Filesystem", "classes/GeneralRoom", "classes/Gotham.Controls.Button", "classes/Gotham.Controls.Slider", "classes/Gotham.Database", "classes/Gotham.GameLoop", "classes/Gotham.Graphics.Container", "classes/Gotham.Graphics.Graphics", "classes/Gotham.Graphics.Polygon", "classes/Gotham.Graphics.Rectangle", "classes/Gotham.Graphics.Sprite", "classes/Gotham.Graphics.Text", "classes/Gotham.Graphics.Texture", "classes/Gotham.Graphics.Tools", "classes/Gotham.Network", "classes/Gotham.Pattern.MVC.Controller", "classes/Gotham.Pattern.MVC.View", "classes/Gotham.Preload", "classes/Gotham.Renderer", "classes/Gotham.Scene", "classes/Gotham.Sound", "classes/Gotham.Util.Ajax", "classes/Gotham.Util.Compression", "classes/Gotham.Util.Geocoding", "classes/Gotham.Util.SearchTools", "classes/Gotham.Util.Util", "classes/GothamGame.Controllers.AnnounceController", "classes/GothamGame.Controllers.BarController", "classes/GothamGame.Controllers.GothsharkController", "classes/GothamGame.Controllers.HelpController", "classes/GothamGame.Controllers.IdentityController", "classes/GothamGame.Controllers.MissionController", "classes/GothamGame.Controllers.NodeListController", "classes/GothamGame.Controllers.SettingsController", "classes/GothamGame.Controllers.ShopController", "classes/GothamGame.Controllers.TerminalController", "classes/GothamGame.Controllers.UserController", "classes/GothamGame.Controllers.WorldMapController", "classes/GothamGame.GothamGame", "classes/GothamGame.Mission.Mission", "classes/GothamGame.Mission.Requirement", "classes/GothamGame.MissionEngine.MissionEngine", "classes/GothamGame.Scenes.Loading", "classes/GothamGame.Scenes.Menu", "classes/GothamGame.Scenes.World", "classes/GothamGame.Terminal.Application.Application", "classes/GothamGame.Terminal.Application.ChangeDirectory", "classes/GothamGame.Terminal.Application.Clear", "classes/GothamGame.Terminal.Application.Copy", "classes/GothamGame.Terminal.Application.ListSegments", "classes/GothamGame.Terminal.Application.Move", "classes/GothamGame.Terminal.Application.Perl", "classes/GothamGame.Terminal.Application.Ping", "classes/GothamGame.Terminal.Application.Slowloris", "classes/GothamGame.Terminal.Application.Traceroute", "classes/GothamGame.Terminal.Command", "classes/GothamGame.Terminal.Console", "classes/GothamGame.Terminal.Filesystem", "classes/GothamGame.Terminal.Terminal", "classes/GothamGame.Tools.HostUtils", "classes/GothamGame.View.AnnounceView", "classes/GothamGame.View.BarView", "classes/GothamGame.View.GothsharkView", "classes/GothamGame.View.HelpView", "classes/GothamGame.View.IdentityView", "classes/GothamGame.View.MissionView", "classes/GothamGame.View.NodeListView", "classes/GothamGame.View.SettingsView", "classes/GothamGame.View.ShopView", "classes/GothamGame.View.TerminalView", "classes/GothamGame.View.UserView", "classes/GothamGame.View.WorldMapView", "classes/GothamObject", "classes/Help", "classes/HoneyCloud", "classes/Host", "classes/HostRoom", "classes/Identity", "classes/IPProvider", "classes/IPViking", "classes/LocalDatabase", "classes/Mission", "classes/MissionRequirement", "classes/MissionRoom", "classes/Network", "classes/Node", "classes/NodeCable", "classes/PingRoom", "classes/SocketServer", "classes/Tier", "classes/TracerouteRoom", "classes/TweenCS.ChainItem", "classes/TweenCS.Tween", "classes/User", "classes/UserMission", "classes/UserMissionRequirement", "classes/UserRoom", "classes/World", "classes/WorldMapRoom", "modules/Backend", "modules/Backend.Database", "modules/Backend.Emitters", "modules/Backend.LocalDatabase", "modules/Backend.Networking", "modules/Backend.World", "modules/Framework", "modules/Framework.Controls", "modules/Framework.Graphics", "modules/Framework.Pattern.MVC", "modules/Framework.Util", "modules/Frontend", "modules/Frontend.Controllers", "modules/Frontend.Mission", "modules/Frontend.Scenes", "modules/Frontend.Terminal", "modules/Frontend.Terminal.Application", "modules/Frontend.Tools", "modules/Frontend.View", "modules/TweenCS"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdministrationRoom.html">AdministrationRoom</a></li>
+	                            <li><a href="../classes/Cable.html">Cable</a></li>
+	                            <li><a href="../classes/CablePart.html">CablePart</a></li>
+	                            <li><a href="../classes/CableType.html">CableType</a></li>
+	                            <li><a href="../classes/Client.html">Client</a></li>
+	                            <li><a href="../classes/Clock.html">Clock</a></li>
+	                            <li><a href="../classes/Country.html">Country</a></li>
+	                            <li><a href="../classes/Cyberfeed.html">Cyberfeed</a></li>
+	                            <li><a href="../classes/Database.html">Database</a></li>
+	                            <li><a href="../classes/DNS.html">DNS</a></li>
+	                            <li><a href="../classes/Emitter_AbandonMission.html">Emitter_AbandonMission</a></li>
+	                            <li><a href="../classes/Emitter_AcceptMission.html">Emitter_AcceptMission</a></li>
+	                            <li><a href="../classes/Emitter_CompleteMission.html">Emitter_CompleteMission</a></li>
+	                            <li><a href="../classes/Emitter_GetCables.html">Emitter_GetCables</a></li>
+	                            <li><a href="../classes/Emitter_GetHelpContent.html">Emitter_GetHelpContent</a></li>
+	                            <li><a href="../classes/Emitter_GetHost.html">Emitter_GetHost</a></li>
+	                            <li><a href="../classes/Emitter_GetMission.html">Emitter_GetMission</a></li>
+	                            <li><a href="../classes/Emitter_GetNodes.html">Emitter_GetNodes</a></li>
+	                            <li><a href="../classes/Emitter_GetUser.html">Emitter_GetUser</a></li>
+	                            <li><a href="../classes/Emitter_Login.html">Emitter_Login</a></li>
+	                            <li><a href="../classes/Emitter_Logout.html">Emitter_Logout</a></li>
+	                            <li><a href="../classes/Emitter_Ping.html">Emitter_Ping</a></li>
+	                            <li><a href="../classes/Emitter_ProgressMission.html">Emitter_ProgressMission</a></li>
+	                            <li><a href="../classes/Emitter_ReconnectLogin.html">Emitter_ReconnectLogin</a></li>
+	                            <li><a href="../classes/Emitter_ShopPurchaseHost.html">Emitter_ShopPurchaseHost</a></li>
+	                            <li><a href="../classes/Emitter_ShopPurchaseNetwork.html">Emitter_ShopPurchaseNetwork</a></li>
+	                            <li><a href="../classes/Emitter_Terminate.html">Emitter_Terminate</a></li>
+	                            <li><a href="../classes/Emitter_Traceroute.html">Emitter_Traceroute</a></li>
+	                            <li><a href="../classes/Emitter_UpdateHelpContent.html">Emitter_UpdateHelpContent</a></li>
+	                            <li><a href="../classes/Filesystem.html">Filesystem</a></li>
+	                            <li><a href="../classes/GeneralRoom.html">GeneralRoom</a></li>
+	                            <li><a href="../classes/Gotham.Controls.Button.html">Gotham.Controls.Button</a></li>
+	                            <li><a href="../classes/Gotham.Controls.Slider.html">Gotham.Controls.Slider</a></li>
+	                            <li><a href="../classes/Gotham.Database.html">Gotham.Database</a></li>
+	                            <li><a href="../classes/Gotham.GameLoop.html">Gotham.GameLoop</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Container.html">Gotham.Graphics.Container</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Graphics.html">Gotham.Graphics.Graphics</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Polygon.html">Gotham.Graphics.Polygon</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Rectangle.html">Gotham.Graphics.Rectangle</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Sprite.html">Gotham.Graphics.Sprite</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Text.html">Gotham.Graphics.Text</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Texture.html">Gotham.Graphics.Texture</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Tools.html">Gotham.Graphics.Tools</a></li>
+	                            <li><a href="../classes/Gotham.Network.html">Gotham.Network</a></li>
+	                            <li><a href="../classes/Gotham.Pattern.MVC.Controller.html">Gotham.Pattern.MVC.Controller</a></li>
+	                            <li><a href="../classes/Gotham.Pattern.MVC.View.html">Gotham.Pattern.MVC.View</a></li>
+	                            <li><a href="../classes/Gotham.Preload.html">Gotham.Preload</a></li>
+	                            <li><a href="../classes/Gotham.Renderer.html">Gotham.Renderer</a></li>
+	                            <li><a href="../classes/Gotham.Scene.html">Gotham.Scene</a></li>
+	                            <li><a href="../classes/Gotham.Sound.html">Gotham.Sound</a></li>
+	                            <li><a href="../classes/Gotham.Util.Ajax.html">Gotham.Util.Ajax</a></li>
+	                            <li><a href="../classes/Gotham.Util.Compression.html">Gotham.Util.Compression</a></li>
+	                            <li><a href="../classes/Gotham.Util.Geocoding.html">Gotham.Util.Geocoding</a></li>
+	                            <li><a href="../classes/Gotham.Util.SearchTools.html">Gotham.Util.SearchTools</a></li>
+	                            <li><a href="../classes/Gotham.Util.Util.html">Gotham.Util.Util</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.AnnounceController.html">GothamGame.Controllers.AnnounceController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.BarController.html">GothamGame.Controllers.BarController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.GothsharkController.html">GothamGame.Controllers.GothsharkController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.HelpController.html">GothamGame.Controllers.HelpController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.IdentityController.html">GothamGame.Controllers.IdentityController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.MissionController.html">GothamGame.Controllers.MissionController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.NodeListController.html">GothamGame.Controllers.NodeListController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.SettingsController.html">GothamGame.Controllers.SettingsController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.ShopController.html">GothamGame.Controllers.ShopController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.TerminalController.html">GothamGame.Controllers.TerminalController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.UserController.html">GothamGame.Controllers.UserController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.WorldMapController.html">GothamGame.Controllers.WorldMapController</a></li>
+	                            <li><a href="../classes/GothamGame.GothamGame.html">GothamGame.GothamGame</a></li>
+	                            <li><a href="../classes/GothamGame.Mission.Mission.html">GothamGame.Mission.Mission</a></li>
+	                            <li><a href="../classes/GothamGame.Mission.Requirement.html">GothamGame.Mission.Requirement</a></li>
+	                            <li><a href="../classes/GothamGame.MissionEngine.MissionEngine.html">GothamGame.MissionEngine.MissionEngine</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.Loading.html">GothamGame.Scenes.Loading</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.Menu.html">GothamGame.Scenes.Menu</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.World.html">GothamGame.Scenes.World</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Application.html">GothamGame.Terminal.Application.Application</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.ChangeDirectory.html">GothamGame.Terminal.Application.ChangeDirectory</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Clear.html">GothamGame.Terminal.Application.Clear</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Copy.html">GothamGame.Terminal.Application.Copy</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.ListSegments.html">GothamGame.Terminal.Application.ListSegments</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Move.html">GothamGame.Terminal.Application.Move</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Perl.html">GothamGame.Terminal.Application.Perl</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Ping.html">GothamGame.Terminal.Application.Ping</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Slowloris.html">GothamGame.Terminal.Application.Slowloris</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Traceroute.html">GothamGame.Terminal.Application.Traceroute</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Command.html">GothamGame.Terminal.Command</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Console.html">GothamGame.Terminal.Console</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Filesystem.html">GothamGame.Terminal.Filesystem</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Terminal.html">GothamGame.Terminal.Terminal</a></li>
+	                            <li><a href="../classes/GothamGame.Tools.HostUtils.html">GothamGame.Tools.HostUtils</a></li>
+	                            <li><a href="../classes/GothamGame.View.AnnounceView.html">GothamGame.View.AnnounceView</a></li>
+	                            <li><a href="../classes/GothamGame.View.BarView.html">GothamGame.View.BarView</a></li>
+	                            <li><a href="../classes/GothamGame.View.GothsharkView.html">GothamGame.View.GothsharkView</a></li>
+	                            <li><a href="../classes/GothamGame.View.HelpView.html">GothamGame.View.HelpView</a></li>
+	                            <li><a href="../classes/GothamGame.View.IdentityView.html">GothamGame.View.IdentityView</a></li>
+	                            <li><a href="../classes/GothamGame.View.MissionView.html">GothamGame.View.MissionView</a></li>
+	                            <li><a href="../classes/GothamGame.View.NodeListView.html">GothamGame.View.NodeListView</a></li>
+	                            <li><a href="../classes/GothamGame.View.SettingsView.html">GothamGame.View.SettingsView</a></li>
+	                            <li><a href="../classes/GothamGame.View.ShopView.html">GothamGame.View.ShopView</a></li>
+	                            <li><a href="../classes/GothamGame.View.TerminalView.html">GothamGame.View.TerminalView</a></li>
+	                            <li><a href="../classes/GothamGame.View.UserView.html">GothamGame.View.UserView</a></li>
+	                            <li><a href="../classes/GothamGame.View.WorldMapView.html">GothamGame.View.WorldMapView</a></li>
+	                            <li><a href="../classes/GothamObject.html">GothamObject</a></li>
+	                            <li><a href="../classes/Help.html">Help</a></li>
+	                            <li><a href="../classes/HoneyCloud.html">HoneyCloud</a></li>
+	                            <li><a href="../classes/Host.html">Host</a></li>
+	                            <li><a href="../classes/HostRoom.html">HostRoom</a></li>
+	                            <li><a href="../classes/Identity.html">Identity</a></li>
+	                            <li><a href="../classes/IPProvider.html">IPProvider</a></li>
+	                            <li><a href="../classes/IPViking.html">IPViking</a></li>
+	                            <li><a href="../classes/LocalDatabase.html">LocalDatabase</a></li>
+	                            <li><a href="../classes/Mission.html">Mission</a></li>
+	                            <li><a href="../classes/MissionRequirement.html">MissionRequirement</a></li>
+	                            <li><a href="../classes/MissionRoom.html">MissionRoom</a></li>
+	                            <li><a href="../classes/Network.html">Network</a></li>
+	                            <li><a href="../classes/Node.html">Node</a></li>
+	                            <li><a href="../classes/NodeCable.html">NodeCable</a></li>
+	                            <li><a href="../classes/PingRoom.html">PingRoom</a></li>
+	                            <li><a href="../classes/SocketServer.html">SocketServer</a></li>
+	                            <li><a href="../classes/Tier.html">Tier</a></li>
+	                            <li><a href="../classes/TracerouteRoom.html">TracerouteRoom</a></li>
+	                            <li><a href="../classes/TweenCS.ChainItem.html">TweenCS.ChainItem</a></li>
+	                            <li><a href="../classes/TweenCS.Tween.html">TweenCS.Tween</a></li>
+	                            <li><a href="../classes/User.html">User</a></li>
+	                            <li><a href="../classes/UserMission.html">UserMission</a></li>
+	                            <li><a href="../classes/UserMissionRequirement.html">UserMissionRequirement</a></li>
+	                            <li><a href="../classes/UserRoom.html">UserRoom</a></li>
+	                            <li><a href="../classes/World.html">World</a></li>
+	                            <li><a href="../classes/WorldMapRoom.html">WorldMapRoom</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/Backend.html">Backend</a></li>
+	                            <li><a href="../modules/Backend.Database.html">Backend.Database</a></li>
+	                            <li><a href="../modules/Backend.Emitters.html">Backend.Emitters</a></li>
+	                            <li><a href="../modules/Backend.LocalDatabase.html">Backend.LocalDatabase</a></li>
+	                            <li><a href="../modules/Backend.Networking.html">Backend.Networking</a></li>
+	                            <li><a href="../modules/Backend.World.html">Backend.World</a></li>
+	                            <li><a href="../modules/Framework.html">Framework</a></li>
+	                            <li><a href="../modules/Framework.Controls.html">Framework.Controls</a></li>
+	                            <li><a href="../modules/Framework.Graphics.html">Framework.Graphics</a></li>
+	                            <li><a href="../modules/Framework.Pattern.MVC.html">Framework.Pattern.MVC</a></li>
+	                            <li><a href="../modules/Framework.Util.html">Framework.Util</a></li>
+	                            <li><a href="../modules/Frontend.html">Frontend</a></li>
+	                            <li><a href="../modules/Frontend.Controllers.html">Frontend.Controllers</a></li>
+	                            <li><a href="../modules/Frontend.Mission.html">Frontend.Mission</a></li>
+	                            <li><a href="../modules/Frontend.Scenes.html">Frontend.Scenes</a></li>
+	                            <li><a href="../modules/Frontend.Terminal.html">Frontend.Terminal</a></li>
+	                            <li><a href="../modules/Frontend.Terminal.Application.html">Frontend.Terminal.Application</a></li>
+	                            <li><a href="../modules/Frontend.Tools.html">Frontend.Tools</a></li>
+	                            <li><a href="../modules/Frontend.View.html">Frontend.View</a></li>
+	                            <li><a href="../modules/TweenCS.html">TweenCS</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+                            <h1>Game\src\objects\View\WorldMapView.coffee <small>File</small></h1>
+                        </div>
+                        
+                        <div class="file">
+                            <pre class="prettyprint linenums">
+                        ﻿
+                        
+                        ###*
+                        # WorldMapView is the view part of the world map. Map creation, node, calbe and animations are done here. see method docs
+                        # @class WorldMapView
+                        # @module Frontend.View
+                        # @namespace GothamGame.View
+                        # @extends Gotham.Pattern.MVC.View
+                        ###
+                        class WorldMapView extends Gotham.Pattern.MVC.View
+                          constructor: -&gt;
+                            super
+                        
+                        
+                            ###*
+                            # Width of the world map
+                            # @property {Number} __width
+                            ###
+                            @__width = 1920
+                        
+                            ###*
+                            # Height of the world map
+                            # @property {Number} __height
+                            ###
+                            @__height = 1080 # Subtract bar heights
+                        
+                            ###*
+                            # Initial / Original map size
+                            # @property {Object} __mapSize
+                            ###
+                            @__mapSize =
+                              width: 7200
+                              height: 3600
+                        
+                            ###*
+                            # List of all info frames currently drawn on the monitor
+                            # @property {Array} _visible_info_frames
+                            ###
+                            @_visible_info_frames = []
+                        
+                            ###*
+                            # Callback which are used to purchase networks. This callback goes to ShopView
+                            # @property {Callback} shopOnNodeClick
+                            ###
+                            @shopOnNodeClick = -&gt;
+                        
+                        
+                          ###*
+                          # Get the coorinate factors for latitude and longitude based on the maps current size and scale
+                          # @method getCoordFactors
+                          # @return {Object}the latitude and longitude property inside a object
+                          ###
+                          getCoordFactors: -&gt;
+                            return {
+                            latitude: ((@__height / 2) / 90) * -1
+                            longitude: ((@__width / 2) / 180)
+                            }
+                        
+                        
+                          ###*
+                          # Converts a lat,lng coordinate to a pixel coordinate (x,y)
+                          #
+                          # @method coordinateToPixel
+                          # @param lat {Number} The latitude
+                          # @param lng {Number} The longitude
+                          # @returns {Object} The X and Y coordinate inside a object
+                          ###
+                          coordinateToPixel: (lat, lng) -&gt;
+                            return {
+                            x: (lng * @getCoordFactors().longitude) + (@__width / 2)
+                            y: (lat * @getCoordFactors().latitude)  + (@__height / 2)
+                            }
+                        
+                        
+                          ###*
+                          # Creates everything
+                          #
+                          # @method create
+                          ###
+                          create: -&gt;
+                        
+                            &quot;&quot;&quot;
+                            Create the background
+                            &quot;&quot;&quot;
+                            @createBackground()
+                        
+                            &quot;&quot;&quot;
+                            Create the world map and node container
+                            &quot;&quot;&quot;
+                            @createWorldMap()
+                        
+                            &quot;&quot;&quot;
+                            Create the sun object
+                            &quot;&quot;&quot;
+                            @createSun()
+                        
+                        
+                        
+                        
+                          ###*
+                          # Creates the background object
+                          #
+                          # @method createBackground
+                          ###
+                          createBackground: -&gt;
+                            @_background = background = new Gotham.Graphics.Sprite Gotham.Preload.fetch(&quot;sea_background&quot;, &quot;image&quot;)
+                            background.width = @__width
+                            background.height = @__height + 140
+                            background._size = @size
+                            background.y = 0
+                            @addChild background
+                        
+                          ###*
+                          # Creates a sun object, Hidden by default
+                          # @method createSun
+                          ###
+                          createSun: -&gt;
+                            @sun = new Gotham.Graphics.Sprite Gotham.Preload.fetch(&quot;sun&quot;, &quot;image&quot;)
+                            @sun.x = 5
+                            @sun.y = -20
+                            @sun.width = 64
+                            @sun.height = 64
+                            @sun.visible = true
+                            @sun.anchor =
+                              x: 0.5
+                              y: 0.5
+                            @mapContainer.addChild @sun
+                        
+                        
+                        
+                          ###*
+                          # Scale the node to reflect WorldMap&#x27;s scale
+                          #
+                          # @method scaleNodes
+                          ###
+                          scaleNodes: () -&gt;
+                            that = @
+                        
+                            # Fetch node table
+                            db_node = Gotham.Database.table &quot;node&quot;
+                        
+                            # Scale each of the nodes
+                            for row in db_node.find()
+                              node = row.sprite
+                        
+                              node.scale.x = (Math.max(0.08, (that.mapContainer.scale.x * 4)**-1))
+                              node.scale.y = (Math.max(0.08, (that.mapContainer.scale.y * 4)**-1))
+                        
+                        
+                          ###*
+                          # Creates the WorldMap container with the worldMap function.
+                          # Adds this sprite array to the container and creates the map.
+                          #
+                          # @method createWorldMap
+                          ###
+                          createWorldMap: -&gt;
+                            that = @
+                        
+                            &quot;&quot;&quot;
+                            Create a container for world map
+                            &quot;&quot;&quot;
+                            @mapContainer = mapContainer = new Gotham.Graphics.Container
+                            mapContainer.interactive = true
+                            mapContainer.scale =
+                              x: 0.8
+                              y: 0.8
+                            mapContainer.x = (@__width - (@__width * mapContainer.scale.x)) / 2
+                        
+                        
+                            mapContainer.hitArea = new Gotham.Graphics.Rectangle 0,0,  @__width, @__height
+                            @_background.addChild mapContainer
+                        
+                            &quot;&quot;&quot;
+                            Activate WheelScrolling on the mapContainer
+                            &quot;&quot;&quot;
+                            GothamGame.Renderer.pixi.addWheelScrollObject(mapContainer)
+                        
+                        
+                            &quot;&quot;&quot;
+                            Activate Panning - Return False and ignore if Longitude &lt; -180 or &gt; 180 and False if Latitude &lt; -90 or &gt; 90
+                            &quot;&quot;&quot;
+                            mapContainer.setPanning (newPosition) -&gt;
+                              # Hide Node Details
+                              that.hideNodeDetails()
+                        
+                              @offset = newPosition
+                        
+                              return {x: true, y: true}
+                        
+                        
+                            mapContainer.offset =
+                              y: -70
+                              x: 0
+                        
+                        
+                            &quot;&quot;&quot;
+                            MapContainers mouse move:
+                            * Calculates coordinate in lat,lng
+                            * Determines country based on lat,lng
+                            * Sets topBarText
+                            &quot;&quot;&quot;
+                            mapContainer.onMouseMove =  (e) -&gt;
+                        
+                              pos = e.data.getLocalPosition this
+                              @_lastMousePosition = pos
+                        
+                              posX = -(that.__width / 2) + pos.x
+                              posY = -(that.__height / 2) + pos.y
+                        
+                              lat = Math.max(Math.min((posY / that.getCoordFactors().latitude).toFixed(4), 90), -90)
+                              long = Math.max(Math.min((posX / that.getCoordFactors().longitude).toFixed(4), 180), -180)
+                        
+                              # Update currentCoordinates in WorldMap object
+                              that.currentCoordinates =
+                                latitude: lat
+                                longitude: long
+                        
+                              that.parent.getObject(&quot;Bar&quot;).updateCoordinates lat, long
+                        
+                            mapContainer.click = () -&gt;
+                        
+                              # If GothShark is visible and the map is clicked. Tween back to original map position
+                              if $(&quot;#gothshark_frame&quot;).is(&quot;:visible&quot;)
+                        
+                                # Check if user is hovering ANY of the terminal frames
+                                isHovering = false
+                                $(&#x27;.terminal_frame&#x27;).each (index) -&gt;
+                                  check = $(@).is(&quot;:hover&quot;)
+                                  if check
+                                    isHovering = true
+                                    return
+                        
+                                # Hide and zoom back if not hovering
+                                if not isHovering
+                                  that.hideNodeDetails()
+                        
+                                  # Zooms the map back to original size
+                                  that.zoomMap(0.8, 400)
+                                  @offset.y = 0
+                        
+                        
+                            &quot;&quot;&quot;
+                            OnWheelScroll
+                            &quot;&quot;&quot;
+                            mapContainer.mouseover = () -&gt;
+                              @canScroll = true
+                        
+                            mapContainer.mouseout = () -&gt;
+                              @canScroll = false
+                              @isDragging = false
+                        
+                            mapContainer.onWheelScroll = (e) -&gt;
+                              if not GothamGame.Globals.canWheelScroll then return
+                              if not @canScroll then return
+                              direction = e.wheelDeltaY / Math.abs(e.wheelDeltaY)
+                        
+                              # -1 = Wheel out, 1 = Wheen In
+                              @isZoomOut = zoomOut = if direction == -1 then true else false
+                        
+                              # Scale Factor per scroll
+                              factor = 1.1
+                        
+                              prevScale =
+                                x: @scale.x
+                                y: @scale.y
+                        
+                              # Calculate what next scaling should be
+                              nextScale =
+                                x: @scale.x * (factor**direction)
+                                y: @scale.y * (factor**direction)
+                        
+                              # IF: Determine weither we should ignore the scaling
+                              # ELSE: Scaling should happen, update offsets
+                              if nextScale.x &lt; 0.4 or nextScale.y &lt; 0.4
+                                return
+                              else if nextScale.x &gt; 10 or nextScale.y &gt; 10
+                                return
+                              else
+                                # Hide Node Details
+                                that.hideNodeDetails()
+                        
+                                @scale = nextScale
+                                # Scale Nodes
+                                that.scaleNodes(zoomOut)
+                        
+                              @offset.x = @offset.x * (factor**direction)
+                              @offset.y = @offset.y * (factor**direction)
+                        
+                              # Calculate the size offset, we do this to move
+                              prevSize =
+                                width : that.__width
+                                height : that.__height
+                        
+                              nextSize =
+                                width : that.__width * nextScale.x
+                                height : that.__height * nextScale.y
+                        
+                              diffSize =
+                                width: prevSize.width - nextSize.width
+                                height: prevSize.height - nextSize.height
+                        
+                        
+                              @position.x = (diffSize.width / 2) + @offset.x
+                              @position.y = (diffSize.height / 2) + @offset.y
+                        
+                        
+                        
+                        
+                            &quot;&quot;&quot;
+                            Create World Map
+                            &quot;&quot;&quot;
+                            worldMap = @createMap()
+                        
+                            for mapItem in worldMap
+                              if mapItem.width &lt; 10 or mapItem.height &lt; 10
+                                continue
+                              mapContainer.addChild mapItem
+                        
+                        
+                            &quot;&quot;&quot;count = 0
+                            setInterval (() -&gt;
+                        
+                              mapContainer.addChild worldMap[count++]
+                              console.log worldMap[count].width, worldMap[count].height
+                            ), 50&quot;&quot;&quot;
+                        
+                        
+                            #mapContainer.addChildArray worldMap
+                        
+                        
+                        
+                            @pathContainer = new Gotham.Graphics.Graphics()
+                            mapContainer.addChild @pathContainer
+                        
+                        
+                            &quot;&quot;&quot;
+                            Create a container for all nodes
+                            &quot;&quot;&quot;
+                            @nodeContainer = nodeContainer = new Gotham.Graphics.Graphics
+                            mapContainer.addChild nodeContainer
+                        
+                        
+                            &quot;&quot;&quot;
+                            Determine Center of the map and create a red dot
+                            &quot;&quot;&quot;
+                            middle = new Gotham.Graphics.Graphics()
+                            middle.lineStyle(0);
+                            middle.beginFill(0xff0000, 1);
+                            middle.drawCircle(@__width / 2, @__height / 2, 1);
+                            mapContainer.addChild middle
+                            return mapContainer
+                        
+                          ###*
+                          # Creates the World map from json,
+                          # @method createMap
+                          # @return {Gotham.Graphics.Sprite[]} Array of all the country polygons
+                          ###
+                          createMap: -&gt;
+                            that = @
+                        
+                            # Fetch JSON
+                            mapJson = Gotham.Preload.fetch(&quot;map&quot;, &quot;json&quot;)
+                        
+                            # Create PolygonList
+                            polygonList = Gotham.Graphics.Tools.polygonFromJSON mapJson, 1 , {x: @__mapSize.width / @__width, y: @__mapSize.height / @__height}
+                            #polygonList = Gotham.Graphics.Tools.polygonFromJSON(mapJson, 1)
+                        
+                        
+                            # Convert to Graphics objects
+                            graphicsList = Gotham.Graphics.Tools.polygonToGraphics(polygonList, true)
+                        
+                            # Add Each of the graphic objects to the world map
+                            worldMap = []
+                            for graphics, key in graphicsList
+                        
+                        
+                              &quot;&quot;&quot;
+                              Generate country texture
+                              &quot;&quot;&quot;
+                              texture = graphics.generateTexture()
+                        
+                              &quot;&quot;&quot;
+                              Generate country texture, with hover effect
+                              &quot;&quot;&quot;
+                              graphics.clear()
+                              graphics.lineStyle(2, 0x000000, 1);
+                              graphics.beginFill(0xffffff, 0.8)
+                              graphics.blendMode = PIXI.BLEND_MODES.ADD
+                              graphics.drawPolygon(graphics.polygon.points)
+                              hoverTexture = graphics.generateTexture()
+                        
+                              &quot;&quot;&quot;
+                              Create a country sprite, Using generated textures
+                              &quot;&quot;&quot;
+                              sprite = new Gotham.Graphics.Sprite texture
+                              sprite.hoverTexture = hoverTexture
+                        
+                              sprite.position.x = graphics.minX
+                              sprite.position.y = graphics.minY
+                        
+                              &quot;&quot;&quot;
+                              Translate sprite position correctly.
+                              Use polygon points to determine the position
+                              &quot;&quot;&quot;
+                              translatedPoints = []
+                              xory = 0
+                              for point in graphics.polygon.points
+                                if xory++ % 2 == 0
+                                  translatedPoints.push(point - sprite.x)
+                                else
+                                  translatedPoints.push(point - sprite.y)
+                        
+                        
+                              &quot;&quot;&quot;
+                              Create a hitarea of the translated points
+                              Activate interaction
+                              &quot;&quot;&quot;
+                              hitarea = new PIXI.Polygon translatedPoints
+                              sprite.hitArea = hitarea
+                              sprite.setInteractive true
+                        
+                              &quot;&quot;&quot;
+                              Mouseover callback
+                              &quot;&quot;&quot;
+                              sprite.mouseover =  (e) -&gt;
+                                # Calculate which country it belongs to
+                                setTimeout((-&gt;
+                                  country = Gotham.Util.Geocoding.getCountry(that.currentCoordinates.latitude, that.currentCoordinates.longitude)
+                                  that.parent.getObject(&quot;Bar&quot;).updateCountry country
+                                ), 20)
+                        
+                                @texture = @hoverTexture
+                        
+                              &quot;&quot;&quot;
+                              Mouseout callback
+                              &quot;&quot;&quot;
+                              sprite.mouseout =  (e) -&gt;
+                                that.parent.getObject(&quot;Bar&quot;).updateCountry null
+                                @texture = @normalTexture
+                        
+                              worldMap.push sprite
+                            return worldMap
+                        
+                        
+                          ###*
+                          # Deletes all nodes in the node container
+                          # @method clearNodeContainer
+                          ###
+                          clearNodeContainer: -&gt;
+                            for i in @nodeContainer.children
+                              if i
+                                i.texture.destroy false
+                                sprite = @nodeContainer.removeChild i
+                                sprite = null
+                        
+                        
+                        
+                          ###*
+                          # Adds a nopde to the node container
+                          # @method addNode
+                          # @param node {Object} The Node ObjECT
+                          # @param interact {Boolean} Weither the node should be interactive or not
+                          ###
+                          addNode: (node, interact) -&gt;
+                            # Convert Lat, Lng to Pixel&#x27;s X and Y
+                            coordinates = @coordinateToPixel(node.lat, node.lng)
+                        
+                            deactivatedMarker = Gotham.Preload.fetch(&quot;map_marker_deactivated&quot;, &quot;image&quot;)
+                            activatedMarker = Gotham.Preload.fetch(&quot;map_marker&quot;, &quot;image&quot;)
+                        
+                            # Create a node sprite
+                            gNode = new Gotham.Graphics.Sprite activatedMarker
+                            gNode.tint = 0xF8E23B
+                            gNode.deactivated_marker = deactivatedMarker
+                            gNode.activated_marker = gNode.texture
+                        
+                            # Set position according to the Lat,Lng conversion
+                            gNode.position =
+                              x: coordinates.x
+                              y: coordinates.y
+                        
+                            # Add original scale variable
+                            gNode.originalScale =
+                              x: gNode.scale.x
+                              y: gNode.scale.y
+                        
+                            # Set Sprites Size
+                            gNode.width = 8
+                            gNode.height = 8
+                        
+                            gNode.anchor =
+                              x: 0.4
+                              y: 0.4
+                        
+                            # Add a sprite property to the node
+                            node.sprite = gNode
+                        
+                            # Add to the node container
+                            @nodeContainer.addChild gNode
+                        
+                            if interact
+                              @addNodeInteraction node
+                        
+                            return
+                        
+                          ###*
+                          # Adds interaction to a node, Typically hovering it showing cables.
+                          # @method addNodeInteraction
+                          # @param node {Node}
+                          ###
+                          addNodeInteraction: (node) -&gt;
+                            that = @
+                        
+                            # The Node should be interactive
+                            node.sprite.interactive = true
+                            node.sprite.buttonMode = true
+                        
+                            # Whenever a node is hovered or exited (mouseover and mouseout)
+                            nodeHover = (node, tint, visible) -&gt;
+                        
+                              if GothamGame.Globals.showCables
+                                visible = true
+                        
+                              # Update country information
+                              that.parent.getObject(&quot;Bar&quot;).updateCountry node.Country
+                        
+                              node.sprite.tint = tint
+                        
+                              for _cable in node.Cables
+                        
+                                cable = Gotham.Database.table(&quot;cable&quot;).findOne({id: _cable.id})
+                                if not cable then return
+                        
+                                for part in cable.CableParts
+                                  part.visible = visible
+                        
+                            node.sprite.rightclick = -&gt;
+                              db_blacklist = Gotham.Database.table &quot;blacklist&quot;
+                        
+                              element = db_blacklist.findOne(node: node.id)
+                        
+                              if not element
+                                db_blacklist.insert {node: node.id}
+                                GothamGame.Announce.message &quot;Disabled #{node.name} (#{node.id})&quot;, &quot;NORMAL&quot;, 50
+                                @texture = @deactivated_marker
+                              else
+                                db_blacklist.remove element
+                                GothamGame.Announce.message &quot;Enabled #{node.name} (#{node.id})&quot;, &quot;NORMAL&quot;, 50
+                                @texture = @activated_marker
+                              that.scaleNodes()
+                        
+                        
+                        
+                            node.sprite.click = -&gt;
+                              @_toggle = if not @_toggle then true else !@_toggle
+                        
+                              if @_toggle
+                        
+                                # Add info frame if not exists
+                                if not @infoFrame
+                                  @infoFrame = that.nodeInfoFrame(node)
+                                  @addChild @infoFrame
+                        
+                                @infoFrame.visible = true
+                        
+                        
+                                # Fire Shop node click callback
+                                that.shopOnNodeClick(node)
+                        
+                                # Set all info frames to hidden, and remove
+                                for _info_frames in that._visible_info_frames
+                                  _info_frames.visible = false
+                                  that._visible_info_frames.remove _info_frames
+                        
+                        
+                                that._visible_info_frames.push @infoFrame
+                                @bringToFront()
+                              else
+                                @infoFrame.visible = false
+                                that._visible_info_frames.remove @infoFrame
+                        
+                        
+                            node.sprite.mouseover = -&gt;
+                              nodeHover node, 0xFF0000, true
+                        
+                        
+                            node.sprite.mouseout = -&gt;
+                              nodeHover node, 0xF8E23B, false
+                        
+                          ###*
+                          # Shows the node-details selector in HTML (GothShark)
+                          # @method showNodeDetails
+                          ###
+                          showNodeDetails: (node) -&gt;
+                            @parent.getObject(&quot;Gothshark&quot;).setNode(node)
+                            $(&quot;#gothshark_frame&quot;).fadeIn()
+                            $(&quot;thead tr td&quot;)[0].click()
+                            $(&quot;thead tr td&quot;)[0].click()
+                        
+                        
+                          ###*
+                          # Hides the node-details selector in HTML (GothShark)
+                          # @method hideNodeDetails
+                          ###
+                          hideNodeDetails: () -&gt;
+                            $(&quot;#gothshark_frame&quot;).fadeOut()
+                        
+                          ###*
+                          # Set the cable visibility
+                          # @method setCableVisibility
+                          # @param {Boolean} visible
+                          ###
+                          setCableVisibility: (visible) -&gt;
+                            cables = Gotham.Database.table(&quot;cable&quot;).find()
+                        
+                            for cable in cables
+                              for part in cable.CableParts
+                                part.visible = visible
+                        
+                        
+                        
+                        
+                          ###*
+                          # Creates the information plate of each of the node,
+                          # @method nodeInfoFrame
+                          # @param node {Gotham.Graphics.Sprite} The node object
+                          # @return {Gotham.Graphics.Sprite} The newly created sprite (Info Frame)
+                          ###
+                          nodeInfoFrame: (node) -&gt;
+                            that = @
+                        
+                        
+                            infoFrame = new Gotham.Graphics.Sprite Gotham.Preload.fetch(&quot;node_details&quot;, &quot;image&quot;)
+                            infoFrame.visible = false
+                            infoFrame.interactive = true
+                        
+                        
+                            infoFrameMask = new Gotham.Graphics.Graphics
+                            infoFrameMask.beginFill(0x00ff00, 0.2)
+                            infoFrameMask.drawRect(0, 0, infoFrame.width - 5, infoFrame.height)
+                            infoFrame.addChild infoFrameMask
+                            infoFrame.mask = infoFrameMask
+                        
+                        
+                            if node.sprite == null
+                              return infoFrame
+                        
+                        
+                            nodeName = new Gotham.Graphics.Text(&quot;Name: &quot;+node.name, {font: &quot;bold 70px calibri&quot;, fill: &quot;#ffffff&quot;, dropShadow: true, align: &quot;center&quot;});
+                            nodeName.x = 80
+                            nodeName.y = 30
+                            nodeName.width = 260
+                            infoFrame.addChild nodeName
+                        
+                            nodeLoad = new Gotham.Graphics.Text(&quot;Load: #{(node.load*100).toFixed(2)}&quot;, {font: &quot;bold 70px calibri&quot;, dropShadow: true, fill: &quot;#ffffff&quot;, align: &quot;center&quot;});
+                            nodeLoad.x = 80
+                            nodeLoad.y = 100
+                            nodeLoad.width = 260
+                            infoFrame.addChild nodeLoad
+                            infoFrame.nodeLoad = nodeLoad
+                        
+                        
+                            utc = moment().utcOffset(&#x27;+0000&#x27;)
+                            utc.subtract(utc.hours(), &quot;hours&quot;)
+                            utc.minutes(utc.minutes(), &quot;minutes&quot;)
+                            utc.add(12, &#x27;hours&#x27;)
+                            nowthen = utc.add(node.time, &quot;minutes&quot;)
+                            nodeTime = new Gotham.Graphics.Text(&quot;Time: #{nowthen.format(&#x27;H:mm&#x27;)}&quot;, {font: &quot;bold 70px calibri&quot;, fill: &quot;#ffffff&quot;,dropShadow: true,  align: &quot;center&quot;});
+                            nodeTime.x = 80
+                            nodeTime.y = 170
+                            nodeTime.width = 260
+                            infoFrame.addChild nodeTime
+                            infoFrame.nodeTime = nodeTime
+                        
+                            nodeIP = new Gotham.Graphics.Text(&quot;IP: &quot;+node.Network.external_ip_v4, {font: &quot;bold 70px calibri&quot;, fill: &quot;#ffffff&quot;, dropShadow: true, align: &quot;center&quot;});
+                            nodeIP.x = 80
+                            nodeIP.y = 240
+                            infoFrame.addChild nodeIP
+                        
+                        
+                            wireShark = new Gotham.Controls.Button &quot;Sniff&quot;, 300, 150, {textSize: 70}
+                            wireShark.x = 140
+                            wireShark.y = 350
+                            infoFrame.addChild wireShark
+                        
+                            infoFrame.click = -&gt;
+                              @ready = if not @ready then true else @ready
+                        
+                        
+                              if @ready
+                                infoFrame.visible = false
+                                @ready = false
+                        
+                                that.mapContainer.interactive = false
+                                that.mapContainer.isDragging = false
+                        
+                                # Zooms out the map to make room for GothOS
+                                tween = that.zoomMap(0.4, 400)
+                                tween.onComplete (tweenObj) -&gt;
+                        
+                                  that.mapContainer.offset = {y: -305, x: 0}
+                        
+                                  # Set interactive and Y pos
+                                  that.mapContainer.interactive = true
+                        
+                                  # Show node detail
+                                  that.showNodeDetails(node)
+                        
+                                  @ready = true
+                        
+                            return infoFrame
+                        
+                        
+                        
+                        
+                          ###*
+                          # Clears the pathContainer, This is typically Traceroutes
+                          # @method clearAnimatePath
+                          ####
+                          clearAnimatePath: () -&gt;
+                            # Remove all pathcontainer children # TODO
+                            if not @pathContainer
+                              return
+                        
+                            for child in @pathContainer.children
+                              child.tween.stop()
+                        
+                        
+                            @pathContainer.children = []
+                        
+                          ###*
+                          # Create a animated attack sequence between two coordinates
+                          # Parameters are as folloiwng
+                          # @method animateAttack
+                          # @param source {Object} Source Data
+                          # @param target {Object} Target Data
+                          # @example Input format
+                          #   source =
+                          #     latitude: &quot;&quot;
+                          #     longitude: &quot;&quot;
+                          #     country: &quot;&quot;
+                          #     company: &quot;&quot;
+                          #   target =
+                          #     latitude: &quot;&quot;
+                          #     longitude: &quot;&quot;
+                          #     country: &quot;&quot;
+                          #     city: &quot;&quot;
+                          #     company: &quot;&quot;
+                          ###
+                          animateAttack: (source, target) -&gt;
+                        
+                            # Ignore 0,0 attacks
+                            if target.country == &quot;O1&quot;
+                              return
+                        
+                            that = @
+                            sourcePixel = @coordinateToPixel source.latitude, source.longitude
+                            targetPixel = @coordinateToPixel target.latitude, target.longitude
+                        
+                            #x : path.start.x + (path.end.x - path.start.x) * Math.min(elapsed + 0.2, 1)
+                            #y : path.start.y + (path.end.y - path.start.y) * Math.min(elapsed + 0.2, 1)
+                        
+                        
+                        
+                            # Create Lazer
+                            lazer = new Gotham.Graphics.Graphics();
+                            lazer.visible = true
+                            lazer.lineStyle(3, 0xff00ff, 1);
+                            @nodeContainer.addChild lazer
+                        
+                            #console.log &quot;%s,%s --&gt; %s,%s&quot;, sourcePixel.x,sourcePixel.y, targetPixel.x,targetPixel.y
+                        
+                            diff =
+                              x: (targetPixel.x - sourcePixel.x)
+                              y: (targetPixel.y - sourcePixel.y)
+                        
+                            distance = Math.sqrt((diff.x**2) + (diff.y**2)) # Distance of the travel a --&gt; b
+                            length = 20.0 # Line length in pixels
+                            endModifier = length / distance
+                        
+                            t = distance / 0.4
+                        
+                            # Tween lazer
+                            tween = new Gotham.Tween lazer
+                            tween.to {}, t
+                            tween.onUpdate (chainItem)-&gt;
+                              # Elapsed tween time
+                              elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
+                        
+                              points =
+                                start:
+                                  x : sourcePixel.x +  diff.x * Math.max(elapsed,0)
+                                  y : sourcePixel.y +  diff.y * Math.max(elapsed,0)
+                                end:
+                                  x : sourcePixel.x + diff.x * Math.min(elapsed + endModifier, 1)
+                                  y : sourcePixel.y + diff.y * Math.min(elapsed + endModifier, 1)
+                        
+                        
+                              lazer.clear()
+                              lazer.lineStyle(3, 0xff00ff, 1);
+                              lazer.moveTo(points.start.x, points.start.y)
+                              lazer.lineTo(points.end.x, points.end.y)
+                        
+                        
+                            tween.onComplete () -&gt;
+                              that.nodeContainer.removeChild lazer
+                            tween.start()
+                        
+                        
+                          ###*
+                          # Creates a animated line between two nodes
+                          #
+                          # @method animatePath
+                          # @param startNode {Node} starting node
+                          # @param endNode {Node} End Node
+                          # @return {Tween} The tween object for the animation
+                          ###
+                          animatePath: (startNode, endNode) -&gt;
+                            # Create cable from the network to connected node
+                            path =
+                              start: @coordinateToPixel(startNode.lat, startNode.lng)
+                              end: @coordinateToPixel(endNode.lat, endNode.lng)
+                        
+                        
+                        
+                            # Create graphics object for cable
+                            gCable = new Gotham.Graphics.Graphics();
+                            gCable.visible = true
+                            gCable.lineStyle(3, 0xff00ff, 1);
+                            gCable.moveTo(path.start.x, path.start.y)
+                            gCable.lineTo(path.end.x, path.end.y)
+                            @pathContainer.addChild gCable
+                        
+                            # Create graphics for animated object (Yellow line which moves inside graphics)
+                            animationGraphics = new Gotham.Graphics.Graphics();
+                            animationGraphics.visible = true
+                            animationGraphics.blendMode = PIXI.BLEND_MODES.ADD;
+                            gCable.addChild animationGraphics
+                        
+                            diff =
+                              x: (path.end.x - path.start.x)
+                              y: (path.end.y - path.start.y)
+                        
+                            tween = new Gotham.Tween()
+                            gCable.tween = tween
+                            tween.repeat Infinity
+                            tween.to {}, 1500
+                            tween.onUpdate (chainItem)-&gt;
+                        
+                        
+                              # Elapsed tween time
+                              elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
+                        
+                        
+                              points =
+                                start:
+                                  x : path.start.x + diff.x * Math.max(elapsed - 0, 0)
+                                  y : path.start.y + diff.y * Math.max(elapsed - 0, 0)
+                                end:
+                                  x : path.start.x + diff.x * Math.min(elapsed + 0.1, 1)
+                                  y : path.start.y + diff.y * Math.min(elapsed + 0.1, 1)
+                        
+                              # Start drawing
+                              animationGraphics.clear()
+                              animationGraphics.lineStyle(1, 0x00ff00, 1);
+                              animationGraphics.moveTo(points.start.x, points.start.y)
+                              animationGraphics.lineTo(points.end.x, points.end.y)
+                        
+                        
+                            return tween
+                        
+                        
+                          ###*
+                          # Adds a cable and draws it between two nodes (Sibling)
+                          # @method addCable
+                          # @param cable {Object}
+                          ###
+                          addCable: (cable) -&gt;
+                        
+                        
+                            # Create a new graphics element
+                            graphics = new Gotham.Graphics.Graphics();
+                            graphics.visible = GothamGame.Globals.showCables
+                            if cable.CableType.id == 1
+                              graphics.lineStyle(1, 0x3399FF, 1);
+                            else
+                              graphics.lineStyle(1, 0x009900, 1);
+                        
+                            graphics.coordinates = {start:null, end:null}
+                        
+                            cablePartsGraphics = []
+                        
+                            for partData in cable.CableParts
+                              currentLocation = @coordinateToPixel(partData.lat, partData.lng)
+                        
+                              if partData.number is 0
+                                graphics.coordinates.start = currentLocation
+                                graphics.moveTo(currentLocation.x, currentLocation.y)
+                                cablePartsGraphics.push graphics
+                              else
+                                graphics.coordinates.end = currentLocation
+                                graphics.lineTo(currentLocation.x, currentLocation.y)
+                        
+                        
+                            # Add graphics cable parts to the cable
+                            cable.CableParts = cablePartsGraphics
+                        
+                            @nodeContainer.addChild graphics
+                        
+                        
+                          ###*
+                          # Adds a network to the worldMap
+                          # @method addNetwork
+                          # @param host [Host] Host object
+                          # @param lat [Double] Latitude position
+                          # @param lng [Double Longitude position
+                          # @param isPlayer [Boolean] If its the player
+                          ###
+                          addNetwork: (network,  isPlayer) -&gt;
+                        
+                            # Create a node formatted object
+                            networkNode =
+                              lat: network.lat
+                              lng: network.lng
+                              sprite: null
+                        
+                            # Add the network to the world map as a node representation
+                            @addNode networkNode, false
+                            networkNode.sprite.width = 16
+                            networkNode.sprite.height = 16
+                            networkNode.sprite.tint = 0x00ff00
+                        
+                            return networkNode.sprite
+                            return #TODO TODO
+                        
+                            # Create cable from the network to connected node
+                            cable =
+                              start: @coordinateToPixel(network.lat, network.lng)
+                              end: @coordinateToPixel(network.Node.lat, network.Node.lng)
+                        
+                            # Create graphics object for cable
+                            gCable = new Gotham.Graphics.Graphics();
+                            gCable.visible = true
+                            gCable.lineStyle(5, 0xff0000, 1);
+                            gCable.moveTo(cable.start.x, cable.start.y)
+                            gCable.lineTo(cable.end.x, cable.end.y)
+                            @nodeContainer.addChild gCable
+                        
+                            # Create graphics for animated object (Yellow line which moves inside graphics)
+                            animationGraphics = new Gotham.Graphics.Graphics();
+                            animationGraphics.visible = true
+                            animationGraphics.blendMode = PIXI.BLEND_MODES.ADD;
+                            gCable.addChild animationGraphics
+                        
+                            tween = new Gotham.Tween()
+                            tween.repeat Infinity
+                            tween.to {}, 2500
+                            tween.onUpdate (chainItem)-&gt;
+                        
+                              # Elapsed tween time
+                              elapsed = (performance.now() - chainItem.startTime) / chainItem.duration
+                        
+                              points =
+                                start:
+                                  x : cable.start.x + (cable.end.x - cable.start.x) * elapsed
+                                  y : cable.start.y + (cable.end.y - cable.start.y) * elapsed
+                                end:
+                                  x : cable.start.x + (cable.end.x - cable.start.x) * Math.min(elapsed + 0.2, 1)
+                                  y : cable.start.y + (cable.end.y - cable.start.y) * Math.min(elapsed + 0.2, 1)
+                        
+                              animationGraphics.clear()
+                              animationGraphics.lineStyle(2, 0x00ff00, 1);
+                              animationGraphics.moveTo(points.start.x, points.start.y)
+                              animationGraphics.lineTo(points.end.x, points.end.y)
+                        
+                              # Start from beginning
+                              if elapsed + 0.2 &gt; 1
+                                points =
+                                  start:
+                                    x : cable.start.x + (cable.end.x - cable.start.x) * 0
+                                    y : cable.start.y + (cable.end.y - cable.start.y) * 0
+                                  end:
+                                    x : cable.start.x + (cable.end.x - cable.start.x) * Math.min(elapsed + 0.2 - 1, 1)
+                                    y : cable.start.y + (cable.end.y - cable.start.y) * Math.min(elapsed + 0.2 - 1, 1)
+                        
+                                animationGraphics.moveTo(points.start.x, points.start.y)
+                                animationGraphics.lineTo(points.end.x, points.end.y)
+                        
+                            tween.start()
+                        
+                        
+                          ###*
+                          # Zooms the map to a given Scale, The map is Centered around Width/2 and Height /2
+                          # The animation is done by tweening
+                          # @method zoomMap
+                          # @param scale {Number} The scale number, Usually, never above 1.5
+                          # @param duration=2000 {Number} The Animation duration
+                          ###
+                          zoomMap: (scale, duration = 400) -&gt;
+                            that = @
+                        
+                            # Capture original scale of the mapContainer
+                            originalScale =
+                              x: that.mapContainer.scale.x
+                              y: that.mapContainer.scale.y
+                        
+                            # Create tween object
+                            tween = new Gotham.Tween that.mapContainer
+                            tween.easing Gotham.Tween.Easing.Quadratic.In
+                            tween.to {
+                              position:
+                                y: 1
+                                x: (that.__width / 2) - (that.__width * scale)/2
+                            }, duration
+                            tween.start()
+                            tween.onUpdate (tweenChain) -&gt;
+                              elapsed = tweenChain.elapsed
+                        
+                              # Scale Stuff
+                              diffScale =
+                                x: (scale - originalScale.x) * elapsed
+                                y: (scale - originalScale.y) * elapsed
+                        
+                              nexScale =
+                                x: originalScale.x - (diffScale.x * -1)
+                                y: originalScale.y - (diffScale.y * -1)
+                        
+                        
+                              factor =
+                                x: (that.__width * nexScale.x) / (that.__width * that.mapContainer.scale.x)
+                                y: (that.__height * nexScale.y) / (that.__height * that.mapContainer.scale.y)
+                        
+                              # Size stuff
+                              prevSize =
+                                width : that.__width
+                                height : that.__height
+                        
+                              nextSize =
+                                width : that.__width * nexScale.x
+                                height : that.__height * nexScale.y
+                        
+                              diffSize =
+                                width: prevSize.width - nextSize.width
+                                height: prevSize.height - nextSize.height
+                        
+                        
+                              that.mapContainer.scale.x = nexScale.x
+                              that.mapContainer.scale.y = nexScale.y
+                        
+                              that.mapContainer.offset.x *= factor.x
+                              that.mapContainer.offset.y *= factor.y
+                        
+                        
+                              that.mapContainer.position.x = (diffSize.width / 2) + that.mapContainer.offset.x
+                              that.mapContainer.position.y = (diffSize.height / 2) +  that.mapContainer.offset.y
+                        
+                              that.scaleNodes true
+                            return tween
+                        
+                        
+                        
+                        
+                        
+                        
+                        module.exports = WorldMapView
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

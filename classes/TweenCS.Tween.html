@@ -1,0 +1,2503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>TweenCS.Tween</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdministrationRoom", "classes/Cable", "classes/CablePart", "classes/CableType", "classes/Client", "classes/Clock", "classes/Country", "classes/Cyberfeed", "classes/Database", "classes/DNS", "classes/Emitter_AbandonMission", "classes/Emitter_AcceptMission", "classes/Emitter_CompleteMission", "classes/Emitter_GetCables", "classes/Emitter_GetHelpContent", "classes/Emitter_GetHost", "classes/Emitter_GetMission", "classes/Emitter_GetNodes", "classes/Emitter_GetUser", "classes/Emitter_Login", "classes/Emitter_Logout", "classes/Emitter_Ping", "classes/Emitter_ProgressMission", "classes/Emitter_ReconnectLogin", "classes/Emitter_ShopPurchaseHost", "classes/Emitter_ShopPurchaseNetwork", "classes/Emitter_Terminate", "classes/Emitter_Traceroute", "classes/Emitter_UpdateHelpContent", "classes/Filesystem", "classes/GeneralRoom", "classes/Gotham.Controls.Button", "classes/Gotham.Controls.Slider", "classes/Gotham.Database", "classes/Gotham.GameLoop", "classes/Gotham.Graphics.Container", "classes/Gotham.Graphics.Graphics", "classes/Gotham.Graphics.Polygon", "classes/Gotham.Graphics.Rectangle", "classes/Gotham.Graphics.Sprite", "classes/Gotham.Graphics.Text", "classes/Gotham.Graphics.Texture", "classes/Gotham.Graphics.Tools", "classes/Gotham.Network", "classes/Gotham.Pattern.MVC.Controller", "classes/Gotham.Pattern.MVC.View", "classes/Gotham.Preload", "classes/Gotham.Renderer", "classes/Gotham.Scene", "classes/Gotham.Sound", "classes/Gotham.Util.Ajax", "classes/Gotham.Util.Compression", "classes/Gotham.Util.Geocoding", "classes/Gotham.Util.SearchTools", "classes/Gotham.Util.Util", "classes/GothamGame.Controllers.AnnounceController", "classes/GothamGame.Controllers.BarController", "classes/GothamGame.Controllers.GothsharkController", "classes/GothamGame.Controllers.HelpController", "classes/GothamGame.Controllers.IdentityController", "classes/GothamGame.Controllers.MissionController", "classes/GothamGame.Controllers.NodeListController", "classes/GothamGame.Controllers.SettingsController", "classes/GothamGame.Controllers.ShopController", "classes/GothamGame.Controllers.TerminalController", "classes/GothamGame.Controllers.UserController", "classes/GothamGame.Controllers.WorldMapController", "classes/GothamGame.GothamGame", "classes/GothamGame.Mission.Mission", "classes/GothamGame.Mission.Requirement", "classes/GothamGame.MissionEngine.MissionEngine", "classes/GothamGame.Scenes.Loading", "classes/GothamGame.Scenes.Menu", "classes/GothamGame.Scenes.World", "classes/GothamGame.Terminal.Application.Application", "classes/GothamGame.Terminal.Application.ChangeDirectory", "classes/GothamGame.Terminal.Application.Clear", "classes/GothamGame.Terminal.Application.Copy", "classes/GothamGame.Terminal.Application.ListSegments", "classes/GothamGame.Terminal.Application.Move", "classes/GothamGame.Terminal.Application.Perl", "classes/GothamGame.Terminal.Application.Ping", "classes/GothamGame.Terminal.Application.Slowloris", "classes/GothamGame.Terminal.Application.Traceroute", "classes/GothamGame.Terminal.Command", "classes/GothamGame.Terminal.Console", "classes/GothamGame.Terminal.Filesystem", "classes/GothamGame.Terminal.Terminal", "classes/GothamGame.Tools.HostUtils", "classes/GothamGame.View.AnnounceView", "classes/GothamGame.View.BarView", "classes/GothamGame.View.GothsharkView", "classes/GothamGame.View.HelpView", "classes/GothamGame.View.IdentityView", "classes/GothamGame.View.MissionView", "classes/GothamGame.View.NodeListView", "classes/GothamGame.View.SettingsView", "classes/GothamGame.View.ShopView", "classes/GothamGame.View.TerminalView", "classes/GothamGame.View.UserView", "classes/GothamGame.View.WorldMapView", "classes/GothamObject", "classes/Help", "classes/HoneyCloud", "classes/Host", "classes/HostRoom", "classes/Identity", "classes/IPProvider", "classes/IPViking", "classes/LocalDatabase", "classes/Mission", "classes/MissionRequirement", "classes/MissionRoom", "classes/Network", "classes/Node", "classes/NodeCable", "classes/PingRoom", "classes/SocketServer", "classes/Tier", "classes/TracerouteRoom", "classes/TweenCS.ChainItem", "classes/TweenCS.Tween", "classes/User", "classes/UserMission", "classes/UserMissionRequirement", "classes/UserRoom", "classes/World", "classes/WorldMapRoom", "modules/Backend", "modules/Backend.Database", "modules/Backend.Emitters", "modules/Backend.LocalDatabase", "modules/Backend.Networking", "modules/Backend.World", "modules/Framework", "modules/Framework.Controls", "modules/Framework.Graphics", "modules/Framework.Pattern.MVC", "modules/Framework.Util", "modules/Frontend", "modules/Frontend.Controllers", "modules/Frontend.Mission", "modules/Frontend.Scenes", "modules/Frontend.Terminal", "modules/Frontend.Terminal.Application", "modules/Frontend.Tools", "modules/Frontend.View", "modules/TweenCS"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdministrationRoom.html">AdministrationRoom</a></li>
+	                            <li><a href="../classes/Cable.html">Cable</a></li>
+	                            <li><a href="../classes/CablePart.html">CablePart</a></li>
+	                            <li><a href="../classes/CableType.html">CableType</a></li>
+	                            <li><a href="../classes/Client.html">Client</a></li>
+	                            <li><a href="../classes/Clock.html">Clock</a></li>
+	                            <li><a href="../classes/Country.html">Country</a></li>
+	                            <li><a href="../classes/Cyberfeed.html">Cyberfeed</a></li>
+	                            <li><a href="../classes/Database.html">Database</a></li>
+	                            <li><a href="../classes/DNS.html">DNS</a></li>
+	                            <li><a href="../classes/Emitter_AbandonMission.html">Emitter_AbandonMission</a></li>
+	                            <li><a href="../classes/Emitter_AcceptMission.html">Emitter_AcceptMission</a></li>
+	                            <li><a href="../classes/Emitter_CompleteMission.html">Emitter_CompleteMission</a></li>
+	                            <li><a href="../classes/Emitter_GetCables.html">Emitter_GetCables</a></li>
+	                            <li><a href="../classes/Emitter_GetHelpContent.html">Emitter_GetHelpContent</a></li>
+	                            <li><a href="../classes/Emitter_GetHost.html">Emitter_GetHost</a></li>
+	                            <li><a href="../classes/Emitter_GetMission.html">Emitter_GetMission</a></li>
+	                            <li><a href="../classes/Emitter_GetNodes.html">Emitter_GetNodes</a></li>
+	                            <li><a href="../classes/Emitter_GetUser.html">Emitter_GetUser</a></li>
+	                            <li><a href="../classes/Emitter_Login.html">Emitter_Login</a></li>
+	                            <li><a href="../classes/Emitter_Logout.html">Emitter_Logout</a></li>
+	                            <li><a href="../classes/Emitter_Ping.html">Emitter_Ping</a></li>
+	                            <li><a href="../classes/Emitter_ProgressMission.html">Emitter_ProgressMission</a></li>
+	                            <li><a href="../classes/Emitter_ReconnectLogin.html">Emitter_ReconnectLogin</a></li>
+	                            <li><a href="../classes/Emitter_ShopPurchaseHost.html">Emitter_ShopPurchaseHost</a></li>
+	                            <li><a href="../classes/Emitter_ShopPurchaseNetwork.html">Emitter_ShopPurchaseNetwork</a></li>
+	                            <li><a href="../classes/Emitter_Terminate.html">Emitter_Terminate</a></li>
+	                            <li><a href="../classes/Emitter_Traceroute.html">Emitter_Traceroute</a></li>
+	                            <li><a href="../classes/Emitter_UpdateHelpContent.html">Emitter_UpdateHelpContent</a></li>
+	                            <li><a href="../classes/Filesystem.html">Filesystem</a></li>
+	                            <li><a href="../classes/GeneralRoom.html">GeneralRoom</a></li>
+	                            <li><a href="../classes/Gotham.Controls.Button.html">Gotham.Controls.Button</a></li>
+	                            <li><a href="../classes/Gotham.Controls.Slider.html">Gotham.Controls.Slider</a></li>
+	                            <li><a href="../classes/Gotham.Database.html">Gotham.Database</a></li>
+	                            <li><a href="../classes/Gotham.GameLoop.html">Gotham.GameLoop</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Container.html">Gotham.Graphics.Container</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Graphics.html">Gotham.Graphics.Graphics</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Polygon.html">Gotham.Graphics.Polygon</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Rectangle.html">Gotham.Graphics.Rectangle</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Sprite.html">Gotham.Graphics.Sprite</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Text.html">Gotham.Graphics.Text</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Texture.html">Gotham.Graphics.Texture</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Tools.html">Gotham.Graphics.Tools</a></li>
+	                            <li><a href="../classes/Gotham.Network.html">Gotham.Network</a></li>
+	                            <li><a href="../classes/Gotham.Pattern.MVC.Controller.html">Gotham.Pattern.MVC.Controller</a></li>
+	                            <li><a href="../classes/Gotham.Pattern.MVC.View.html">Gotham.Pattern.MVC.View</a></li>
+	                            <li><a href="../classes/Gotham.Preload.html">Gotham.Preload</a></li>
+	                            <li><a href="../classes/Gotham.Renderer.html">Gotham.Renderer</a></li>
+	                            <li><a href="../classes/Gotham.Scene.html">Gotham.Scene</a></li>
+	                            <li><a href="../classes/Gotham.Sound.html">Gotham.Sound</a></li>
+	                            <li><a href="../classes/Gotham.Util.Ajax.html">Gotham.Util.Ajax</a></li>
+	                            <li><a href="../classes/Gotham.Util.Compression.html">Gotham.Util.Compression</a></li>
+	                            <li><a href="../classes/Gotham.Util.Geocoding.html">Gotham.Util.Geocoding</a></li>
+	                            <li><a href="../classes/Gotham.Util.SearchTools.html">Gotham.Util.SearchTools</a></li>
+	                            <li><a href="../classes/Gotham.Util.Util.html">Gotham.Util.Util</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.AnnounceController.html">GothamGame.Controllers.AnnounceController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.BarController.html">GothamGame.Controllers.BarController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.GothsharkController.html">GothamGame.Controllers.GothsharkController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.HelpController.html">GothamGame.Controllers.HelpController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.IdentityController.html">GothamGame.Controllers.IdentityController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.MissionController.html">GothamGame.Controllers.MissionController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.NodeListController.html">GothamGame.Controllers.NodeListController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.SettingsController.html">GothamGame.Controllers.SettingsController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.ShopController.html">GothamGame.Controllers.ShopController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.TerminalController.html">GothamGame.Controllers.TerminalController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.UserController.html">GothamGame.Controllers.UserController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.WorldMapController.html">GothamGame.Controllers.WorldMapController</a></li>
+	                            <li><a href="../classes/GothamGame.GothamGame.html">GothamGame.GothamGame</a></li>
+	                            <li><a href="../classes/GothamGame.Mission.Mission.html">GothamGame.Mission.Mission</a></li>
+	                            <li><a href="../classes/GothamGame.Mission.Requirement.html">GothamGame.Mission.Requirement</a></li>
+	                            <li><a href="../classes/GothamGame.MissionEngine.MissionEngine.html">GothamGame.MissionEngine.MissionEngine</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.Loading.html">GothamGame.Scenes.Loading</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.Menu.html">GothamGame.Scenes.Menu</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.World.html">GothamGame.Scenes.World</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Application.html">GothamGame.Terminal.Application.Application</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.ChangeDirectory.html">GothamGame.Terminal.Application.ChangeDirectory</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Clear.html">GothamGame.Terminal.Application.Clear</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Copy.html">GothamGame.Terminal.Application.Copy</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.ListSegments.html">GothamGame.Terminal.Application.ListSegments</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Move.html">GothamGame.Terminal.Application.Move</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Perl.html">GothamGame.Terminal.Application.Perl</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Ping.html">GothamGame.Terminal.Application.Ping</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Slowloris.html">GothamGame.Terminal.Application.Slowloris</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Traceroute.html">GothamGame.Terminal.Application.Traceroute</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Command.html">GothamGame.Terminal.Command</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Console.html">GothamGame.Terminal.Console</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Filesystem.html">GothamGame.Terminal.Filesystem</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Terminal.html">GothamGame.Terminal.Terminal</a></li>
+	                            <li><a href="../classes/GothamGame.Tools.HostUtils.html">GothamGame.Tools.HostUtils</a></li>
+	                            <li><a href="../classes/GothamGame.View.AnnounceView.html">GothamGame.View.AnnounceView</a></li>
+	                            <li><a href="../classes/GothamGame.View.BarView.html">GothamGame.View.BarView</a></li>
+	                            <li><a href="../classes/GothamGame.View.GothsharkView.html">GothamGame.View.GothsharkView</a></li>
+	                            <li><a href="../classes/GothamGame.View.HelpView.html">GothamGame.View.HelpView</a></li>
+	                            <li><a href="../classes/GothamGame.View.IdentityView.html">GothamGame.View.IdentityView</a></li>
+	                            <li><a href="../classes/GothamGame.View.MissionView.html">GothamGame.View.MissionView</a></li>
+	                            <li><a href="../classes/GothamGame.View.NodeListView.html">GothamGame.View.NodeListView</a></li>
+	                            <li><a href="../classes/GothamGame.View.SettingsView.html">GothamGame.View.SettingsView</a></li>
+	                            <li><a href="../classes/GothamGame.View.ShopView.html">GothamGame.View.ShopView</a></li>
+	                            <li><a href="../classes/GothamGame.View.TerminalView.html">GothamGame.View.TerminalView</a></li>
+	                            <li><a href="../classes/GothamGame.View.UserView.html">GothamGame.View.UserView</a></li>
+	                            <li><a href="../classes/GothamGame.View.WorldMapView.html">GothamGame.View.WorldMapView</a></li>
+	                            <li><a href="../classes/GothamObject.html">GothamObject</a></li>
+	                            <li><a href="../classes/Help.html">Help</a></li>
+	                            <li><a href="../classes/HoneyCloud.html">HoneyCloud</a></li>
+	                            <li><a href="../classes/Host.html">Host</a></li>
+	                            <li><a href="../classes/HostRoom.html">HostRoom</a></li>
+	                            <li><a href="../classes/Identity.html">Identity</a></li>
+	                            <li><a href="../classes/IPProvider.html">IPProvider</a></li>
+	                            <li><a href="../classes/IPViking.html">IPViking</a></li>
+	                            <li><a href="../classes/LocalDatabase.html">LocalDatabase</a></li>
+	                            <li><a href="../classes/Mission.html">Mission</a></li>
+	                            <li><a href="../classes/MissionRequirement.html">MissionRequirement</a></li>
+	                            <li><a href="../classes/MissionRoom.html">MissionRoom</a></li>
+	                            <li><a href="../classes/Network.html">Network</a></li>
+	                            <li><a href="../classes/Node.html">Node</a></li>
+	                            <li><a href="../classes/NodeCable.html">NodeCable</a></li>
+	                            <li><a href="../classes/PingRoom.html">PingRoom</a></li>
+	                            <li><a href="../classes/SocketServer.html">SocketServer</a></li>
+	                            <li><a href="../classes/Tier.html">Tier</a></li>
+	                            <li><a href="../classes/TracerouteRoom.html">TracerouteRoom</a></li>
+	                            <li><a href="../classes/TweenCS.ChainItem.html">TweenCS.ChainItem</a></li>
+	                            <li><a href="../classes/TweenCS.Tween.html">TweenCS.Tween</a></li>
+	                            <li><a href="../classes/User.html">User</a></li>
+	                            <li><a href="../classes/UserMission.html">UserMission</a></li>
+	                            <li><a href="../classes/UserMissionRequirement.html">UserMissionRequirement</a></li>
+	                            <li><a href="../classes/UserRoom.html">UserRoom</a></li>
+	                            <li><a href="../classes/World.html">World</a></li>
+	                            <li><a href="../classes/WorldMapRoom.html">WorldMapRoom</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/Backend.html">Backend</a></li>
+	                            <li><a href="../modules/Backend.Database.html">Backend.Database</a></li>
+	                            <li><a href="../modules/Backend.Emitters.html">Backend.Emitters</a></li>
+	                            <li><a href="../modules/Backend.LocalDatabase.html">Backend.LocalDatabase</a></li>
+	                            <li><a href="../modules/Backend.Networking.html">Backend.Networking</a></li>
+	                            <li><a href="../modules/Backend.World.html">Backend.World</a></li>
+	                            <li><a href="../modules/Framework.html">Framework</a></li>
+	                            <li><a href="../modules/Framework.Controls.html">Framework.Controls</a></li>
+	                            <li><a href="../modules/Framework.Graphics.html">Framework.Graphics</a></li>
+	                            <li><a href="../modules/Framework.Pattern.MVC.html">Framework.Pattern.MVC</a></li>
+	                            <li><a href="../modules/Framework.Util.html">Framework.Util</a></li>
+	                            <li><a href="../modules/Frontend.html">Frontend</a></li>
+	                            <li><a href="../modules/Frontend.Controllers.html">Frontend.Controllers</a></li>
+	                            <li><a href="../modules/Frontend.Mission.html">Frontend.Mission</a></li>
+	                            <li><a href="../modules/Frontend.Scenes.html">Frontend.Scenes</a></li>
+	                            <li><a href="../modules/Frontend.Terminal.html">Frontend.Terminal</a></li>
+	                            <li><a href="../modules/Frontend.Terminal.Application.html">Frontend.Terminal.Application</a></li>
+	                            <li><a href="../modules/Frontend.Tools.html">Frontend.Tools</a></li>
+	                            <li><a href="../modules/Frontend.View.html">Frontend.View</a></li>
+	                            <li><a href="../modules/TweenCS.html">TweenCS</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+                            <h1>TweenCS.Tween <small>Class</small></h1>
+                        </div>
+                        
+                        <div class="well well-small">
+                        
+                        
+                                <div class="foundat">
+                                    Defined in: <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l76"><code>GameFramework\src\Modules\Tween\Tween.coffee:76</code></a>
+                                </div>
+                        
+                                    Module: <a href="../modules/TweenCS.html">TweenCS</a>
+                        
+                        </div>
+                        
+                        
+                        <div class="well well-small">
+                            <p>The tween class of Gotham
+                        This class animates objects of any format
+                        It features to reach deep proprerties in an object</p>
+                        
+                        </div>
+                        
+                            <div class="constructor">
+                                <h2>Constructor</h2>
+                                <div id="method_TweenCS.Tween" class="method item">
+                                    <h3 class="name"><code>TweenCS.Tween</code></h3>
+                                
+                                        <div class="args">
+                                            <span class="paren">(</span><ul class="args-list inline commas">
+                                                <li class="arg">
+                                                        <code>object</code>
+                                                </li>
+                                            </ul><span class="paren">)</span>
+                                        </div>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                    <div class="meta">
+                                                <p>
+                                                Defined in
+                                        <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l76"><code>GameFramework\src\Modules\Tween\Tween.coffee:76</code></a>
+                                        </p>
+                                
+                                
+                                
+                                    </div>
+                                
+                                    <div class="description">
+                                        
+                                    </div>
+                                
+                                        <div class="params">
+                                            <h4>Parameters:</h4>
+                                
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">object</code>
+                                                        <span class="type">Object</span>
+                                
+                                
+                                                    <div class="param-description">
+                                                        <p>The object to tween</p>
+                                
+                                                    </div>
+                                
+                                                </li>
+                                            </ul>
+                                        </div>
+                                
+                                
+                                        <div class="example">
+                                            <h4>Example:</h4>
+                                
+                                            <div class="example-content">
+                                                <pre class="code prettyprint"><code>  # How to use:
+                                  # Start
+                                  tweenTo =
+                                    scale:
+                                      x: 2
+                                      y: 2
+                                  rotation: 0.1
+                                
+                                  # End
+                                  tweenBack =
+                                    scale:
+                                      x: 1
+                                      y: 1
+                                  rotation: -0.1
+                                
+                                  tween = new Tween object
+                                  tween.startDelay 500
+                                  tween.repeat(Infinity)
+                                  tween.easing Tween.Easing.Circular.InOut
+                                  tween.to tweenTo, 1500
+                                  tween.to tweenBack, 1500
+                                  tween.onStart -&gt;
+                                    console.log @ + " started!"
+                                  tween.start()</code></pre>
+                                
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        
+                        <div>
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#index">Index</a></li>
+                        
+                                    <li><a data-toggle="tab" href="#methods">Methods</a></li>
+                                    <li><a data-toggle="tab" href="#properties">Properties</a></li>
+                            </ul>
+                        
+                            <div class="tab-content">
+                                <div id="index" class="tab-pane active">
+                                    <h2 class="off-left">Item Index</h2>
+                        
+                                        <div class="index-section methods">
+                                            <h3>Methods</h3>
+                        
+                                            <ul class="index-list methods">
+                                                    <li class="index-item method private">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method__onComplete" data-tablink="_onComplete">_onComplete</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method private">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method__onStart" data-tablink="_onStart">_onStart</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method private">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method__onUpdate" data-tablink="_onUpdate">_onUpdate</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_addToChain" data-tablink="addToChain">addToChain</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_clear" data-tablink="clear">clear</a>
+                        
+                                                            <span class="flag static">static</span>
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_clone" data-tablink="clone">clone</a>
+                        
+                                                            <span class="flag static">static</span>
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_delay" data-tablink="delay">delay</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_easing" data-tablink="easing">easing</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_flattenKeys" data-tablink="flattenKeys">flattenKeys</a>
+                        
+                                                            <span class="flag static">static</span>
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_func" data-tablink="func">func</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_getTweenChain" data-tablink="getTweenChain">getTweenChain</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_onComplete" data-tablink="onComplete">onComplete</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_onStart" data-tablink="onStart">onStart</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_onUpdate" data-tablink="onUpdate">onUpdate</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_pause" data-tablink="pause">pause</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_repeat" data-tablink="repeat">repeat</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_resolve" data-tablink="resolve">resolve</a>
+                        
+                                                            <span class="flag static">static</span>
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_start" data-tablink="start">start</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_startDelay" data-tablink="startDelay">startDelay</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_stop" data-tablink="stop">stop</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_to" data-tablink="to">to</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_unpause" data-tablink="unpause">unpause</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#" data-tabid="#methods" data-anchor="#method_update" data-tablink="update">update</a>
+                        
+                                                            <span class="flag static">static</span>
+                                                    </li>
+                                            </ul>
+                                        </div>
+                        
+                                        <div class="index-section properties">
+                                            <h3>Properties</h3>
+                        
+                                            <ul class="index-list properties">
+                                                    <li class="index-item property private">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__chain" data-tablink="_chain">_chain</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property private">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__complete" data-tablink="_complete">_complete</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__currentTime" data-tablink="_currentTime">_currentTime</a>
+                        
+                                                            <span class="flag static">static</span>
+                                                    </li>
+                                                    <li class="index-item property private">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__easing" data-tablink="_easing">_easing</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property private">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__interpolation" data-tablink="_interpolation">_interpolation</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property private">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__object" data-tablink="_object">_object</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property private">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__properties" data-tablink="_properties">_properties</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property private">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__remainingRuns" data-tablink="_remainingRuns">_remainingRuns</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property private">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__runCounter" data-tablink="_runCounter">_runCounter</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property private">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__startDelay" data-tablink="_startDelay">_startDelay</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property private">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__started" data-tablink="_started">_started</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property private">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property__tweens" data-tablink="_tweens">_tweens</a>
+                        
+                                                            <span class="flag static">static</span>
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property_Easing" data-tablink="Easing">Easing</a>
+                        
+                                                            <span class="flag static">static</span>
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#" data-tabid="#properties" data-anchor="#property_Interpolation" data-tablink="Interpolation">Interpolation</a>
+                        
+                                                            <span class="flag static">static</span>
+                                                    </li>
+                                            </ul>
+                                        </div>
+                        
+                        
+                                </div>
+                        
+                                    <div id="methods" class="tab-pane">
+                                        <h2 class="off-left">Methods</h2>
+                        
+                                            <div id="method__onComplete" class="method item private">
+                                                <h3 class="name"><code>_onComplete</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l189"><code>GameFramework\src\Modules\Tween\Tween.coffee:189</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>onComplete callback</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method__onStart" class="method item private">
+                                                <h3 class="name"><code>_onStart</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l196"><code>GameFramework\src\Modules\Tween\Tween.coffee:196</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>onStart callback</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method__onUpdate" class="method item private">
+                                                <h3 class="name"><code>_onUpdate</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l182"><code>GameFramework\src\Modules\Tween\Tween.coffee:182</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>onUpdate callback</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_addToChain" class="method item">
+                                                <h3 class="name"><code>addToChain</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>newPath</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l249"><code>GameFramework\src\Modules\Tween\Tween.coffee:249</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Adds a new TweenCS.ChainItem to the chain</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">newPath</code>
+                                                                    <span class="type"><a href="../classes/TweenCS.ChainItem.html" class="crosslink">TweenCS.ChainItem</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>The chain item</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_clear" class="method item">
+                                                <h3 class="name"><code>clear</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                    <span class="flag static">static</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l122"><code>GameFramework\src\Modules\Tween\Tween.coffee:122</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Clear all ongoing tweens in loop</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_clone" class="method item">
+                                                <h3 class="name"><code>clone</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>obj</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                    <span class="flag static">static</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l611"><code>GameFramework\src\Modules\Tween\Tween.coffee:611</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Clones a object</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">obj</code>
+                                                                    <span class="type">Object</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>the object to clone</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_delay" class="method item">
+                                                <h3 class="name"><code>delay</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>time</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                    <span class="flag chainable">chainable</span>
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l423"><code>GameFramework\src\Modules\Tween\Tween.coffee:423</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Add a delay between two tween goto's</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">time</code>
+                                                                    <span class="type">Long</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Delay in Milliseconds</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_easing" class="method item">
+                                                <h3 class="name"><code>easing</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>easing</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                    <span class="flag chainable">chainable</span>
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l346"><code>GameFramework\src\Modules\Tween\Tween.coffee:346</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Set the easing algorithm for the tween
+                                            The easing algorithms are found in the Tween.Easing object.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">easing</code>
+                                                                    <span class="type">Tween.Easing</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>The easing algorithm</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            <pre class="code prettyprint"><code>    obj.easing(Tween.Easing.Linear.None)</code></pre>
+                                            
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div id="method_flattenKeys" class="method item">
+                                                <h3 class="name"><code>flattenKeys</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>obj</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>delimiter</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>max_depth</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type">Array</span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                                    <span class="flag static">static</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l658"><code>GameFramework\src\Modules\Tween\Tween.coffee:658</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Function for finding properties recursively in an Object</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">obj</code>
+                                                                    <span class="type">Object</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Start/Parent Node</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">delimiter</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>The Delimeter of the result. Default: "."</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">max_depth</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Max Depth of the recursion</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type">Array</span>:
+                                                                <p>Array with the resulting properties</p>
+                                            
+                                                        </div>
+                                                    </div>
+                                            
+                                            </div>
+                                            <div id="method_func" class="method item">
+                                                <h3 class="name"><code>func</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                    <span class="flag chainable">chainable</span>
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l361"><code>GameFramework\src\Modules\Tween\Tween.coffee:361</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Adds a function to the tween chain. Neat for when you want logic to run between two tweens</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_getTweenChain" class="method item">
+                                                <h3 class="name"><code>getTweenChain</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="../classes/TweenCS.ChainItem.html" class="crosslink">TweenCS.ChainItem</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l241"><code>GameFramework\src\Modules\Tween\Tween.coffee:241</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Retrieve all chainItems of the Tween</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="../classes/TweenCS.ChainItem.html" class="crosslink">TweenCS.ChainItem</a></span>:
+                                                                <p>The tween Chain</p>
+                                            
+                                                        </div>
+                                                    </div>
+                                            
+                                            </div>
+                                            <div id="method_onComplete" class="method item">
+                                                <h3 class="name"><code>onComplete</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>callback</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l473"><code>GameFramework\src\Modules\Tween\Tween.coffee:473</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>The onComplete callback
+                                            Is called when the tween is completed</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">callback</code>
+                                                                    <span class="type">Callback</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>The onComplete callback</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_onStart" class="method item">
+                                                <h3 class="name"><code>onStart</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>callback</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l482"><code>GameFramework\src\Modules\Tween\Tween.coffee:482</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>The onStart callback
+                                            Is called when the tween is started</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">callback</code>
+                                                                    <span class="type">Callback</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>The onStart callback</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_onUpdate" class="method item">
+                                                <h3 class="name"><code>onUpdate</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>callback</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l463"><code>GameFramework\src\Modules\Tween\Tween.coffee:463</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>The onUpdate callback
+                                            Is called when the tween is updated</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">callback</code>
+                                                                    <span class="type">Callback</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>The onUpdate callback</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_pause" class="method item">
+                                                <h3 class="name"><code>pause</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l308"><code>GameFramework\src\Modules\Tween\Tween.coffee:308</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Pauses the tween.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_repeat" class="method item">
+                                                <h3 class="name"><code>repeat</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>num</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                    <span class="flag chainable">chainable</span>
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l446"><code>GameFramework\src\Modules\Tween\Tween.coffee:446</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>How many times you want to repeat the Tween
+                                            To repeat "forever", use Infinity</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">num</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Number of times to repeat</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_resolve" class="method item">
+                                                <h3 class="name"><code>resolve</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>obj</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>path</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>def</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>setValue</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                    <span class="flag static">static</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l624"><code>GameFramework\src\Modules\Tween\Tween.coffee:624</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Resolves a string property. Ex: "a.b". which is obj["a"]["b"]</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">obj</code>
+                                                                    <span class="type">Object</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>the object to resolve</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">path</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>the object path</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">def</code>
+                                                                    <span class="type">Object</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>default if not found</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">setValue</code>
+                                                                    <span class="type">Object</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Value to set on the path</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_start" class="method item">
+                                                <h3 class="name"><code>start</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l292"><code>GameFramework\src\Modules\Tween\Tween.coffee:292</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Starts the tween. _onStart callback is called</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_startDelay" class="method item">
+                                                <h3 class="name"><code>startDelay</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>time</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l284"><code>GameFramework\src\Modules\Tween\Tween.coffee:284</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Sets Delay of the start</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">time</code>
+                                                                    <span class="type">Number</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Delay in milliseconds</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_stop" class="method item">
+                                                <h3 class="name"><code>stop</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l300"><code>GameFramework\src\Modules\Tween\Tween.coffee:300</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Stops the tween</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_to" class="method item">
+                                                <h3 class="name"><code>to</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>property</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>duration</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                    <span class="flag chainable">chainable</span>
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l383"><code>GameFramework\src\Modules\Tween\Tween.coffee:383</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Add tween action to the tween chain</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">property</code>
+                                                                    <span class="type">Object</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>The "goal" property of the tween (Where you want the target object to end up)</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">duration</code>
+                                                                    <span class="type">Long</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Duration of the tween from start --&gt; end (In milliseconds)</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_unpause" class="method item">
+                                                <h3 class="name"><code>unpause</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l315"><code>GameFramework\src\Modules\Tween\Tween.coffee:315</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Unpauses the tween.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_update" class="method item">
+                                                <h3 class="name"><code>update</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>time</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                    <span class="flag static">static</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l491"><code>GameFramework\src\Modules\Tween\Tween.coffee:491</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Update loop of the tween engine ensures that tweening actually happens
+                                            IT is called from GameLoop.update()</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">time</code>
+                                                                    <span class="type">Long</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Render runtime in milliseconds</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                    </div>
+                        
+                                    <div id="properties" class="tab-pane">
+                                        <h2 class="off-left">Properties</h2>
+                        
+                                            <div id="property__chain" class="property item private">
+                                                <h3 class="name"><code>_chain</code></h3>
+                                                <span class="type">Array</span>
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l152"><code>GameFramework\src\Modules\Tween\Tween.coffee:152</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Chain of tweens to be applied to object (ChainItems)</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property__complete" class="property item private">
+                                                <h3 class="name"><code>_complete</code></h3>
+                                                <span class="type">Boolean</span>
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l210"><code>GameFramework\src\Modules\Tween\Tween.coffee:210</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>If the tween collection is complete or not</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property__currentTime" class="property item">
+                                                <h3 class="name"><code>_currentTime</code></h3>
+                                                <span class="type">Long</span>
+                                            
+                                            
+                                            
+                                            
+                                                    <span class="flag static">static</span>
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l131"><code>GameFramework\src\Modules\Tween\Tween.coffee:131</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Current runtime time, Retreived from GameLoop's update()</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property__easing" class="property item private">
+                                                <h3 class="name"><code>_easing</code></h3>
+                                                <span class="type">Tween.Easing</span>
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l168"><code>GameFramework\src\Modules\Tween\Tween.coffee:168</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>The easing to use, Default is Linear</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property__interpolation" class="property item private">
+                                                <h3 class="name"><code>_interpolation</code></h3>
+                                                <span class="type">Tween.Interpolation</span>
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l175"><code>GameFramework\src\Modules\Tween\Tween.coffee:175</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Which interpolation to use, default is Linear</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property__object" class="property item private">
+                                                <h3 class="name"><code>_object</code></h3>
+                                                <span class="type">Object</span>
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l144"><code>GameFramework\src\Modules\Tween\Tween.coffee:144</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>The object to do tweening on</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property__properties" class="property item private">
+                                                <h3 class="name"><code>_properties</code></h3>
+                                                <span class="type">Array</span>
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l161"><code>GameFramework\src\Modules\Tween\Tween.coffee:161</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>The properties to process while tweening</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property__remainingRuns" class="property item private">
+                                                <h3 class="name"><code>_remainingRuns</code></h3>
+                                                <span class="type">Number</span>
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l231"><code>GameFramework\src\Modules\Tween\Tween.coffee:231</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Number of remaining runs for this tween</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property__runCounter" class="property item private">
+                                                <h3 class="name"><code>_runCounter</code></h3>
+                                                <span class="type">Number</span>
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l224"><code>GameFramework\src\Modules\Tween\Tween.coffee:224</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Number of runs done (Incremented per chainItem</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property__startDelay" class="property item private">
+                                                <h3 class="name"><code>_startDelay</code></h3>
+                                                <span class="type">Number</span>
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l217"><code>GameFramework\src\Modules\Tween\Tween.coffee:217</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>The tween start delay</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property__started" class="property item private">
+                                                <h3 class="name"><code>_started</code></h3>
+                                                <span class="type">Boolean</span>
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l203"><code>GameFramework\src\Modules\Tween\Tween.coffee:203</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>If the tween collection has started or not</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property__tweens" class="property item private">
+                                                <h3 class="name"><code>_tweens</code></h3>
+                                                <span class="type">ArrayTween</span>
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                                    <span class="flag static">static</span>
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l114"><code>GameFramework\src\Modules\Tween\Tween.coffee:114</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Static list of all ongoing tweens</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_Easing" class="property item">
+                                                <h3 class="name"><code>Easing</code></h3>
+                                                <span class="type">Object</span>
+                                            
+                                            
+                                            
+                                            
+                                                    <span class="flag static">static</span>
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l689"><code>GameFramework\src\Modules\Tween\Tween.coffee:689</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                                    <h4>Sub-properties:</h4>
+                                            
+                                                    <ul class="params-list">
+                                                        <li class="param">
+                                                                <code class="param-name">Linear</code>
+                                                                <span class="type">Object</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Linear.None</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Quadratic</code>
+                                                                <span class="type">Object</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Quadratic.In</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Quadratic.Out</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Quadratic.InOut</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Cubic</code>
+                                                                <span class="type">Object</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Cubic.In</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Cubic.Out</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Cubic.InOut</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Quartic</code>
+                                                                <span class="type">Object</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Quartic.In</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Quartic.Out</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Quartic.InOut</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Quintic</code>
+                                                                <span class="type">Object</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Quintic.In</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Quintic.Out</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Quintic.InOut</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Sinusoidal</code>
+                                                                <span class="type">Object</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Sinusoidal.In</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Sinusoidal.Out</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Sinusoidal.InOut</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Exponential</code>
+                                                                <span class="type">Object</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Exponential.In</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Exponential.Out</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Exponential.InOut</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Circular</code>
+                                                                <span class="type">Object</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Circular.In</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Circular.Out</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Circular.InOut</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Elastic</code>
+                                                                <span class="type">Object</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Elastic.In</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Elastic.Out</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Elastic.InOut</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Back</code>
+                                                                <span class="type">Object</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Back.In</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Back.Out</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Back.InOut</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Bounce</code>
+                                                                <span class="type">Object</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Bounce.In</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Bounce.Out</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Bounce.InOut</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                    </ul>
+                                            </div>
+                                            <div id="property_Interpolation" class="property item">
+                                                <h3 class="name"><code>Interpolation</code></h3>
+                                                <span class="type">Object</span>
+                                            
+                                            
+                                            
+                                            
+                                                    <span class="flag static">static</span>
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/GameFramework_src_Modules_Tween_Tween.coffee.html#l877"><code>GameFramework\src\Modules\Tween\Tween.coffee:877</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                                    <h4>Sub-properties:</h4>
+                                            
+                                                    <ul class="params-list">
+                                                        <li class="param">
+                                                                <code class="param-name">Linear</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Bezier</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">CatmullRom</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Utils</code>
+                                                                <span class="type">Object</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Utils.Linear</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Utils.Bernstein</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Utils.Factorial</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                        <li class="param">
+                                                                <code class="param-name">Utils.CatmullRom</code>
+                                                                <span class="type">Function</span>
+                                            
+                                                            <div class="param-description">
+                                                                 
+                                                            </div>
+                                            
+                                                        </li>
+                                                    </ul>
+                                            </div>
+                                    </div>
+                        
+                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

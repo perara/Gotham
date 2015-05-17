@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Game\src\engine\Mission.coffee</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdministrationRoom", "classes/Cable", "classes/CablePart", "classes/CableType", "classes/Client", "classes/Clock", "classes/Country", "classes/Cyberfeed", "classes/Database", "classes/DNS", "classes/Emitter_AbandonMission", "classes/Emitter_AcceptMission", "classes/Emitter_CompleteMission", "classes/Emitter_GetCables", "classes/Emitter_GetHelpContent", "classes/Emitter_GetHost", "classes/Emitter_GetMission", "classes/Emitter_GetNodes", "classes/Emitter_GetUser", "classes/Emitter_Login", "classes/Emitter_Logout", "classes/Emitter_Ping", "classes/Emitter_ProgressMission", "classes/Emitter_ReconnectLogin", "classes/Emitter_ShopPurchaseHost", "classes/Emitter_ShopPurchaseNetwork", "classes/Emitter_Terminate", "classes/Emitter_Traceroute", "classes/Emitter_UpdateHelpContent", "classes/Filesystem", "classes/GeneralRoom", "classes/Gotham.Controls.Button", "classes/Gotham.Controls.Slider", "classes/Gotham.Database", "classes/Gotham.GameLoop", "classes/Gotham.Graphics.Container", "classes/Gotham.Graphics.Graphics", "classes/Gotham.Graphics.Polygon", "classes/Gotham.Graphics.Rectangle", "classes/Gotham.Graphics.Sprite", "classes/Gotham.Graphics.Text", "classes/Gotham.Graphics.Texture", "classes/Gotham.Graphics.Tools", "classes/Gotham.Network", "classes/Gotham.Pattern.MVC.Controller", "classes/Gotham.Pattern.MVC.View", "classes/Gotham.Preload", "classes/Gotham.Renderer", "classes/Gotham.Scene", "classes/Gotham.Sound", "classes/Gotham.Util.Ajax", "classes/Gotham.Util.Compression", "classes/Gotham.Util.Geocoding", "classes/Gotham.Util.SearchTools", "classes/Gotham.Util.Util", "classes/GothamGame.Controllers.AnnounceController", "classes/GothamGame.Controllers.BarController", "classes/GothamGame.Controllers.GothsharkController", "classes/GothamGame.Controllers.HelpController", "classes/GothamGame.Controllers.IdentityController", "classes/GothamGame.Controllers.MissionController", "classes/GothamGame.Controllers.NodeListController", "classes/GothamGame.Controllers.SettingsController", "classes/GothamGame.Controllers.ShopController", "classes/GothamGame.Controllers.TerminalController", "classes/GothamGame.Controllers.UserController", "classes/GothamGame.Controllers.WorldMapController", "classes/GothamGame.GothamGame", "classes/GothamGame.Mission.Mission", "classes/GothamGame.Mission.Requirement", "classes/GothamGame.MissionEngine.MissionEngine", "classes/GothamGame.Scenes.Loading", "classes/GothamGame.Scenes.Menu", "classes/GothamGame.Scenes.World", "classes/GothamGame.Terminal.Application.Application", "classes/GothamGame.Terminal.Application.ChangeDirectory", "classes/GothamGame.Terminal.Application.Clear", "classes/GothamGame.Terminal.Application.Copy", "classes/GothamGame.Terminal.Application.ListSegments", "classes/GothamGame.Terminal.Application.Move", "classes/GothamGame.Terminal.Application.Perl", "classes/GothamGame.Terminal.Application.Ping", "classes/GothamGame.Terminal.Application.Slowloris", "classes/GothamGame.Terminal.Application.Traceroute", "classes/GothamGame.Terminal.Command", "classes/GothamGame.Terminal.Console", "classes/GothamGame.Terminal.Filesystem", "classes/GothamGame.Terminal.Terminal", "classes/GothamGame.Tools.HostUtils", "classes/GothamGame.View.AnnounceView", "classes/GothamGame.View.BarView", "classes/GothamGame.View.GothsharkView", "classes/GothamGame.View.HelpView", "classes/GothamGame.View.IdentityView", "classes/GothamGame.View.MissionView", "classes/GothamGame.View.NodeListView", "classes/GothamGame.View.SettingsView", "classes/GothamGame.View.ShopView", "classes/GothamGame.View.TerminalView", "classes/GothamGame.View.UserView", "classes/GothamGame.View.WorldMapView", "classes/GothamObject", "classes/Help", "classes/HoneyCloud", "classes/Host", "classes/HostRoom", "classes/Identity", "classes/IPProvider", "classes/IPViking", "classes/LocalDatabase", "classes/Mission", "classes/MissionRequirement", "classes/MissionRoom", "classes/Network", "classes/Node", "classes/NodeCable", "classes/PingRoom", "classes/SocketServer", "classes/Tier", "classes/TracerouteRoom", "classes/TweenCS.ChainItem", "classes/TweenCS.Tween", "classes/User", "classes/UserMission", "classes/UserMissionRequirement", "classes/UserRoom", "classes/World", "classes/WorldMapRoom", "modules/Backend", "modules/Backend.Database", "modules/Backend.Emitters", "modules/Backend.LocalDatabase", "modules/Backend.Networking", "modules/Backend.World", "modules/Framework", "modules/Framework.Controls", "modules/Framework.Graphics", "modules/Framework.Pattern.MVC", "modules/Framework.Util", "modules/Frontend", "modules/Frontend.Controllers", "modules/Frontend.Mission", "modules/Frontend.Scenes", "modules/Frontend.Terminal", "modules/Frontend.Terminal.Application", "modules/Frontend.Tools", "modules/Frontend.View", "modules/TweenCS"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdministrationRoom.html">AdministrationRoom</a></li>
+	                            <li><a href="../classes/Cable.html">Cable</a></li>
+	                            <li><a href="../classes/CablePart.html">CablePart</a></li>
+	                            <li><a href="../classes/CableType.html">CableType</a></li>
+	                            <li><a href="../classes/Client.html">Client</a></li>
+	                            <li><a href="../classes/Clock.html">Clock</a></li>
+	                            <li><a href="../classes/Country.html">Country</a></li>
+	                            <li><a href="../classes/Cyberfeed.html">Cyberfeed</a></li>
+	                            <li><a href="../classes/Database.html">Database</a></li>
+	                            <li><a href="../classes/DNS.html">DNS</a></li>
+	                            <li><a href="../classes/Emitter_AbandonMission.html">Emitter_AbandonMission</a></li>
+	                            <li><a href="../classes/Emitter_AcceptMission.html">Emitter_AcceptMission</a></li>
+	                            <li><a href="../classes/Emitter_CompleteMission.html">Emitter_CompleteMission</a></li>
+	                            <li><a href="../classes/Emitter_GetCables.html">Emitter_GetCables</a></li>
+	                            <li><a href="../classes/Emitter_GetHelpContent.html">Emitter_GetHelpContent</a></li>
+	                            <li><a href="../classes/Emitter_GetHost.html">Emitter_GetHost</a></li>
+	                            <li><a href="../classes/Emitter_GetMission.html">Emitter_GetMission</a></li>
+	                            <li><a href="../classes/Emitter_GetNodes.html">Emitter_GetNodes</a></li>
+	                            <li><a href="../classes/Emitter_GetUser.html">Emitter_GetUser</a></li>
+	                            <li><a href="../classes/Emitter_Login.html">Emitter_Login</a></li>
+	                            <li><a href="../classes/Emitter_Logout.html">Emitter_Logout</a></li>
+	                            <li><a href="../classes/Emitter_Ping.html">Emitter_Ping</a></li>
+	                            <li><a href="../classes/Emitter_ProgressMission.html">Emitter_ProgressMission</a></li>
+	                            <li><a href="../classes/Emitter_ReconnectLogin.html">Emitter_ReconnectLogin</a></li>
+	                            <li><a href="../classes/Emitter_ShopPurchaseHost.html">Emitter_ShopPurchaseHost</a></li>
+	                            <li><a href="../classes/Emitter_ShopPurchaseNetwork.html">Emitter_ShopPurchaseNetwork</a></li>
+	                            <li><a href="../classes/Emitter_Terminate.html">Emitter_Terminate</a></li>
+	                            <li><a href="../classes/Emitter_Traceroute.html">Emitter_Traceroute</a></li>
+	                            <li><a href="../classes/Emitter_UpdateHelpContent.html">Emitter_UpdateHelpContent</a></li>
+	                            <li><a href="../classes/Filesystem.html">Filesystem</a></li>
+	                            <li><a href="../classes/GeneralRoom.html">GeneralRoom</a></li>
+	                            <li><a href="../classes/Gotham.Controls.Button.html">Gotham.Controls.Button</a></li>
+	                            <li><a href="../classes/Gotham.Controls.Slider.html">Gotham.Controls.Slider</a></li>
+	                            <li><a href="../classes/Gotham.Database.html">Gotham.Database</a></li>
+	                            <li><a href="../classes/Gotham.GameLoop.html">Gotham.GameLoop</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Container.html">Gotham.Graphics.Container</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Graphics.html">Gotham.Graphics.Graphics</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Polygon.html">Gotham.Graphics.Polygon</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Rectangle.html">Gotham.Graphics.Rectangle</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Sprite.html">Gotham.Graphics.Sprite</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Text.html">Gotham.Graphics.Text</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Texture.html">Gotham.Graphics.Texture</a></li>
+	                            <li><a href="../classes/Gotham.Graphics.Tools.html">Gotham.Graphics.Tools</a></li>
+	                            <li><a href="../classes/Gotham.Network.html">Gotham.Network</a></li>
+	                            <li><a href="../classes/Gotham.Pattern.MVC.Controller.html">Gotham.Pattern.MVC.Controller</a></li>
+	                            <li><a href="../classes/Gotham.Pattern.MVC.View.html">Gotham.Pattern.MVC.View</a></li>
+	                            <li><a href="../classes/Gotham.Preload.html">Gotham.Preload</a></li>
+	                            <li><a href="../classes/Gotham.Renderer.html">Gotham.Renderer</a></li>
+	                            <li><a href="../classes/Gotham.Scene.html">Gotham.Scene</a></li>
+	                            <li><a href="../classes/Gotham.Sound.html">Gotham.Sound</a></li>
+	                            <li><a href="../classes/Gotham.Util.Ajax.html">Gotham.Util.Ajax</a></li>
+	                            <li><a href="../classes/Gotham.Util.Compression.html">Gotham.Util.Compression</a></li>
+	                            <li><a href="../classes/Gotham.Util.Geocoding.html">Gotham.Util.Geocoding</a></li>
+	                            <li><a href="../classes/Gotham.Util.SearchTools.html">Gotham.Util.SearchTools</a></li>
+	                            <li><a href="../classes/Gotham.Util.Util.html">Gotham.Util.Util</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.AnnounceController.html">GothamGame.Controllers.AnnounceController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.BarController.html">GothamGame.Controllers.BarController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.GothsharkController.html">GothamGame.Controllers.GothsharkController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.HelpController.html">GothamGame.Controllers.HelpController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.IdentityController.html">GothamGame.Controllers.IdentityController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.MissionController.html">GothamGame.Controllers.MissionController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.NodeListController.html">GothamGame.Controllers.NodeListController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.SettingsController.html">GothamGame.Controllers.SettingsController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.ShopController.html">GothamGame.Controllers.ShopController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.TerminalController.html">GothamGame.Controllers.TerminalController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.UserController.html">GothamGame.Controllers.UserController</a></li>
+	                            <li><a href="../classes/GothamGame.Controllers.WorldMapController.html">GothamGame.Controllers.WorldMapController</a></li>
+	                            <li><a href="../classes/GothamGame.GothamGame.html">GothamGame.GothamGame</a></li>
+	                            <li><a href="../classes/GothamGame.Mission.Mission.html">GothamGame.Mission.Mission</a></li>
+	                            <li><a href="../classes/GothamGame.Mission.Requirement.html">GothamGame.Mission.Requirement</a></li>
+	                            <li><a href="../classes/GothamGame.MissionEngine.MissionEngine.html">GothamGame.MissionEngine.MissionEngine</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.Loading.html">GothamGame.Scenes.Loading</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.Menu.html">GothamGame.Scenes.Menu</a></li>
+	                            <li><a href="../classes/GothamGame.Scenes.World.html">GothamGame.Scenes.World</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Application.html">GothamGame.Terminal.Application.Application</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.ChangeDirectory.html">GothamGame.Terminal.Application.ChangeDirectory</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Clear.html">GothamGame.Terminal.Application.Clear</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Copy.html">GothamGame.Terminal.Application.Copy</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.ListSegments.html">GothamGame.Terminal.Application.ListSegments</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Move.html">GothamGame.Terminal.Application.Move</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Perl.html">GothamGame.Terminal.Application.Perl</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Ping.html">GothamGame.Terminal.Application.Ping</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Slowloris.html">GothamGame.Terminal.Application.Slowloris</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Application.Traceroute.html">GothamGame.Terminal.Application.Traceroute</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Command.html">GothamGame.Terminal.Command</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Console.html">GothamGame.Terminal.Console</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Filesystem.html">GothamGame.Terminal.Filesystem</a></li>
+	                            <li><a href="../classes/GothamGame.Terminal.Terminal.html">GothamGame.Terminal.Terminal</a></li>
+	                            <li><a href="../classes/GothamGame.Tools.HostUtils.html">GothamGame.Tools.HostUtils</a></li>
+	                            <li><a href="../classes/GothamGame.View.AnnounceView.html">GothamGame.View.AnnounceView</a></li>
+	                            <li><a href="../classes/GothamGame.View.BarView.html">GothamGame.View.BarView</a></li>
+	                            <li><a href="../classes/GothamGame.View.GothsharkView.html">GothamGame.View.GothsharkView</a></li>
+	                            <li><a href="../classes/GothamGame.View.HelpView.html">GothamGame.View.HelpView</a></li>
+	                            <li><a href="../classes/GothamGame.View.IdentityView.html">GothamGame.View.IdentityView</a></li>
+	                            <li><a href="../classes/GothamGame.View.MissionView.html">GothamGame.View.MissionView</a></li>
+	                            <li><a href="../classes/GothamGame.View.NodeListView.html">GothamGame.View.NodeListView</a></li>
+	                            <li><a href="../classes/GothamGame.View.SettingsView.html">GothamGame.View.SettingsView</a></li>
+	                            <li><a href="../classes/GothamGame.View.ShopView.html">GothamGame.View.ShopView</a></li>
+	                            <li><a href="../classes/GothamGame.View.TerminalView.html">GothamGame.View.TerminalView</a></li>
+	                            <li><a href="../classes/GothamGame.View.UserView.html">GothamGame.View.UserView</a></li>
+	                            <li><a href="../classes/GothamGame.View.WorldMapView.html">GothamGame.View.WorldMapView</a></li>
+	                            <li><a href="../classes/GothamObject.html">GothamObject</a></li>
+	                            <li><a href="../classes/Help.html">Help</a></li>
+	                            <li><a href="../classes/HoneyCloud.html">HoneyCloud</a></li>
+	                            <li><a href="../classes/Host.html">Host</a></li>
+	                            <li><a href="../classes/HostRoom.html">HostRoom</a></li>
+	                            <li><a href="../classes/Identity.html">Identity</a></li>
+	                            <li><a href="../classes/IPProvider.html">IPProvider</a></li>
+	                            <li><a href="../classes/IPViking.html">IPViking</a></li>
+	                            <li><a href="../classes/LocalDatabase.html">LocalDatabase</a></li>
+	                            <li><a href="../classes/Mission.html">Mission</a></li>
+	                            <li><a href="../classes/MissionRequirement.html">MissionRequirement</a></li>
+	                            <li><a href="../classes/MissionRoom.html">MissionRoom</a></li>
+	                            <li><a href="../classes/Network.html">Network</a></li>
+	                            <li><a href="../classes/Node.html">Node</a></li>
+	                            <li><a href="../classes/NodeCable.html">NodeCable</a></li>
+	                            <li><a href="../classes/PingRoom.html">PingRoom</a></li>
+	                            <li><a href="../classes/SocketServer.html">SocketServer</a></li>
+	                            <li><a href="../classes/Tier.html">Tier</a></li>
+	                            <li><a href="../classes/TracerouteRoom.html">TracerouteRoom</a></li>
+	                            <li><a href="../classes/TweenCS.ChainItem.html">TweenCS.ChainItem</a></li>
+	                            <li><a href="../classes/TweenCS.Tween.html">TweenCS.Tween</a></li>
+	                            <li><a href="../classes/User.html">User</a></li>
+	                            <li><a href="../classes/UserMission.html">UserMission</a></li>
+	                            <li><a href="../classes/UserMissionRequirement.html">UserMissionRequirement</a></li>
+	                            <li><a href="../classes/UserRoom.html">UserRoom</a></li>
+	                            <li><a href="../classes/World.html">World</a></li>
+	                            <li><a href="../classes/WorldMapRoom.html">WorldMapRoom</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/Backend.html">Backend</a></li>
+	                            <li><a href="../modules/Backend.Database.html">Backend.Database</a></li>
+	                            <li><a href="../modules/Backend.Emitters.html">Backend.Emitters</a></li>
+	                            <li><a href="../modules/Backend.LocalDatabase.html">Backend.LocalDatabase</a></li>
+	                            <li><a href="../modules/Backend.Networking.html">Backend.Networking</a></li>
+	                            <li><a href="../modules/Backend.World.html">Backend.World</a></li>
+	                            <li><a href="../modules/Framework.html">Framework</a></li>
+	                            <li><a href="../modules/Framework.Controls.html">Framework.Controls</a></li>
+	                            <li><a href="../modules/Framework.Graphics.html">Framework.Graphics</a></li>
+	                            <li><a href="../modules/Framework.Pattern.MVC.html">Framework.Pattern.MVC</a></li>
+	                            <li><a href="../modules/Framework.Util.html">Framework.Util</a></li>
+	                            <li><a href="../modules/Frontend.html">Frontend</a></li>
+	                            <li><a href="../modules/Frontend.Controllers.html">Frontend.Controllers</a></li>
+	                            <li><a href="../modules/Frontend.Mission.html">Frontend.Mission</a></li>
+	                            <li><a href="../modules/Frontend.Scenes.html">Frontend.Scenes</a></li>
+	                            <li><a href="../modules/Frontend.Terminal.html">Frontend.Terminal</a></li>
+	                            <li><a href="../modules/Frontend.Terminal.Application.html">Frontend.Terminal.Application</a></li>
+	                            <li><a href="../modules/Frontend.Tools.html">Frontend.Tools</a></li>
+	                            <li><a href="../modules/Frontend.View.html">Frontend.View</a></li>
+	                            <li><a href="../modules/TweenCS.html">TweenCS</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+                            <h1>Game\src\engine\Mission.coffee <small>File</small></h1>
+                        </div>
+                        
+                        <div class="file">
+                            <pre class="prettyprint linenums">
+                        
+                        
+                        
+                        ###*
+                        # Mission contains all of the mission data retrieved from backend. It emits on Update, Complete etc.
+                        # @class Mission
+                        # @module Frontend
+                        # @submodule Frontend.Mission
+                        # @namespace GothamGame.Mission
+                        ###
+                        class Mission
+                        
+                          constructor: () -&gt;
+                            @id = null
+                            @_title = null
+                            @_description = null
+                            @_description_ext = null
+                            @_requiredXP = null
+                            @_engine = null
+                            @_data = null
+                            @ongoing = false
+                        
+                        
+                            @_requirements = {}
+                        
+                            @onProgress = -&gt;
+                            @onRequirementComplete = -&gt;
+                            @onComplete = -&gt;
+                        
+                        
+                        
+                          # Update state of a mission, Eventually triggers onComplete if it is complete.
+                          updateState: -&gt;
+                            if @isCompleted()
+                              @onComplete(@)
+                        
+                          # Create a requirement to a mission
+                          #
+                          # @param requirement {Object} The requirement
+                          # @return {Requirement} The Requirement
+                          addRequirement: (requirementData) -&gt;
+                            #console.log &quot;[MISSION] Added Requirement: #{requirementData.requirement}&quot;
+                            requirement = new Requirement(@, requirementData)
+                            @_requirements[requirementData.id] =  requirement
+                            return requirement
+                        
+                          addUserMissionRequirement: (userMissionRequirementData) -&gt;
+                        
+                            # Retrieve the requirement
+                            requirement = @_requirements[userMissionRequirementData.mission_requirement]
+                            requirement.setCurrent userMissionRequirementData.current
+                            requirement.setExpected userMissionRequirementData.expected
+                            requirement.setEmitInput userMissionRequirementData.emit_input
+                            requirement.setEmitValue userMissionRequirementData.emit_value
+                            requirement.userMissionRequirementData = userMissionRequirementData
+                        
+                        
+                        
+                        
+                          # Add a list of requirements
+                          #
+                          # @param requirementName {String} The name of the requirement
+                          # @return {Requirement} The Requirement
+                          addRequirements: (arr)-&gt;
+                            for i in arr
+                              @addRequirement i
+                        
+                          addUserMissionRequirements: (arr)-&gt;
+                            for i in arr
+                              @addUserMissionRequirement i
+                        
+                          # Get a requirement by name
+                          #
+                          # @param requirementName {String} The requirement name
+                          # @return {Requirement}
+                          getRequirement: (requirementName) -&gt;
+                            return @_requirements[requirementName]
+                        
+                          getRequirements: () -&gt;
+                            return @_requirements
+                        
+                        
+                          # Check if the mission is completed
+                          # Checks via all of the requirementrs
+                          #
+                          # @return {Boolean} True if completed, False if not
+                          isCompleted: -&gt;
+                            isComplete = true
+                            for idx, req of @_requirements
+                              if not req.isComplete()
+                                isComplete = false
+                                break
+                            return isComplete
+                        
+                          setTitle: (title) -&gt;
+                            #console.log &quot;[MISSION] Set Title to: #{title}&quot;
+                            @_title = title
+                        
+                          setDescription: (description) -&gt;
+                            #console.log &quot;[MISSION] Set Title to: #{description}&quot;
+                            @_description = description
+                        
+                          setExtendedDescription: (description_ext) -&gt;
+                            @_description_ext = description_ext
+                        
+                          setRequiredXP: (xp) -&gt;
+                            @_requiredXP = xp
+                          setID: (id) -&gt;
+                            @id = id
+                        
+                          setUserMissionID: (userMissionId) -&gt;
+                            @userMissionId = userMissionId
+                          getUserMissionID: -&gt;
+                            return @userMissionId
+                        
+                          setMoneyGain: (moneyGain) -&gt;
+                            @money_gain = moneyGain
+                        
+                          getMoneyGain: -&gt;
+                            return @money_gain
+                        
+                          setExperienceGain: (expGain) -&gt;
+                            @experience_gain = expGain
+                          getExperienceGain: -&gt;
+                            return @experience_gain
+                        
+                        
+                          setOngoing: (ongoing) -&gt;
+                            @ongoing = ongoing
+                        
+                          getOngoing: -&gt;
+                            return @ongoing
+                        
+                          getID: -&gt;
+                            return @id
+                        
+                        
+                          getTitle: -&gt;
+                            return @_title
+                          getDescription: -&gt;
+                            return @_description
+                          getExtendedDescription: () -&gt;
+                            return @_description_ext
+                        
+                          getRequiredXP: () -&gt;
+                            return @_requiredXP
+                        
+                          emit: (emit_name, emit_value, _c) -&gt;
+                        
+                            for key, requirement of @_requirements
+                              #console.log &quot;[MISSION] Requirement #{requirement._requirement}&quot;
+                        
+                              if requirement._emit == emit_name
+                                console.log &quot;[MISSION] Matched Requirement #{requirement._requirement}&quot;
+                                requirement.emit emit_value, _c
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                          generateEvent: (name, mission, trigger, requirement) -&gt;
+                            event =
+                              name: name
+                              mission: mission
+                              trigger: trigger
+                              requirement: requirement
+                            return event
+                        
+                          &quot;&quot;&quot;triggerComplete: -&gt;
+                            for callback in  @_engine._triggerCallbacks.missionCompleted
+                              callback(@generateEvent(@_name, @, &quot;complete&quot;))
+                        
+                          triggerFailed: -&gt;
+                            for callback in  @_engine._triggerCallbacks.missionFailed
+                              callback(@generateEvent(@_name, @, &quot;failed&quot;))
+                        
+                          # Trigger for progress, Takes option Requirement input
+                          #
+                          # @param requirement {Requirement} The requirement
+                          #
+                          triggerProgress: (requirement) -&gt;
+                            for callback in  @_engine._triggerCallbacks.missionProgress
+                              callback(@generateEvent(@_name, @, &quot;progress&quot;, requirement))
+                        
+                            # Check if all requirements is completed
+                            if @isCompleted()
+                              @triggerComplete()
+                        
+                          triggerAccepted: -&gt;
+                            for callback in  @_engine._triggerCallbacks.missionAccepted
+                              callback(@generateEvent(@_name, @, &quot;accepted&quot;))
+                          &quot;&quot;&quot;
+                        
+                        
+                          printMission: -&gt;
+                            console.log &quot;-----------------------------------&quot;
+                            console.log &quot;Mission Name: #{@_title}&quot;
+                            console.log &quot;Mission Description: #{@_description}&quot;
+                            console.log &quot;Requirements:&quot;
+                            $.each(@_requirements, (key,val) -&gt;
+                              console.log &quot;\t#{val._requirement}: #{val.getCurrentValue()}/#{val.getExpectedValue()}&quot;
+                            )
+                        
+                            console.log &quot;-----------------------------------&quot;
+                        
+                        
+                        
+                          ###*
+                          # Requirement class for adding part of a mission. A requirement is basically part of a mission. Example: Ping IP: null/192.168.21.1
+                          # @class Requirement
+                          # @module Frontend
+                          # @submodule Frontend.Mission
+                          # @namespace GothamGame.Mission
+                          ###
+                          class Requirement
+                        
+                            # Creates an requirement object
+                            #
+                            # @param name {String} The Requireement Title
+                            constructor: (mission, requirementData) -&gt;
+                              @_requirementData = requirementData
+                        
+                              # Database Fields
+                              @_id = requirementData.id
+                              @_mission = @mission = mission
+                              @_requirement = requirementData.requirement
+                              @_current = requirementData.default
+                              @_expected = requirementData.expected
+                              @_emit = requirementData.emit
+                              @_emit_value = requirementData.emit_value
+                              @_emit_input = requirementData.emit_input
+                              @_emit_behaviour = requirementData.emit_behaviour
+                        
+                              # Internal Definition
+                              @_complete = false
+                        
+                            getCurrent: -&gt;
+                              return @_current
+                            getExpected: -&gt;
+                              return @_expected
+                            getName: -&gt;
+                              return @_requirement
+                        
+                            setCurrent: (current) -&gt;
+                              @_current = current
+                              @isComplete()
+                        
+                            setExpected: (expected) -&gt;
+                              @_expected = expected
+                              @isComplete()
+                        
+                            setEmitValue: (emitValue) -&gt;
+                              @_emit_value = emitValue
+                        
+                            setEmitInput: (emitInput) -&gt;
+                              @_emit_input = emitInput
+                        
+                            isComplete: -&gt;
+                              if &quot;&quot;+@_current == &quot;&quot;+@_expected
+                                @_complete = true
+                              return @_complete
+                        
+                            emit: (input, _c) -&gt;
+                        
+                              if @_complete
+                                return
+                        
+                              # Throw error of input and emit input does not match
+                              if input != @_emit_input
+                                console.warn &quot;Requirement input is invalid! Got #{input}, Expected: #{@_emit_input}&quot;
+                                return
+                        
+                              # Increment Behaviour - Increments @_emit_value to the @_current value
+                              if @_emit_behaviour == &quot;increment&quot;
+                                @_current = parseInt(@_current)
+                                @_current += parseInt(@_emit_value)
+                        
+                              # Decrement Behaviour - Decrements @_emit_value to the @_current value
+                              else if @_emit_behaviour == &quot;decrement&quot;
+                                @_current = parseInt(@_current)
+                                @_current -= parseInt(@_emit_value)
+                        
+                              # Set Behaviour - Sets @_current equal to @_emit_value
+                              else if @_emit_behaviour == &quot;set&quot;
+                                @_current = @_emit_value
+                        
+                              # If Current and Expected value are equal, Fire onComplete and set requirement to complete
+                              if &quot;&quot;+@_current == &quot;&quot;+@_expected
+                                # Requirement is complete
+                                @_complete = true
+                        
+                                _c(@)
+                        
+                                # Fire Requirement Complete Callback
+                                @_mission.onRequirementComplete(@)
+                        
+                                # Check if Mission is complete
+                                if @_mission.isCompleted()
+                                  @_mission.onComplete(@_mission)
+                        
+                              # Send Progress Callback
+                              else
+                                @_mission.onProgress(@)
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            # Check if the requirement is complete
+                            #
+                            # @return {Boolean} True if complete, False if not
+                            isComplete: -&gt;
+                              return if &quot;&quot;+@getCurrentValue() == &quot;&quot;+@getExpectedValue() then true else false
+                        
+                            getExpectedValue: -&gt;
+                              return if typeof(@_expected) == &quot;function&quot; then @expectValue() else @_expected
+                        
+                            getCurrentValue: -&gt;
+                              return if typeof(@_current) == &quot;function&quot; then @currentValue() else @_current
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        module.exports = Mission
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>
