@@ -372,11 +372,12 @@ require('./Extensions/JQuery.coffee');
 
 
 /**
- * Acs as a namespace class,
- * @class Gotham
+ * Gotham Game Framework
+ *
+ * Contains all classes for the framework.
  * @module Framework
  * @submodule Framework
- * @namespace Gotham
+ * @main Gotham
  */
 
 Gotham = (function() {
@@ -457,6 +458,7 @@ module.exports = window.Gotham = Gotham;
  * @param [options] {Object} Options of the button
  * @param [options.toggle=true] {Boolean} Weither the button is a toggle button or click button
  * @param [options.textSize=40] {Number} Size of the text label
+ * @param [options.buttonColor=0x000000] {Hex} Hex color of buttonColor
  * @param [options.texture=null] {Gotham.Graphics.Texture} Which texture to apply to the button
  * @param [options.offset=0] {Number} Offset of the button in pixels
  * @param [options.margin=0] {Number} Margin of the button
@@ -507,7 +509,19 @@ Button = (function(_super) {
       y: 0.5
     };
     this.addChild(button_text);
+
+    /**
+     * Label of the button
+     * @property {String} label
+     */
     this.label = button_text;
+
+    /**
+     * Click event of the button
+     * @method click
+     * @param e {Event} button event
+     * @private
+     */
     this.click = function(e) {
       if (!_toggle) {
         this.onClick();
@@ -522,13 +536,38 @@ Button = (function(_super) {
     };
   }
 
+
+  /**
+   * Set the background of the button
+   * @method setBackground
+   * @param hex {Hex} hex of the background color to set
+   */
+
   Button.prototype.setBackground = function(hex) {
     return this.tint = hex;
   };
 
+
+  /**
+   * callback for when button is clicked
+   * @method onClick
+   */
+
   Button.prototype.onClick = function() {};
 
+
+  /**
+   * callback for when button is toggled on
+   * @method toggleOn
+   */
+
   Button.prototype.toggleOn = function() {};
+
+
+  /**
+   * callback for when button is toggled off
+   * @method toggleOff
+   */
 
   Button.prototype.toggleOff = function() {};
 
@@ -563,10 +602,26 @@ Slider = (function(_super) {
     var knob, progress_text, that;
     Slider.__super__.constructor.apply(this, arguments);
     that = this;
+
+    /**
+     * onProgress callback
+     * @property onProgress {Function}
+     */
     this.onProgress = null;
+
+    /**
+     * Slider progress
+     * @property progress {Number}
+     */
     this.progress = 0;
     this.texture = background;
     this.tint = 0xFFFF00;
+
+    /**
+     * THe knob sprite
+     * @property knob {Gotham.Graphics.Sprite}
+     * @private
+     */
     knob = this.knob = new Gotham.Graphics.Sprite(knobTexture);
     knob.width = this.height;
     knob.height = this.height;
@@ -609,6 +664,15 @@ Slider = (function(_super) {
     this.addChild(knob);
   }
 
+
+  /**
+   * Calculates Current slider percentage based on knob's position
+   * Accounts for scale and all that jazz
+   * @method calculateProgress
+   * @param x {Number} Knob's current X position
+   * @return {Number} percentage in number format
+   */
+
   Slider.prototype.calculateProgress = function(x) {
     return ((x * this.scale.x) / (this.width - (this.knob.width * this.scale.x))) * 100;
   };
@@ -628,15 +692,38 @@ module.exports = Slider;
  * @module Framework
  * @submodule Framework
  * @namespace Gotham
+ * @constructor
+ * @chainable
  */
 var Database;
 
 Database = (function() {
   function Database() {
+
+    /**
+     * The database instance (LokiJS)
+     * @property db {LokiJS}
+     * @private
+     */
     this.db = new loki();
+
+    /**
+     * Tables for the database
+     * @property _tables {Object}
+     * @private
+     */
     this._tables = {};
     return this;
   }
+
+
+  /**
+   * Creates a new table
+   * This table is then stored in the internal _tables object
+   * @method table
+   * @param tableName {String} The table name
+   * @return [LokiJS] Returns the table
+   */
 
   Database.prototype.table = function(tableName) {
     if (!this._tables[tableName]) {
@@ -646,6 +733,13 @@ Database = (function() {
     }
     return this._tables[tableName];
   };
+
+
+  /**
+   * Retrieve all tables
+   * @method getTables
+   * @return {Object} All objects
+   */
 
   Database.prototype.getTables = function() {
     return this._tables;
@@ -672,6 +766,8 @@ module.exports = Database;
  * @module Framework
  * @submodule Framework
  * @namespace Gotham
+ * @constructor
+ * @param fps {Number} The FPS limit
  */
 var GameLoop;
 
@@ -679,8 +775,26 @@ GameLoop = (function() {
   function GameLoop(fps) {
     var animate, that;
     that = this;
+
+    /**
+     * The renderer instance
+     * @property renderer {Gotham.Renderer}
+     * @private
+     */
     this.renderer = function() {};
+
+    /**
+     * Tasks to execute in the game loop
+     * @property _tasks {Callback[]}
+     * @private
+     */
     this._tasks = [];
+
+    /**
+     * FPS Meter Instance. Shows FPS on screen
+     * @property FPSMeter {FPSMeter}
+     * @private
+     */
     this.FPSMeter = new FPSMeter({
       decimals: 0,
       graph: true,
@@ -688,6 +802,12 @@ GameLoop = (function() {
       left: "47%",
       top: "96%"
     });
+
+    /**
+     * Stats the animation loop
+     * @method animate
+     * @private
+     */
     animate = function(time) {
       requestAnimationFrame(animate);
       return that.update(time);
@@ -695,9 +815,26 @@ GameLoop = (function() {
     requestAnimationFrame(animate);
   }
 
+
+  /**
+   * Sets the renderer of the game loop
+   * @method setRenderer
+   * @param renderer {Gotham.Renderer}
+   */
+
   GameLoop.prototype.setRenderer = function(renderer) {
     return this.renderer = renderer;
   };
+
+
+  /**
+   * The update loop function
+   * This function are started in the constructor and runs in the preset FPS
+   * It updates logic and draw + Tween
+   * @method update
+   * @param time {Long} Duration of the application runtime
+   * @private
+   */
 
   GameLoop.prototype.update = function(time) {
     var s, _i, _len, _ref, _task;
@@ -714,6 +851,14 @@ GameLoop = (function() {
     this.renderer();
     return this.FPSMeter.tick();
   };
+
+
+  /**
+   * Function which adds a task to be completed in the render loop
+   * This runs until the Task returns false, will then be deleted from queue
+   * @method addTask
+   * @param task {Function} The Task function
+   */
 
   GameLoop.prototype.addTask = function(task) {
     return this._tasks.push(task);
@@ -741,6 +886,12 @@ var Container,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 Container = (function(_super) {
+
+  /**
+   * The created state of the container
+   * @property {Boolean} _created
+   * @private
+   */
   var _created;
 
   __extends(Container, _super);
@@ -751,9 +902,21 @@ Container = (function(_super) {
 
   _created = false;
 
+
+  /**
+   * Create function, must be overriden
+   * @method create
+   */
+
   Container.prototype.create = function() {
     throw new Exception("Override Create Method");
   };
+
+
+  /**
+   * Must be overridden
+   * @method update
+   */
 
   Container.prototype.update = function() {
     throw new Exception("Override Update Method");
@@ -775,6 +938,7 @@ module.exports = Container;
  * @submodule Framework.Graphics
  * @namespace Gotham.Graphics
  * @extends PIXI.Graphics
+ * @constructor
  */
 var Graphics,
   __hasProp = {}.hasOwnProperty,
@@ -785,7 +949,17 @@ Graphics = (function(_super) {
 
   function Graphics() {
     Graphics.__super__.constructor.apply(this, arguments);
+
+    /**
+     * X offset
+     * @property {Number} _dx
+     */
     this._dx = 0;
+
+    /**
+     * Y offset
+     * @property {Number} _dy
+     */
     this._dy = 0;
   }
 
@@ -873,8 +1047,19 @@ Sprite = (function(_super) {
 
   function Sprite(texture) {
     Sprite.__super__.constructor.apply(this, arguments);
+
+    /**
+     * Texture for when the sprite is hovered
+     * @property {Gotham.Graphics.Texture}
+     */
     this.hoverTexture = null;
+
+    /**
+     * Original texture
+     * @property {Gotham.Graphics.Texture} normalTexture
+     */
     this.normalTexture = texture;
+    this.texture = texture;
   }
 
   return Sprite;
@@ -977,6 +1162,22 @@ var Tools;
 Tools = (function() {
   function Tools() {}
 
+
+  /**
+   * Converts a json structure to a polygon
+   * The supported format is the following:
+   * @method polygonFromJSON
+   * @example
+   *         # The format
+   *         json = [[x,y,x2,y2][x,y,x2,y2]]
+   *
+   * @param json {Object} The json object
+   * @param skipRatio {Integer} The Skip frequency.
+   * @param scale {Object} scale option
+   * @param scale.x {Number} x scale
+   * @param scale.y {Number} y scale
+   */
+
   Tools.polygonFromJSON = function(json, skipRatio, scale) {
     var count, key, point, pointList, polygon, polygonList, _i, _j, _key, _len, _len1;
     if (skipRatio == null) {
@@ -1003,6 +1204,22 @@ Tools = (function() {
     }
     return polygonList;
   };
+
+
+  /**
+   * Converts a Polygon into a Graphics element
+   * @method polygonToGraphics
+   * @param options {Array(Polygon) || Polygon} the moving options
+   * @param interactive {Boolean} weither the graphics should be interactive or not
+   * @example
+   *         #
+   *         # Convert list of polygons to list of Graphic objects
+   *         graphicsList = Gotham.Graphics.PolygonToGraphics(polygonList)
+   *
+   *         # Convert a polygon to a graphics object
+   *         graphicObj = Gotham.Graphics.PolygonToGraphics(polygon)
+   *
+   */
 
   Tools.polygonToGraphics = function(polygon, interactive) {
     var graphicsList, grp, key, minX, minY, point, polygonList, xory, _i, _j, _len, _len1, _ref;
@@ -1063,32 +1280,81 @@ module.exports = Tools;
  * @module Framework
  * @submodule Framework
  * @namespace Gotham
+ * @constructor
+ * @param host {String} Hostname of the server
+ * @param port {Integer} Port of the server
  */
 var Network;
 
 Network = (function() {
   function Network(host, port) {
+
+    /**
+     * The host to connect to
+     * @property {String} host
+     */
     var _ref;
     this.host = host;
-    this.port = port;
-    this.Socket = this._socket = null;
-    this.hasConnectedOnce = false;
-    this.onConnect = function() {};
-    this.onReconnect = function() {};
-    this.onReconnecting = function() {};
-    this.onDisconnect = function() {};
+
+    /**
+     * The port to connect on
+     * @property {Number} port
+     */
     if ((_ref = !port) != null ? _ref : this.port = 8080) {
 
     } else {
       this.port = port;
     }
+
+    /**
+     * The Socket object
+     * @property {SocketIO} Socket
+     */
+    this.Socket = null;
+
+    /**
+     * Variable which determine if the socket has been connected once.
+     * @property {Boolean} hasConnectedOnce
+     * @private
+     */
+    this.hasConnectedOnce = false;
+
+    /**
+     * Callback for when the client has connected
+     * @method onConnect
+     */
+    this.onConnect = function() {};
+
+    /**
+     * Callback for when the client has recconected
+     * @method onReconnect
+     */
+    this.onReconnect = function() {};
+
+    /**
+     * Callback for when the client is reconnecting
+     * @method onReconnecting
+     */
+    this.onReconnecting = function() {};
+
+    /**
+     * Callback for when the connection is lost
+     * @method onDisconnect
+     */
+    this.onDisconnect = function() {};
   }
+
+
+  /**
+   * Connects to the server
+   * @method connect
+   */
 
   Network.prototype.connect = function() {
     var that;
     that = this;
-    this.Socket = this._socket = io.connect("" + this.host + ":" + this.port);
-    this._socket.on('connect', function() {
+    this.Socket = io.connect("" + this.host + ":" + this.port);
+    this.Socket.on('connect', function() {
       if (that.hasConnectedOnce) {
         that.onReconnect(this);
       } else {
@@ -1096,10 +1362,10 @@ Network = (function() {
       }
       return that.hasConnectedOnce = true;
     });
-    this._socket.on('reconnecting', function() {
+    this.Socket.on('reconnecting', function() {
       return that.onReconnecting(this);
     });
-    return this._socket.on('disconnect', function() {
+    return this.Socket.on('disconnect', function() {
       return that.onDisconnect(this);
     });
   };
@@ -1132,15 +1398,49 @@ Controller = (function() {
     if (!ViewObject._v) {
       throw Error("View is missing in super constructor (Have your view inherited GothamGame.View ?");
     }
+
+    /**
+     * The created state of the controller
+     * @property {Boolean} _created
+     * @private
+     */
     this._created = false;
+
+    /**
+     * Processes belonging to this controller (Ran by GameLoop)
+     * @property {Array} _processes
+     */
     this._processes = [];
+
+    /**
+     * Name of the controller
+     * @property {String} name
+     */
     this.name = name;
+
+    /**
+     * View of the controller
+     * @property {Gotham.Pattern.MVC.View} View
+     */
     this.View = ViewObject;
   }
+
+
+  /**
+   * This function should be overriden, It creates the controller
+   * @method create
+   */
 
   Controller.prototype.create = function() {
     throw new Error("create() must be overriden");
   };
+
+
+  /**
+   * Adds a process which is executed in the game loo
+   * @method addProcess
+   * @param func {Function} the function to execute in the game loop
+   */
 
   Controller.prototype.addProcess = function(func) {
     return this._processes.push(func);
@@ -1174,15 +1474,50 @@ View = (function(_super) {
 
   function View(controller) {
     View.__super__.constructor.apply(this, arguments);
+
+    /**
+     * This is a identifier that tells internal stuff that its a view.
+     * @property {Boolean} _v
+     * @private
+     */
     this._v = true;
+
+    /**
+     * A boolean which determine create state of the view
+     * @property {Boolean} _created
+     * @private
+     */
     this._created = false;
+
+    /**
+     * Processed which is executed by this view (in the game loop)
+     * @property {Array} _processes
+     */
     this._processes = [];
+
+    /**
+     * The controller belonging to this view
+     * @property {Gotham.Pattern.MVC.Controller}
+     */
     this.Controller = controller;
   }
+
+
+  /**
+   * This function should be overriden, It creates the view
+   * @method create
+   */
 
   View.prototype.create = function() {
     throw new Error("create() must be overriden");
   };
+
+
+  /**
+   * Adds a process which is executed in the game loop
+   * @method addProcess
+   * @param func {Function} Function to execute in the game loop
+   */
 
   View.prototype.addProcess = function(func) {
     return this._processes.push(func);
@@ -1207,13 +1542,17 @@ module.exports = View;
  * @module Framework
  * @submodule Framework
  * @namespace Gotham
+ * @constructor
  * @example
+ *     # Examples
+ *     # Preloading a Image file
  *     Gotham.Preload.image("/assets/img/settings_close.png", "settings_close", "image")
+ *     # Preloading a JSON File
  *     Gotham.Preload.json("/assets/json/json.json", "map")
- *
- * @example
- *   Gotham.Preload.fetch("map", "json")
- *   Gotham.Preload.fetch("settings_close", "image")
+ *     # Fetching the JSON file
+ *     Gotham.Preload.fetch("map", "json")
+ *     # Fetching the image file
+ *     Gotham.Preload.fetch("settings_close", "image")
  *
  */
 var Preload;
@@ -1222,22 +1561,85 @@ Preload = (function() {
   var downloadImage, downloadJSON, downloadSound;
 
   function Preload() {
+
+    /**
+     * The table of image preloading
+     * @property db_image {LokiJS}
+     * @private
+     */
     this.db_image = Gotham.Database.table("preload_images");
+
+    /**
+     * The table of audio preloading
+     * @property db_audio {LokiJS}
+     * @private
+     */
     this.db_audio = Gotham.Database.table("preload_audio");
+
+    /**
+     * The table of data (json) preloading
+     * @property db_data {LokiJS}
+     * @private
+     */
     this.db_data = Gotham.Database.table("preload_data");
+
+    /**
+     * Callback for when a item is loaded
+     * @method onLoad
+     */
     this.onLoad = function() {};
+
+    /**
+     * Callback for when all items are loaded
+     * @method onComplete
+     */
     this.onComplete = function() {};
+
+    /**
+     * Number of network items loaded
+     * @property _numNetworkLoaded {Integer}
+     * @private
+     */
     this._numNetworkLoaded = 0;
+
+    /**
+     * Total count for preloaded items
+     * @property _totalCount {Integer}
+     * @private
+     */
     this._totalCount = 0;
   }
+
+
+  /**
+   * Get total number items subject for preloading
+   * @method getTotalCount
+   * @private
+   * @return {Number}
+   */
 
   Preload.prototype.getTotalCount = function() {
     return this._totalCount;
   };
 
+
+  /**
+   * Increments the total item count
+   * @method incrementTotalCount
+   * @private
+   */
+
   Preload.prototype.incrementTotalCount = function() {
     return this._totalCount++;
   };
+
+
+  /**
+   * Get number of items current loaded
+   * @method getNumLoaded
+   * @private
+   * @return {Number} Total of elements currently loaded
+   */
 
   Preload.prototype.getNumLoaded = function() {
     var db, dbs, total, _i, _len;
@@ -1250,11 +1652,29 @@ Preload = (function() {
     return total;
   };
 
+
+  /**
+   * Function for downloading a json file, Runs callback when done
+   * @method downloadJSON
+   * @param url {String} the url
+   * @param callback {Callback} The complete callback
+   * @private
+   */
+
   downloadJSON = function(url, callback) {
     return Gotham.Util.Ajax.GET(url, function(data, response) {
       return callback(data);
     });
   };
+
+
+  /**
+   * Function for downloading a image, runs callback on end
+   * @method downloadJSON
+   * @param url {String} the url
+   * @param callback {Callback} The complete callback
+   * @private
+   */
 
   downloadImage = function(url, callback) {
     var texture;
@@ -1264,6 +1684,16 @@ Preload = (function() {
       return callback(texture);
     });
   };
+
+
+  /**
+   * Function for downloading a sound elements, runs callback on end
+   * @method downloadSound
+   * @param url {String} the url
+   * @param options {Object} Sound options
+   * @param callback {Callback} The complete callback
+   * @private
+   */
 
   downloadSound = function(url, options, callback) {
     var howlParameters, howler, sound;
@@ -1281,9 +1711,26 @@ Preload = (function() {
     });
   };
 
+
+  /**
+   * Callback which fires when preloading is complete
+   * @method _onComplete
+   * @private
+   */
+
   Preload.prototype._onComplete = function() {
     return this.onComplete();
   };
+
+
+  /**
+   * Callback which fires when preloading is complete
+   * @method _onLoad
+   * @param source {Object} The loaded object
+   * @param type {String} The object type (Sound, Image, etc)
+   * @param name {String} The object name
+   * @private
+   */
 
   Preload.prototype._onLoad = function(source, type, name) {
     var percent;
@@ -1294,9 +1741,25 @@ Preload = (function() {
     }
   };
 
+
+  /**
+   * Check for weither preloading is complete or not
+   * @method isPreloadComplete
+   * @private
+   * @return {Boolean} Weither preloading is complete or not
+   */
+
   Preload.prototype.isPreloadComplete = function() {
     return ((this._loadedObjects / this._totalObjects) * 100.0) === 100;
   };
+
+
+  /**
+   * Function for preloading image
+   * @method image
+   * @param url {Object} The item to Preload
+   * @param name {String} The name of the object
+   */
 
   Preload.prototype.image = function(url, name) {
     var that;
@@ -1312,6 +1775,15 @@ Preload = (function() {
     });
   };
 
+
+  /**
+   * Function for preloading mp3
+   * @method mp3
+   * @param url {Object} The item to Preload
+   * @param name {String} The name of the object
+   * @param options {Object} Options for howler
+   */
+
   Preload.prototype.mp3 = function(url, name, options) {
     var that;
     that = this;
@@ -1326,6 +1798,14 @@ Preload = (function() {
     });
   };
 
+
+  /**
+   * Function for preloading json
+   * @method json
+   * @param url {Object} The item to Preload
+   * @param name {String} The name of the object
+   */
+
   Preload.prototype.json = function(url, name) {
     var that;
     that = this;
@@ -1339,6 +1819,15 @@ Preload = (function() {
       return that._onLoad(json, 'JSON', name);
     });
   };
+
+
+  /**
+   * Function for preloading network data
+   * @method network
+   * @param name {Object} The callback name
+   * @param table {Table} The database table
+   * @param socket {SocketIO} The connected socket
+   */
 
   Preload.prototype.network = function(name, table, socket) {
     var that;
@@ -1356,6 +1845,15 @@ Preload = (function() {
     });
   };
 
+
+  /**
+   * Function for fetching an preloaded item
+   * @method fetch
+   * @param name {String} Name of the file
+   * @param type {String} The type of the file
+   * @return {Object} The element retrieved
+   */
+
   Preload.prototype.fetch = function(name, type) {
     var db;
     db = this.getDatabase(type);
@@ -1363,6 +1861,14 @@ Preload = (function() {
       name: name
     }).object;
   };
+
+
+  /**
+   * Function which returns the storage for the given type
+   * @method getDatabase
+   * @param type {String} The type of the storage
+   * @return {Database} The database retrieved
+   */
 
   Preload.prototype.getDatabase = function(type) {
     switch (type) {
@@ -1395,10 +1901,10 @@ module.exports = Preload;
  * @submodule Framework
  * @namespace Gotham
  * @constructor
- * @param width [Integer] Width of the rendered area
- * @param height [Integer] Height of the rendered area
- * @param options [Object] Additional Option Parameters
- * @param autoResize [Boolean] Weither the renderer should automaticly resize to window size
+ * @param width {Integer} Width of the rendered area
+ * @param height {Integer} Height of the rendered area
+ * @param options {Object} Additional Option Parameters
+ * @param autoResize {Boolean} Weither the renderer should automaticly resize to window size
  */
 var Renderer;
 
@@ -1406,6 +1912,11 @@ Renderer = (function() {
   function Renderer(width, height, options, autoResize) {
     var label, rootScene, that;
     that = this;
+
+    /**
+     * The pixi renderer instance
+     * @property {PIXI.Renderer} pixi
+     */
     this.pixi = PIXI.autoDetectRenderer(width, height, {
       autoResize: true,
       antialias: true
@@ -1435,6 +1946,12 @@ Renderer = (function() {
     };
     rootScene.addChild(label);
     this.pixi.stage = rootScene;
+
+    /**
+     * All scene objects, By default "root" is defined
+     * @property {Object} scenes
+     * @private
+     */
     this.scenes = {
       "root": this.pixi.stage
     };
@@ -1450,16 +1967,39 @@ Renderer = (function() {
     });
   }
 
+
+  /**
+   * Sets current stage to defined name, errors out if not exists
+   * @method setScene
+   * @param name {String} The scene name
+   */
+
   Renderer.prototype.setScene = function(name) {
     var scene;
     scene = this.scenes[name];
     return this.pixi.stage = scene;
   };
 
+
+  /**
+   * Adds a new scene to the renderer
+   * @method addScene
+   * @param name {String} Name of the Scene
+   * @param scene {Gotham.Scene} The Scene object
+   */
+
   Renderer.prototype.addScene = function(name, scene) {
     scene._renderer = this;
     return this.scenes[name] = scene;
   };
+
+
+  /**
+   * Retrieves a scene from the renderer
+   * @method getScene
+   * @param name {String} Name of the scene
+   * @returns {Gotham.Scene} The scene object with the given name
+   */
 
   Renderer.prototype.getScene = function(name) {
     return this.scenes[name];
@@ -1496,15 +2036,44 @@ Scene = (function(_super) {
 
   function Scene() {
     Scene.__super__.constructor.apply(this, arguments);
+
+    /**
+     * The children objects of the scene. These objects are typically views
+     * NB! Should not be accessed randomly
+     * @property {Object[]} __children
+     * @private
+     */
     this.__children = {};
     this.create();
   }
 
+
+  /**
+   * The create function of the scene, Should be overridden.
+   * @method create
+   */
+
   Scene.prototype.create = function() {};
+
+
+  /**
+   * Gets a child by name
+   * @method getObject
+   * @param name {String} Child name
+   * @return {DisplayObject} The child
+   */
 
   Scene.prototype.getObject = function(name) {
     return this.__children[name];
   };
+
+
+  /**
+   * Adds a child to the Scene
+   * @method addObject
+   * @param child {DisplayObject} The display object to remove
+   * @return {DisplayObject} The display object removed, undefined if none
+   */
 
   Scene.prototype.addObject = function(child) {
     this.addChild(child.View);
@@ -1524,6 +2093,14 @@ Scene = (function(_super) {
     this.__children[child.name] = child;
     return child;
   };
+
+
+  /**
+   * Removes a child from the Scene
+   * @method removeObject
+   * @param child {DisplayObject} The display object to remove
+   * @return {DisplayObject} The display object removed, undefined if none
+   */
 
   Scene.prototype.removeObject = function(child) {
     delete this.__children[child.name];
@@ -1558,43 +2135,93 @@ Howler = require('../dependencies/howler.js');
  * @module Framework
  * @submodule Framework
  * @namespace Gotham
- * @constructor
- * @param
- * @example Creating a sound object
- *   # Preload the audio file
- *   Gotham.Preload.mp3("./assets/audio/menu.mp3", "boud", volume: 0.2)
+ * @example
+ *   **Preload the audio file**
  *
- * @example Using the sound object
- *   # Fetch the sound file
- *   sound = Gotham.Preload.fetch("boud", "audio")
- *   # Set Volume
- *   sound.volume(0.3)
- *   # Play Audio
- *   sound.play()
- *   # Stop Audio
- *   sound.stop()
+ *   ``Gotham.Preload.mp3("./assets/audio/menu.mp3", "boud", volume: 0.2)``
+ *
+ *   **Fetch the sound file**
+ *
+ *   ``sound = Gotham.Preload.fetch("boud", "audio")``
+ *
+ *   **Set Volume**
+ *
+ *   ``sound.volume(0.3)``
+ *
+ *   **Play Audio**
+ *
+ *   ``sound.play()``
+ *
+ *   **Stop Audio**
+ *
+ *   ``sound.stop()``
+ * @constructor
+ * @param {Howl} sound Howler sound object
  */
 
 Sound = (function() {
   function Sound(sound) {
+
+    /**
+     * The howler sound object
+     * @property {Howl} _sound
+     * @private
+     */
     this._sound = sound;
   }
+
+
+  /**
+   * Call Howl object's play function Howl.play()
+   * @method play
+   * @return [void] None
+   */
 
   Sound.prototype.play = function() {
     return this._sound.play();
   };
 
+
+  /**
+   * Call Howl object's stop function Howl.stop()
+   * @method stop
+   * @return [void] None
+   */
+
   Sound.prototype.stop = function() {
     return this._sound.stop();
   };
+
+
+  /**
+   * Call Howl object's pause function Howl.pause()
+   * @method pause
+   * @return [void] None
+   */
 
   Sound.prototype.pause = function() {
     return this._sound.pause();
   };
 
+
+  /**
+   * Call Howl object's play function Howl.play()
+   * @method volume
+   * @param val {Double} between 0.0 and 1.0
+   * @return [void] None
+   */
+
   Sound.prototype.volume = function(val) {
     return this._sound.volume(val);
   };
+
+
+  /**
+   * Seek Forward the Audio Position on the Howl Object
+   * @method forward
+   * @param sec {Integer} Number of seconds to forward
+   * @return [void] None
+   */
 
   Sound.prototype.forward = function(sec) {
     var currPos;
@@ -1602,19 +2229,49 @@ Sound = (function() {
     return this._sound.pos(currPos + sec);
   };
 
+
+  /**
+   * Seek Backwards the Audio Position on the Howl Object
+   * @method backward
+   * @param sec {Integer} Number of seconds to forward
+   * @return [void] None
+   */
+
   Sound.prototype.backward = function(sec) {
     var currPos;
     currPos = this._sound.pos();
     return this._sound.pos(currPos - sec);
   };
 
+
+  /**
+   * Mute the Sound, Calling Howl Object's Mute function
+   * @method mute
+   * @return [void] None
+   */
+
   Sound.prototype.mute = function() {
     return this._sound.mute();
   };
 
+
+  /**
+   * Unmute the Sound, Calling Howl Object's Mute function
+   * @method unmute
+   * @return [void] None
+   */
+
   Sound.prototype.unmute = function() {
     return this._sound.unmute();
   };
+
+
+  /**
+   * Sets the loop state of the Howl sound
+   * @method loop
+   * @param state {Boolean} Either true or false based on weither to loop or not
+   * @return [void] None
+   */
 
   Sound.prototype.loop = function(state) {
     return this._sound.loop(state);
@@ -1630,43 +2287,139 @@ module.exports = Sound;
 },{"../dependencies/howler.js":33}],27:[function(require,module,exports){
 
 /**
+ * @class ChainItem
+ * @module TweenCS
+ * @namespace TweenCS
+ * @constructor
+ */
+var ChainItem, Tween,
+  __modulo = function(a, b) { return (a % b + +b) % b; };
+
+ChainItem = (function() {
+  function ChainItem() {
+
+    /**
+     * Which property this chain modifies
+     * @property {Object} property
+     * @private
+     */
+    this.property = null;
+
+    /**
+     * The chain item duration
+     * @property {Integer} duration
+     * @private
+     */
+    this.duration = null;
+
+    /**
+     * The start timestamp of the chainItem
+     * @property {Long} startTime
+     * @private
+     */
+    this.startTime = null;
+
+    /**
+     * The end timestamp of the chainItem
+     * @property {Long} endTime
+     * @private
+     */
+    this.endTime = null;
+
+    /**
+     * If the chainItem has been initialized
+     * @property {Boolean} inited
+     * @private
+     */
+    this.inited = false;
+
+    /**
+     * Which type this chain item is, Delay, Translation etc.
+     * @property {String} type
+     * @private
+     */
+    this.type = null;
+
+    /**
+     * Next chainItem in the loop
+     * @property {TweenCS.ChainItem} next
+     * @private
+     */
+    this.next = null;
+
+    /**
+     * Previous chainItem in the loop
+     * @property {TweenCS.ChainItem} previous
+     * @private
+     */
+    this.previous = null;
+
+    /**
+     * The elapsed percentage of the chainItem (Between 0 and 1)
+     * @property {Number} elapsed
+     * @private
+     */
+    this.elapsed = 0;
+  }
+
+  return ChainItem;
+
+})();
+
+
+/**
 ﻿ * The tween class of Gotham
  * This class animates objects of any format
  * It features to reach deep proprerties in an object
  * @class Tween
  * @module TweenCS
  * @namespace TweenCS
+ * @constructor
+ * @param object {Object} The object to tween
+ *
+ * @example
+ *       # How to use:
+ *       # Start
+ *       tweenTo =
+ *         scale:
+ *           x: 2
+ *           y: 2
+ *       rotation: 0.1
+ *
+ *       # End
+ *       tweenBack =
+ *         scale:
+ *           x: 1
+ *           y: 1
+ *       rotation: -0.1
+ *
+ *       tween = new Tween object
+ *       tween.startDelay 500
+ *       tween.repeat(Infinity)
+ *       tween.easing Tween.Easing.Circular.InOut
+ *       tween.to tweenTo, 1500
+ *       tween.to tweenBack, 1500
+ *       tween.onStart ->
+ *         console.log @ + " started!"
+ *       tween.start()
  */
-var Tween,
-  __modulo = function(a, b) { return (a % b + +b) % b; };
 
 Tween = (function() {
 
   /**
-   * @class ChainItem
-   * @module TweenCS
-   * @namespace TweenCS.ChainItem
+   * Static list of all ongoing tweens
+   * @property {Array[Tween]} _tweens
+   * @static
+   * @private
    */
-  var ChainItem;
-
-  ChainItem = (function() {
-    function ChainItem() {
-      this.property = null;
-      this.duration = null;
-      this.startTime = null;
-      this.endTime = null;
-      this.inited = false;
-      this.type = null;
-      this.next = null;
-      this.previous = null;
-      this.elapsed = 0;
-    }
-
-    return ChainItem;
-
-  })();
-
   Tween._tweens = [];
+
+
+  /**
+   * Clear all ongoing tweens in loop
+   * @method clear
+   * @static
+   */
 
   Tween.clear = function() {
     var tween, _i, _len, _ref, _results;
@@ -1679,29 +2432,127 @@ Tween = (function() {
     return _results;
   };
 
+
+  /**
+   * Current runtime time, Retreived from GameLoop's update()
+   * @property _currentTime {Long}
+   * @static
+   */
+
   Tween._currentTime = 0;
 
   function Tween(object) {
+
+    /**
+     * The object to do tweening on
+     * @property {Object} _object
+     * @private
+     */
     this._object = object;
+
+    /**
+     * Chain of tweens to be applied to object (ChainItems)
+     * @property {Array} _chain
+     * @private
+     */
     this._chain = [];
+
+    /**
+     * The properties to process while tweening
+     * @property {Array} _properties
+     * @private
+     */
     this._properties = [];
+
+    /**
+     * The easing to use, Default is Linear
+     * @property {Tween.Easing} _easing
+     * @private
+     */
     this._easing = Tween.Easing.Linear.None;
+
+    /**
+     * Which interpolation to use, default is Linear
+     * @property {Tween.Interpolation} _interpolation
+     * @private
+     */
     this._interpolation = Tween.Interpolation.Linear;
+
+    /**
+     * onUpdate callback
+     * @method _onUpdate
+     * @private
+     */
     this._onUpdate = function() {};
+
+    /**
+     * onComplete callback
+     * @method _onComplete
+     * @private
+     */
     this._onComplete = function() {};
+
+    /**
+     * onStart callback
+     * @method  _onStart
+     * @private
+     */
     this._onStart = function() {};
+
+    /**
+     * If the tween collection has started or not
+     * @property {Boolean} _started
+     * @private
+     */
     this._started = false;
+
+    /**
+     * If the tween collection is complete or not
+     * @property {Boolean} _complete
+     * @private
+     */
     this._complete = false;
+
+    /**
+     * The tween start delay
+     * @property {Number} _startDelay
+     * @private
+     */
     this._startDelay = 0;
-    this._lastTime = 0;
+
+    /**
+     * Number of runs done (Incremented per chainItem
+     * @property {Number} _runCounter
+     * @private
+     */
     this._runCounter = 0;
+
+    /**
+     * Number of remaining runs for this tween
+     * @property {Number} _remainingRuns
+     * @private
+     */
     this._remainingRuns = 1;
     Tween._tweens.push(this);
   }
 
+
+  /**
+   * Retrieve all chainItems of the Tween
+   * @method getTweenChain
+   * @returns {TweenCS.ChainItem} The tween Chain
+   */
+
   Tween.prototype.getTweenChain = function() {
     return this._chain;
   };
+
+
+  /**
+   * Adds a new TweenCS.ChainItem to the chain
+   * @method addToChain
+   * @param newPath {TweenCS.ChainItem} The chain item
+   */
 
   Tween.prototype.addToChain = function(newPath) {
     var first, last;
@@ -1719,23 +2570,54 @@ Tween = (function() {
     return this._chain.push(newPath);
   };
 
+
+  /**
+   * Sets Delay of the start
+   * @method startDelay
+   * @param time {Number} Delay in milliseconds
+   */
+
   Tween.prototype.startDelay = function(time) {
     return this._startDelay = time;
   };
+
+
+  /**
+   * Starts the tween. _onStart callback is called
+   * @method start
+   */
 
   Tween.prototype.start = function() {
     this._started = true;
     return this._onStart(this._object);
   };
 
+
+  /**
+   * Stops the tween
+   * @method stop
+   */
+
   Tween.prototype.stop = function() {
     this._started = false;
     return this._complete = true;
   };
 
+
+  /**
+   * Pauses the tween.
+   * @method pause
+   */
+
   Tween.prototype.pause = function() {
     return this._started = false;
   };
+
+
+  /**
+   * Unpauses the tween.
+   * @method unpause
+   */
 
   Tween.prototype.unpause = function() {
     var chainItem, elapsedTime, time, timeLeft;
@@ -1747,6 +2629,18 @@ Tween = (function() {
     chainItem.endTime = time + timeLeft;
     return chainItem.startTime = chainItem.endTime - chainItem.duration;
   };
+
+
+  /**
+   * Set the easing algorithm for the tween
+   * The easing algorithms are found in the Tween.Easing object.
+   * @method easing
+   * @param easing {Tween.Easing} The easing algorithm
+   * @example
+   *         obj.easing(Tween.Easing.Linear.None)
+   *
+   * @chainable
+   */
 
   Tween.prototype.easing = function(easing) {
     this._easing = easing;
@@ -1782,8 +2676,9 @@ Tween = (function() {
 
   /**
    * Add tween action to the tween chain
-   * @param [Object] property The "goal" property of the tween (Where you want the target object to end up)
-   * @param [Long] duration Duration of the tween from start --> end (In milliseconds)
+   * @method to
+   * @param property {Object} The "goal" property of the tween (Where you want the target object to end up)
+   * @param duration {Long} Duration of the tween from start --> end (In milliseconds)
    * @chainable
    */
 
@@ -1816,6 +2711,14 @@ Tween = (function() {
     return this;
   };
 
+
+  /**
+   * Add a delay between two tween goto's
+   * @method delay
+   * @param time {Long} Delay in Milliseconds
+   * @chainable
+   */
+
   Tween.prototype.delay = function(time) {
     var delayItem;
     if (typeof time !== 'number') {
@@ -1830,39 +2733,69 @@ Tween = (function() {
       "previous": null,
       "next": null
     };
-    return this.addToChain(delayItem);
+    this.addToChain(delayItem);
+    return this;
   };
+
+
+  /**
+   * How many times you want to repeat the Tween
+   * To repeat "forever", use Infinity
+   * @method repeat
+   * @param num {Integer} Number of times to repeat
+   * @chainable
+   */
 
   Tween.prototype.repeat = function(num) {
-    return this._remainingRuns = num;
+    this._remainingRuns = num;
+    return this;
   };
 
-  Tween.prototype.addCutsomProperty = function(property) {
-    return this._properties.push(property);
-  };
 
-  Tween.prototype.addCutsomProperties = function(properties) {
-    var property, _i, _len, _results;
-    _results = [];
-    for (_i = 0, _len = properties.length; _i < _len; _i++) {
-      property = properties[_i];
-      _results.push(this.addProperty(property));
-    }
-    return _results;
-  };
+  /**
+   * The onUpdate callback
+   * Is called when the tween is updated
+   * @method onUpdate
+   * @param callback {Callback} The onUpdate callback
+   */
 
   Tween.prototype.onUpdate = function(callback) {
     this._onUpdate = callback;
     return this.onUpdate = true;
   };
 
+
+  /**
+   * The onComplete callback
+   * Is called when the tween is completed
+   * @method onComplete
+   * @param callback {Callback} The onComplete callback
+   */
+
   Tween.prototype.onComplete = function(callback) {
     return this._onComplete = callback;
   };
 
+
+  /**
+   * The onStart callback
+   * Is called when the tween is started
+   * @method onStart
+   * @param callback {Callback} The onStart callback
+   */
+
   Tween.prototype.onStart = function(callback) {
     return this._onStart = callback;
   };
+
+
+  /**
+   * Update loop of the tween engine ensures that tweening actually happens
+   * IT is called from GameLoop.update()
+   * @method update
+   * @param time {Long} Render runtime in milliseconds
+   * @static
+   */
 
   Tween.update = function(time) {
     var chainItem, elapsed, end, key, nextPos, prop, property, start, startTime, tween, value, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2, _results;
@@ -1948,6 +2881,14 @@ Tween = (function() {
     return _results;
   };
 
+
+  /**
+   * Clones a object
+   * @method clone
+   * @param obj {Object} the object to clone
+   * @static
+   */
+
   Tween.clone = function(obj) {
     var i, target;
     target = {};
@@ -1958,6 +2899,17 @@ Tween = (function() {
     }
     return target;
   };
+
+
+  /**
+   * Resolves a string property. Ex: "a.b". which is obj["a"]["b"]
+   * @method resolve
+   * @param obj {Object} the object to resolve
+   * @param path {String} the object path
+   * @param def {Object} default if not found
+   * @param setValue {Object} Value to set on the path
+   * @static
+   */
 
   Tween.resolve = function(obj, path, def, setValue) {
     var i, len, previous;
@@ -1984,6 +2936,17 @@ Tween = (function() {
     return obj;
   };
 
+
+  /**
+   * Function for finding properties recursively in an Object
+   * @method flattenKeys
+   * @param obj {Object} Start/Parent Node
+   * @param delimiter {String} The Delimeter of the result. Default: "."
+   * @param max_depth {Integer} Max Depth of the recursion
+   * @return {Array} Array with the resulting properties
+   * @static
+   */
+
   Tween.flattenKeys = function(obj, delimiter, max_depth) {
     var recurse;
     delimiter = delimiter || '.';
@@ -2006,6 +2969,54 @@ Tween = (function() {
     };
     return recurse(obj, [], [], 0);
   };
+
+
+  /**
+   * @property {Object} Easing
+   * @property {Object} Easing.Linear
+   * @property {Function} Easing.Linear.None
+   * @property {Object} Easing.Quadratic
+   * @property {Function} Easing.Quadratic.In
+   * @property {Function} Easing.Quadratic.Out
+   * @property {Function} Easing.Quadratic.InOut
+   * @property {Object} Easing.Cubic
+   * @property {Function} Easing.Cubic.In
+   * @property {Function} Easing.Cubic.Out
+   * @property {Function} Easing.Cubic.InOut
+   * @property {Object} Easing.Quartic
+   * @property {Function} Easing.Quartic.In
+   * @property {Function} Easing.Quartic.Out
+   * @property {Function} Easing.Quartic.InOut
+   * @property {Object} Easing.Quintic
+   * @property {Function} Easing.Quintic.In
+   * @property {Function} Easing.Quintic.Out
+   * @property {Function} Easing.Quintic.InOut
+   * @property {Object} Easing.Sinusoidal
+   * @property {Function} Easing.Sinusoidal.In
+   * @property {Function} Easing.Sinusoidal.Out
+   * @property {Function} Easing.Sinusoidal.InOut
+   * @property {Object} Easing.Exponential
+   * @property {Function} Easing.Exponential.In
+   * @property {Function} Easing.Exponential.Out
+   * @property {Function} Easing.Exponential.InOut
+   * @property {Object} Easing.Circular
+   * @property {Function} Easing.Circular.In
+   * @property {Function} Easing.Circular.Out
+   * @property {Function} Easing.Circular.InOut
+   * @property {Object} Easing.Elastic
+   * @property {Function} Easing.Elastic.In
+   * @property {Function} Easing.Elastic.Out
+   * @property {Function} Easing.Elastic.InOut
+   * @property {Object} Easing.Back
+   * @property {Function} Easing.Back.In
+   * @property {Function} Easing.Back.Out
+   * @property {Function} Easing.Back.InOut
+   * @property {Object} Easing.Bounce
+   * @property {Function} Easing.Bounce.In
+   * @property {Function} Easing.Bounce.Out
+   * @property {Function} Easing.Bounce.InOut
+   * @static
+   */
 
   Tween.Easing = {
     Linear: {
@@ -2228,6 +3239,20 @@ Tween = (function() {
     }
   };
 
+
+  /**
+   * @property {Object} Interpolation
+   * @property {Function} Interpolation.Linear
+   * @property {Function} Interpolation.Bezier
+   * @property {Function} Interpolation.CatmullRom
+   * @property {Object} Interpolation.Utils
+   * @property {Function} Interpolation.Utils.Linear
+   * @property {Function} Interpolation.Utils.Bernstein
+   * @property {Function} Interpolation.Utils.Factorial
+   * @property {Function} Interpolation.Utils.CatmullRom
+   * @static
+   */
+
   Tween.Interpolation = {
     Linear: function(v, k) {
       var f, fn, i, m;
@@ -2370,6 +3395,14 @@ var Ajax;
 Ajax = (function() {
   function Ajax() {}
 
+
+  /**
+   * Fetches the XML Document from  the request,
+   * It can also handle Internet Explorer via ActiveX
+   * @method getXmlDoc
+   * @static
+   */
+
   Ajax.getXmlDoc = function() {
     var xmlDoc;
     xmlDoc = null;
@@ -2380,6 +3413,15 @@ Ajax = (function() {
     }
     return xmlDoc;
   };
+
+
+  /**
+   * GET request to URL, which then returns the data to the callback
+   * @method GET
+   * @param url {String} The url of the request
+   * @param callback {Callback} The resulting success callback of the request
+   * @static
+   */
 
   Ajax.GET = function(url, callback) {
     var xmlDoc;
@@ -2414,6 +3456,14 @@ var Compression;
 Compression = (function() {
   function Compression() {}
 
+
+  /**
+   * GZIP Compression
+   * @property {Object} GZIP
+   * @property {Function} GZIP.decompress
+   * @static
+   */
+
   Compression.prototype.GZIP = {
     decompress: function(bytes) {
       var gunzip, plain;
@@ -2443,6 +3493,15 @@ var Geocoding;
 
 Geocoding = (function() {
   function Geocoding() {}
+
+
+  /**
+   * Identifies a country by latitude and longitude
+   * @method getCountry
+   * @param lat {Number} Latitude
+   * @param lng {Number} Longitude
+   * @returns {Object} country object
+   */
 
   Geocoding.getCountry = function(lat, lng) {
     return window.CRG.country_reverse_geocoding().get_country(lat, lng);
@@ -2480,6 +3539,16 @@ var SearchTools;
 
 SearchTools = (function() {
   function SearchTools() {}
+
+
+  /**
+   * Find a key in an object
+   * @method FindKey
+   * @param object {Object} Object to search in
+   * @param key {String} The key requested to find
+   * @param maxDepth {Integer} The max search depth
+   * @static
+   */
 
   SearchTools.FindKey = function(object, key, maxDepth) {
     var depth, found, item, queue, _key;
@@ -3716,8 +4785,8 @@ Ping = (function(_super) {
         this.removeListener('Ping_Host_Not_found');
         return that.Console.add("ping: unknown host " + that.Packet.target);
       });
-      return GothamGame.Network.Socket.on('Ping', function(session) {
-        var avg_rtt, duration, i, max_rtt, min_rtt, onDone, ping, startTime, _i, _len, _ref, _results;
+      return GothamGame.Network.Socket.on('Ping', function(session, path, targetNetwork) {
+        var avg_rtt, current, db_node, direction, duration, i, last, lengthGap, max_rtt, min_rtt, newEnd, newStart, nodeID, onDone, ping, startTime, tween, _i, _j, _len, _len1, _ref, _results;
         this.removeListener('Ping_Host_Not_found');
         this.removeListener('Ping');
         that.Console.add("PING " + session.target + " (" + session.target + ") " + session.packetsize + "(" + (session.packetsize + session.HEADER_SIZE) + ") bytes of data.");
@@ -3736,7 +4805,7 @@ Ping = (function(_super) {
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           ping = _ref[_i];
-          _results.push(setTimeout((function() {
+          setTimeout((function() {
             var randomRTT;
             randomRTT = Math.floor(Math.random() * (ping.rtt + 10)) + Math.max(ping.rtt - 10, 0);
             avg_rtt += randomRTT;
@@ -3752,7 +4821,36 @@ Ping = (function(_super) {
               avg_rtt = avg_rtt / i;
               return onDone();
             }
-          }), ping.time));
+          }), ping.time);
+          GothamGame.Renderer.getScene("World").getObject("WorldMap").View.clearAnimatePath();
+          db_node = Gotham.Database.table("node");
+          last = that._commandObject.controller.network;
+          for (_j = 0, _len1 = path.length; _j < _len1; _j++) {
+            nodeID = path[_j];
+            current = db_node.findOne({
+              id: nodeID
+            });
+            direction = last.lng < 0 ? 180 : -180;
+            lengthGap = Math.abs(last.lng - current.lng);
+            if (lengthGap > 160) {
+              newEnd = {
+                lat: current.lat,
+                lng: direction * -1
+              };
+              newStart = {
+                lat: current.lat,
+                lng: direction
+              };
+              tween = GothamGame.Renderer.getScene("World").getObject("WorldMap").View.animatePath(last, newEnd);
+              tween.start();
+              last = newStart;
+            }
+            tween = GothamGame.Renderer.getScene("World").getObject("WorldMap").View.animatePath(last, current);
+            tween.start();
+            last = current;
+          }
+          tween = GothamGame.Renderer.getScene("World").getObject("WorldMap").View.animatePath(last, targetNetwork);
+          _results.push(tween.start());
         }
         return _results;
       });

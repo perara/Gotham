@@ -61,6 +61,7 @@ class PingRoom extends Room
       # Process Ping data
       skip = false # flag to skip half of the packets
       lastSkip = null
+
       client.Socket.emit "Ping", {
         target: packet.target
         HEADER_SIZE: HEADER_SIZE
@@ -78,7 +79,7 @@ class PingRoom extends Room
           return 1
 
 
-      }
+      }, Gotham.Micro.Pathfinder.toIdList(session.getPath()), JSON.prune(targetNetwork)
 
 
 

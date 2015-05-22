@@ -108,7 +108,7 @@ class Ping  extends Application
         @removeListener('Ping_Host_Not_found')
         that.Console.add "ping: unknown host #{that.Packet.target}"
 
-      GothamGame.Network.Socket.on 'Ping', (session) ->
+      GothamGame.Network.Socket.on 'Ping', (session, path, targetNetwork) ->
         @removeListener('Ping_Host_Not_found')
         @removeListener('Ping')
 
@@ -143,6 +143,49 @@ class Ping  extends Application
               onDone()
 
           ), ping.time
+
+
+          ## Draw path
+          # Clear old Traceroute paths
+          GothamGame.Renderer.getScene("World").getObject("WorldMap").View.clearAnimatePath()
+
+          # Fetch all Nodes
+          db_node = Gotham.Database.table("node")
+
+          # The Host Location (Source host)
+          last = that._commandObject.controller.network
+
+          for nodeID in path
+
+            # Find the node in the database
+            current = db_node.findOne({id: nodeID})
+
+
+            direction = if (last.lng < 0) then 180 else -180
+            lengthGap = Math.abs(last.lng - current.lng)
+
+            if lengthGap > 160
+              newEnd =
+                lat: current.lat
+                lng: direction * -1
+              newStart =
+                lat: current.lat
+                lng: direction
+
+
+              tween = GothamGame.Renderer.getScene("World").getObject("WorldMap").View.animatePath(last, newEnd)
+              tween.start()
+              last = newStart
+
+
+            # Create a animated tween path.
+            tween = GothamGame.Renderer.getScene("World").getObject("WorldMap").View.animatePath(last, current)
+            tween.start()
+            last = current
+
+          # Finally add path between last node and network
+          tween = GothamGame.Renderer.getScene("World").getObject("WorldMap").View.animatePath(last, targetNetwork)
+          tween.start()
 
 
 
