@@ -7555,7 +7555,7 @@ HelpView = (function(_super) {
     var helpForm, helpTitle, innerContainer;
     helpForm = $("<div/>", {
       "class": "help-form",
-      "style": "position: absolute; top: 10%; left:20%; width: 600px; height: 400px; background-color: #fdf5e8; box-shadow: 10px 10px 5px #000000; border: 1px solid black;"
+      "style": "position: absolute; top: 10%; left:20%; width: 900px; height: 600px; background-color: #fdf5e8; box-shadow: 10px 10px 5px #000000; border: 1px solid black;"
     });
     innerContainer = $("<div/>", {
       "style": "height: 100%;"
