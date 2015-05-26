@@ -68,10 +68,10 @@ class HelpView extends Gotham.Pattern.MVC.View
     helpForm = $("<div/>",{
       "class": "help-form"
       "style": "position: absolute;
-            top: 20%;
+            top: 10%;
             left:20%;
-            width: 600px;
-            height: 400px;
+            width: 900px;
+            height: 600px;
             background-color: #fdf5e8;
             box-shadow: 10px 10px 5px #000000;
             border: 1px solid black;"
@@ -83,7 +83,7 @@ class HelpView extends Gotham.Pattern.MVC.View
 
 
     @helpMenu = $("<div/>",{
-      "class": "col-sm-4 b-col help-menu"
+      "class": "col-sm-3 b-col help-menu"
       "style": "height: 100%;
             overflow-y: scroll;
             overflow-x: hidden;
@@ -94,7 +94,7 @@ class HelpView extends Gotham.Pattern.MVC.View
     })
 
     helpTitle = $("<div/>",{
-      "class": "col-sm-7 help-title"
+      "class": "col-sm-9 help-title"
       "html": "<p>Help Central</p>"
       "style": "            height: 25px;
             text-align: center;
@@ -107,7 +107,7 @@ class HelpView extends Gotham.Pattern.MVC.View
     })
 
     @helpContent = $("<div/>",{
-      "class": "col-sm-7 help-content"
+      "class": "col-sm-9 help-content"
       "style": "padding: 10px;
             height: 90%;
             overflow: scroll;"
