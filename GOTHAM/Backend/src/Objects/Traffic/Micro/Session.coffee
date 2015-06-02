@@ -2,7 +2,7 @@
 # Session object containing source, target ,traffic path and packets exchanged
 class Session
 
-  constructor: (sourceHost, targetNetwork, type, customPath) ->
+  constructor: (sourceHost, targetNetwork, type, customPath, blacklist) ->
     type = if not type then "None" else type
 
     # Set source variables
@@ -18,7 +18,7 @@ class Session
     if customPath
       @path = customPath
     else
-      @path = Gotham.Micro.Pathfinder.bStar(@sourceNode, @targetNode)
+      @path = Gotham.Micro.Pathfinder.bStar(@sourceNode, @targetNode, blacklist)
     @reversePath = [].concat(@path)
 
     @layers = Gotham.Micro.LayerStructure.Packet[type]()

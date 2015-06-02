@@ -25,7 +25,6 @@ class TracerouteRoom extends Room
     @addEvent "Traceroute", (packet, blacklist) ->
       client = that.getClient(@id)
 
-
       # Data format is
       # {node: id}
       # Transform to:
@@ -33,7 +32,7 @@ class TracerouteRoom extends Room
       db_node = Gotham.LocalDatabase.table("Node")
       blacklist = blacklist.map (obj) ->
         return db_node.findOne(id: obj.node)
-  
+
       # Get tables
       db_host = Gotham.LocalDatabase.table("Host")
       db_network = Gotham.LocalDatabase.table("Network")
